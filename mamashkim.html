@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wendi – ממשקים</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal:        #3ECFBE;
+      --teal-dark:   #2BADA0;
+      --teal-glow:   rgba(62,207,190,.14);
+      --blue:        #4A90C4;
+      --dark:        #050f1e;
+      --surface:     #081428;
+      --surface-2:   #0c1f3a;
+      --surface-3:   #102848;
+      --border:      rgba(255,255,255,.12);
+      --border-teal: rgba(62,207,190,.5);
+      --text:        #E4EAF0;
+      --muted:       #a8c4e8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--text); font-family: 'Heebo', sans-serif; font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: .025; pointer-events: none; z-index: 0; }
+
+    /* ── ANIMATIONS ── */
+    .fade-up { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(1.5)} }
+
+    /* ── UTILS ── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 48px; position: relative; z-index: 1; }
+    .eyebrow { display: inline-block; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); background: var(--teal-glow); border: 1px solid var(--border-teal); padding: 4px 14px; border-radius: 20px; margin-bottom: 18px; }
+    .sec-title { font-size: clamp(1.85rem, 3vw, 2.8rem); font-weight: 900; line-height: 1.15; color: #fff; margin-bottom: 14px; letter-spacing: -.4px; }
+    .sec-sub { font-size: 1.02rem; color: var(--muted); max-width: 620px; margin-bottom: 52px; line-height: 1.78; }
+    .btn-p { background: var(--teal); color: #000; font-weight: 700; padding: 14px 30px; border-radius: 9px; font-size: .95rem; display: inline-block; transition: all .2s; box-shadow: 0 0 28px rgba(62,207,190,.28); }
+    .btn-p:hover { background: #fff; transform: translateY(-2px); }
+    .btn-o { border: 1px solid var(--border-teal); color: var(--teal); padding: 14px 30px; border-radius: 9px; font-size: .95rem; background: transparent; transition: all .2s; display: inline-block; }
+    .btn-o:hover { background: var(--teal-glow); transform: translateY(-2px); }
+
+        /* ══ NAV ══ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 48px; height: 68px;
+      background: rgba(5,15,30,.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      transition: all .45s cubic-bezier(.4,0,.2,1);
+    }
+    nav .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; max-width: 1440px;
+    }
+    nav.scrolled {
+      top: 10px; left: 50%; right: auto; transform: translateX(-50%);
+      width: auto; min-width: 560px; height: 50px; border-radius: 50px;
+      padding: 0 8px 0 20px; background: rgba(5,15,30,.99);
+      border: 1px solid rgba(62,207,190,.35);
+      box-shadow: 0 8px 40px rgba(0,0,0,.4), 0 0 0 1px rgba(62,207,190,.08);
+    }
+    nav.scrolled .nav-logo { opacity: 0; width: 0; overflow: hidden; margin: 0; }
+    nav.scrolled .nav-links { gap: 18px; }
+    nav.scrolled .nav-links > li > a { font-size: .82rem; }
+    nav.scrolled .nav-cta { padding: 7px 18px; font-size: .82rem; }
+    nav.scrolled .nav-inner { justify-content: center; gap: 12px; }
+    .nav-home { display:none; font-size:.82rem; font-weight:600; color:rgba(255,255,255,.75); padding:6px 12px; border-radius:8px; transition:all .2s; white-space:nowrap; flex-shrink:0; text-decoration:none; }
+    .nav-home:hover { color:var(--teal); background:rgba(255,255,255,.06); }
+    nav.scrolled .nav-home { display:flex; align-items:center; gap:5px; }
+    .nav-logo { display: flex; align-items: center; transition: all .35s; flex-shrink: 0; }
+    .nav-logo img { height: 36px; width: auto; filter: brightness(0) invert(1); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links > li { position: relative; }
+    .nav-links > li > a { font-size: .88rem; font-weight: 500; color: rgba(255,255,255,.78); transition: color .2s; display: flex; align-items: center; gap: 3px; }
+    .nav-links > li > a:hover, .nav-links > li > a.active-page { color: var(--teal); }
+    .arr { font-size: .6rem; opacity: .7; }
+    .dropdown { position: absolute; top: calc(100% + 10px); right: 0; background: #050f1e; border: 1px solid rgba(62,207,190,.2); border-radius: 12px; min-width: 180px; padding: 7px; opacity: 0; pointer-events: none; transform: translateY(8px) scale(.97); transition: all .22s cubic-bezier(.4,0,.2,1); box-shadow: 0 12px 40px rgba(0,0,0,.3); }
+    .nav-links > li:hover .dropdown { opacity: 1; pointer-events: all; transform: translateY(0) scale(1); }
+    .dropdown a { display: block; padding: 9px 14px; font-size: .86rem; color: rgba(255,255,255,.65); border-radius: 8px; transition: all .15s; }
+    .dropdown a:hover, .dropdown a.active-sub { background: rgba(62,207,190,.12); color: var(--teal); }
+    .nav-cta { background: var(--teal); color: #000; font-weight: 700; font-size: .86rem; padding: 9px 20px; border-radius: 20px; transition: all .25s; white-space: nowrap; flex-shrink: 0; }
+    .nav-cta:hover { background: #fff; transform: translateY(-1px); }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:6px; background:none; border:none; z-index:300; }
+    .hamburger span { display:block; width:24px; height:2px; background:#fff; border-radius:2px; transition:all .3s; }
+    .hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+    @media(max-width:768px){ .hamburger{display:flex;} .nav-links,.nav-cta{display:none!important;} nav{padding:0 20px;} nav .nav-inner{justify-content:space-between;} nav.scrolled{left:16px;right:16px;transform:none;min-width:unset;width:auto;border-radius:16px;padding:0 16px;} nav.scrolled .nav-logo{opacity:1;width:auto;overflow:visible;} }
+
+    /* ══ PAGE HERO ══ */
+    .page-hero {
+      padding: 140px 48px 80px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero-g { position: absolute; top: -100px; left: -150px; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(62,207,190,.1) 0%, transparent 65%); pointer-events: none; }
+    .page-hero-g2 { position: absolute; bottom: -100px; right: -80px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(74,144,196,.07) 0%, transparent 65%); pointer-events: none; }
+    .page-hero-inner { max-width: 1160px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .page-hero h1 { font-size: clamp(2.2rem, 4vw, 3.8rem); font-weight: 900; line-height: 1.1; letter-spacing: -1px; color: #fff; margin-bottom: 22px; }
+    .page-hero h1 .ac { color: var(--teal); }
+    .page-hero p { font-size: 1.1rem; color: var(--muted); line-height: 1.8; margin-bottom: 32px; }
+    .hero-bullets { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .hero-bullets li { display: flex; align-items: flex-start; gap: 12px; font-size: .95rem; color: var(--text); }
+    .hero-bullets li .bi { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* Connection visual */
+    .conn-visual { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 32px; position: relative; overflow: hidden; }
+    .conn-visual::before { content: ''; position: absolute; top: -60px; left: -60px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(62,207,190,.1) 0%, transparent 70%); }
+    .conn-center { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .conn-wendi { background: linear-gradient(135deg, var(--teal), var(--blue)); color: #000; font-weight: 900; font-size: 1.1rem; padding: 16px 32px; border-radius: 12px; text-align: center; box-shadow: 0 0 32px rgba(62,207,190,.3); }
+    .conn-arrows { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+    .conn-arrow { font-size: 1.2rem; color: var(--teal); animation: pulse-arr 2s infinite; }
+    .conn-arrow:nth-child(2) { animation-delay: .3s; }
+    .conn-arrow:nth-child(3) { animation-delay: .6s; }
+    @keyframes pulse-arr { 0%,100%{opacity:.4} 50%{opacity:1} }
+    .conn-systems { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .conn-sys { background: var(--surface-2); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; text-align: center; font-size: .78rem; color: var(--muted); font-weight: 600; transition: border-color .2s; }
+    .conn-sys:hover { border-color: var(--border-teal); color: var(--teal); }
+
+    /* ══ WHY SECTION ══ */
+    .why-section { padding: 80px 0; border-top: 1px solid rgba(0,0,0,.06); }
+    .why-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .why-section.section-white h2 { color: #0a1f3d !important; }
+    .why-section.section-white p { color: #4a6fa8 !important; }
+    .example-flows { display: flex; flex-direction: column; gap: 10px; }
+    .flow { background: var(--dark); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; font-size: .88rem; color: var(--text); line-height: 1.6; transition: border-color .2s; }
+    .flow:hover { border-color: var(--border-teal); }
+    .flow .ft { color: var(--teal); font-weight: 700; font-size: .8rem; display: block; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .06em; }
+    .flow-steps { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .fs { background: var(--surface-2); padding: 3px 10px; border-radius: 5px; font-size: .8rem; color: var(--text); }
+    .fa { color: var(--teal); font-size: .75rem; }
+
+    /* ══ WHAT MAKES US DIFFERENT ══ */
+    .different { padding: 96px 0; }
+    .diff-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .diff-table { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .diff-header { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface-2); }
+    .diff-col-h { padding: 14px 20px; font-size: .82rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    .diff-col-h.wendi { color: var(--teal); }
+    .diff-col-h.others { color: var(--muted); }
+    .diff-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); }
+    .diff-row:hover { background: var(--surface-2); }
+    .diff-cell { padding: 14px 20px; font-size: .88rem; display: flex; align-items: center; gap: 8px; }
+    .diff-cell.yes { color: var(--text); }
+    .diff-cell.no { color: var(--muted); }
+    .diff-cell .tick { color: var(--teal); font-weight: 700; }
+    .diff-cell .cross { color: #E05C5C; }
+    .diff-text { display: flex; flex-direction: column; gap: 20px; }
+    .diff-card { background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 24px; transition: border-color .2s; }
+    .diff-card:hover { border-color: var(--border-teal); }
+    .diff-card h4 { font-size: .97rem; font-weight: 700; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .diff-card p { font-size: .87rem; color: var(--muted); line-height: 1.65; }
+
+    /* ══ INTEGRATION TYPES ══ */
+    .int-types { padding: 80px 0; border-top: 1px solid rgba(0,0,0,.06); }
+    .types-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .type-card { background: var(--dark); border: 1px solid var(--border); border-radius: 15px; padding: 32px; transition: all .22s; }
+    .type-card:hover { border-color: var(--border-teal); transform: translateY(-3px); }
+    .type-icon { font-size: 1.6rem; margin-bottom: 16px; width: 52px; height: 52px; border-radius: 12px; background: var(--teal-glow); border: 1px solid var(--border-teal); display: flex; align-items: center; justify-content: center; }
+    .type-card h3 { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .type-card p { font-size: .88rem; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+    .type-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+    .tag { background: var(--surface-2); border: 1px solid var(--border); padding: 3px 11px; border-radius: 5px; font-size: .76rem; color: var(--muted); font-weight: 600; }
+
+    /* ══ SYSTEMS WE INTEGRATED ══ */
+    .systems { padding: 96px 0; }
+    .systems-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
+    .sys-cat { background: var(--surface); border: 1px solid var(--border); border-radius: 13px; padding: 26px 22px; transition: border-color .2s; }
+    .sys-cat:hover { border-color: var(--border-teal); }
+    .sys-cat h4 { font-size: .86rem; font-weight: 700; color: var(--teal); margin-bottom: 14px; display: flex; align-items: center; gap: 7px; }
+    .sys-cat ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .sys-cat li { font-size: .84rem; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+    .sys-cat li::before { content: '→'; color: var(--teal); font-size: .73rem; }
+
+    /* ══ PROCESS STEPS ══ */
+    .process { padding: 80px 0; background: var(--dark) !important; border-top: 1px solid var(--border); }
+    .steps-timeline { display: flex; flex-direction: column; gap: 0; max-width: 780px; margin: 0 auto; }
+    .step-item { display: grid; grid-template-columns: 60px 1fr; gap: 28px; position: relative; padding-bottom: 48px; }
+    .step-item:last-child { padding-bottom: 0; }
+    .step-item::before { content: ''; position: absolute; top: 52px; right: 30px; width: 2px; bottom: 0; background: linear-gradient(to bottom, var(--border-teal), transparent); }
+    .step-item:last-child::before { display: none; }
+    .step-num-wrap { display: flex; flex-direction: column; align-items: center; }
+    .step-num { width: 52px; height: 52px; border-radius: 50%; background: var(--teal); color: #000; font-weight: 900; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-body { padding-top: 10px; }
+    .step-body h3 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .step-body p { font-size: .92rem; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+    .step-tags { display: flex; gap: 7px; flex-wrap: wrap; }
+    .stag { background: var(--teal-glow); border: 1px solid var(--border-teal); padding: 3px 11px; border-radius: 5px; font-size: .76rem; color: var(--teal); font-weight: 600; }
+
+    /* ══ CTA ══ */
+    .cta-band { padding: 100px 48px; text-align: center; position: relative; overflow: hidden; background: linear-gradient(160deg,#071d3e 0%,#0e2f5a 50%,#071d3e 100%); border-top: 1px solid var(--border); }
+    .cta-band::before { content: ''; position: absolute; top: -180px; left: 50%; transform: translateX(-50%); width: 650px; height: 650px; border-radius: 50%; background: radial-gradient(circle, rgba(62,207,190,.09) 0%, transparent 65%); }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-band h2 { font-size: clamp(1.75rem, 3.2vw, 3rem); font-weight: 900; color: #fff; margin-bottom: 14px; letter-spacing: -.4px; }
+    .cta-band p { font-size: 1.02rem; color: var(--muted); margin-bottom: 36px; }
+    .cta-form { display: flex; gap: 10px; max-width: 420px; margin: 0 auto; }
+    .cta-in { flex: 1; padding: 13px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 9px; color: var(--text); font-family: 'Heebo',sans-serif; font-size: .91rem; outline: none; transition: border-color .2s; }
+    .cta-in::placeholder { color: var(--muted); }
+    .cta-in:focus { border-color: var(--teal); }
+    .cta-btn { background: var(--teal); color: #000; font-weight: 700; font-size: .91rem; padding: 13px 22px; border-radius: 9px; border: none; cursor: pointer; font-family: 'Heebo',sans-serif; white-space: nowrap; transition: all .2s; }
+    .cta-btn:hover { background: #fff; transform: translateY(-1px); }
+
+    /* ══ FOOTER ══ */
+    footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 48px 34px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 44px; margin-bottom: 44px; }
+    .fbrand { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+    .fbrand img { height: 26px; filter: brightness(0) invert(1); }
+    .ftagline { font-size: .85rem; color: var(--muted); line-height: 1.7; max-width: 230px; }
+    .fcol h5 { font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: #fff; margin-bottom: 14px; }
+    .fcol ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .fcol a { font-size: .85rem; color: var(--muted); transition: color .2s; }
+    .fcol a:hover { color: var(--teal); }
+    .fbot { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 22px; font-size: .78rem; color: var(--muted); }
+    .fbot a { color: var(--muted); transition: color .2s; margin-right: 18px; }
+    .fbot a:hover { color: var(--teal); }
+
+    @media(max-width:960px){
+      nav { padding: 0 18px; } .nav-links { display: none; }
+      .container, .page-hero { padding-right: 18px; padding-left: 18px; }
+      .page-hero-inner, .why-inner, .diff-layout { grid-template-columns: 1fr; }
+      .types-grid, .systems-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .cta-form { flex-direction: column; }
+    }
+
+    /* ══ ALTERNATING SECTIONS ══ */
+    :root {
+      --white-bg:     #ffffff;
+      --white-surface:#f0f5ff;
+      --white-border: rgba(10,48,125,.1);
+      --white-text:   #0a307d;
+      --white-muted:  #4a6fa8;
+    }
+    .section-white {
+      background: var(--surface) !important;
+      color: var(--white-text);
+    }
+    .section-white .sec-title,
+    .section-white h2, .section-white h3, .section-white h4 { color: #0a1f3d !important; }
+    .section-white .sec-sub,
+    .section-white p,
+    .section-white .sectors-note { color: var(--muted) !important; }
+    .section-white .eyebrow {
+      background: rgba(10,48,125,.08);
+      border-color: rgba(10,48,125,.25);
+      color: var(--teal-dark);
+    }
+    /* Cards inside white sections */
+    .section-white .scard,
+    .section-white .wcard,
+    .section-white .tcard,
+    .section-white .vcard,
+    .section-white .icat,
+    .section-white .type-card,
+    .section-white .sys-cat,
+    .section-white .istep,
+    .section-white .diff-card {
+      background: var(--surface) !important;
+      border-color: rgba(10,48,125,.15) !important;
+      color: var(--white-text);
+    }
+    .section-white .scard:hover,
+    .section-white .wcard:hover,
+    .section-white .tcard:hover,
+    .section-white .vcard:hover,
+    .section-white .icat:hover,
+    .section-white .type-card:hover {
+      border-color: var(--teal) !important;
+      box-shadow: 0 8px 32px rgba(10,48,125,.12) !important;
+    }
+    .section-white .scard h3,
+    .section-white .wcard h3,
+    .section-white .tcard .tname,
+    .section-white .vcard h3,
+    .section-white .icat h4,
+    .section-white .type-card h3,
+    .section-white .sys-cat h4 { color: #fff !important; }
+    .section-white .scard p,
+    .section-white .wcard p,
+    .section-white .tcard .tq,
+    .section-white .vcard p,
+    .section-white .icat li,
+    .section-white .type-card p,
+    .section-white .sys-cat li,
+    .section-white .trole { color: var(--muted) !important; }
+    .section-white .sbullets li { color: var(--muted) !important; }
+    .section-white .sectors-note { color: var(--muted) !important; }
+    /* What-grid inside white */
+    .section-white .what-grid { background: rgba(10,48,125,.06) !important; }
+    /* Module list inside white */
+    .section-white .mod-layout { background: rgba(10,48,125,.08) !important; }
+    .section-white .mod-list { background: var(--surface) !important; }
+    .section-white .mitem { border-color: rgba(10,48,125,.12) !important; }
+    .section-white .mitem:hover,
+    .section-white .mitem.active { background: #e8eef8 !important; }
+    .section-white .mitem h4 { color: var(--muted) !important; }
+    .section-white .mitem.active h4,
+    .section-white .mitem:hover h4 { color: #fff !important; }
+    .section-white .mitem p { color: var(--muted) !important; }
+    .section-white .mpanel { background: #f7faff !important; }
+    .section-white .mod-detail-title { color: #fff !important; }
+    .section-white .mod-detail-sub { color: var(--muted) !important; }
+    .section-white .mod-detail-header { border-color: rgba(10,48,125,.12) !important; }
+    .section-white .feat-chip { background: #e8eef8 !important; border-color: rgba(10,48,125,.12) !important; }
+    .section-white .feat-chip strong { color: #fff !important; }
+    .section-white .feat-chip p { color: var(--muted) !important; }
+    .section-white .mod-desc { background: #eef3fb !important; color: var(--muted) !important; }
+    .section-white .mod-note { background: rgba(62,207,190,.08) !important; }
+    /* Testimonials inside white */
+    .section-white .tfeat { background: #eef3fb !important; }
+    .section-white .tq { color: #1a3a6b !important; }
+    .section-white .chip { background: #e2eaf7 !important; color: var(--muted) !important; }
+    .section-white .tcard-photo-row .tname { color: #fff !important; }
+    /* White logos band */
+    .section-white .logo-box { color: #8aabd4 !important; }
+    .section-white .logo-box:hover { color: var(--teal-dark) !important; }
+    /* Sectors grid inside white */
+    .section-white .sec-grid { }
+    .section-white .scard-icon { }
+    .section-white .slink { color: var(--teal-dark) !important; }
+    /* White partner stats */
+    .section-white .pstat, .section-white .ps {
+      background: var(--surface) !important;
+      border-color: rgba(10,48,125,.15) !important;
+    }
+    .section-white .ps-lbl, .section-white .pstat-label { color: var(--muted) !important; }
+    /* Scifi divider on white */
+    .section-white .scifi-divider-label {
+      background: var(--surface) !important;
+      color: var(--teal-dark) !important;
+      border-color: rgba(10,48,125,.25) !important;
+    }
+
+    .section-white .sector-story { background: var(--surface-2) !important; border-color: var(--border-teal) !important; }
+    .section-white .story-label { color: var(--teal) !important; }
+    .section-white .story-quote { color: var(--text) !important; }
+    .section-white .story-name { color: #fff !important; }
+    .section-white .sector-title { color: #fff !important; }
+    .section-white .sector-desc, .section-white .sector-badge { color: var(--muted) !important; }
+    .section-white .sf-item { color: var(--text) !important; }
+    .section-white .sch { background: var(--surface-2) !important; color: var(--muted) !important; border-color: var(--border) !important; }
+    .section-white .faq-q { color: var(--text) !important; }
+    .section-white .faq-item { border-color: var(--border) !important; }
+    .section-white .faq-a-inner { color: var(--muted) !important; }
+    .section-white .team-card { background: var(--surface) !important; border-color: var(--border) !important; }
+    .section-white .team-name { color: #fff !important; }
+    .section-white .team-role { color: var(--muted) !important; }
+    .section-white .big { color: #fff !important; }
+    .section-white .wstat { background: var(--surface) !important; border-color: var(--border) !important; }
+    .section-white .wstat-lbl { color: var(--muted) !important; }
+    .section-white .metric-num { color: var(--teal) !important; }
+    .section-white .metric-lbl { color: var(--muted) !important; }
+    .section-white .flow { background: var(--surface) !important; border-color: rgba(10,48,125,.15) !important; }
+    .section-white .flow .ft { color: #2BADA0 !important; }
+    .section-white .fs { background: #e2eaf7 !important; color: #fff !important; }
+    .section-white .type-card h3 { color: #fff !important; }
+    .section-white .tag { background: #e2eaf7 !important; color: var(--muted) !important; }
+    .section-white .story-card { background: var(--surface) !important; border-color: var(--border) !important; }
+    .section-white .sc-org, .sc-result { color: var(--text) !important; }
+    .section-white .sc-text { color: var(--text) !important; }
+    .section-white .sc-challenge, .sc-role-sm { color: var(--muted) !important; }
+    .section-white .sc-footer { border-color: var(--border) !important; }
+
+    nav.scrolled{top:12px;right:24px;left:auto;inset-inline:unset;width:auto;height:52px;border-radius:40px;padding:0 20px 0 24px;background:rgba(5,15,30,.99);border:1px solid rgba(62,207,190,.3);box-shadow:0 8px 32px rgba(0,0,0,.35);}
+    nav.scrolled .nav-logo{display:none;}
+    nav.scrolled .nav-links{gap:20px;}
+    nav.scrolled .nav-links>li>a{font-size:.83rem;}
+    nav.scrolled .nav-cta{padding:7px 16px;font-size:.82rem;}
+    .nav-links>li>a{color:rgba(255,255,255,.8) !important;}
+    .nav-links>li>a:hover,.nav-links>li>a.active-page{color:var(--teal) !important;}
+    .dropdown{background:#050f1e !important;border-color:rgba(62,207,190,.2) !important;border-radius:12px !important;box-shadow:0 12px 40px rgba(0,0,0,.3) !important;transform:translateY(8px) scale(.97) !important;transition:all .22s cubic-bezier(.4,0,.2,1) !important;}
+    .nav-links>li:hover .dropdown{transform:translateY(0) scale(1) !important;}
+    .dropdown a{color:rgba(255,255,255,.65) !important;}
+    .dropdown a:hover,.dropdown a.active-sub{background:rgba(62,207,190,.12) !important;color:var(--teal) !important;}
+    .nav-cta{border-radius:20px !important;}
+
+    nav { justify-content: center; }
+    nav .nav-inner { display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1160px; }
+    nav.scrolled { top:10px;left:50%;right:auto;transform:translateX(-50%);width:auto;min-width:520px;height:50px;border-radius:50px;padding:0 8px 0 20px;background:rgba(5,15,30,.99);border:1px solid rgba(62,207,190,.35);box-shadow:0 8px 40px rgba(0,0,0,.4); }
+    nav.scrolled .nav-logo{opacity:0;width:0;overflow:hidden;margin:0;}
+    nav.scrolled .nav-links{gap:16px;}
+    nav.scrolled .nav-links>li>a{font-size:.82rem;}
+    nav.scrolled .nav-cta{padding:7px 16px;font-size:.82rem;}
+    nav.scrolled .nav-inner{justify-content:center;gap:10px;}
+
+    /* ══ DEEP NAVY GRADIENT BODY ══ */
+    body {
+      background: linear-gradient(160deg, #050f1e 0%, #07162a 40%, #050f1e 100%) !important;
+      background-attachment: fixed !important;
+    }
+    /* Subtle radial glow top-center — feels like a light source */
+    body::after {
+      content: '';
+      position: fixed; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(62,207,190,.06) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Wendi character glow — teal halo */
+    .hero-char img {
+      filter: drop-shadow(0 0 40px rgba(62,207,190,.35))
+              drop-shadow(0 0 80px rgba(62,207,190,.15));
+    }
+    .cta-char {
+      filter: drop-shadow(0 0 30px rgba(62,207,190,.3))
+              drop-shadow(0 0 60px rgba(62,207,190,.12)) !important;
+    }
+
+    /* ── BODY GRADIENT + GLOW ── */
+    body{background:linear-gradient(160deg,#050f1e 0%,#07162a 40%,#050f1e 100%) !important;background-attachment:fixed !important;}
+    body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(62,207,190,.06) 0%,transparent 65%);pointer-events:none;z-index:0;}
+    /* ── CTA warmer ── */
+    .cta-band{background:linear-gradient(160deg,#071d3e 0%,#0e2f5a 50%,#071d3e 100%) !important;border-top:1px solid rgba(62,207,190,.18) !important;padding:72px 48px !important;}
+    /* ── footer ── */
+    footer{border-top:1px solid rgba(255,255,255,.06) !important;padding:44px 48px 28px !important;}
+    /* ── page hero bg ── */
+    .page-hero{background:transparent;}
+    /* ── sector section alternating fix ── */
+    .sector-section{border-top:1px solid rgba(255,255,255,.05) !important;background:#050f1e;}
+    .sector-section:nth-child(odd){background:#081428 !important;}
+    /* ── tri divider on internal pages ── */
+    .tri-divider{opacity:.5;}
+    /* ── scrolled nav for internal ── */
+    nav.scrolled .dropdown{background:#050f1e !important;}
+
+    /* ══ CONTACT FORM ══ */
+    .contact-form { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    .cf-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+    .cf-in { width:100%; padding:13px 16px; background:rgba(255,255,255,.95); border:1px solid rgba(255,255,255,.3); border-radius:9px; color:#0a1f3d; font-family:'Heebo',sans-serif; font-size:.92rem; outline:none; transition:all .2s; text-align:right; -webkit-appearance:none; }
+    .cf-in::placeholder { color:#6a8ab5; }
+    .cf-in:focus { border-color:var(--teal); box-shadow:0 0 0 3px rgba(62,207,190,.15); }
+    .cf-select { cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a8ab5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:left 14px center; padding-left:36px; }
+    .cf-btn { background:#0a307d; color:#fff; font-weight:700; font-size:.95rem; padding:13px 20px; border-radius:9px; border:none; cursor:pointer; font-family:'Heebo',sans-serif; transition:all .22s; white-space:nowrap; }
+    .cf-btn:hover { background:var(--teal); color:#000; transform:translateY(-1px); }
+    @media(max-width:900px){ .cf-row { grid-template-columns:1fr 1fr; } }
+    @media(max-width:500px){ .cf-row { grid-template-columns:1fr; } }
+    /* ══ MAMASHKIM WHITE SECTIONS ══ */
+    .section-white { background: #ffffff !important; }
+    /* Eyebrow on white */
+    .section-white .eyebrow { background:rgba(10,48,125,.08) !important; border-color:rgba(10,48,125,.2) !important; color:#0a307d !important; }
+    /* Headings on white */
+    .section-white h1,.section-white h2,.section-white h3,.section-white h4,.section-white .sec-title { color:#0a1f3d !important; }
+    .section-white p, .section-white .sec-sub { color:#4a6fa8 !important; }
+    /* Cards on white */
+    .section-white .flow { background:#f0f5ff !important; border-color:rgba(10,48,125,.12) !important; }
+    .section-white .flow .ft { color:#0a307d !important; }
+    .section-white .flow .fs { background:#e2eaf7 !important; color:#0a1f3d !important; border:1px solid rgba(10,48,125,.15) !important; }
+    .section-white .flow .fa { color:var(--teal-dark) !important; }
+    .section-white .type-card { background:#f0f5ff !important; border-color:rgba(10,48,125,.1) !important; }
+    .section-white .type-card h3 { color:#0a1f3d !important; }
+    .section-white .type-card p { color:#4a6fa8 !important; }
+    .section-white .tag { background:#e2eaf7 !important; color:#4a6fa8 !important; border-color:rgba(10,48,125,.12) !important; }
+    .section-white .type-card-icon { background:rgba(10,48,125,.08) !important; border-color:rgba(10,48,125,.15) !important; }
+    /* Why section cards */
+    .section-white .icat { background:#f0f5ff !important; border-color:rgba(10,48,125,.1) !important; }
+    .section-white .icat h4 { color:#0a1f3d !important; }
+    .section-white .icat li { color:#4a6fa8 !important; }
+    .section-white .icat .icat-icon { background:rgba(10,48,125,.08) !important; border-color:rgba(10,48,125,.15) !important; }
+    /* Dividers on white */
+    .section-white .tri-divider .td-tri.lg { border-top-color:#0a307d !important; opacity:.25; }
+    .section-white .tri-divider .td-tri.md { border-top-color:var(--teal-dark) !important; opacity:.2; }
+    /* Dark sections */
+    .different, .systems, .process { background:var(--surface) !important; }
+    .different .sec-title, .different h2, .systems h2, .process h2 { color:#fff !important; }
+    .different p, .systems p, .process p { color:var(--muted) !important; }
+    /* Diff cards */
+    .diff-card { background:var(--surface-2) !important; border-color:var(--border) !important; }
+    .diff-card h3 { color:#fff !important; }
+    .diff-card p { color:var(--muted) !important; }
+    /* Sys cards */
+    .sys-cat { background:var(--surface-2) !important; border-color:var(--border) !important; }
+    .sys-cat h4 { color:#fff !important; }
+    .sys-cat li { color:var(--muted) !important; }
+    /* Process steps */
+    .istep { background:var(--surface-2) !important; border-color:var(--border) !important; }
+    .istep h3 { color:#fff !important; }
+    .istep p { color:var(--muted) !important; }
+
+    /* ══════════════════════════════
+       MOBILE RESPONSIVE — WENDI
+    ══════════════════════════════ */
+
+    /* ── HAMBURGER NAV ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+      z-index: 300;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all .3s cubic-bezier(.4,0,.2,1);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(5,15,30,.98);
+      backdrop-filter: blur(20px);
+      z-index: 250;
+      flex-direction: column;
+      padding: 90px 32px 40px;
+      overflow-y: auto;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all .35s cubic-bezier(.4,0,.2,1);
+    }
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .mob-link {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.8);
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      text-decoration: none;
+      display: block;
+      transition: color .2s;
+    }
+    .mob-link:hover, .mob-link:active { color: var(--teal); }
+    .mob-link.active-page { color: var(--teal); }
+    .mob-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      padding: 10px 0 10px 20px;
+      display: block;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .mob-sub:hover { color: var(--teal); }
+    .mob-cta {
+      margin-top: 32px;
+      background: var(--teal);
+      color: #000;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      /* Show hamburger, hide nav links */
+      .hamburger { display: flex; }
+      .nav-links, .nav-cta { display: none !important; }
+      nav { padding: 0 20px; justify-content: space-between; }
+      nav .nav-inner { justify-content: space-between; }
+      nav.scrolled { left: 0; right: 0; transform: none; min-width: unset;
+        width: calc(100% - 32px); margin: 0 16px; border-radius: 16px; padding: 0 16px; }
+      nav.scrolled .nav-logo { opacity: 1; width: auto; overflow: visible; }
+
+      /* CONTAINER */
+      .container { padding: 0 20px; }
+
+      /* HERO */
+      .hero { padding: 100px 0 52px; }
+      .hero-inner { grid-template-columns: 1fr !important; gap: 0 !important; text-align: center; }
+      .hero-inner > div:first-child { order: 1; }
+      .hero-char { display: none; }
+      h1 { font-size: clamp(2rem, 8vw, 3rem) !important; }
+      .hero-tag { font-size: .7rem; }
+      .hero-actions { flex-direction: column; gap: 10px; align-items: center; }
+      .hero-actions a { width: 100%; max-width: 280px; text-align: center; }
+      .hero-trust { justify-content: center; flex-wrap: wrap; }
+
+      /* SECTIONS */
+      .sec-title { font-size: clamp(1.6rem, 6vw, 2.2rem) !important; }
+      .sec-sub { font-size: .92rem; }
+
+      /* PARTNER */
+      .partner-inner { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .big-q { font-size: 1.4rem !important; }
+
+      /* DEVICE COMPACT */
+      .dc-inner { grid-template-columns: 1fr !important; gap: 32px; }
+      .dc-text { order: 1; }
+      .dc-visual { order: 2; }
+      .desktop-frame { width: 100% !important; }
+
+      /* WHAT WENDI */
+      .what-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+      .wcard { padding: 18px !important; }
+
+      /* SECTORS */
+      .sectors-hd { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .sec-grid { grid-template-columns: 1fr !important; }
+      .scard { padding: 20px; }
+
+      /* MODULES */
+      .mod-layout { grid-template-columns: 1fr !important; }
+      .mod-list { flex-direction: column; }
+      .mpanel { border-top: 1px solid var(--border); }
+      .feat-grid { grid-template-columns: 1fr !important; }
+
+      /* TESTIMONIALS COLUMNS */
+      .testi-cols-wrap { max-height: 500px; }
+      .testi-col:nth-child(2), .testi-col-3 { display: none !important; }
+      .tc-card { padding: 18px; }
+      .tc-text { font-size: .85rem; }
+
+      /* LOGOS */
+      .logos-row { gap: 0; }
+      .logo-box { padding: 12px 16px; }
+      .logo-box img { height: 28px; }
+
+      /* CONTACT FORM */
+      .cta-band { padding: 52px 20px !important; }
+      .cf-row { grid-template-columns: 1fr !important; }
+      .contact-form { gap: 8px; }
+
+      /* FOOTER */
+      footer { padding: 40px 20px 24px !important; }
+      .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+
+      /* TRI DIVIDER */
+      .tri-divider { height: 36px; }
+
+      /* ABOUT PAGE */
+      .who-intro { grid-template-columns: 1fr !important; gap: 32px; }
+      .who-stats { grid-template-columns: 1fr 1fr !important; }
+      .values-grid { grid-template-columns: 1fr !important; }
+      .team-grid { grid-template-columns: 1fr 1fr !important; }
+      .gallery-grid { grid-template-columns: 1fr !important; }
+      .gallery-item.wide { grid-column: span 1 !important; }
+      .video-grid { grid-template-columns: 1fr !important; }
+      .page-tabs { flex-direction: column; gap: 6px; }
+      .ptab { text-align: center; }
+      .faq-q { font-size: .9rem; }
+
+      /* PITRONOT PAGE */
+      .sector-cards { grid-template-columns: 1fr 1fr !important; }
+      .sector-inner { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .sector-story { margin-top: 0; }
+
+      /* SIPURIM PAGE */
+      .fc-inner { grid-template-columns: 1fr !important; }
+      .fc-visual { min-height: 160px !important; }
+      .stories-grid { grid-template-columns: 1fr !important; }
+      .metrics-grid { grid-template-columns: 1fr 1fr !important; }
+      .filter-bar-inner { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+
+      /* MAMASHKIM PAGE */
+      .why-grid, .diff-grid, .types-grid, .sys-grid, .process-steps {
+        grid-template-columns: 1fr !important;
+      }
+      .flow-steps { flex-wrap: wrap; gap: 6px; }
+      .fs { font-size: .75rem !important; padding: 5px 10px !important; }
+
+      /* CTA BAND */
+      .cta-band h2 { font-size: 1.6rem !important; }
+      .cta-band { text-align: center; }
+
+      /* GENERAL */
+      .btn-p, .btn-o { padding: 12px 20px; font-size: .9rem; }
+    }
+
+    @media (max-width: 480px) {
+      .sector-cards { grid-template-columns: 1fr !important; }
+      .who-stats, .team-grid, .metrics-grid { grid-template-columns: 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr !important; }
+      h1 { font-size: clamp(1.7rem, 7vw, 2.5rem) !important; }
+    }
+
+    /* Home button — visible only in scrolled pill nav */
+    .nav-home {
+      display: none;
+      font-size: .82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.75);
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .nav-home:hover { color: var(--teal); background: rgba(255,255,255,.06); }
+    nav.scrolled .nav-home { display: flex; align-items: center; gap: 5px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-home">🏠 דף הבית</a>
+    <div class="nav-logo">
+      <a href="index.html"><img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;filter:brightness(0) invert(1);" /></a>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="about.html">אודותינו <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="about.html">מי אנחנו</a>
+          <a href="about.html#faq">שאלות ותשובות</a>
+          <a href="about.html#gallery">גלריה</a>
+        </div>
+      </li>
+      <li>
+        <a href="pitronot.html">מגזרים <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="pitronot.html#finantsim">פיננסים</a>
+          <a href="pitronot.html#logistika">לוגיסטיקה ותחבורה</a>
+          <a href="pitronot.html#tsiburi">מוסדות ציבוריים</a>
+          <a href="pitronot.html#briut">שירותי בריאות</a>
+          <a href="pitronot.html#taasia">תעשייה ומסחר</a>
+          <a href="pitronot.html#tayarut">תיירות</a>
+        </div>
+      </li>
+      <li><a href="modulim.html">מודולים</a></li>
+      <li><a href="sipurim.html">סיפורי לקוחות</a></li>
+      <li>
+        <a href="mamashkim.html" class="active-page">ממשקים <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="mamashkim.html#why">למה ממשקים</a>
+          <a href="mamashkim.html#different">מה מייחד אותנו</a>
+          <a href="mamashkim.html#types">סוגי ממשקים</a>
+          <a href="mamashkim.html#systems">מערכות שחיברנו</a>
+          <a href="mamashkim.html#process">תהליך העבודה</a>
+        </div>
+      </li>
+    </ul>
+    <a href="#contact" class="nav-cta">דברו איתנו</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="תפריט">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-g"></div>
+  <div class="page-hero-g2"></div>
+  <div class="page-hero-inner">
+    <div class="fade-up">
+      <div class="eyebrow">ממשקים</div>
+      <h1>וונדי מתחברת<br/>לארגון שלכם —<br/><span class="ac">באמת.</span></h1>
+      <p>בניגוד לפלטפורמות מדף, וונדי היא חברת מוצר שמבצעת ממשקים ייעודיים לפי צורך ארגוני, כדי לספק לעובדים One Stop Shop אמיתי.</p>
+      <ul class="hero-bullets">
+        <li><span class="bi">🔗</span> ממשקים מותאמים אישית לפי תהליכים קיימים</li>
+        <li><span class="bi">🧩</span> חיבור למערכות ליבה — שכר, נוכחות, משמרות, HR, BI ועוד</li>
+        <li><span class="bi">🏢</span> ניסיון מוכח בארגונים גדולים ומורכבים</li>
+        <li><span class="bi">🚀</span> פיתוח, תחזוקה ותמיכה — במקום אחד</li>
+      </ul>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="#contact" class="btn-p">דברו איתנו על אינטגרציה</a>
+        <a href="#process" class="btn-o">ראו את התהליך</a>
+      </div>
+    </div>
+
+    <!-- Connection visual -->
+    <div class="conn-visual fade-up">
+      <div class="conn-center">
+        <div class="conn-systems">
+          <div class="conn-sys">SAP HR</div>
+          <div class="conn-sys">Priority</div>
+          <div class="conn-sys">Oracle</div>
+          <div class="conn-sys">Agresso</div>
+          <div class="conn-sys">Comeet</div>
+          <div class="conn-sys">BI / Data</div>
+        </div>
+        <div class="conn-arrows">
+          <span class="conn-arrow">↓</span>
+          <span class="conn-arrow">↓</span>
+          <span class="conn-arrow">↓</span>
+        </div>
+        <div class="conn-wendi">Wendi — One Stop Shop</div>
+        <div class="conn-arrows">
+          <span class="conn-arrow">↓</span>
+          <span class="conn-arrow">↓</span>
+          <span class="conn-arrow">↓</span>
+        </div>
+        <div class="conn-systems">
+          <div class="conn-sys">💼 מנהל</div>
+          <div class="conn-sys">👷 עובד שטח</div>
+          <div class="conn-sys">🏥 קליני</div>
+          <div class="conn-sys">📱 מובייל</div>
+          <div class="conn-sys">💻 דסקטופ</div>
+          <div class="conn-sys">🌐 כל מכשיר</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY INTEGRATIONS MATTER -->
+<section class="why-section section-white" id="why">
+  <div class="container">
+    <div class="why-inner">
+      <div class="fade-up">
+        <div class="eyebrow">למה ממשקים קריטיים</div>
+        <h2>המערכת שלכם לא חיה לבד — וגם וונדי לא</h2>
+        <p>בארגונים גדולים קיימת אקוסיסטמה של מערכות: ניהול עובדים, שכר, הדרכה, תפעול, תקשורת ועוד. וונדי לא מנסה להחליף הכול — אלא להתחבר חכם, לשקף נתונים, ולהניע תהליכים מקצה לקצה.</p>
+        <p>התוצאה: עובד שרואה הכל ממקום אחד, ו-HR שמקבל נתוני אמת בזמן אמת.</p>
+        <a href="#contact" class="btn-p">קבעו פגישה</a>
+      </div>
+      <div class="example-flows fade-up">
+        <div class="flow">
+          <span class="ft">דוגמה 1 — קליטת עובד חדש</span>
+          <div class="flow-steps">
+            <span class="fs">נפתח ב-HR</span>
+            <span class="fa">←</span>
+            <span class="fs">מופיע בוונדי</span>
+            <span class="fa">←</span>
+            <span class="fs">תכנים מותאמים</span>
+            <span class="fa">←</span>
+            <span class="fs">Onboarding אוטומטי</span>
+          </div>
+        </div>
+        <div class="flow">
+          <span class="ft">דוגמה 2 — שינוי תפקיד</span>
+          <div class="flow-steps">
+            <span class="fs">עדכון ב-ERP</span>
+            <span class="fa">←</span>
+            <span class="fs">הרשאות מתעדכנות</span>
+            <span class="fa">←</span>
+            <span class="fs">תוכן חדש מתאים</span>
+            <span class="fa">←</span>
+            <span class="fs">Workflows עודכנו</span>
+          </div>
+        </div>
+        <div class="flow">
+          <span class="ft">דוגמה 3 — מידע אישי לעובד</span>
+          <div class="flow-steps">
+            <span class="fs">עובד פותח וונדי</span>
+            <span class="fa">←</span>
+            <span class="fs">שולף יתרות חופשה</span>
+            <span class="fa">←</span>
+            <span class="fs">רואה תלוש שכר</span>
+            <span class="fa">←</span>
+            <span class="fs">מגיש בקשה</span>
+          </div>
+        </div>
+        <div class="flow">
+          <span class="ft">דוגמה 4 — חבר מביא חבר</span>
+          <div class="flow-steps">
+            <span class="fs">משרות מגיעות ממערכת גיוס</span>
+            <span class="fa">←</span>
+            <span class="fs">עובד צופה</span>
+            <span class="fa">←</span>
+            <span class="fs">מגייס חברים</span>
+            <span class="fa">←</span>
+            <span class="fs">מקבל סטטוסים על חבריו</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT MAKES WENDI DIFFERENT -->
+<div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
+<section class="different" id="different">
+  <div class="container">
+    <div class="eyebrow">מה מייחד את וונדי</div>
+    <h2 class="sec-title fade-up">לא רק API. פתרון מלא.</h2>
+    <p class="sec-sub fade-up">רוב הפלטפורמות מציעות חיבור טכני בלבד. וונדי עושה הרבה יותר מזה.</p>
+    <div class="diff-layout">
+      <div class="diff-table fade-up">
+        <div class="diff-header">
+          <div class="diff-col-h wendi">✦ בוונדי</div>
+          <div class="diff-col-h others">פלטפורמות אחרות</div>
+        </div>
+        <div class="diff-row">
+          <div class="diff-cell yes"><span class="tick">✔</span> אפיון משותף עם הלקוח</div>
+          <div class="diff-cell no"><span class="cross">✗</span> חיבור מדף בלבד</div>
+        </div>
+        <div class="diff-row">
+          <div class="diff-cell yes"><span class="tick">✔</span> פיתוח ממשק ייעודי</div>
+          <div class="diff-cell no"><span class="cross">✗</span> רק API קיים</div>
+        </div>
+        <div class="diff-row">
+          <div class="diff-cell yes"><span class="tick">✔</span> התאמה להרשאות והיררכיה</div>
+          <div class="diff-cell no"><span class="cross">✗</span> גישה גנרית</div>
+        </div>
+        <div class="diff-row">
+          <div class="diff-cell yes"><span class="tick">✔</span> תחזוקה שוטפת ושדרוגים</div>
+          <div class="diff-cell no"><span class="cross">✗</span> האחריות עליכם</div>
+        </div>
+        <div class="diff-row">
+          <div class="diff-cell yes"><span class="tick">✔</span> גורם אחד — מוצר, פיתוח, תמיכה</div>
+          <div class="diff-cell no"><span class="cross">✗</span> ספקים מרובים</div>
+        </div>
+        <div class="diff-row">
+          <div class="diff-cell yes"><span class="tick">✔</span> התאמה לתרבות ארגונית</div>
+          <div class="diff-cell no"><span class="cross">✗</span> פתרון אחיד לכולם</div>
+        </div>
+      </div>
+      <div class="diff-text fade-up">
+        <div class="diff-card">
+          <h4>🤝 אפיון משותף</h4>
+          <p>אנחנו מתחילים בהבנת הצורך העסקי שלכם — מה המידע, מי המשתמשים, ומה המטרה. לא מוכרים לכם חיבור גנרי.</p>
+        </div>
+        <div class="diff-card">
+          <h4>⚙️ פיתוח ייעודי</h4>
+          <p>כל ממשק מפותח במיוחד לארגון שלכם — לפי תהליכים, הרשאות ומבנה ארגוני. לא Template, לא "plug and play" שלא עובד.</p>
+        </div>
+        <div class="diff-card">
+          <h4>🛡️ אחריות מלאה</h4>
+          <p>פיתוח, בדיקות, עלייה לאוויר, תחזוקה ושדרוגים — הכל תחת אחריות של גורם אחד. אתם לא נעים בין ספקים.</p>
+        </div>
+        <div class="diff-card">
+          <h4>📈 גדל עם הארגון</h4>
+          <p>כשהארגון גדל, הממשק גדל איתו. מבצעים שינויים ועדכונים לאורך כל חיי המוצר.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATION TYPES -->
+<section class="int-types section-white" id="types">
+  <div class="container">
+    <div class="eyebrow">סוגי ממשקים</div>
+    <h2 class="sec-title fade-up">מתחברים לכל שכבה בארגון</h2>
+    <p class="sec-sub fade-up">וונדי יודעת להתחבר לכל סוג מערכת — ישנה, חדשה, פנים-ארגונית או חיצונית.</p>
+    <div class="types-grid">
+      <div class="type-card fade-up">
+        <div class="type-icon">👥</div>
+        <h3>מערכות HR ושכר</h3>
+        <p>נתוני עובדים, מבנה ארגוני, תפקידים, מחלקות וסטטוס העסקה — בזמן אמת ולפי הרשאות.</p>
+        <div class="type-tags">
+          <span class="tag">SAP HR</span>
+          <span class="tag">Oracle HCM</span>
+          <span class="tag">Priority</span>
+          <span class="tag">Agresso</span>
+          <span class="tag">Hilan</span>
+        </div>
+      </div>
+      <div class="type-card fade-up">
+        <div class="type-icon">⏰</div>
+        <h3>נוכחות, משמרות וגיוס</h3>
+        <p>הצגת משמרות, דיווח נוכחות, חבר מביא חבר ומכרזים פנימיים — ישירות לעובד בנייד.</p>
+        <div class="type-tags">
+          <span class="tag">Comeet</span>
+          <span class="tag">Synerion</span>
+          <span class="tag">Adi Absence</span>
+          <span class="tag">Talentsoft</span>
+        </div>
+      </div>
+      <div class="type-card fade-up">
+        <div class="type-icon">📊</div>
+        <h3>מערכות BI ו-Data</h3>
+        <p>מדדי שימושיות, מעורבות עובדים ומדדים ניהוליים — מחוברים למקורות הנתונים שלכם.</p>
+        <div class="type-tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">Tableau</span>
+          <span class="tag">Google Analytics</span>
+          <span class="tag">Mixpanel</span>
+        </div>
+      </div>
+      <div class="type-card fade-up">
+        <div class="type-icon">🔧</div>
+        <h3>מערכות ייעודיות ו-Legacy</h3>
+        <p>מערכות פנים-ארגוניות, פתרונות ישנים ופיתוחים פנימיים של הלקוח — מחוברים דרך API מותאם.</p>
+        <div class="type-tags">
+          <span class="tag">API מותאם</span>
+          <span class="tag">Webhook</span>
+          <span class="tag">Batch</span>
+          <span class="tag">Real-time</span>
+          <span class="tag">Legacy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEMS WE INTEGRATED -->
+<div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
+<section class="systems" id="systems">
+  <div class="container">
+    <div class="eyebrow">ממשקים שבוצעו בהצלחה</div>
+    <h2 class="sec-title fade-up">מערכות שהתממשקנו אליהן</h2>
+    <p class="sec-sub fade-up">אלה חלק מהמערכות שחיברנו בפועל אצל לקוחותינו.</p>
+    <div class="systems-grid fade-up">
+      <div class="sys-cat">
+        <h4>🔹 HR ושכר</h4>
+        <ul>
+          <li>SAP HR / SAP SuccessFactors</li>
+          <li>Oracle HCM</li>
+          <li>Priority People</li>
+          <li>Agresso (Unit4)</li>
+          <li>Hilan</li>
+          <li>Sapak</li>
+        </ul>
+      </div>
+      <div class="sys-cat">
+        <h4>🔹 גיוס ונוכחות</h4>
+        <ul>
+          <li>Comeet</li>
+          <li>Synerion</li>
+          <li>Adi Absence</li>
+          <li>Talentsoft</li>
+          <li>TimeSoft</li>
+          <li>SmartHR</li>
+        </ul>
+      </div>
+      <div class="sys-cat">
+        <h4>🔹 למידה ו-LMS</h4>
+        <ul>
+          <li>Moodle</li>
+          <li>TalentLMS</li>
+          <li>Docebo</li>
+          <li>Cornerstone</li>
+          <li>SAP Litmos</li>
+          <li>מערכות LMS פנימיות</li>
+        </ul>
+      </div>
+      <div class="sys-cat">
+        <h4>🔹 תפעול ותקשורת</h4>
+        <ul>
+          <li>Microsoft Teams</li>
+          <li>SharePoint</li>
+          <li>ServiceNow</li>
+          <li>Jira</li>
+          <li>Monday.com</li>
+          <li>מערכות פנימיות</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
+<section class="process" id="process">
+  <div class="container">
+    <div class="eyebrow">תהליך העבודה</div>
+    <h2 class="sec-title fade-up" style="text-align:center">כך נראה חיבור לוונדי</h2>
+    <p class="sec-sub fade-up" style="margin:0 auto 60px">ארבעה שלבים מסודרים — מהאפיון ועד לתחזוקה שוטפת.</p>
+    <div class="steps-timeline fade-up">
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">1</div></div>
+        <div class="step-body">
+          <h3>הבנת הצורך העסקי</h3>
+          <p>מתחילים בשיחה עמוקה: מה המידע שצריך לזרום? מי המשתמשים? מה המטרה העסקית? בשלב זה מבינים את הכאב האמיתי ומגדירים יחד את פתרון היעד.</p>
+          <div class="step-tags"><span class="stag">גילוי צרכים</span><span class="stag">מיפוי תהליכים</span><span class="stag">הגדרת יעדים</span></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">2</div></div>
+        <div class="step-body">
+          <h3>אפיון טכנולוגי משותף</h3>
+          <p>קובעים יחד את הארכיטקטורה הנכונה — API, Webhook, Batch או Real-time. מגדירים את מבנה הנתונים, ההרשאות, ופרוטוקולי האבטחה.</p>
+          <div class="step-tags"><span class="stag">API Design</span><span class="stag">אבטחת מידע</span><span class="stag">ארכיטקטורה</span><span class="stag">הרשאות</span></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">3</div></div>
+        <div class="step-body">
+          <h3>פיתוח ובדיקות</h3>
+          <p>הממשק מפותח בסביבת staging בשיתוף מלא עם הלקוח. מבצעים בדיקות קצה לקצה, UAT ובדיקות עומס לפני עלייה לאוויר.</p>
+          <div class="step-tags"><span class="stag">Staging</span><span class="stag">UAT</span><span class="stag">בדיקות קצה לקצה</span><span class="stag">QA</span></div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-wrap"><div class="step-num">4</div></div>
+        <div class="step-body">
+          <h3>עלייה לאוויר וליווי שוטף</h3>
+          <p>לאחר העלייה לאוויר מתחיל הליווי הקבוע — ניטור, תחזוקה, התאמות לשינויים בארגון ושדרוגים עתידיים. גורם אחד אחראי לאורך כל הדרך.</p>
+          <div class="step-tags"><span class="stag">ניטור 24/7</span><span class="stag">תחזוקה שוטפת</span><span class="stag">SLA</span><span class="stag">שדרוגים</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" id="contact">
+  <div class="cta-content">
+    <div class="eyebrow" style="margin-bottom:16px">צרו קשר</div>
+    <h2 style="margin-bottom:8px">לקבלת מידע נוסף על המוצר שלנו</h2>
+    <p style="margin-bottom:8px">התקשרו <strong style="color:var(--teal)">077-7743044</strong> או מלאו את הפרטים</p>
+    <div class="contact-form">
+      <div class="cf-row">
+        <input class="cf-in" type="text" placeholder="שם" />
+        <input class="cf-in" type="tel" placeholder="טלפון" />
+        <input class="cf-in" type="text" placeholder="ארגון" />
+        <input class="cf-in" type="text" placeholder="תפקיד בארגון" />
+      </div>
+      <div class="cf-row">
+        <input class="cf-in" type="email" placeholder="כתובת מייל" />
+        <select class="cf-in cf-select">
+          <option value="" disabled selected>מעוניינים ב:</option>
+          <option>פורטל ואפליקציה</option>
+          <option>LMS — למידה והכשרה</option>
+          <option>Workflow וטפסים</option>
+          <option>הערכת ביצועים</option>
+          <option>Wendi AI</option>
+          <option>כל הפתרון</option>
+        </select>
+        <select class="cf-in cf-select">
+          <option value="" disabled selected>כמות עובדים</option>
+          <option>עד 200</option>
+          <option>200 – 500</option>
+          <option>500 – 1,000</option>
+          <option>1,000 – 5,000</option>
+          <option>מעל 5,000</option>
+        </select>
+        <button class="cf-btn" onclick="submitForm()">שליחה »</button>
+      </div>
+    </div>
+    <p style="font-size:.76rem;color:var(--muted);margin-top:12px">פגישת היכרות של 30 דקות, ללא התחייבות.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="fbrand"><a href="index.html"><img src="wendi-logo.png" alt="Wendi" /></a></div>
+      <p class="ftagline">פלטפורמת העובד המובילה בישראל — תקשורת, למידה וממשקים ביחד.</p>
+    </div>
+    <div class="fcol">
+      <h5>ממשקים</h5>
+      <ul>
+        <li><a href="#why">למה ממשקים</a></li>
+        <li><a href="#different">מה מייחד אותנו</a></li>
+        <li><a href="#types">סוגי ממשקים</a></li>
+        <li><a href="#systems">מערכות שחיברנו</a></li>
+        <li><a href="#process">תהליך העבודה</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h5>פתרונות</h5>
+      <ul>
+        <li><a href="pitronot.html#finantsim">פיננסים</a></li>
+        <li><a href="pitronot.html#logistika">לוגיסטיקה</a></li>
+        <li><a href="pitronot.html#tsiburi">מוסדות ציבוריים</a></li>
+        <li><a href="pitronot.html#briut">שירותי בריאות</a></li>
+        <li><a href="pitronot.html#taasia">תעשייה</a></li>
+        <li><a href="pitronot.html#tayarut">תיירות</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h5>אודותינו</h5>
+      <ul>
+        <li><a href="about.html">מי אנחנו</a></li>
+        <li><a href="sipurim.html">סיפורי לקוחות</a></li>
+    <li><a href="modulim.html">מודולים</a></li>
+        <li><a href="about.html#faq">שאלות ותשובות</a></li>
+        <li><a href="about.html#gallery">גלריה</a></li>
+        <li><a href="#contact">צרו קשר</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <span>© 2024 Wendi. כל הזכויות שמורות.</span>
+    <div><a href="#">פרטיות</a><a href="#">תנאי שימוש</a><a href="#">נגישות</a></div>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(
+    es => es.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  
+  
+
+  /* ═══ SMART SCROLL NAV ═══ */
+  const navEl = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    navEl.classList.toggle('scrolled', window.scrollY > 100);
+  }, { passive: true });
+
+  /* ═══ HAMBURGER MENU ═══ */
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    const isOpen = menu.classList.contains('open');
+    if (isOpen) { menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = ''; }
+    else { menu.style.display = 'flex'; requestAnimationFrame(() => menu.classList.add('open')); btn.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  }
+  document.querySelectorAll('.mob-link, .mob-sub, .mob-cta').forEach(a => {
+    a.addEventListener('click', () => {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('hamburger');
+      menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = '';
+    });
+  });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wendi – מודולים ופיצ'רים</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--teal:#3ECFBE;--teal-dark:#2BADA0;--teal-glow:rgba(62,207,190,.14);--blue:#4A90C4;--dark:#050f1e;--surface:#081428;--surface-2:#0c1f3a;--surface-3:#102848;--border:rgba(74,144,196,.12);--border-teal:rgba(62,207,190,.28);--text:#E4EAF0;--muted:#a8c4e8;--white-text:#0a307d;--white-muted:#4a6fa8;--white-surface:#f0f5ff;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:linear-gradient(160deg,#050f1e 0%,#07162a 40%,#050f1e 100%) fixed;color:var(--text);font-family:'Heebo',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+    body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(62,207,190,.06) 0%,transparent 65%);pointer-events:none;z-index:0;}
+    a{color:inherit;text-decoration:none;}
+    .container{max-width:1440px;margin:0 auto;padding:0 64px;position:relative;z-index:1;}
+    .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-glow);border:1px solid var(--border-teal);padding:4px 14px;border-radius:20px;margin-bottom:18px;}
+    .sec-title{font-size:clamp(1.85rem,3vw,2.8rem);font-weight:900;line-height:1.15;color:#fff;margin-bottom:14px;letter-spacing:-.4px;}
+    .btn-p{background:var(--teal);color:#000;font-weight:700;padding:13px 28px;border-radius:9px;font-size:.93rem;display:inline-block;transition:all .2s;box-shadow:0 0 24px rgba(62,207,190,.25);}
+    .btn-p:hover{background:#fff;transform:translateY(-2px);}
+    .btn-o{border:1px solid var(--border-teal);color:var(--teal);padding:13px 28px;border-radius:9px;font-size:.93rem;background:transparent;transition:all .2s;display:inline-block;}
+    .btn-o:hover{background:var(--teal-glow);}
+    .fade-up{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:0 48px;height:68px;background:rgba(5,15,30,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);transition:all .45s cubic-bezier(.4,0,.2,1);}
+    nav .nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1440px;}
+    nav.scrolled{top:10px;left:50%;right:auto;transform:translateX(-50%);width:auto;min-width:520px;height:50px;border-radius:50px;padding:0 8px 0 20px;background:rgba(5,15,30,.99);border:1px solid rgba(62,207,190,.35);box-shadow:0 8px 40px rgba(0,0,0,.4);}
+    nav.scrolled .nav-logo{opacity:0;width:0;overflow:hidden;margin:0;}
+    nav.scrolled .nav-links{gap:16px;}
+    nav.scrolled .nav-links>li>a{font-size:.82rem;}
+    nav.scrolled .nav-cta{padding:7px 16px;font-size:.82rem;}
+    nav.scrolled .nav-inner{justify-content:center;gap:10px;}
+    .nav-logo img{height:36px;width:auto;filter:brightness(0) invert(1);}
+    .nav-links{display:flex;gap:28px;list-style:none;}
+    .nav-links>li{position:relative;}
+    .nav-links>li>a{font-size:.88rem;font-weight:500;color:rgba(255,255,255,.78);transition:color .2s;display:flex;align-items:center;gap:3px;}
+    .nav-links>li>a:hover,.nav-links>li>a.active-page{color:var(--teal);}
+    .arr{font-size:.6rem;opacity:.7;}
+    .dropdown{position:absolute;top:calc(100% + 10px);right:0;background:#050f1e;border:1px solid rgba(62,207,190,.2);border-radius:12px;min-width:180px;padding:7px;opacity:0;pointer-events:none;transform:translateY(8px) scale(.97);transition:all .22s;box-shadow:0 12px 40px rgba(0,0,0,.3);}
+    .nav-links>li:hover .dropdown{opacity:1;pointer-events:all;transform:translateY(0) scale(1);}
+    .dropdown a{display:block;padding:9px 14px;font-size:.86rem;color:rgba(255,255,255,.65);border-radius:8px;transition:all .15s;}
+    .dropdown a:hover{background:rgba(62,207,190,.12);color:var(--teal);}
+    .nav-cta{background:var(--teal);color:#000;font-weight:700;font-size:.86rem;padding:9px 20px;border-radius:20px;transition:all .25s;white-space:nowrap;flex-shrink:0;}
+    .nav-cta:hover{background:#fff;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;background:none;border:none;z-index:300;}
+    .hamburger span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all .3s;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(5,15,30,.98);backdrop-filter:blur(20px);z-index:250;flex-direction:column;padding:90px 32px 40px;overflow-y:auto;opacity:0;transform:translateX(100%);transition:all .35s cubic-bezier(.4,0,.2,1);}
+    .mobile-menu.open{display:flex;opacity:1;transform:translateX(0);}
+    .mob-link{font-size:1.5rem;font-weight:700;color:rgba(255,255,255,.8);padding:16px 0;border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none;display:block;transition:color .2s;}
+    .mob-link:hover{color:var(--teal);}
+    .mob-sub{font-size:1rem;color:var(--muted);padding:10px 0 10px 20px;display:block;text-decoration:none;}
+    .mob-sub:hover{color:var(--teal);}
+    .mob-cta{margin-top:32px;background:var(--teal);color:#000;font-weight:700;font-size:1.1rem;padding:16px;border-radius:12px;text-align:center;text-decoration:none;display:block;}
+
+    /* PAGE HERO */
+    .page-hero{padding:120px 0 64px;position:relative;overflow:hidden;}
+    .ph-glow{position:absolute;top:-100px;left:-150px;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(62,207,190,.1) 0%,transparent 65%);pointer-events:none;}
+
+    /* MODULE TABS — top quick nav */
+    .mod-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:48px;justify-content:center;}
+    .mod-tab{background:var(--surface-2);border:1px solid var(--border);padding:9px 20px;border-radius:24px;font-size:.88rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all .22s;display:flex;align-items:center;gap:7px;}
+    .mod-tab:hover,.mod-tab.active{background:var(--teal-glow);border-color:var(--border-teal);color:var(--teal);}
+
+    /* MODULE LAYOUT */
+    .mod-layout{display:block;border-radius:18px;overflow:hidden;min-height:400px;}
+    .mod-list{display:none!important;}
+    .mitem{border:none;border-bottom:1px solid var(--border);padding:20px 22px;cursor:pointer;transition:all .2s;display:flex;gap:12px;align-items:center;background:transparent;position:relative;width:100%;}
+    .mitem:last-child{border-bottom:none;}
+    .mitem::before{content:'';position:absolute;right:0;top:0;bottom:0;width:3px;background:var(--teal);transform:scaleY(0);transition:transform .25s;}
+    .mitem.active::before{transform:scaleY(1);}
+    .mitem:hover{background:var(--surface);}
+    .mitem.active{background:var(--surface-2);}
+    .mitem-icon{font-size:1.25rem;flex-shrink:0;width:38px;height:38px;border-radius:9px;background:var(--teal-glow);border:1px solid var(--border-teal);display:flex;align-items:center;justify-content:center;}
+    .mitem.active .mitem-icon{background:rgba(62,207,190,.22);}
+    .mitem>div:nth-child(2){flex:1;min-width:0;}
+    .mitem h4{font-size:.9rem;font-weight:700;color:var(--muted);margin-bottom:2px;transition:color .2s;}
+    .mitem.active h4,.mitem:hover h4{color:#fff;}
+    .mitem p{font-size:.76rem;color:var(--muted);line-height:1.35;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+    .mitem-arrow{font-size:1.1rem;color:var(--muted);transition:all .2s;flex-shrink:0;}
+    .mitem.active .mitem-arrow,.mitem:hover .mitem-arrow{color:var(--teal);transform:translateX(-3px);}
+    .mpanel{background:var(--surface);overflow-y:auto;border-radius:18px;border:1px solid var(--border);}
+    .mod-detail{display:none;padding:40px;animation:modFade .3s ease;}
+    .mod-detail.active{display:block;}
+    @keyframes modFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    .mod-detail-header{display:flex;gap:14px;align-items:flex-start;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border);}
+    .mod-detail-icon{width:52px;height:52px;border-radius:13px;background:var(--teal-glow);border:1px solid var(--border-teal);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+    .mod-detail-title{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:4px;}
+    .mod-detail-sub{font-size:.85rem;color:var(--muted);line-height:1.5;}
+    .mod-desc{font-size:.9rem;color:var(--muted);line-height:1.75;margin-bottom:18px;padding:13px 15px;background:var(--surface-2);border-right:2px solid var(--teal);border-radius:0 8px 8px 0;}
+    .mod-note{font-size:.8rem;color:var(--teal);margin-top:14px;padding:9px 13px;background:var(--teal-glow);border-radius:8px;border:1px solid var(--border-teal);}
+    .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .feat-chip{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:13px 14px;display:flex;gap:10px;align-items:flex-start;transition:all .2s;}
+    .feat-chip:hover{border-color:var(--border-teal);transform:translateY(-1px);}
+    .fc-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+    .feat-chip strong{display:block;font-size:.83rem;font-weight:700;color:#fff;margin-bottom:2px;}
+    .feat-chip p{font-size:.76rem;color:var(--muted);line-height:1.5;margin:0;}
+
+    /* CTA BAND */
+    .cta-band{padding:72px 48px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(160deg,#071d3e 0%,#0e2f5a 50%,#071d3e 100%);border-top:1px solid rgba(62,207,190,.18);}
+    .cta-band::before{content:'';position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(62,207,190,.09) 0%,transparent 65%);}
+    .cta-content{position:relative;z-index:1;}
+    .cta-band h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:#fff;margin-bottom:14px;}
+    .cta-band p{font-size:1rem;color:var(--muted);margin-bottom:28px;}
+    .contact-form{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:10px;}
+    .cf-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;}
+    .cf-in{width:100%;padding:13px 16px;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.3);border-radius:9px;color:#0a1f3d;font-family:'Heebo',sans-serif;font-size:.92rem;outline:none;transition:all .2s;text-align:right;-webkit-appearance:none;}
+    .cf-in::placeholder{color:#6a8ab5;}
+    .cf-in:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(62,207,190,.15);}
+    .cf-select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a8ab5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center;padding-left:36px;}
+    .cf-btn{background:#0a307d;color:#fff;font-weight:700;font-size:.95rem;padding:13px 20px;border-radius:9px;border:none;cursor:pointer;font-family:'Heebo',sans-serif;transition:all .22s;white-space:nowrap;}
+    .cf-btn:hover{background:var(--teal);color:#000;transform:translateY(-1px);}
+
+    /* FOOTER */
+    footer{background:var(--dark);border-top:1px solid rgba(255,255,255,.06);padding:44px 64px 28px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px;}
+    .fbrand img{height:26px;filter:brightness(0) invert(1);}
+    .ftagline{font-size:.85rem;color:var(--muted);line-height:1.7;max-width:230px;margin-top:10px;}
+    .fcol h5{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#fff;margin-bottom:14px;}
+    .fcol ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+    .fcol a{font-size:.85rem;color:var(--muted);transition:color .2s;}
+    .fcol a:hover{color:var(--teal);}
+    .fbot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:22px;font-size:.78rem;color:var(--muted);}
+    .fbot a{color:var(--muted);margin-right:18px;}
+    .fbot a:hover{color:var(--teal);}
+
+    @media(max-width:768px){
+      nav{padding:0 20px;}.nav-links,.nav-cta{display:none!important;}
+      .hamburger{display:flex;}.container,.page-hero{padding-right:20px;padding-left:20px;}
+      .mod-layout{grid-template-columns:1fr!important;}
+      .mod-list{flex-direction:row;overflow-x:auto;scrollbar-width:none;}
+      .mod-list::-webkit-scrollbar{display:none;}
+      .mitem{min-width:130px;flex-direction:column;align-items:center;text-align:center;padding:12px 8px;border-bottom:none;border-left:1px solid var(--border);}
+      .mitem::before{display:none;}
+      .mitem-arrow{display:none;}
+      .mitem h4{font-size:.72rem;}
+      .mitem p{display:none;}
+      .feat-grid{grid-template-columns:1fr!important;}
+      .cf-row{grid-template-columns:1fr!important;}
+      .footer-grid{grid-template-columns:1fr 1fr!important;}
+      .mod-tabs{gap:6px;}
+      .mod-tab{font-size:.8rem;padding:7px 14px;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-home">🏠 דף הבית</a>
+    <div class="nav-logo">
+      <a href="index.html"><img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;filter:brightness(0) invert(1);" /></a>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="about.html">אודותינו <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="about.html">מי אנחנו</a>
+          <a href="about.html#faq">שאלות ותשובות</a>
+          <a href="about.html#gallery">גלריה</a>
+        </div>
+      </li>
+      <li>
+        <a href="pitronot.html">מגזרים <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="pitronot.html#finantsim">פיננסים</a>
+          <a href="pitronot.html#logistika">לוגיסטיקה ותחבורה</a>
+          <a href="pitronot.html#tsiburi">מוסדות ציבוריים</a>
+          <a href="pitronot.html#briut">שירותי בריאות</a>
+          <a href="pitronot.html#taasia">תעשייה ומסחר</a>
+          <a href="pitronot.html#tayarut">תיירות</a>
+        </div>
+      </li>
+      <li><a href="modulim.html" class="active-page">מודולים</a></li>
+      <li><a href="sipurim.html">סיפורי לקוחות</a></li>
+      <li>
+        <a href="mamashkim.html">ממשקים <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="mamashkim.html#why">למה ממשקים</a>
+          <a href="mamashkim.html#types">סוגי ממשקים</a>
+          <a href="mamashkim.html#process">תהליך העבודה</a>
+        </div>
+      </li>
+    </ul>
+    <a href="#contact" class="nav-cta">דברו איתנו</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="תפריט">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="mob-link">דף הבית</a>
+  <a href="about.html" class="mob-link">אודותינו</a>
+  <a href="pitronot.html" class="mob-link">מגזרים</a>
+  <a href="modulim.html" class="mob-link active-page">מודולים</a>
+  <a href="sipurim.html" class="mob-link">סיפורי לקוחות</a>
+  <a href="mamashkim.html" class="mob-link">ממשקים</a>
+  <a href="#contact" class="mob-cta" onclick="toggleMenu()">דברו איתנו ←</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="ph-glow"></div>
+  <div class="container">
+    <div class="eyebrow">מודולים ופיצ'רים</div>
+    <h1 style="font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px">
+      כל כלי במקום הנכון
+    </h1>
+    <p style="font-size:1.1rem;color:var(--muted);max-width:600px;line-height:1.8;margin-bottom:40px">
+      וונדי מציעה 4 מודולים מרכזיים שעובדים יחד כמערכת אחת. לחצו על כל מודול לגלות את הפיצ'רים המלאים.
+    </p>
+
+    <!-- Quick module tabs -->
+    <div class="mod-tabs fade-up">
+      <div class="mod-tab active" onclick="goMod(this,'portal')">📱 פורטל ואפליקציה</div>
+      <div class="mod-tab" onclick="goMod(this,'workflow')">⚙️ Workflow</div>
+      <div class="mod-tab" onclick="goMod(this,'lms')">🎓 LMS — למידה</div>
+      <div class="mod-tab" onclick="goMod(this,'performance')">⭐ הערכת ביצועים</div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES INTERACTIVE -->
+<section style="padding:0 0 80px;background:transparent;">
+  <div class="container">
+    <div class="mod-layout fade-up" id="modLayout">
+      <ul class="mod-list" id="modList">
+        <li class="mitem active" data-mod="portal" onclick="setMod(this,'portal')">
+          <div class="mitem-icon">📱</div>
+          <div><h4>פורטל ואפליקציה</h4><p>אפליקציה פנים-ארגונית נייטיב לכל מכשיר.</p></div>
+          <div class="mitem-arrow">›</div>
+        </li>
+        <li class="mitem" data-mod="workflow" onclick="setMod(this,'workflow')">
+          <div class="mitem-icon">⚙️</div>
+          <div><h4>Workflow</h4><p>ניהול תהליכים פנים-ארגוניים דיגיטלית.</p></div>
+          <div class="mitem-arrow">›</div>
+        </li>
+        <li class="mitem" data-mod="lms" onclick="setMod(this,'lms')">
+          <div class="mitem-icon">🎓</div>
+          <div><h4>LMS — למידה</h4><p>ניהול הכשרות, קורסים והסמכות.</p></div>
+          <div class="mitem-arrow">›</div>
+        </li>
+        <li class="mitem" data-mod="performance" onclick="setMod(this,'performance')">
+          <div class="mitem-icon">⭐</div>
+          <div><h4>הערכת ביצועים</h4><p>מודול הערכה שנתי ממוחשב ומותאם אישית.</p></div>
+          <div class="mitem-arrow">›</div>
+        </li>
+      </ul>
+
+      <div class="mpanel" id="modPanel">
+        <!-- PORTAL -->
+        <div class="mod-detail active" id="detail-portal">
+          <div class="mod-detail-header">
+            <div class="mod-detail-icon">📱</div>
+            <div><div class="mod-detail-title">פורטל ואפליקציה פנים-ארגונית</div><div class="mod-detail-sub">One Stop Shop לכל עובד — בכל מכשיר, בכל רגע</div></div>
+          </div>
+          <div class="feat-grid">
+            <div class="feat-chip"><span class="fc-icon">🎂</span><div><strong>חוגגים</strong><p>עובדים חוגגי יום הולדת, שנת עבודה ועובדים חדשים — מוצגים ממוקד בכל מקום בפורטל</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📞</span><div><strong>אנשי קשר</strong><p>חיפוש מהיר לפי עובד, תפקיד, מחלקה + Click to Call, מייל, וואטסאפ</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📖</span><div><strong>ספר טלפונים ארגוני</strong><p>חיפוש מהיר של מחלקות הארגון</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📅</span><div><strong>הרשמה לאירועים</strong><p>פרסום ימי עיון, כנסים, הדרכות. הרשמה/ביטול, זימון ליומן וייצוא לאקסל</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">👏</span><div><strong>פרגונים</strong><p>שיח מפרגן בין עובדים, חיזוק שייכות והוקרה יומיומית</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📋</span><div><strong>נהלים ומידע</strong><p>מאגר נהלים חכם עם קישורים פנימיים וחיפוש מהיר</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📊</span><div><strong>טפסים וסקרים</strong><p>טפסים חכמים + טפסים אנונימיים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🔔</span><div><strong>Push מפולח</strong><p>שליחה לפי קבוצות, מתוזמנת, או טריגר אוטומטי לפי אירועים אישיים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🖼️</span><div><strong>גלריית תמונות</strong><p>אלבומי אירועים, הורדה לטלפון, תגובות ולייקים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">👤</span><div><strong>אזור אישי</strong><p>פרופיל, יתרות, מסמכים אישיים, טפסים ועוד</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🏢</span><div><strong>מבנה ארגוני</strong><p>ניהול אוטומטי של היררכיה ארגונית והצגתה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">✍️</span><div><strong>קרא וחתום</strong><p>מנגנון חתימה על תכנים + מעקב אחר עובדים שחתמו ושלא חתמו</p></div></div>
+          </div>
+        </div>
+
+        <!-- WORKFLOW -->
+        <div class="mod-detail" id="detail-workflow">
+          <div class="mod-detail-header">
+            <div class="mod-detail-icon">⚙️</div>
+            <div><div class="mod-detail-title">מודול Workflow</div><div class="mod-detail-sub">אוטומציה של תהליכים פנים-ארגוניים — חסכו זמן, שפרו חוויה</div></div>
+          </div>
+          <div class="mod-desc">מטרת המודול לאפשר לארגון לנהל תהליכים פנים-ארגוניים בצורה דיגיטלית וחווייתית — לשיפור הפרודוקטיביות ושביעות רצון העובדים.</div>
+          <div class="feat-grid">
+            <div class="feat-chip"><span class="fc-icon">🚀</span><div><strong>Pre-Boarding</strong><p>מילוי טפסים, העלאת קבצים ואישורים — לפני יום תחילת העבודה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🎉</span><div><strong>Onboarding</strong><p>מסלול משימות עם התניות, קבלת ציוד וחתימות כל שלבי הקליטה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🏖️</span><div><strong>בקשות חופשה</strong><p>ניהול בקשות עם סבבי אישורים אוטומטיים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">💰</span><div><strong>החזר הוצאות</strong><p>הגשה, אישורים ומעקב — הכל דיגיטלי</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📚</span><div><strong>יציאה להשתלמות</strong><p>בקשות לקורסים וכנסים עם אישור מנהל</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🛒</span><div><strong>הזמנות ציוד</strong><p>הזמנת ציוד, מדים, אוכל ועוד — בתהליך מסודר</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">✅</span><div><strong>צ'ק ליסט משימות</strong><p>פתיחה/סגירה של חנות או משמרת עם מעקב</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🚗</span><div><strong>כניסת רכב לחניון</strong><p>ניהול בקשות כניסת רכב לחניונים ארגוניים</p></div></div>
+          </div>
+          <div class="mod-note">כל תהליך עסקי פנים-ארגוני שמשלב שלבים, משימות ואנשים — ניתן לבנות בוונדי.</div>
+        </div>
+
+        <!-- LMS -->
+        <div class="mod-detail" id="detail-lms">
+          <div class="mod-detail-header">
+            <div class="mod-detail-icon">🎓</div>
+            <div><div class="mod-detail-title">מודול LMS — למידה והכשרה</div><div class="mod-detail-sub">ניהול מלא של הכשרות, קורסים, הסמכות ולמידה שוטפת</div></div>
+          </div>
+          <div class="feat-grid">
+            <div class="feat-chip"><span class="fc-icon">🖥️</span><div><strong>למידה מתוקשבת</strong><p>תמיכה במגוון סוגי קבצים וסטנדרט SCORM ללומדות</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🏛️</span><div><strong>הדרכות פרונטליות</strong><p>קטלוג קורסים, ניהול מדריכים, כיתות וחומרי הדרכה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📜</span><div><strong>ניהול הסמכות</strong><p>מעקב אחר תוקף הסמכות, רגולציה וכשירות ארגונית</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📝</span><div><strong>מחולל מבחנים</strong><p>בנק שאלות, הגדרות מאפייני מבחן פר מסלול ולומד</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🏆</span><div><strong>תעודות אוטומטיות</strong><p>מחולל תעודות — מופקות אוטומטית עם סיום קורס</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🆕</span><div><strong>קליטת עובדים חדשים</strong><p>מסלול הכשרה מלא לעובד חדש מהיום הראשון</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📁</span><div><strong>תיק אישי</strong><p>תיק אישי לכל עובד עם היסטוריית למידה והסמכות</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🔗</span><div><strong>ממשקי HR ושכר</strong><p>חיבור לכל מערכות שכר ומשאבי אנוש כולל עץ ארגוני</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🔄</span><div><strong>למידה שוטפת</strong><p>רענון, מעקב אחר פגי תוקף והכשרות חוזרות</p></div></div>
+          </div>
+        </div>
+
+        <!-- PERFORMANCE -->
+        <div class="mod-detail" id="detail-performance">
+          <div class="mod-detail-header">
+            <div class="mod-detail-icon">⭐</div>
+            <div><div class="mod-detail-title">מודול הערכת ביצועים</div><div class="mod-detail-sub">תהליך הערכה שנתי ממוחשב, גמיש ופרסונלי לכל עובד</div></div>
+          </div>
+          <div class="mod-desc">מודול הערכת ביצועים מתקדם לניהול ממוחשב ויעיל של תהליך ההערכה השנתי. ניתן לקיים תהליך אוטומטי מותאם לפי עיסוק.</div>
+          <div class="feat-grid">
+            <div class="feat-chip"><span class="fc-icon">🔗</span><div><strong>ממשק למערכת שכר</strong><p>קליטת עובדים אוטומטית מממשק שכר</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🎯</span><div><strong>הערכה על בסיס כישורים</strong><p>ניהול והערכה לפי כישורים ספציפיים לתפקיד</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">👤</span><div><strong>טופס פרסונלי</strong><p>התאמת טופס הערכה לכל עובד באופן אישי</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">👥</span><div><strong>תהליכים לפי קבוצות</strong><p>הקמת תהליכי הערכה לפי קבוצות שונות בארגון</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🖥️</span><div><strong>ממשק חדשני</strong><p>ממשק משתמש ייחודי ונוח לשימוש לעובד ולמנהל</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">🔔</span><div><strong>מנגנון התראות חכם</strong><p>תזכורות אוטומטיות בכל שלבי תהליך ההערכה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon">📊</span><div><strong>מעקב ובקרה</strong><p>דשבורד ניהולי עם סטטוס תהליכים ומדדים בזמן אמת</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band" id="contact">
+  <div class="cta-content">
+    <div class="eyebrow" style="margin-bottom:16px">צרו קשר</div>
+    <h2>רוצים לראות את המודולים בפעולה?</h2>
+    <p>השאירו פרטים ונקבע הדגמה מותאמת לארגון שלכם.</p>
+    <div class="contact-form">
+      <div class="cf-row">
+        <input class="cf-in" type="text" placeholder="שם"/>
+        <input class="cf-in" type="tel" placeholder="טלפון"/>
+        <input class="cf-in" type="text" placeholder="ארגון"/>
+        <input class="cf-in" type="text" placeholder="תפקיד בארגון"/>
+      </div>
+      <div class="cf-row">
+        <input class="cf-in" type="email" placeholder="כתובת מייל"/>
+        <select class="cf-in cf-select">
+          <option value="" disabled selected>מעוניינים ב:</option>
+          <option>פורטל ואפליקציה</option><option>LMS — למידה והכשרה</option>
+          <option>Workflow וטפסים</option><option>הערכת ביצועים</option>
+          <option>Wendi AI</option><option>כל הפתרון</option>
+        </select>
+        <select class="cf-in cf-select">
+          <option value="" disabled selected>כמות עובדים</option>
+          <option>עד 200</option><option>200 – 500</option>
+          <option>500 – 1,000</option><option>1,000 – 5,000</option><option>מעל 5,000</option>
+        </select>
+        <button class="cf-btn" onclick="submitForm()">שליחה »</button>
+      </div>
+    </div>
+    <p style="font-size:.76rem;color:var(--muted);margin-top:12px">פגישת היכרות של 30 דקות, ללא התחייבות.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="fbrand"><a href="index.html"><img src="wendi-logo.png" alt="Wendi"/></a></div><p class="ftagline">פלטפורמת העובד המובילה בישראל.</p></div>
+    <div class="fcol"><h5>מגזרים</h5><ul><li><a href="pitronot.html#finantsim">פיננסים</a></li><li><a href="pitronot.html#briut">בריאות</a></li><li><a href="pitronot.html#logistika">לוגיסטיקה</a></li><li><a href="pitronot.html#tsiburi">ציבורי</a></li></ul></div>
+    <div class="fcol"><h5>מוצר</h5><ul><li><a href="modulim.html">מודולים</a></li><li><a href="mamashkim.html">ממשקים</a></li><li><a href="sipurim.html">סיפורי לקוחות</a></li></ul></div>
+    <div class="fcol"><h5>חברה</h5><ul><li><a href="about.html">מי אנחנו</a></li><li><a href="about.html#faq">שאלות ותשובות</a></li><li><a href="#contact">צרו קשר</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2024 Wendi. כל הזכויות שמורות.</span><div><a href="#">פרטיות</a><a href="#">תנאי שימוש</a></div></div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold:.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+function setMod(el,modId){
+  document.querySelectorAll('.mitem').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.mod-detail').forEach(d=>d.classList.remove('active'));
+  document.getElementById('detail-'+modId)?.classList.add('active');
+  // sync top tabs
+  document.querySelectorAll('.mod-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`.mod-tab[onclick*="${modId}"]`)?.classList.add('active');
+}
+
+function goMod(el,modId){
+  document.querySelectorAll('.mod-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.mod-detail').forEach(d=>d.classList.remove('active'));
+  document.getElementById('detail-'+modId)?.classList.add('active');
+}
+
+function submitForm(){
+  const inputs=document.querySelectorAll('.cf-in');
+  let valid=true;
+  inputs.forEach(inp=>{if(!inp.value.trim()){inp.style.borderColor='#e05c5c';valid=false;}else{inp.style.borderColor='';}});
+  if(!valid)return;
+  const btn=document.querySelector('.cf-btn');
+  btn.textContent='✓ נשלח!';btn.style.background='var(--teal)';btn.style.color='#000';btn.disabled=true;
+  inputs.forEach(inp=>{inp.value='';inp.style.borderColor='';});
+  setTimeout(()=>{btn.textContent='שליחה »';btn.style.background='';btn.style.color='';btn.disabled=false;},3000);
+}
+
+function toggleMenu(){
+  const menu=document.getElementById('mobileMenu');
+  const btn=document.getElementById('hamburger');
+  const isOpen=menu.classList.contains('open');
+  if(isOpen){menu.classList.remove('open');btn.classList.remove('open');document.body.style.overflow='';}
+  else{menu.style.display='flex';requestAnimationFrame(()=>menu.classList.add('open'));btn.classList.add('open');document.body.style.overflow='hidden';}
+}
+
+const navEl=document.querySelector('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>100),{passive:true});
+</script>
+</body>
+</html>

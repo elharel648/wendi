@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wendi – סיפורי לקוחות</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--teal:#3ECFBE;--teal-dark:#2BADA0;--teal-glow:rgba(62,207,190,.14);--blue:#4A90C4;--dark:#050f1e;--surface:#081428;--surface-2:#0c1f3a;--surface-3:#102848;--border:rgba(74,144,196,.12);--border-teal:rgba(62,207,190,.28);--text:#E4EAF0;--muted:#a8c4e8;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:linear-gradient(160deg,#050f1e 0%,#07162a 40%,#050f1e 100%) fixed;color:var(--text);font-family:'Heebo',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+    a{color:inherit;text-decoration:none;}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.025;pointer-events:none;z-index:0;}
+    .fade-up{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+    .stagger>*{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease;}
+    .stagger.visible>*:nth-child(1){opacity:1;transform:translateY(0);transition-delay:.05s}
+    .stagger.visible>*:nth-child(2){opacity:1;transform:translateY(0);transition-delay:.13s}
+    .stagger.visible>*:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.21s}
+    .stagger.visible>*:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.29s}
+    .stagger.visible>*:nth-child(5){opacity:1;transform:translateY(0);transition-delay:.37s}
+    .container{max-width:1440px;margin:0 auto;padding:0 64px;position:relative;z-index:1;}
+    .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-glow);border:1px solid var(--border-teal);padding:4px 14px;border-radius:20px;margin-bottom:18px;}
+    .sec-title{font-size:clamp(1.85rem,3vw,2.8rem);font-weight:900;line-height:1.15;color:#fff;margin-bottom:14px;letter-spacing:-.4px;}
+    .btn-p{background:var(--teal);color:#000;font-weight:700;padding:12px 26px;border-radius:9px;font-size:.92rem;display:inline-block;transition:all .2s;}
+    .btn-p:hover{background:#fff;transform:translateY(-2px);}
+    .btn-o{border:1px solid var(--border-teal);color:var(--teal);padding:12px 26px;border-radius:9px;font-size:.92rem;background:transparent;transition:all .2s;display:inline-block;}
+    .btn-o:hover{background:var(--teal-glow);}
+
+    /* NAV */
+    nav{position:fixed;top:0;inset-inline:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;background:rgba(5,15,30,.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    .nav-logo img{height:36px;width:auto;filter:brightness(0) invert(1);}
+    .nav-links{display:flex;gap:28px;list-style:none;}
+    .nav-links>li{position:relative;}
+    .nav-links>li>a{font-size:.88rem;font-weight:500;color:var(--muted);transition:color .2s;display:flex;align-items:center;gap:3px;}
+    .nav-links>li>a:hover,.nav-links>li>a.active-page{color:var(--teal);}
+    .arr{font-size:.6rem;opacity:.7;}
+    .dropdown{position:absolute;top:calc(100% + 10px);right:0;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;min-width:175px;padding:7px;opacity:0;pointer-events:none;transform:translateY(8px);transition:all .2s;}
+    .nav-links>li:hover .dropdown{opacity:1;pointer-events:all;transform:translateY(0);}
+    .dropdown a{display:block;padding:8px 13px;font-size:.86rem;color:var(--muted);border-radius:7px;transition:all .15s;}
+    .dropdown a:hover{background:var(--surface-3);color:var(--teal);}
+    .nav-cta{background:var(--teal);color:#000;font-weight:700;font-size:.86rem;padding:10px 20px;border-radius:8px;transition:all .2s;}
+    .nav-cta:hover{background:#fff;}
+
+    /* HERO */
+    .page-hero{padding:110px 0 56px;position:relative;overflow:hidden;}
+    .pg{position:absolute;top:-100px;left:-150px;width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(62,207,190,.1) 0%,transparent 65%);pointer-events:none;}
+
+    /* FILTERS */
+    .filter-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:20px 0;position:sticky;top:68px;z-index:100;}
+    .filter-bar-inner{max-width:1440px;margin:0 auto;padding:0 64px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+    .filter-label{font-size:.82rem;color:var(--muted);font-weight:600;margin-left:8px;}
+    .filter-btn{background:var(--surface-2);border:1px solid var(--border);padding:7px 18px;border-radius:20px;font-size:.82rem;color:var(--muted);cursor:pointer;transition:all .2s;font-family:'Heebo',sans-serif;}
+    .filter-btn.active,.filter-btn:hover{background:var(--teal-glow);border-color:var(--border-teal);color:var(--teal);}
+
+    /* FEATURED CASE */
+    .featured-case{margin-bottom:64px;}
+    .fc-inner{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--surface);border:1px solid var(--border-teal);border-radius:20px;overflow:hidden;}
+    .fc-visual{background:linear-gradient(135deg,var(--surface-2),var(--surface-3));display:flex;align-items:center;justify-content:center;padding:48px;position:relative;min-height:360px;}
+    .fc-logo-big{font-size:5rem;filter:drop-shadow(0 0 20px rgba(62,207,190,.3));}
+    .fc-badge{position:absolute;top:20px;right:20px;background:var(--teal);color:#000;font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:20px;}
+    .fc-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(62,207,190,.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+    .fc-content{padding:48px;}
+    .fc-sector{font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:12px;}
+    .fc-title{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:16px;line-height:1.3;}
+    .fc-quote{font-size:1rem;color:var(--text);font-style:italic;line-height:1.75;margin-bottom:22px;}
+    .fc-quote::before{content:'"';color:var(--teal);font-size:1.5rem;line-height:0;vertical-align:-.35em;margin-left:4px;}
+    .fc-author{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+    .fc-av{width:44px;height:44px;border-radius:50%;border:2px solid var(--border-teal);overflow:hidden;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:#000;flex-shrink:0;}
+    .fc-av img{width:100%;height:100%;object-fit:cover;}
+    .fc-name{font-weight:700;font-size:.9rem;color:#fff;}
+    .fc-role{font-size:.78rem;color:var(--muted);}
+    .fc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding-top:20px;border-top:1px solid var(--border);}
+    .fc-stat-num{font-size:1.6rem;font-weight:900;color:var(--teal);line-height:1;margin-bottom:4px;}
+    .fc-stat-lbl{font-size:.77rem;color:var(--muted);}
+    .fc-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px;}
+    .fchip{background:var(--surface-3);border:1px solid var(--border);padding:4px 11px;border-radius:5px;font-size:.75rem;color:var(--muted);}
+
+    /* STORY CARDS GRID */
+    .stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+    .story-card{background:var(--surface);border:1px solid var(--border);border-radius:15px;overflow:hidden;transition:all .25s;display:flex;flex-direction:column;}
+    .story-card:hover{border-color:var(--border-teal);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.35);}
+    .sc-top{padding:28px 28px 0;display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+    .sc-avatar{width:52px;height:52px;border-radius:50%;border:2px solid var(--border-teal);overflow:hidden;background:linear-gradient(135deg,var(--teal),var(--blue));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;color:#000;flex-shrink:0;}
+    .sc-avatar img{width:100%;height:100%;object-fit:cover;}
+    .sc-org{font-size:.95rem;font-weight:700;color:#fff;}
+    .sc-sector-tag{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:4px;background:var(--teal-glow);color:var(--teal);border:1px solid var(--border-teal);margin-top:3px;}
+    .sc-body{padding:0 28px;flex:1;}
+    .sc-challenge{font-size:.82rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+    .sc-text{font-size:.9rem;color:var(--text);line-height:1.7;font-style:italic;margin-bottom:16px;}
+    .sc-text::before{content:'"';color:var(--teal);font-size:1.2rem;line-height:0;vertical-align:-.3em;margin-left:3px;}
+    .sc-results{display:flex;flex-direction:column;gap:6px;margin-bottom:20px;}
+    .sc-result{display:flex;align-items:center;gap:8px;font-size:.83rem;color:var(--text);}
+    .sc-result::before{content:'✓';color:var(--teal);font-weight:700;font-size:.85rem;}
+    .sc-footer{padding:16px 28px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+    .sc-name{font-size:.82rem;font-weight:700;color:#fff;}
+    .sc-role-sm{font-size:.74rem;color:var(--muted);}
+    .sc-link{font-size:.82rem;color:var(--teal);font-weight:600;transition:gap .2s;display:flex;align-items:center;gap:4px;}
+    .story-card:hover .sc-link{gap:8px;}
+
+    /* METRICS BAND */
+    .metrics-band{padding:72px 0;background:var(--surface);border-top:1px solid var(--border);margin:80px 0 0;}
+    .metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+    .metric-item{text-align:center;padding:0 24px;border-left:1px solid var(--border);}
+    .metric-item:last-child{border-right:1px solid var(--border);}
+    .metric-num{font-size:3rem;font-weight:900;color:var(--teal);line-height:1;margin-bottom:8px;}
+    .metric-lbl{font-size:.88rem;color:var(--muted);}
+
+    /* CTA */
+    .cta-band{padding:80px 48px;text-align:center;position:relative;overflow:hidden;background:linear-gradient(160deg,#071d3e 0%,#0e2f5a 50%,#071d3e 100%);border-top:1px solid var(--border);}
+    .cta-band::before{content:'';position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:550px;height:550px;border-radius:50%;background:radial-gradient(circle,rgba(62,207,190,.09) 0%,transparent 65%);}
+    .cta-content{position:relative;z-index:1;}
+    .cta-band h2{font-size:clamp(1.6rem,3vw,2.8rem);font-weight:900;color:#fff;margin-bottom:14px;}
+    .cta-band p{font-size:1rem;color:var(--muted);margin-bottom:32px;}
+    .cta-form{display:flex;gap:10px;max-width:400px;margin:0 auto;}
+    .cta-in{flex:1;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);font-family:'Heebo',sans-serif;font-size:.9rem;outline:none;}
+    .cta-in:focus{border-color:var(--teal);}
+    .cta-btn{background:var(--teal);color:#000;font-weight:700;font-size:.9rem;padding:12px 22px;border-radius:9px;border:none;cursor:pointer;font-family:'Heebo',sans-serif;white-space:nowrap;}
+    .cta-btn:hover{background:#fff;}
+
+    footer{background:var(--dark);border-top:1px solid var(--border);padding:56px 48px 32px;}
+    .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:40px;}
+    .fbrand img{height:26px;filter:brightness(0) invert(1);}
+    .ftagline{font-size:.85rem;color:var(--muted);line-height:1.7;max-width:230px;margin-top:10px;}
+    .fcol h5{font-size:.76rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#fff;margin-bottom:14px;}
+    .fcol ul{list-style:none;display:flex;flex-direction:column;gap:9px;}
+    .fcol a{font-size:.85rem;color:var(--muted);transition:color .2s;}
+    .fcol a:hover{color:var(--teal);}
+    .fbot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:22px;font-size:.78rem;color:var(--muted);}
+    .fbot a{color:var(--muted);margin-right:18px;}
+    .fbot a:hover{color:var(--teal);}
+
+    @media(max-width:960px){
+      nav{padding:0 18px;}.nav-links{display:none;}
+      .container,.filter-bar-inner{padding-right:18px;padding-left:18px;}
+      .fc-inner{grid-template-columns:1fr;}
+      .stories-grid{grid-template-columns:1fr;}
+      .metrics-grid{grid-template-columns:1fr 1fr;gap:20px;}
+      .metric-item{border:1px solid var(--border);border-radius:12px;padding:20px;}
+      .footer-grid{grid-template-columns:1fr 1fr;}
+      .cta-form{flex-direction:column;}
+    }
+
+    /* ══ ALTERNATING SECTIONS ══ */
+    :root {
+      --white-bg:     #ffffff;
+      --white-surface:#f0f5ff;
+      --white-border: rgba(10,48,125,.1);
+      --white-text:   #0a307d;
+      --white-muted:  #4a6fa8;
+    }
+    .section-white {
+      background: var(--surface) !important;
+      color: var(--white-text);
+    }
+    .section-white .sec-title,
+    .section-white h2, .section-white h3, .section-white h4 { color: #fff !important; }
+    .section-white .sec-sub,
+    .section-white p,
+    .section-white .sectors-note { color: var(--muted) !important; }
+    .section-white .eyebrow {
+      background: rgba(10,48,125,.08);
+      border-color: rgba(10,48,125,.25);
+      color: var(--teal-dark);
+    }
+    /* Cards inside white sections */
+    .section-white .scard,
+    .section-white .wcard,
+    .section-white .tcard,
+    .section-white .vcard,
+    .section-white .icat,
+    .section-white .type-card,
+    .section-white .sys-cat,
+    .section-white .istep,
+    .section-white .diff-card {
+      background: var(--surface) !important;
+      border-color: rgba(10,48,125,.15) !important;
+      color: var(--white-text);
+    }
+    .section-white .scard:hover,
+    .section-white .wcard:hover,
+    .section-white .tcard:hover,
+    .section-white .vcard:hover,
+    .section-white .icat:hover,
+    .section-white .type-card:hover {
+      border-color: var(--teal) !important;
+      box-shadow: 0 8px 32px rgba(10,48,125,.12) !important;
+    }
+    .section-white .scard h3,
+    .section-white .wcard h3,
+    .section-white .tcard .tname,
+    .section-white .vcard h3,
+    .section-white .icat h4,
+    .section-white .type-card h3,
+    .section-white .sys-cat h4 { color: #fff !important; }
+    .section-white .scard p,
+    .section-white .wcard p,
+    .section-white .tcard .tq,
+    .section-white .vcard p,
+    .section-white .icat li,
+    .section-white .type-card p,
+    .section-white .sys-cat li,
+    .section-white .trole { color: var(--muted) !important; }
+    .section-white .sbullets li { color: var(--muted) !important; }
+    .section-white .sectors-note { color: var(--muted) !important; }
+    /* What-grid inside white */
+    .section-white .what-grid { background: rgba(10,48,125,.06) !important; }
+    /* Module list inside white */
+    .section-white .mod-layout { background: rgba(10,48,125,.08) !important; }
+    .section-white .mod-list { background: var(--surface) !important; }
+    .section-white .mitem { border-color: rgba(10,48,125,.12) !important; }
+    .section-white .mitem:hover,
+    .section-white .mitem.active { background: #e8eef8 !important; }
+    .section-white .mitem h4 { color: var(--muted) !important; }
+    .section-white .mitem.active h4,
+    .section-white .mitem:hover h4 { color: #fff !important; }
+    .section-white .mitem p { color: var(--muted) !important; }
+    .section-white .mpanel { background: #f7faff !important; }
+    .section-white .mod-detail-title { color: #fff !important; }
+    .section-white .mod-detail-sub { color: var(--muted) !important; }
+    .section-white .mod-detail-header { border-color: rgba(10,48,125,.12) !important; }
+    .section-white .feat-chip { background: #e8eef8 !important; border-color: rgba(10,48,125,.12) !important; }
+    .section-white .feat-chip strong { color: #fff !important; }
+    .section-white .feat-chip p { color: var(--muted) !important; }
+    .section-white .mod-desc { background: #eef3fb !important; color: var(--muted) !important; }
+    .section-white .mod-note { background: rgba(62,207,190,.08) !important; }
+    /* Testimonials inside white */
+    .section-white .tfeat { background: #eef3fb !important; }
+    .section-white .tq { color: #1a3a6b !important; }
+    .section-white .chip { background: #e2eaf7 !important; color: var(--muted) !important; }
+    .section-white .tcard-photo-row .tname { color: #fff !important; }
+    /* White logos band */
+    .section-white .logo-box { color: #8aabd4 !important; }
+    .section-white .logo-box:hover { color: var(--teal-dark) !important; }
+    /* Sectors grid inside white */
+    .section-white .sec-grid { }
+    .section-white .scard-icon { }
+    .section-white .slink { color: var(--teal-dark) !important; }
+    /* White partner stats */
+    .section-white .pstat, .section-white .ps {
+      background: var(--surface) !important;
+      border-color: rgba(10,48,125,.15) !important;
+    }
+    .section-white .ps-lbl, .section-white .pstat-label { color: var(--muted) !important; }
+    /* Scifi divider on white */
+    .section-white .scifi-divider-label {
+      background: var(--surface) !important;
+      color: var(--teal-dark) !important;
+      border-color: rgba(10,48,125,.25) !important;
+    }
+
+    .section-white .sector-story { background: var(--surface-2) !important; border-color: var(--border-teal) !important; }
+    .section-white .story-label { color: var(--teal) !important; }
+    .section-white .story-quote { color: var(--text) !important; }
+    .section-white .story-name { color: #fff !important; }
+    .section-white .sector-title { color: #fff !important; }
+    .section-white .sector-desc, .section-white .sector-badge { color: var(--muted) !important; }
+    .section-white .sf-item { color: var(--text) !important; }
+    .section-white .sch { background: var(--surface-2) !important; color: var(--muted) !important; border-color: var(--border) !important; }
+    .section-white .faq-q { color: var(--text) !important; }
+    .section-white .faq-item { border-color: var(--border) !important; }
+    .section-white .faq-a-inner { color: var(--muted) !important; }
+    .section-white .team-card { background: var(--surface) !important; border-color: var(--border) !important; }
+    .section-white .team-name { color: #fff !important; }
+    .section-white .team-role { color: var(--muted) !important; }
+    .section-white .big { color: #fff !important; }
+    .section-white .wstat { background: var(--surface) !important; border-color: var(--border) !important; }
+    .section-white .wstat-lbl { color: var(--muted) !important; }
+    .section-white .metric-num { color: var(--teal) !important; }
+    .section-white .metric-lbl { color: var(--muted) !important; }
+    .section-white .flow { background: var(--surface) !important; border-color: rgba(10,48,125,.15) !important; }
+    .section-white .flow .ft { color: #2BADA0 !important; }
+    .section-white .fs { background: #e2eaf7 !important; color: #fff !important; }
+    .section-white .type-card h3 { color: #fff !important; }
+    .section-white .tag { background: #e2eaf7 !important; color: var(--muted) !important; }
+    .section-white .story-card { background: var(--surface) !important; border-color: var(--border) !important; }
+    .section-white .sc-org, .sc-result { color: var(--text) !important; }
+    .section-white .sc-text { color: var(--text) !important; }
+    .section-white .sc-challenge, .sc-role-sm { color: var(--muted) !important; }
+    .section-white .sc-footer { border-color: var(--border) !important; }
+
+    nav.scrolled{top:12px;right:24px;left:auto;inset-inline:unset;width:auto;height:52px;border-radius:40px;padding:0 20px 0 24px;background:rgba(5,15,30,.99);border:1px solid rgba(62,207,190,.3);box-shadow:0 8px 32px rgba(0,0,0,.35);}
+    nav.scrolled .nav-logo{display:none;}
+    nav.scrolled .nav-links{gap:20px;}
+    nav.scrolled .nav-links>li>a{font-size:.83rem;}
+    nav.scrolled .nav-cta{padding:7px 16px;font-size:.82rem;}
+    .nav-links>li>a{color:rgba(255,255,255,.8) !important;}
+    .nav-links>li>a:hover,.nav-links>li>a.active-page{color:var(--teal) !important;}
+    .dropdown{background:#050f1e !important;border-color:rgba(62,207,190,.2) !important;border-radius:12px !important;box-shadow:0 12px 40px rgba(0,0,0,.3) !important;transform:translateY(8px) scale(.97) !important;transition:all .22s cubic-bezier(.4,0,.2,1) !important;}
+    .nav-links>li:hover .dropdown{transform:translateY(0) scale(1) !important;}
+    .dropdown a{color:rgba(255,255,255,.65) !important;}
+    .dropdown a:hover,.dropdown a.active-sub{background:rgba(62,207,190,.12) !important;color:var(--teal) !important;}
+    .nav-cta{border-radius:20px !important;}
+
+    nav { justify-content: center; }
+    nav .nav-inner { display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1160px; }
+    nav.scrolled { top:10px;left:50%;right:auto;transform:translateX(-50%);width:auto;min-width:520px;height:50px;border-radius:50px;padding:0 8px 0 20px;background:rgba(5,15,30,.99);border:1px solid rgba(62,207,190,.35);box-shadow:0 8px 40px rgba(0,0,0,.4); }
+    nav.scrolled .nav-logo{opacity:0;width:0;overflow:hidden;margin:0;}
+    nav.scrolled .nav-links{gap:16px;}
+    nav.scrolled .nav-links>li>a{font-size:.82rem;}
+    nav.scrolled .nav-cta{padding:7px 16px;font-size:.82rem;}
+    nav.scrolled .nav-inner{justify-content:center;gap:10px;}
+
+    /* ══ DEEP NAVY GRADIENT BODY ══ */
+    body {
+      background: linear-gradient(160deg, #050f1e 0%, #07162a 40%, #050f1e 100%) !important;
+      background-attachment: fixed !important;
+    }
+    /* Subtle radial glow top-center — feels like a light source */
+    body::after {
+      content: '';
+      position: fixed; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(62,207,190,.06) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* Wendi character glow — teal halo */
+    .hero-char img {
+      filter: drop-shadow(0 0 40px rgba(62,207,190,.35))
+              drop-shadow(0 0 80px rgba(62,207,190,.15));
+    }
+    .cta-char {
+      filter: drop-shadow(0 0 30px rgba(62,207,190,.3))
+              drop-shadow(0 0 60px rgba(62,207,190,.12)) !important;
+    }
+
+    /* ── BODY GRADIENT + GLOW ── */
+    body{background:linear-gradient(160deg,#050f1e 0%,#07162a 40%,#050f1e 100%) !important;background-attachment:fixed !important;}
+    body::after{content:'';position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:600px;border-radius:50%;background:radial-gradient(ellipse,rgba(62,207,190,.06) 0%,transparent 65%);pointer-events:none;z-index:0;}
+    /* ── CTA warmer ── */
+    .cta-band{background:linear-gradient(160deg,#071d3e 0%,#0e2f5a 50%,#071d3e 100%) !important;border-top:1px solid rgba(62,207,190,.18) !important;padding:72px 48px !important;}
+    /* ── footer ── */
+    footer{border-top:1px solid rgba(255,255,255,.06) !important;padding:44px 48px 28px !important;}
+    /* ── page hero bg ── */
+    .page-hero{background:transparent;}
+    /* ── sector section alternating fix ── */
+    .sector-section{border-top:1px solid rgba(255,255,255,.05) !important;background:#050f1e;}
+    .sector-section:nth-child(odd){background:#081428 !important;}
+    /* ── tri divider on internal pages ── */
+    .tri-divider{opacity:.5;}
+    /* ── scrolled nav for internal ── */
+    nav.scrolled .dropdown{background:#050f1e !important;}
+
+    /* ══ CONTACT FORM ══ */
+    .contact-form { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+    .cf-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+    .cf-in { width:100%; padding:13px 16px; background:rgba(255,255,255,.95); border:1px solid rgba(255,255,255,.3); border-radius:9px; color:#0a1f3d; font-family:'Heebo',sans-serif; font-size:.92rem; outline:none; transition:all .2s; text-align:right; -webkit-appearance:none; }
+    .cf-in::placeholder { color:#6a8ab5; }
+    .cf-in:focus { border-color:var(--teal); box-shadow:0 0 0 3px rgba(62,207,190,.15); }
+    .cf-select { cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a8ab5' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:left 14px center; padding-left:36px; }
+    .cf-btn { background:#0a307d; color:#fff; font-weight:700; font-size:.95rem; padding:13px 20px; border-radius:9px; border:none; cursor:pointer; font-family:'Heebo',sans-serif; transition:all .22s; white-space:nowrap; }
+    .cf-btn:hover { background:var(--teal); color:#000; transform:translateY(-1px); }
+    @media(max-width:900px){ .cf-row { grid-template-columns:1fr 1fr; } }
+    @media(max-width:500px){ .cf-row { grid-template-columns:1fr; } }
+    /* ══════════════════════════════
+       MOBILE RESPONSIVE — WENDI
+    ══════════════════════════════ */
+
+    /* ── HAMBURGER NAV ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+      z-index: 300;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: all .3s cubic-bezier(.4,0,.2,1);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(5,15,30,.98);
+      backdrop-filter: blur(20px);
+      z-index: 250;
+      flex-direction: column;
+      padding: 90px 32px 40px;
+      overflow-y: auto;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all .35s cubic-bezier(.4,0,.2,1);
+    }
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .mob-link {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: rgba(255,255,255,.8);
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      text-decoration: none;
+      display: block;
+      transition: color .2s;
+    }
+    .mob-link:hover, .mob-link:active { color: var(--teal); }
+    .mob-link.active-page { color: var(--teal); }
+    .mob-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      padding: 10px 0 10px 20px;
+      display: block;
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .mob-sub:hover { color: var(--teal); }
+    .mob-cta {
+      margin-top: 32px;
+      background: var(--teal);
+      color: #000;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      /* Show hamburger, hide nav links */
+      .hamburger { display: flex; }
+      .nav-links, .nav-cta { display: none !important; }
+      nav { padding: 0 20px; justify-content: space-between; }
+      nav .nav-inner { justify-content: space-between; }
+      nav.scrolled { left: 0; right: 0; transform: none; min-width: unset;
+        width: calc(100% - 32px); margin: 0 16px; border-radius: 16px; padding: 0 16px; }
+      nav.scrolled .nav-logo { opacity: 1; width: auto; overflow: visible; }
+
+      /* CONTAINER */
+      .container { padding: 0 20px; }
+
+      /* HERO */
+      .hero { padding: 100px 0 52px; }
+      .hero-inner { grid-template-columns: 1fr !important; gap: 0 !important; text-align: center; }
+      .hero-inner > div:first-child { order: 1; }
+      .hero-char { display: none; }
+      h1 { font-size: clamp(2rem, 8vw, 3rem) !important; }
+      .hero-tag { font-size: .7rem; }
+      .hero-actions { flex-direction: column; gap: 10px; align-items: center; }
+      .hero-actions a { width: 100%; max-width: 280px; text-align: center; }
+      .hero-trust { justify-content: center; flex-wrap: wrap; }
+
+      /* SECTIONS */
+      .sec-title { font-size: clamp(1.6rem, 6vw, 2.2rem) !important; }
+      .sec-sub { font-size: .92rem; }
+
+      /* PARTNER */
+      .partner-inner { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .big-q { font-size: 1.4rem !important; }
+
+      /* DEVICE COMPACT */
+      .dc-inner { grid-template-columns: 1fr !important; gap: 32px; }
+      .dc-text { order: 1; }
+      .dc-visual { order: 2; }
+      .desktop-frame { width: 100% !important; }
+
+      /* WHAT WENDI */
+      .what-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+      .wcard { padding: 18px !important; }
+
+      /* SECTORS */
+      .sectors-hd { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .sec-grid { grid-template-columns: 1fr !important; }
+      .scard { padding: 20px; }
+
+      /* MODULES */
+      .mod-layout { grid-template-columns: 1fr !important; }
+      .mod-list { flex-direction: column; }
+      .mpanel { border-top: 1px solid var(--border); }
+      .feat-grid { grid-template-columns: 1fr !important; }
+
+      /* TESTIMONIALS COLUMNS */
+      .testi-cols-wrap { max-height: 500px; }
+      .testi-col:nth-child(2), .testi-col-3 { display: none !important; }
+      .tc-card { padding: 18px; }
+      .tc-text { font-size: .85rem; }
+
+      /* LOGOS */
+      .logos-row { gap: 0; }
+      .logo-box { padding: 12px 16px; }
+      .logo-box img { height: 28px; }
+
+      /* CONTACT FORM */
+      .cta-band { padding: 52px 20px !important; }
+      .cf-row { grid-template-columns: 1fr !important; }
+      .contact-form { gap: 8px; }
+
+      /* FOOTER */
+      footer { padding: 40px 20px 24px !important; }
+      .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+
+      /* TRI DIVIDER */
+      .tri-divider { height: 36px; }
+
+      /* ABOUT PAGE */
+      .who-intro { grid-template-columns: 1fr !important; gap: 32px; }
+      .who-stats { grid-template-columns: 1fr 1fr !important; }
+      .values-grid { grid-template-columns: 1fr !important; }
+      .team-grid { grid-template-columns: 1fr 1fr !important; }
+      .gallery-grid { grid-template-columns: 1fr !important; }
+      .gallery-item.wide { grid-column: span 1 !important; }
+      .video-grid { grid-template-columns: 1fr !important; }
+      .page-tabs { flex-direction: column; gap: 6px; }
+      .ptab { text-align: center; }
+      .faq-q { font-size: .9rem; }
+
+      /* PITRONOT PAGE */
+      .sector-cards { grid-template-columns: 1fr 1fr !important; }
+      .sector-inner { grid-template-columns: 1fr !important; gap: 32px !important; }
+      .sector-story { margin-top: 0; }
+
+      /* SIPURIM PAGE */
+      .fc-inner { grid-template-columns: 1fr !important; }
+      .fc-visual { min-height: 160px !important; }
+      .stories-grid { grid-template-columns: 1fr !important; }
+      .metrics-grid { grid-template-columns: 1fr 1fr !important; }
+      .filter-bar-inner { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+
+      /* MAMASHKIM PAGE */
+      .why-grid, .diff-grid, .types-grid, .sys-grid, .process-steps {
+        grid-template-columns: 1fr !important;
+      }
+      .flow-steps { flex-wrap: wrap; gap: 6px; }
+      .fs { font-size: .75rem !important; padding: 5px 10px !important; }
+
+      /* CTA BAND */
+      .cta-band h2 { font-size: 1.6rem !important; }
+      .cta-band { text-align: center; }
+
+      /* GENERAL */
+      .btn-p, .btn-o { padding: 12px 20px; font-size: .9rem; }
+    }
+
+    @media (max-width: 480px) {
+      .sector-cards { grid-template-columns: 1fr !important; }
+      .who-stats, .team-grid, .metrics-grid { grid-template-columns: 1fr !important; }
+      .footer-grid { grid-template-columns: 1fr !important; }
+      h1 { font-size: clamp(1.7rem, 7vw, 2.5rem) !important; }
+    }
+
+    /* Home button — visible only in scrolled pill nav */
+    .nav-home {
+      display: none;
+      font-size: .82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.75);
+      padding: 6px 12px;
+      border-radius: 8px;
+      transition: all .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+    .nav-home:hover { color: var(--teal); background: rgba(255,255,255,.06); }
+    nav.scrolled .nav-home { display: flex; align-items: center; gap: 5px; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-home">🏠 דף הבית</a>
+    <div class="nav-logo">
+      <a href="index.html"><img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;filter:brightness(0) invert(1);" /></a>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="about.html">אודותינו <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="about.html">מי אנחנו</a>
+          <a href="about.html#faq">שאלות ותשובות</a>
+          <a href="about.html#gallery">גלריה</a>
+        </div>
+      </li>
+      <li>
+        <a href="pitronot.html">מגזרים <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="pitronot.html#finantsim">פיננסים</a>
+          <a href="pitronot.html#logistika">לוגיסטיקה ותחבורה</a>
+          <a href="pitronot.html#tsiburi">מוסדות ציבוריים</a>
+          <a href="pitronot.html#briut">שירותי בריאות</a>
+          <a href="pitronot.html#taasia">תעשייה ומסחר</a>
+          <a href="pitronot.html#tayarut">תיירות</a>
+        </div>
+      </li>
+      <li><a href="modulim.html">מודולים</a></li>
+      <li><a href="sipurim.html" class="active-page">סיפורי לקוחות</a></li>
+      <li>
+        <a href="mamashkim.html">ממשקים <span class="arr">▾</span></a>
+        <div class="dropdown">
+          <a href="mamashkim.html#why">למה ממשקים</a>
+          <a href="mamashkim.html#different">מה מייחד אותנו</a>
+          <a href="mamashkim.html#types">סוגי ממשקים</a>
+          <a href="mamashkim.html#systems">מערכות שחיברנו</a>
+          <a href="mamashkim.html#process">תהליך העבודה</a>
+        </div>
+      </li>
+    </ul>
+    <a href="#contact" class="nav-cta">דברו איתנו</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="תפריט">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="pg"></div>
+  <div class="container">
+    <div class="eyebrow">סיפורי לקוחות</div>
+    <h1 style="font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px">
+      ארגונים אמיתיים.<br/>אתגרים אמיתיים.<br/><span style="color:var(--teal)">פתרונות שעובדים.</span>
+    </h1>
+    <p style="font-size:1.05rem;color:var(--muted);max-width:580px;line-height:1.8">ארגונים מורכבים זקוקים לפתרונות שעובדים במציאות היומיומית שלהם. כאן תוכלו לקרוא איך ארגונים ממגזרים שונים משתמשים ב-Wendi.</p>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filter-bar">
+  <div class="filter-bar-inner">
+    <span class="filter-label">סינון לפי מגזר:</span>
+    <button class="filter-btn active" onclick="filterStories(this,'all')">הכל</button>
+    <button class="filter-btn" onclick="filterStories(this,'health')">שירותי בריאות</button>
+    <button class="filter-btn" onclick="filterStories(this,'finance')">פיננסים</button>
+    <button class="filter-btn" onclick="filterStories(this,'transport')">לוגיסטיקה</button>
+    <button class="filter-btn" onclick="filterStories(this,'public')">ציבורי</button>
+    <button class="filter-btn" onclick="filterStories(this,'industry')">תעשייה</button>
+  </div>
+</div>
+
+<!-- FEATURED -->
+<section style="padding:64px 0 0">
+  <div class="container">
+    <div class="eyebrow">סיפור מרכזי</div>
+    <div class="featured-case fade-up">
+      <div class="fc-inner">
+        <div class="fc-visual">
+          <div class="fc-glow"></div>
+          <div class="fc-logo-big">🏥</div>
+          <div class="fc-badge">סיפור הצלחה מרכזי</div>
+        </div>
+        <div class="fc-content">
+          <div class="fc-sector">שירותי בריאות</div>
+          <h2 class="fc-title">המרכז הרפואי תל אביב — איכילוב</h2>
+          <div class="fc-chips">
+            <span class="fchip">📱 אפליקציה נייטיב</span>
+            <span class="fchip">💬 תקשורת ושירות לעובד</span>
+            <span class="fchip">📋 טפסים</span>
+            <span class="fchip">🎓 LMS</span>
+            <span class="fchip">אלפי עובדים</span>
+            <span class="fchip">פעילות 24/7</span>
+          </div>
+          <p class="fc-quote">כחלק מהנגשת כלל הערוצים לעובדים בפנייה למשאבי אנוש — האפליקציה היא ערוץ מרכזי, בעיקר לאור הנוחות, הבולטות, היכולת לחשוף תכנים מותאמים לפי קבוצות ועצם זה שזה זמין לך בכל מקום ובכל זמן.</p>
+          <div class="fc-author">
+            <div class="fc-av"><img src="lihi.jpg" alt="ליהי מטיחין" onerror="this.style.display='none';this.parentElement.innerHTML='ל'"/></div>
+            <div><div class="fc-name">ליהי מטיחין</div><div class="fc-role">מנהלת מרכז שירות לעובד, איכילוב</div></div>
+          </div>
+          <div class="fc-stats">
+            <div><div class="fc-stat-num">↑85%</div><div class="fc-stat-lbl">מעורבות עובדים</div></div>
+            <div><div class="fc-stat-num">24/7</div><div class="fc-stat-lbl">זמינות מלאה</div></div>
+            <div><div class="fc-stat-num">אלפי</div><div class="fc-stat-lbl">עובדים פעילים</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALL STORIES -->
+    <h2 class="sec-title fade-up" style="margin-bottom:32px">כל סיפורי הלקוחות</h2>
+    <div class="stories-grid stagger" id="storiesGrid">
+
+      <!-- FINANCE -->
+      <div class="story-card" data-sector="finance">
+        <div class="sc-top">
+          <div class="sc-avatar"><img src="testimonial1.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='פ'"/></div>
+          <div><div class="sc-org">גוף פיננסי מוביל</div><span class="sc-sector-tag">פיננסים</span></div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-challenge">האתגר</div>
+          <p class="sc-text">חיפשנו פתרון שיאחד תקשורת, למידה וידע — מבלי לפגוע ברגולציה ובשליטה בנתונים.</p>
+          <div class="sc-results">
+            <div class="sc-result">הנגשת מידע מדויק לפי הרשאות</div>
+            <div class="sc-result">ניהול הכשרות חובה בפלטפורמה אחת</div>
+            <div class="sc-result">עמידה מלאה בדרישות הרגולטוריות</div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div><div class="sc-name">מנהל HR</div><div class="sc-role-sm">1,200 עובדים</div></div>
+          <a href="pitronot.html#finantsim" class="sc-link">לפתרון ←</a>
+        </div>
+      </div>
+
+      <!-- TRANSPORT -->
+      <div class="story-card" data-sector="transport">
+        <div class="sc-top">
+          <div class="sc-avatar"><img src="testimonial2.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='ת'"/></div>
+          <div><div class="sc-org">ארגון תחבורה ארצי</div><span class="sc-sector-tag">לוגיסטיקה ותחבורה</span></div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-challenge">האתגר</div>
+          <p class="sc-text">פערי תקשורת בין מטה לעובדי שטח, הכשרות שלא הגיעו לכולם, ותחושת ניתוק מהארגון.</p>
+          <div class="sc-results">
+            <div class="sc-result">ערוץ תקשורת אחיד לכל 3,500 עובדים</div>
+            <div class="sc-result">הכשרות שטח דיגיטליות עם מעקב</div>
+            <div class="sc-result">עלייה ב-40% בשביעות רצון עובדים</div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div><div class="sc-name">סמנכ"ל HR</div><div class="sc-role-sm">3,500 עובדים</div></div>
+          <a href="pitronot.html#logistika" class="sc-link">לפתרון ←</a>
+        </div>
+      </div>
+
+      <!-- HEALTH -->
+      <div class="story-card" data-sector="health">
+        <div class="sc-top">
+          <div class="sc-avatar"><img src="testimonial3.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='ב'"/></div>
+          <div><div class="sc-org">ארגון בריאות מוביל</div><span class="sc-sector-tag">שירותי בריאות</span></div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-challenge">האתגר</div>
+          <p class="sc-text">סביבה רפואית דינמית שדרשה ידע מתעדכן, הכשרות מקצועיות ותקשורת מהירה — 24/7.</p>
+          <div class="sc-results">
+            <div class="sc-result">שיפור זמינות ידע לצוות הרפואי</div>
+            <div class="sc-result">ניהול הסמכות ופגי תוקף אוטומטי</div>
+            <div class="sc-result">תקשורת בין-מחלקתית חכמה</div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div><div class="sc-name">CHRO</div><div class="sc-role-sm">2,000 עובדים</div></div>
+          <a href="pitronot.html#briut" class="sc-link">לפתרון ←</a>
+        </div>
+      </div>
+
+      <!-- PUBLIC -->
+      <div class="story-card" data-sector="public">
+        <div class="sc-top">
+          <div class="sc-avatar" style="font-size:1rem;color:#000">צ</div>
+          <div><div class="sc-org">גוף ציבורי גדול</div><span class="sc-sector-tag">מוסדות ציבוריים</span></div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-challenge">האתגר</div>
+          <p class="sc-text">מורכבות ארגונית עם עשרות יחידות שעבדו בבדידות — ללא ידע משותף ותקשורת רוחבית.</p>
+          <div class="sc-results">
+            <div class="sc-result">פורטל ידע אחד לכל היחידות</div>
+            <div class="sc-result">שקיפות ונגישות למידע ארגוני</div>
+            <div class="sc-result">חיזוק תחושת השייכות הארגונית</div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div><div class="sc-name">מנהלת HR</div><div class="sc-role-sm">2,000 עובדים</div></div>
+          <a href="pitronot.html#tsiburi" class="sc-link">לפתרון ←</a>
+        </div>
+      </div>
+
+      <!-- INDUSTRY -->
+      <div class="story-card" data-sector="industry">
+        <div class="sc-top">
+          <div class="sc-avatar" style="font-size:1rem;color:#000">מ</div>
+          <div><div class="sc-org">ארגון מסחרי גדול</div><span class="sc-sector-tag">תעשייה ומסחר</span></div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-challenge">האתגר</div>
+          <p class="sc-text">4 אתרי ייצור, שפה ארגונית שונה בכל אחד — ללא אחידות בהכשרות, בטיחות ותוכן.</p>
+          <div class="sc-results">
+            <div class="sc-result">אחידות תוכן בין כל האתרים</div>
+            <div class="sc-result">הכשרות בטיחות עם מעקב מרכזי</div>
+            <div class="sc-result">תקשורת רוחבית מהמטה לשטח</div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div><div class="sc-name">מנהל תפעול</div><div class="sc-role-sm">1,500 עובדים, 4 אתרים</div></div>
+          <a href="pitronot.html#taasia" class="sc-link">לפתרון ←</a>
+        </div>
+      </div>
+
+      <!-- TOURISM -->
+      <div class="story-card" data-sector="industry">
+        <div class="sc-top">
+          <div class="sc-avatar" style="font-size:1rem;color:#000">ת</div>
+          <div><div class="sc-org">רשת תיירות מובילה</div><span class="sc-sector-tag">תיירות</span></div>
+        </div>
+        <div class="sc-body">
+          <div class="sc-challenge">האתגר</div>
+          <p class="sc-text">600 עובדים עונתיים שמצטרפים בכל קיץ — Onboarding ידני, הכשרות לא אחידות ותחלופה גבוהה.</p>
+          <div class="sc-results">
+            <div class="sc-result">Onboarding דיגיטלי תוך 48 שעות</div>
+            <div class="sc-result">הכשרות שירות עם אישור אוטומטי</div>
+            <div class="sc-result">ירידה של 30% בתחלופת עובדים</div>
+          </div>
+        </div>
+        <div class="sc-footer">
+          <div><div class="sc-name">VP HR</div><div class="sc-role-sm">600 עובדים עונתיים</div></div>
+          <a href="pitronot.html#tayarut" class="sc-link">לפתרון ←</a>
+        </div>
+      </div>
+
+    </div><!-- /stories-grid -->
+  </div>
+</section>
+
+<!-- METRICS -->
+<div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
+<div class="metrics-band section-white">
+  <div class="container">
+    <div class="metrics-grid">
+      <div class="metric-item fade-up"><div class="metric-num">50+</div><div class="metric-lbl">ארגונים פעילים</div></div>
+      <div class="metric-item fade-up"><div class="metric-num">98%</div><div class="metric-lbl">שביעות רצון לקוחות</div></div>
+      <div class="metric-item fade-up"><div class="metric-num">60%</div><div class="metric-lbl">חיסכון בזמן ניהולי</div></div>
+      <div class="metric-item fade-up"><div class="metric-num">3M+</div><div class="metric-lbl">אינטראקציות עובדים בחודש</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-band" id="contact">
+  <div class="cta-content">
+    <div class="eyebrow" style="margin-bottom:16px">צרו קשר</div>
+    <h2 style="margin-bottom:8px">לקבלת מידע נוסף על המוצר שלנו</h2>
+    <p style="margin-bottom:8px">התקשרו <strong style="color:var(--teal)">077-7743044</strong> או מלאו את הפרטים</p>
+    <div class="contact-form">
+      <div class="cf-row">
+        <input class="cf-in" type="text" placeholder="שם" />
+        <input class="cf-in" type="tel" placeholder="טלפון" />
+        <input class="cf-in" type="text" placeholder="ארגון" />
+        <input class="cf-in" type="text" placeholder="תפקיד בארגון" />
+      </div>
+      <div class="cf-row">
+        <input class="cf-in" type="email" placeholder="כתובת מייל" />
+        <select class="cf-in cf-select">
+          <option value="" disabled selected>מעוניינים ב:</option>
+          <option>פורטל ואפליקציה</option>
+          <option>LMS — למידה והכשרה</option>
+          <option>Workflow וטפסים</option>
+          <option>הערכת ביצועים</option>
+          <option>Wendi AI</option>
+          <option>כל הפתרון</option>
+        </select>
+        <select class="cf-in cf-select">
+          <option value="" disabled selected>כמות עובדים</option>
+          <option>עד 200</option>
+          <option>200 – 500</option>
+          <option>500 – 1,000</option>
+          <option>1,000 – 5,000</option>
+          <option>מעל 5,000</option>
+        </select>
+        <button class="cf-btn" onclick="submitForm()">שליחה »</button>
+      </div>
+    </div>
+    <p style="font-size:.76rem;color:var(--muted);margin-top:12px">פגישת היכרות של 30 דקות, ללא התחייבות.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><div class="fbrand"><a href="index.html"><img src="wendi-logo.png" alt="Wendi"/></a></div><p class="ftagline">פלטפורמת העובד המובילה בישראל.</p></div>
+    <div class="fcol"><h5>פתרונות</h5><ul><li><a href="pitronot.html#finantsim">פיננסים</a></li><li><a href="pitronot.html#briut">בריאות</a></li><li><a href="pitronot.html#logistika">לוגיסטיקה</a></li><li><a href="pitronot.html#tsiburi">ציבורי</a></li></ul></div>
+    <div class="fcol"><h5>מוצר</h5><ul><li><a href="modulim.html">מודולים</a></li>
+<li><a href="mamashkim.html">ממשקים</a></li><li><a href="index.html#modules">מודולים</a></li><li><a href="index.html#showcase">מובייל vs דסקטופ</a></li></ul></div>
+    <div class="fcol"><h5>חברה</h5><ul><li><a href="about.html">מי אנחנו</a></li><li><a href="about.html#faq">שאלות ותשובות</a></li><li><a href="#contact">צרו קשר</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2024 Wendi. כל הזכויות שמורות.</span><div><a href="#">פרטיות</a><a href="#">תנאי שימוש</a></div></div>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold:.08});
+document.querySelectorAll('.fade-up,.stagger').forEach(el=>obs.observe(el));
+
+function filterStories(btn,sector){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.story-card').forEach(card=>{
+    const show=sector==='all'||card.dataset.sector===sector;
+    card.style.display=show?'flex':'none';
+  });
+}
+
+  
+  
+
+  /* ═══ SMART SCROLL NAV ═══ */
+  const navEl = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    navEl.classList.toggle('scrolled', window.scrollY > 100);
+  }, { passive: true });
+
+  /* ═══ HAMBURGER MENU ═══ */
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    const isOpen = menu.classList.contains('open');
+    if (isOpen) { menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = ''; }
+    else { menu.style.display = 'flex'; requestAnimationFrame(() => menu.classList.add('open')); btn.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  }
+  document.querySelectorAll('.mob-link, .mob-sub, .mob-cta').forEach(a => {
+    a.addEventListener('click', () => {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.getElementById('hamburger');
+      menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = '';
+    });
+  });
+
+</script>
+</body>
+</html>
