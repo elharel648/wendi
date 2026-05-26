@@ -143,13 +143,532 @@
       .mod-tabs{gap:6px;}
       .mod-tab{font-size:.8rem;padding:7px 14px;}
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       DESIGN SYSTEM OVERHAUL — Unified midnight glass aesthetic
+       (Apple / Linear / Reflect Notes grade)
+       Content preserved 100% — only visual tokens updated.
+       ═══════════════════════════════════════════════════════════════ */
+
+    /* 1. CANVAS — pure midnight + ambient cyan/purple radials */
+    body {
+      background: #030014 !important;
+      background-attachment: fixed !important;
+    }
+    body::after {
+      content: '' !important;
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      transform: none !important;
+      border-radius: 0 !important;
+      background:
+        radial-gradient(900px circle at 12% 8%, rgba(0, 242, 254, 0.035), transparent 55%),
+        radial-gradient(800px circle at 88% 78%, rgba(147, 51, 234, 0.040), transparent 55%) !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      filter: none !important;
+      animation: pageBreathe 14s ease-in-out infinite;
+    }
+    @keyframes pageBreathe {
+      0%, 100% { opacity: .85; }
+      50%      { opacity: 1; }
+    }
+
+    /* 2. NAV — refined midnight glass */
+    nav {
+      background: rgba(3, 0, 20, 0.72) !important;
+      backdrop-filter: blur(20px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+    nav.scrolled {
+      background: rgba(3, 0, 20, 0.85) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    .dropdown {
+      background: rgba(8, 5, 24, 0.95) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      backdrop-filter: blur(16px);
+    }
+
+    /* 3. PAGE HERO — ambient cyan/purple light injections */
+    .page-hero { padding: 140px 0 80px !important; position: relative; }
+    .ph-glow { display: none !important; }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -180px;
+      inset-inline-start: -100px;
+      width: 720px;
+      height: 720px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.06) 0%, transparent 60%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -120px;
+      inset-inline-end: -80px;
+      width: 560px;
+      height: 560px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.06) 0%, transparent 60%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .page-hero h1, .page-hero p, .page-hero .eyebrow, .page-hero .mod-tabs {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 4. EYEBROW — glass pill */
+    .eyebrow {
+      background: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(255, 255, 255, 0.10) !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      backdrop-filter: blur(8px);
+      padding: 6px 16px !important;
+      font-weight: 600 !important;
+    }
+
+    /* 5. MODULE TABS — glass pills with cyan glow on active */
+    .mod-tabs {
+      gap: 10px !important;
+    }
+    .mod-tab {
+      background: rgba(255, 255, 255, 0.03) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      color: rgba(255, 255, 255, 0.65) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all .4s cubic-bezier(.22,1,.36,1) !important;
+      padding: 10px 22px !important;
+      font-weight: 600;
+    }
+    .mod-tab svg {
+      width: 16px;
+      height: 16px;
+      transition: transform .3s ease, color .3s ease;
+    }
+    .mod-tab:hover {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(255, 255, 255, 0.20) !important;
+      color: #fff !important;
+      transform: translateY(-2px);
+    }
+    .mod-tab.active {
+      background: rgba(62, 207, 190, 0.10) !important;
+      border-color: rgba(62, 207, 190, 0.45) !important;
+      color: var(--teal) !important;
+      box-shadow: 0 0 24px rgba(62, 207, 190, 0.18) !important;
+    }
+    .mod-tab.active svg { color: var(--teal); }
+    .mod-tab:hover svg { transform: scale(1.1); }
+
+    /* 6. MODULE LAYOUT — full asymmetric: list left, panel right */
+    .mod-layout {
+      display: grid !important;
+      grid-template-columns: minmax(260px, 320px) 1fr !important;
+      gap: 18px !important;
+      border-radius: 20px !important;
+      overflow: visible !important;
+      min-height: auto !important;
+      background: transparent !important;
+    }
+    .mod-list {
+      display: flex !important;
+      flex-direction: column;
+      gap: 8px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+
+    /* 7. MITEM — glass cards with cyan side beam on active */
+    .mitem {
+      background: rgba(15, 12, 30, 0.4) !important;
+      backdrop-filter: blur(16px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.06) !important;
+      border-radius: 14px !important;
+      padding: 18px 20px !important;
+      transition: all .5s cubic-bezier(.22,1,.36,1) !important;
+      cursor: pointer;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .mitem::before {
+      width: 3px !important;
+      background: linear-gradient(180deg, var(--teal), rgba(62, 207, 190, 0.3)) !important;
+      transform: scaleY(0);
+      transform-origin: center;
+      transition: transform .4s cubic-bezier(.22,1,.36,1) !important;
+    }
+    .mitem.active::before { transform: scaleY(1); }
+    .mitem:hover {
+      background: rgba(20, 16, 38, 0.55) !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
+      transform: translateY(-2px);
+    }
+    .mitem.active {
+      background: rgba(62, 207, 190, 0.08) !important;
+      border-color: rgba(62, 207, 190, 0.32) !important;
+      box-shadow:
+        0 12px 32px rgba(0, 0, 0, 0.4),
+        0 0 24px rgba(62, 207, 190, 0.10) !important;
+    }
+    .mitem-icon {
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 11px !important;
+      background: rgba(62, 207, 190, 0.08) !important;
+      border: 1px solid rgba(62, 207, 190, 0.20) !important;
+      color: var(--teal);
+      font-size: 0 !important;
+    }
+    .mitem.active .mitem-icon {
+      background: rgba(62, 207, 190, 0.18) !important;
+      border-color: rgba(62, 207, 190, 0.4) !important;
+    }
+    .mitem-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--teal);
+    }
+    .mitem h4 {
+      color: rgba(255, 255, 255, 0.85) !important;
+      font-size: .95rem !important;
+      font-weight: 600 !important;
+      letter-spacing: -.1px;
+    }
+    .mitem.active h4 { color: #fff !important; }
+    .mitem p {
+      color: rgba(255, 255, 255, 0.5) !important;
+      font-size: .78rem !important;
+    }
+    .mitem-arrow {
+      color: rgba(255, 255, 255, 0.25) !important;
+      font-size: 1.4rem !important;
+      transition: all .35s ease;
+    }
+    .mitem:hover .mitem-arrow,
+    .mitem.active .mitem-arrow {
+      color: var(--teal) !important;
+      transform: translateX(-4px) !important;
+    }
+
+    /* 8. MPANEL — premium glass surface */
+    .mpanel {
+      background: rgba(15, 12, 30, 0.4) !important;
+      backdrop-filter: blur(20px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.06) !important;
+      border-radius: 20px !important;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+      overflow: hidden !important;
+      position: relative;
+    }
+    .mpanel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(62, 207, 190, 0.3), transparent);
+    }
+    .mod-detail { padding: 44px !important; }
+    .mod-detail-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+      margin-bottom: 28px !important;
+      padding-bottom: 24px !important;
+      gap: 18px !important;
+    }
+    .mod-detail-icon {
+      width: 56px !important;
+      height: 56px !important;
+      border-radius: 14px !important;
+      background: rgba(62, 207, 190, 0.10) !important;
+      border: 1px solid rgba(62, 207, 190, 0.28) !important;
+      color: var(--teal);
+      font-size: 0 !important;
+      box-shadow: 0 0 24px rgba(62, 207, 190, 0.10);
+    }
+    .mod-detail-icon svg {
+      width: 26px;
+      height: 26px;
+      color: var(--teal);
+    }
+    .mod-detail-title {
+      font-size: 1.4rem !important;
+      font-weight: 700 !important;
+      color: #fff !important;
+      letter-spacing: -.3px;
+    }
+    .mod-detail-sub {
+      color: rgba(255, 255, 255, 0.55) !important;
+      font-size: .95rem !important;
+    }
+    .mod-desc {
+      background: rgba(255, 255, 255, 0.03) !important;
+      border-right: 2px solid var(--teal) !important;
+      color: rgba(255, 255, 255, 0.78) !important;
+      padding: 16px 20px !important;
+      font-size: .95rem !important;
+      border-radius: 0 12px 12px 0 !important;
+    }
+    .mod-note {
+      background: rgba(62, 207, 190, 0.08) !important;
+      border: 1px solid rgba(62, 207, 190, 0.22) !important;
+      color: var(--teal) !important;
+      padding: 12px 16px !important;
+      border-radius: 10px !important;
+      margin-top: 18px !important;
+    }
+
+    /* 9. FEAT-CHIP — 21st.dev "Glowing Effect": cursor-angle border glow + bento asymmetry */
+    @property --glow-angle { syntax: '<angle>'; initial-value: 90deg; inherits: false; }
+    .feat-grid {
+      grid-template-columns: 1fr 1fr !important;
+      gap: 12px !important;
+    }
+    /* Featured first tile spans full width — breaks the uniform grid (21st.dev bento) */
+    .feat-grid > .feat-chip:first-child {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, rgba(62,207,190,0.07), rgba(147,51,234,0.035)) !important;
+      flex-direction: row;
+      align-items: center;
+    }
+    .feat-grid > .feat-chip:first-child .fc-icon {
+      width: 44px !important; height: 44px !important;
+    }
+    .feat-grid > .feat-chip:first-child .fc-icon svg { width: 22px; height: 22px; }
+    .feat-grid > .feat-chip:first-child strong { font-size: 1rem !important; }
+    .feat-chip {
+      background: rgba(255, 255, 255, 0.025) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.05) !important;
+      border-radius: 14px !important;
+      padding: 18px 18px !important;
+      transition: transform .45s cubic-bezier(.22,1,.36,1), background .4s ease, box-shadow .45s ease !important;
+      position: relative;
+      overflow: hidden;
+      gap: 12px !important;
+    }
+    /* The Glowing Effect — conic border glow that points toward the cursor */
+    .feat-chip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: conic-gradient(from var(--glow-angle) at center,
+        transparent 0deg,
+        rgba(62,207,190,0.85) 55deg,
+        rgba(111,230,216,1) 90deg,
+        rgba(62,207,190,0.85) 125deg,
+        transparent 180deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: 0;
+      transition: opacity .35s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+    /* Inner soft spotlight */
+    .feat-chip::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(62, 207, 190, 0.12), transparent 60%);
+      opacity: 0;
+      transition: opacity .4s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .feat-chip:hover {
+      background: rgba(20, 16, 38, 0.55) !important;
+      transform: translateY(-3px);
+      box-shadow:
+        0 14px 32px rgba(0, 0, 0, 0.4),
+        0 0 22px rgba(62, 207, 190, 0.10);
+    }
+    .feat-chip:hover::before { opacity: 1; }
+    .feat-chip:hover::after { opacity: 1; }
+    .feat-chip > * { position: relative; z-index: 3; }
+    .fc-icon {
+      width: 34px !important;
+      height: 34px !important;
+      border-radius: 9px;
+      background: rgba(62, 207, 190, 0.08);
+      border: 1px solid rgba(62, 207, 190, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal);
+      flex-shrink: 0;
+      font-size: 0 !important;
+      transition: background .3s ease, transform .3s ease;
+    }
+    .fc-icon svg {
+      width: 17px;
+      height: 17px;
+      color: var(--teal);
+    }
+    .feat-chip:hover .fc-icon {
+      background: rgba(62, 207, 190, 0.16);
+      transform: scale(1.06);
+    }
+    .feat-chip strong {
+      color: #fff !important;
+      font-size: .92rem !important;
+      font-weight: 600 !important;
+      letter-spacing: -.1px;
+    }
+    .feat-chip p {
+      color: rgba(255, 255, 255, 0.55) !important;
+      font-size: .82rem !important;
+      line-height: 1.55 !important;
+    }
+
+    /* 10. CTA BAND — unified glass */
+    .cta-band {
+      background: transparent !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+      padding: 96px 48px !important;
+      position: relative;
+    }
+    .cta-band::before {
+      content: '' !important;
+      position: absolute !important;
+      top: -120px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: 900px !important;
+      height: 700px !important;
+      border-radius: 50% !important;
+      background: radial-gradient(ellipse,
+        rgba(62, 207, 190, 0.06) 0%,
+        rgba(147, 51, 234, 0.03) 35%,
+        transparent 65%) !important;
+      filter: blur(50px) !important;
+      pointer-events: none !important;
+    }
+    .cta-band h2 { color: #fff !important; letter-spacing: -.5px; }
+    .cta-band p { color: rgba(255, 255, 255, 0.6) !important; }
+
+    /* 11. CONTACT FORM — glass inputs */
+    .cf-in {
+      background: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+    .cf-in::placeholder { color: rgba(255, 255, 255, 0.35) !important; }
+    .cf-in:focus {
+      outline: none !important;
+      border-color: rgba(62, 207, 190, 0.60) !important;
+      background: rgba(255, 255, 255, 0.07) !important;
+      box-shadow:
+        0 0 0 1px rgba(62, 207, 190, 0.55),
+        0 0 20px rgba(62, 207, 190, 0.18) !important;
+    }
+    .cf-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    }
+    .cf-btn {
+      background: var(--teal) !important;
+      color: #000 !important;
+      box-shadow: 0 0 28px rgba(62, 207, 190, 0.32);
+    }
+    .cf-btn:hover {
+      background: #fff !important;
+      transform: translateY(-2px);
+    }
+
+    /* 12. FOOTER — unified */
+    footer {
+      background: transparent !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+    .fcol h5 { color: rgba(255, 255, 255, 0.92) !important; }
+    .fcol a, .ftagline, .fbot { color: rgba(255, 255, 255, 0.5) !important; }
+    .fcol a:hover, .fbot a:hover { color: var(--teal) !important; }
+    .fbot { border-top-color: rgba(255, 255, 255, 0.04) !important; }
+
+    /* 13. NAV HOME ICON */
+    .nav-home svg { width: 16px; height: 16px; vertical-align: middle; }
+
+    /* ═══ AMBIENT FLOATING TRIANGLES — visual continuity with homepage ═══ */
+    .ambient-tri {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      animation: ambientFloat ease-in-out infinite;
+    }
+    .ambient-tri svg { width: 100%; height: 100%; display: block; }
+    .ambient-tri polygon {
+      fill: rgba(62, 207, 190, 0.04);
+      stroke: rgba(62, 207, 190, 0.15);
+      stroke-width: 1;
+      stroke-linejoin: round;
+    }
+    @keyframes ambientFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    .ambient-tri.atri-1 {  /* large, top-right edge */
+      width: 180px; height: 156px;
+      top: 200px; right: -50px;
+      animation-duration: 14s;
+    }
+    .ambient-tri.atri-2 {  /* inverted, left side */
+      width: 110px; height: 95px;
+      top: 600px; left: -30px;
+      animation-duration: 16s;
+      animation-delay: -4s;
+    }
+    .ambient-tri.atri-3 {  /* small, right mid */
+      width: 90px; height: 78px;
+      top: 1100px; right: 8%;
+      animation-duration: 13s;
+      animation-delay: -7s;
+    }
+    .ambient-tri.atri-4 {  /* tiny inverted, bottom-left */
+      width: 70px; height: 60px;
+      bottom: 320px; left: 6%;
+      animation-duration: 12s;
+      animation-delay: -2s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ambient-tri, body::after { animation: none !important; }
+    }
+    @media (max-width: 960px) {
+      .mod-layout { grid-template-columns: 1fr !important; }
+      .mod-list { position: static !important; }
+      .ambient-tri.atri-1 { width: 110px; height: 95px; right: -30px; }
+      .ambient-tri.atri-2 { width: 70px; height: 60px; }
+      .ambient-tri.atri-3 { display: none; }
+    }
   </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-home">🏠 דף הבית</a>
+    <a href="index.html" class="nav-home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> דף הבית</a>
     <div class="nav-logo">
       <a href="index.html"><img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;" /></a>
     </div>
@@ -201,6 +720,20 @@
   <a href="#contact" class="mob-cta" onclick="toggleMenu()">דברו איתנו ←</a>
 </div>
 
+<!-- AMBIENT FLOATING TRIANGLES — visual continuity with homepage -->
+<div class="ambient-tri atri-1" aria-hidden="true">
+  <svg viewBox="0 0 100 87"><polygon points="50,5 95,82 5,82"/></svg>
+</div>
+<div class="ambient-tri atri-2" aria-hidden="true">
+  <svg viewBox="0 0 100 87"><polygon points="50,82 95,5 5,5"/></svg>
+</div>
+<div class="ambient-tri atri-3" aria-hidden="true">
+  <svg viewBox="0 0 100 87"><polygon points="50,5 95,82 5,82"/></svg>
+</div>
+<div class="ambient-tri atri-4" aria-hidden="true">
+  <svg viewBox="0 0 100 87"><polygon points="50,82 95,5 5,5"/></svg>
+</div>
+
 <!-- PAGE HERO -->
 <section class="page-hero">
   <div class="ph-glow"></div>
@@ -215,10 +748,10 @@
 
     <!-- Quick module tabs -->
     <div class="mod-tabs fade-up">
-      <div class="mod-tab active" onclick="goMod(this,'portal')">📱 פורטל ואפליקציה</div>
-      <div class="mod-tab" onclick="goMod(this,'workflow')">⚙️ Workflow</div>
-      <div class="mod-tab" onclick="goMod(this,'lms')">🎓 LMS — למידה</div>
-      <div class="mod-tab" onclick="goMod(this,'performance')">⭐ הערכת ביצועים</div>
+      <div class="mod-tab active" onclick="goMod(this,'portal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg> פורטל ואפליקציה</div>
+      <div class="mod-tab" onclick="goMod(this,'workflow')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> Workflow</div>
+      <div class="mod-tab" onclick="goMod(this,'lms')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 4 3 6 3s6-1 6-3v-5"/></svg> LMS — למידה</div>
+      <div class="mod-tab" onclick="goMod(this,'performance')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> הערכת ביצועים</div>
     </div>
   </div>
 </section>
@@ -229,22 +762,22 @@
     <div class="mod-layout fade-up" id="modLayout">
       <ul class="mod-list" id="modList">
         <li class="mitem active" data-mod="portal" onclick="setMod(this,'portal')">
-          <div class="mitem-icon">📱</div>
+          <div class="mitem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
           <div><h4>פורטל ואפליקציה</h4><p>אפליקציה פנים-ארגונית נייטיב לכל מכשיר.</p></div>
           <div class="mitem-arrow">›</div>
         </li>
         <li class="mitem" data-mod="workflow" onclick="setMod(this,'workflow')">
-          <div class="mitem-icon">⚙️</div>
+          <div class="mitem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div>
           <div><h4>Workflow</h4><p>ניהול תהליכים פנים-ארגוניים דיגיטלית.</p></div>
           <div class="mitem-arrow">›</div>
         </li>
         <li class="mitem" data-mod="lms" onclick="setMod(this,'lms')">
-          <div class="mitem-icon">🎓</div>
+          <div class="mitem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 4 3 6 3s6-1 6-3v-5"/></svg></div>
           <div><h4>LMS — למידה</h4><p>ניהול הכשרות, קורסים והסמכות.</p></div>
           <div class="mitem-arrow">›</div>
         </li>
         <li class="mitem" data-mod="performance" onclick="setMod(this,'performance')">
-          <div class="mitem-icon">⭐</div>
+          <div class="mitem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
           <div><h4>הערכת ביצועים</h4><p>מודול הערכה שנתי ממוחשב ומותאם אישית.</p></div>
           <div class="mitem-arrow">›</div>
         </li>
@@ -254,41 +787,41 @@
         <!-- PORTAL -->
         <div class="mod-detail active" id="detail-portal">
           <div class="mod-detail-header">
-            <div class="mod-detail-icon">📱</div>
+            <div class="mod-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div>
             <div><div class="mod-detail-title">פורטל ואפליקציה פנים-ארגונית</div><div class="mod-detail-sub">One Stop Shop לכל עובד — בכל מכשיר, בכל רגע</div></div>
           </div>
           <div class="feat-grid">
-            <div class="feat-chip"><span class="fc-icon">🎂</span><div><strong>חוגגים</strong><p>עובדים חוגגי יום הולדת, שנת עבודה ועובדים חדשים — מוצגים ממוקד בכל מקום בפורטל</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📞</span><div><strong>אנשי קשר</strong><p>חיפוש מהיר לפי עובד, תפקיד, מחלקה + Click to Call, מייל, וואטסאפ</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📖</span><div><strong>ספר טלפונים ארגוני</strong><p>חיפוש מהיר של מחלקות הארגון</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📅</span><div><strong>הרשמה לאירועים</strong><p>פרסום ימי עיון, כנסים, הדרכות. הרשמה/ביטול, זימון ליומן וייצוא לאקסל</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">👏</span><div><strong>פרגונים</strong><p>שיח מפרגן בין עובדים, חיזוק שייכות והוקרה יומיומית</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📋</span><div><strong>נהלים ומידע</strong><p>מאגר נהלים חכם עם קישורים פנימיים וחיפוש מהיר</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📊</span><div><strong>טפסים וסקרים</strong><p>טפסים חכמים + טפסים אנונימיים</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🔔</span><div><strong>Push מפולח</strong><p>שליחה לפי קבוצות, מתוזמנת, או טריגר אוטומטי לפי אירועים אישיים</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🖼️</span><div><strong>גלריית תמונות</strong><p>אלבומי אירועים, הורדה לטלפון, תגובות ולייקים</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">👤</span><div><strong>אזור אישי</strong><p>פרופיל, יתרות, מסמכים אישיים, טפסים ועוד</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🏢</span><div><strong>מבנה ארגוני</strong><p>ניהול אוטומטי של היררכיה ארגונית והצגתה</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">✍️</span><div><strong>קרא וחתום</strong><p>מנגנון חתימה על תכנים + מעקב אחר עובדים שחתמו ושלא חתמו</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-8H4v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M7 4h.01"/><path d="M12 4h.01"/><path d="M17 4h.01"/></svg></span><div><strong>חוגגים</strong><p>עובדים חוגגי יום הולדת, שנת עבודה ועובדים חדשים — מוצגים ממוקד בכל מקום בפורטל</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><div><strong>אנשי קשר</strong><p>חיפוש מהיר לפי עובד, תפקיד, מחלקה + Click to Call, מייל, וואטסאפ</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><div><strong>ספר טלפונים ארגוני</strong><p>חיפוש מהיר של מחלקות הארגון</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg></span><div><strong>הרשמה לאירועים</strong><p>פרסום ימי עיון, כנסים, הדרכות. הרשמה/ביטול, זימון ליומן וייצוא לאקסל</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg></span><div><strong>פרגונים</strong><p>שיח מפרגן בין עובדים, חיזוק שייכות והוקרה יומיומית</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></span><div><strong>נהלים ומידע</strong><p>מאגר נהלים חכם עם קישורים פנימיים וחיפוש מהיר</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 17v-5"/><path d="M12 17V8"/><path d="M17 17v-9"/></svg></span><div><strong>טפסים וסקרים</strong><p>טפסים חכמים + טפסים אנונימיים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span><div><strong>Push מפולח</strong><p>שליחה לפי קבוצות, מתוזמנת, או טריגר אוטומטי לפי אירועים אישיים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span><div><strong>גלריית תמונות</strong><p>אלבומי אירועים, הורדה לטלפון, תגובות ולייקים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><div><strong>אזור אישי</strong><p>פרופיל, יתרות, מסמכים אישיים, טפסים ועוד</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg></span><div><strong>מבנה ארגוני</strong><p>ניהול אוטומטי של היררכיה ארגונית והצגתה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span><div><strong>קרא וחתום</strong><p>מנגנון חתימה על תכנים + מעקב אחר עובדים שחתמו ושלא חתמו</p></div></div>
           </div>
         </div>
 
         <!-- WORKFLOW -->
         <div class="mod-detail" id="detail-workflow">
           <div class="mod-detail-header">
-            <div class="mod-detail-icon">⚙️</div>
+            <div class="mod-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></div>
             <div><div class="mod-detail-title">מודול Workflow</div><div class="mod-detail-sub">אוטומציה של תהליכים פנים-ארגוניים — חסכו זמן, שפרו חוויה</div></div>
           </div>
           <div class="mod-desc">מטרת המודול לאפשר לארגון לנהל תהליכים פנים-ארגוניים בצורה דיגיטלית וחווייתית — לשיפור הפרודוקטיביות ושביעות רצון העובדים.</div>
           <div class="feat-grid">
-            <div class="feat-chip"><span class="fc-icon">🚀</span><div><strong>Pre-Boarding</strong><p>מילוי טפסים, העלאת קבצים ואישורים — לפני יום תחילת העבודה</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🎉</span><div><strong>Onboarding</strong><p>מסלול משימות עם התניות, קבלת ציוד וחתימות כל שלבי הקליטה</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🏖️</span><div><strong>בקשות חופשה</strong><p>ניהול בקשות עם סבבי אישורים אוטומטיים</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">💰</span><div><strong>החזר הוצאות</strong><p>הגשה, אישורים ומעקב — הכל דיגיטלי</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📚</span><div><strong>יציאה להשתלמות</strong><p>בקשות לקורסים וכנסים עם אישור מנהל</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🛒</span><div><strong>הזמנות ציוד</strong><p>הזמנת ציוד, מדים, אוכל ועוד — בתהליך מסודר</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">✅</span><div><strong>צ'ק ליסט משימות</strong><p>פתיחה/סגירה של חנות או משמרת עם מעקב</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🚗</span><div><strong>כניסת רכב לחניון</strong><p>ניהול בקשות כניסת רכב לחניונים ארגוניים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span><div><strong>Pre-Boarding</strong><p>מילוי טפסים, העלאת קבצים ואישורים — לפני יום תחילת העבודה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-1.32-.32a2.5 2.5 0 0 0-2.4.96l-.95 1.27c-.42.56-1.21.71-1.81.35l-1.39-.85a1.92 1.92 0 0 0-2.4.38L9.5 17"/><path d="M11 2c-1 1-1.5 2-1.5 3 0 1.5 1.5 3 1.5 4.5"/></svg></span><div><strong>Onboarding</strong><p>מסלול משימות עם התניות, קבלת ציוד וחתימות כל שלבי הקליטה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span><div><strong>בקשות חופשה</strong><p>ניהול בקשות עם סבבי אישורים אוטומטיים</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5c-1.5 0-2.8 1.4-3 2-3.5-1.5-11-.3-11 5 0 1.8 0 3 2 4.5V20h4v-2h3v2h4v-4c1-.5 1.7-1 2-2h2v-4h-2c0-1-.5-1.5-1-2V5z"/><path d="M2 9v1c0 1.1.9 2 2 2h1"/><path d="M16 11h.01"/></svg></span><div><strong>החזר הוצאות</strong><p>הגשה, אישורים ומעקב — הכל דיגיטלי</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg></span><div><strong>יציאה להשתלמות</strong><p>בקשות לקורסים וכנסים עם אישור מנהל</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span><div><strong>הזמנות ציוד</strong><p>הזמנת ציוד, מדים, אוכל ועוד — בתהליך מסודר</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9.5"/><path d="m9 11 3 3L22 4"/></svg></span><div><strong>צ'ק ליסט משימות</strong><p>פתיחה/סגירה של חנות או משמרת עם מעקב</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg></span><div><strong>כניסת רכב לחניון</strong><p>ניהול בקשות כניסת רכב לחניונים ארגוניים</p></div></div>
           </div>
           <div class="mod-note">כל תהליך עסקי פנים-ארגוני שמשלב שלבים, משימות ואנשים — ניתן לבנות בוונדי.</div>
         </div>
@@ -296,37 +829,37 @@
         <!-- LMS -->
         <div class="mod-detail" id="detail-lms">
           <div class="mod-detail-header">
-            <div class="mod-detail-icon">🎓</div>
+            <div class="mod-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 4 3 6 3s6-1 6-3v-5"/></svg></div>
             <div><div class="mod-detail-title">מודול LMS — למידה והכשרה</div><div class="mod-detail-sub">ניהול מלא של הכשרות, קורסים, הסמכות ולמידה שוטפת</div></div>
           </div>
           <div class="feat-grid">
-            <div class="feat-chip"><span class="fc-icon">🖥️</span><div><strong>למידה מתוקשבת</strong><p>תמיכה במגוון סוגי קבצים וסטנדרט SCORM ללומדות</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🏛️</span><div><strong>הדרכות פרונטליות</strong><p>קטלוג קורסים, ניהול מדריכים, כיתות וחומרי הדרכה</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📜</span><div><strong>ניהול הסמכות</strong><p>מעקב אחר תוקף הסמכות, רגולציה וכשירות ארגונית</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📝</span><div><strong>מחולל מבחנים</strong><p>בנק שאלות, הגדרות מאפייני מבחן פר מסלול ולומד</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🏆</span><div><strong>תעודות אוטומטיות</strong><p>מחולל תעודות — מופקות אוטומטית עם סיום קורס</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🆕</span><div><strong>קליטת עובדים חדשים</strong><p>מסלול הכשרה מלא לעובד חדש מהיום הראשון</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📁</span><div><strong>תיק אישי</strong><p>תיק אישי לכל עובד עם היסטוריית למידה והסמכות</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🔗</span><div><strong>ממשקי HR ושכר</strong><p>חיבור לכל מערכות שכר ומשאבי אנוש כולל עץ ארגוני</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🔄</span><div><strong>למידה שוטפת</strong><p>רענון, מעקב אחר פגי תוקף והכשרות חוזרות</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span><div><strong>למידה מתוקשבת</strong><p>תמיכה במגוון סוגי קבצים וסטנדרט SCORM ללומדות</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg></span><div><strong>הדרכות פרונטליות</strong><p>קטלוג קורסים, ניהול מדריכים, כיתות וחומרי הדרכה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H6"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></svg></span><div><strong>ניהול הסמכות</strong><p>מעקב אחר תוקף הסמכות, רגולציה וכשירות ארגונית</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"/></svg></span><div><strong>מחולל מבחנים</strong><p>בנק שאלות, הגדרות מאפייני מבחן פר מסלול ולומד</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></span><div><strong>תעודות אוטומטיות</strong><p>מחולל תעודות — מופקות אוטומטית עם סיום קורס</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg></span><div><strong>קליטת עובדים חדשים</strong><p>מסלול הכשרה מלא לעובד חדש מהיום הראשון</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><div><strong>תיק אישי</strong><p>תיק אישי לכל עובד עם היסטוריית למידה והסמכות</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg></span><div><strong>ממשקי HR ושכר</strong><p>חיבור לכל מערכות שכר ומשאבי אנוש כולל עץ ארגוני</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v6h6"/><path d="M21 12A9 9 0 0 0 6 5.3L3 8"/><path d="M21 22v-6h-6"/><path d="M3 12a9 9 0 0 0 15 6.7l3-2.7"/></svg></span><div><strong>למידה שוטפת</strong><p>רענון, מעקב אחר פגי תוקף והכשרות חוזרות</p></div></div>
           </div>
         </div>
 
         <!-- PERFORMANCE -->
         <div class="mod-detail" id="detail-performance">
           <div class="mod-detail-header">
-            <div class="mod-detail-icon">⭐</div>
+            <div class="mod-detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
             <div><div class="mod-detail-title">מודול הערכת ביצועים</div><div class="mod-detail-sub">תהליך הערכה שנתי ממוחשב, גמיש ופרסונלי לכל עובד</div></div>
           </div>
           <div class="mod-desc">מודול הערכת ביצועים מתקדם לניהול ממוחשב ויעיל של תהליך ההערכה השנתי. ניתן לקיים תהליך אוטומטי מותאם לפי עיסוק.</div>
           <div class="feat-grid">
-            <div class="feat-chip"><span class="fc-icon">🔗</span><div><strong>ממשק למערכת שכר</strong><p>קליטת עובדים אוטומטית מממשק שכר</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🎯</span><div><strong>הערכה על בסיס כישורים</strong><p>ניהול והערכה לפי כישורים ספציפיים לתפקיד</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">👤</span><div><strong>טופס פרסונלי</strong><p>התאמת טופס הערכה לכל עובד באופן אישי</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">👥</span><div><strong>תהליכים לפי קבוצות</strong><p>הקמת תהליכי הערכה לפי קבוצות שונות בארגון</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🖥️</span><div><strong>ממשק חדשני</strong><p>ממשק משתמש ייחודי ונוח לשימוש לעובד ולמנהל</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">🔔</span><div><strong>מנגנון התראות חכם</strong><p>תזכורות אוטומטיות בכל שלבי תהליך ההערכה</p></div></div>
-            <div class="feat-chip"><span class="fc-icon">📊</span><div><strong>מעקב ובקרה</strong><p>דשבורד ניהולי עם סטטוס תהליכים ומדדים בזמן אמת</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg></span><div><strong>ממשק למערכת שכר</strong><p>קליטת עובדים אוטומטית מממשק שכר</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><div><strong>הערכה על בסיס כישורים</strong><p>ניהול והערכה לפי כישורים ספציפיים לתפקיד</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="15" r="3"/><circle cx="9" cy="7" r="4"/><path d="M10 15H6a4 4 0 0 0-4 4v2"/><path d="m21.7 16.4-.9-.3"/><path d="m15.2 13.9-.9-.3"/><path d="m16.6 18.7.3-.9"/><path d="m19.1 12.2.3-.9"/><path d="m19.6 18.7-.4-1"/><path d="m16.8 12.3-.4-1"/><path d="m14.3 16.6 1-.4"/><path d="m20.7 13.8 1-.4"/></svg></span><div><strong>טופס פרסונלי</strong><p>התאמת טופס הערכה לכל עובד באופן אישי</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><div><strong>תהליכים לפי קבוצות</strong><p>הקמת תהליכי הערכה לפי קבוצות שונות בארגון</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span><div><strong>ממשק חדשני</strong><p>ממשק משתמש ייחודי ונוח לשימוש לעובד ולמנהל</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M22 8c0-2.3-.8-4.3-2-6"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/></svg></span><div><strong>מנגנון התראות חכם</strong><p>תזכורות אוטומטיות בכל שלבי תהליך ההערכה</p></div></div>
+            <div class="feat-chip"><span class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 11.207a.5.5 0 0 1 .146-.353l2-2a.5.5 0 0 1 .708 0l3.292 3.292a.5.5 0 0 0 .708 0l4.292-4.292a.5.5 0 0 1 .854.353V16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1z"/></svg></span><div><strong>מעקב ובקרה</strong><p>דשבורד ניהולי עם סטטוס תהליכים ומדדים בזמן אמת</p></div></div>
           </div>
         </div>
       </div>
@@ -396,6 +929,9 @@ function goMod(el,modId){
   el.classList.add('active');
   document.querySelectorAll('.mod-detail').forEach(d=>d.classList.remove('active'));
   document.getElementById('detail-'+modId)?.classList.add('active');
+  // sync sidebar list
+  document.querySelectorAll('.mitem').forEach(i=>i.classList.remove('active'));
+  document.querySelector(`.mitem[data-mod="${modId}"]`)?.classList.add('active');
 }
 
 function submitForm(){
@@ -419,6 +955,20 @@ function toggleMenu(){
 
 const navEl=document.querySelector('nav');
 window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>100),{passive:true});
+
+/* ═══ 21st.dev GLOWING EFFECT — border glow follows cursor angle + inner spotlight ═══ */
+document.querySelectorAll('.feat-chip').forEach(chip=>{
+  chip.addEventListener('mousemove',e=>{
+    const r=chip.getBoundingClientRect();
+    const x=e.clientX-r.left, y=e.clientY-r.top;
+    chip.style.setProperty('--mx',x+'px');
+    chip.style.setProperty('--my',y+'px');
+    // angle from card center toward cursor → bright part of conic border points at the mouse
+    const cx=r.width/2, cy=r.height/2;
+    const angle=Math.atan2(y-cy,x-cx)*180/Math.PI;
+    chip.style.setProperty('--glow-angle',(angle-90)+'deg');
+  });
+});
 </script>
 </body>
 </html>

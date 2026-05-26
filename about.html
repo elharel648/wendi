@@ -20,6 +20,9 @@
     .stagger.visible>*:nth-child(3){opacity:1;transform:translateY(0);transition-delay:.25s}
     .stagger.visible>*:nth-child(4){opacity:1;transform:translateY(0);transition-delay:.35s}
     .stagger.visible>*:nth-child(5){opacity:1;transform:translateY(0);transition-delay:.45s}
+    .stagger.visible>*:nth-child(6){opacity:1;transform:translateY(0);transition-delay:.55s}
+    .stagger.visible>*:nth-child(7){opacity:1;transform:translateY(0);transition-delay:.65s}
+    .stagger.visible>*:nth-child(8){opacity:1;transform:translateY(0);transition-delay:.75s}
     .container{max-width:1440px;margin:0 auto;padding:0 64px;position:relative;z-index:1;}
     .eyebrow{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-glow);border:1px solid var(--border-teal);padding:4px 14px;border-radius:20px;margin-bottom:18px;}
     .sec-title{font-size:clamp(1.85rem,3vw,2.8rem);font-weight:900;line-height:1.15;color:#fff;margin-bottom:14px;letter-spacing:-.4px;}
@@ -600,13 +603,560 @@
     }
     .nav-home:hover { color: var(--teal); background: rgba(255,255,255,.06); }
     nav.scrolled .nav-home { display: flex; align-items: center; gap: 5px; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       DESIGN SYSTEM OVERHAUL — Unified midnight glass aesthetic
+       (Apple / Linear / Reflect Notes grade)
+       Content preserved 100% — only visual tokens updated.
+       ═══════════════════════════════════════════════════════════════ */
+
+    /* 1. CANVAS — pure midnight + ambient cyan/purple radials */
+    body {
+      background: #030014 !important;
+      background-attachment: fixed !important;
+    }
+    body::before {
+      opacity: 0 !important; /* kill old noise */
+    }
+    body::after {
+      content: '' !important;
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      transform: none !important;
+      border-radius: 0 !important;
+      background:
+        radial-gradient(900px circle at 12% 8%, rgba(0, 242, 254, 0.035), transparent 55%),
+        radial-gradient(800px circle at 88% 78%, rgba(147, 51, 234, 0.040), transparent 55%) !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      filter: none !important;
+    }
+
+    /* 2. NAV — refined midnight glass */
+    nav {
+      background: rgba(3, 0, 20, 0.72) !important;
+      backdrop-filter: blur(20px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+    nav.scrolled {
+      background: rgba(3, 0, 20, 0.85) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+    .dropdown {
+      background: rgba(8, 5, 24, 0.95) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      backdrop-filter: blur(16px);
+    }
+
+    /* 3. SECTION BACKGROUNDS — kill the old navy fills, let canvas bleed through */
+    .values-section,
+    .team-section,
+    .faq-section,
+    .gallery-section,
+    .section-white {
+      background: transparent !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.04) !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+    .section-white .sec-sub,
+    .section-white p,
+    .section-white .sectors-note {
+      color: rgba(255, 255, 255, 0.55) !important;
+    }
+
+    /* 4. PAGE HERO — ambient cyan/purple injections (replace old .pg/.pg2) */
+    .page-hero { padding: 140px 0 80px !important; position: relative; }
+    .pg, .pg2 { display: none !important; }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      top: -180px;
+      inset-inline-start: -100px;
+      width: 720px;
+      height: 720px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.06) 0%, transparent 60%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -120px;
+      inset-inline-end: -80px;
+      width: 560px;
+      height: 560px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.06) 0%, transparent 60%);
+      filter: blur(40px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* 5. EYEBROWS — glass pills (replace old teal-glow fill) */
+    .eyebrow {
+      background: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(255, 255, 255, 0.10) !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 6px 16px !important;
+      font-weight: 600 !important;
+    }
+    .faq-tag {
+      background: rgba(0, 242, 254, 0.08) !important;
+      border: 1px solid rgba(0, 242, 254, 0.20) !important;
+      color: rgba(0, 242, 254, 0.85) !important;
+    }
+
+    /* 6. GLASS CONTAINERS — universal token across all cards */
+    .wstat,
+    .vcard,
+    .team-card,
+    .gallery-item,
+    .video-card {
+      background: rgba(15, 12, 30, 0.4) !important;
+      backdrop-filter: blur(16px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.06) !important;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+      border-radius: 16px !important;
+      transition:
+        transform .5s cubic-bezier(.22,1,.36,1),
+        border-color .5s ease,
+        background .5s ease,
+        box-shadow .5s ease !important;
+    }
+    .wstat:hover,
+    .vcard:hover,
+    .team-card:hover,
+    .gallery-item:hover,
+    .video-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(62, 207, 190, 0.22) !important;
+      background: rgba(20, 16, 38, 0.55) !important;
+      box-shadow:
+        0 16px 50px rgba(0, 0, 0, 0.55),
+        0 0 24px rgba(62, 207, 190, 0.08) !important;
+    }
+
+    /* 7. STAT CARDS — editorial padding + crisp number */
+    .wstat { padding: 30px !important; }
+    .wstat-num {
+      color: #fff !important;
+      font-weight: 800 !important;
+      letter-spacing: -.5px;
+    }
+    .wstat-lbl { color: rgba(255, 255, 255, 0.55) !important; }
+
+    /* 8. VALUE CARDS — asymmetric bento + editorial padding */
+    .values-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 16px !important;
+    }
+    .vcard { padding: 36px !important; }
+    /* Featured bento — 1st and 6th span 2 cols for visual hierarchy */
+    .vcard:nth-child(1) { grid-column: span 2; }
+    .vcard:nth-child(6) { grid-column: span 2; }
+    .vcard-icon {
+      background: rgba(62, 207, 190, 0.08) !important;
+      border: 1px solid rgba(62, 207, 190, 0.20) !important;
+      width: 56px !important;
+      height: 56px !important;
+      border-radius: 14px !important;
+    }
+    .vcard h3 {
+      color: #fff !important;
+      font-size: 1.05rem !important;
+      margin-bottom: 12px !important;
+      letter-spacing: -.2px;
+    }
+    .vcard p { color: rgba(255, 255, 255, 0.55) !important; }
+
+    /* 9. TEAM CARDS — quiet glass */
+    .team-card { padding: 32px 20px !important; }
+    .team-photo {
+      background: linear-gradient(135deg, #2A2A33, #1A1A22) !important;
+      border: 2px solid rgba(255, 255, 255, 0.08) !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+    .team-name { color: #fff !important; font-weight: 700 !important; }
+    .team-role { color: rgba(255, 255, 255, 0.5) !important; }
+
+    /* 10. FAQ — refined glass accordion */
+    .faq-item {
+      background: rgba(15, 12, 30, 0.4) !important;
+      backdrop-filter: blur(16px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.06) !important;
+      border-radius: 14px !important;
+      padding: 0 28px !important;
+      margin-bottom: 10px;
+      transition: all .4s ease !important;
+    }
+    .faq-item.open {
+      border-color: rgba(62, 207, 190, 0.25) !important;
+      background: rgba(20, 16, 38, 0.55) !important;
+      box-shadow: 0 0 24px rgba(62, 207, 190, 0.08);
+    }
+    .faq-q {
+      color: rgba(255, 255, 255, 0.92) !important;
+      font-weight: 600 !important;
+      padding: 24px 0 !important;
+    }
+    .faq-q:hover { color: var(--teal) !important; }
+    .faq-a-inner {
+      color: rgba(255, 255, 255, 0.55) !important;
+      padding-bottom: 24px !important;
+    }
+    .faq-icon { color: rgba(62, 207, 190, 0.9) !important; }
+
+    /* 11. FILTERS + PAGE TABS — glass pills, cyan glow when active */
+    .faq-filter,
+    .gfilter,
+    .ptab {
+      background: rgba(255, 255, 255, 0.03) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      color: rgba(255, 255, 255, 0.65) !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all .35s ease !important;
+    }
+    .faq-filter:hover,
+    .gfilter:hover,
+    .ptab:hover {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(255, 255, 255, 0.18) !important;
+      color: rgba(255, 255, 255, 0.92) !important;
+    }
+    .faq-filter.active,
+    .gfilter.active,
+    .ptab.active {
+      background: rgba(62, 207, 190, 0.10) !important;
+      border-color: rgba(62, 207, 190, 0.40) !important;
+      color: var(--teal) !important;
+      box-shadow: 0 0 18px rgba(62, 207, 190, 0.15) !important;
+    }
+
+    /* 12. GALLERY — bento, glass tiles */
+    .gallery-item {
+      padding: 0 !important;
+    }
+    .gallery-placeholder { color: rgba(255, 255, 255, 0.45) !important; }
+    .gallery-placeholder .gp-lbl { color: rgba(255, 255, 255, 0.7); }
+    .gallery-item:hover {
+      transform: scale(1.015) translateY(-2px);
+    }
+
+    /* 13. VIDEO CARDS */
+    .video-thumb {
+      background: rgba(255, 255, 255, 0.02) !important;
+    }
+    .video-play {
+      background: var(--teal) !important;
+      color: #000 !important;
+      box-shadow: 0 0 28px rgba(62, 207, 190, 0.35);
+    }
+    .video-title { color: #fff !important; }
+    .video-dur { color: rgba(255, 255, 255, 0.5) !important; }
+    .video-card .video-info { padding: 20px !important; }
+
+    /* 14. WHO TEXT — premium hierarchy */
+    .who-text .big { color: rgba(255, 255, 255, 0.96) !important; letter-spacing: -.4px; }
+    .who-text .big .tc { color: var(--teal) !important; }
+    .who-text p { color: rgba(255, 255, 255, 0.55) !important; }
+
+    /* 15. SECTION TITLES — crisp white */
+    .sec-title { color: #fff !important; letter-spacing: -.5px !important; }
+    .sec-sub { color: rgba(255, 255, 255, 0.55) !important; }
+    .page-hero h1 { color: #fff !important; letter-spacing: -1px !important; }
+    .page-hero p { color: rgba(255, 255, 255, 0.6) !important; }
+
+    /* 16. CTA BAND — unified, no harsh gradient */
+    .cta-band {
+      background: transparent !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+      padding: 96px 48px !important;
+      position: relative;
+    }
+    .cta-band::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse,
+        rgba(62, 207, 190, 0.06) 0%,
+        rgba(147, 51, 234, 0.03) 35%,
+        transparent 65%);
+      filter: blur(50px);
+      pointer-events: none;
+    }
+    .cta-band h2 { color: #fff !important; letter-spacing: -.5px; }
+    .cta-band p { color: rgba(255, 255, 255, 0.6) !important; }
+    .cta-content { position: relative; z-index: 1; }
+
+    /* 17. CONTACT FORM — glass inputs */
+    .cf-in {
+      background: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+      text-align: right;
+    }
+    .cf-in::placeholder { color: rgba(255, 255, 255, 0.35) !important; }
+    .cf-in:focus {
+      border-color: rgba(62, 207, 190, 0.45) !important;
+      background: rgba(255, 255, 255, 0.06) !important;
+      box-shadow: 0 0 0 3px rgba(62, 207, 190, 0.10) !important;
+    }
+    .cf-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+    }
+    .cf-btn {
+      background: var(--teal) !important;
+      color: #000 !important;
+      box-shadow: 0 0 28px rgba(62, 207, 190, 0.32);
+      font-weight: 700;
+    }
+    .cf-btn:hover {
+      background: #fff !important;
+      transform: translateY(-2px);
+    }
+
+    /* 18. BUTTONS — refined */
+    .btn-p {
+      background: var(--teal) !important;
+      color: #000 !important;
+      box-shadow: 0 0 28px rgba(62, 207, 190, 0.28);
+    }
+    .btn-o {
+      background: rgba(255, 255, 255, 0.03) !important;
+      border: 1px solid rgba(255, 255, 255, 0.10) !important;
+      color: rgba(255, 255, 255, 0.85) !important;
+      backdrop-filter: blur(8px);
+    }
+    .btn-o:hover {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(62, 207, 190, 0.3) !important;
+      color: var(--teal) !important;
+    }
+
+    /* 19. FOOTER — unified */
+    footer {
+      background: transparent !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+    }
+    .fcol h5 { color: rgba(255, 255, 255, 0.92) !important; }
+    .fcol a, .ftagline, .fbot { color: rgba(255, 255, 255, 0.5) !important; }
+    .fcol a:hover, .fbot a:hover { color: var(--teal) !important; }
+    .fbot { border-top-color: rgba(255, 255, 255, 0.04) !important; }
+
+    /* 20. MOBILE — disable bento spans for clean stack */
+    @media (max-width: 960px) {
+      .vcard:nth-child(1),
+      .vcard:nth-child(6) { grid-column: span 1; }
+    }
+
+    /* 21. SVG ICONS in value cards — replaces emojis */
+    .vcard {
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    .vcard-content {
+      position: relative;
+      z-index: 2;
+    }
+    .vcard-icon svg {
+      width: 26px !important;
+      height: 26px !important;
+      color: var(--teal);
+    }
+    .vcard-icon {
+      font-size: 0 !important; /* kill old emoji size */
+    }
+
+    /* 22. PIXEL CANVAS — premium hover effect on value cards */
+    .pixel-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity .6s ease;
+    }
+    .vcard:hover .pixel-canvas { opacity: 1; }
+
+    /* 23. NAV HOME ICON — replace emoji */
+    .nav-home svg {
+      width: 16px;
+      height: 16px;
+      vertical-align: middle;
+    }
+
+    /* 24. GALLERY PLACEHOLDER ICONS */
+    .gallery-placeholder .gp-icon {
+      font-size: 0 !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .gallery-placeholder .gp-icon svg {
+      width: 32px;
+      height: 32px;
+      color: rgba(62, 207, 190, 0.75);
+    }
+
+    /* 25. VIDEO PLAY + DURATION ICONS */
+    .video-play {
+      font-size: 0 !important;
+    }
+    .video-play svg {
+      width: 18px;
+      height: 18px;
+      color: #000;
+      margin-inline-start: 2px;
+    }
+    .video-dur {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .video-dur svg {
+      width: 13px;
+      height: 13px;
+      color: rgba(62, 207, 190, 0.85);
+    }
+
+    /* 26. CINEMATIC BREATHING RADIALS — slow-pulsing depth in the bg */
+    body::before {
+      content: '' !important;
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background-image: none !important;
+      background:
+        radial-gradient(circle at 50% 25%, rgba(0, 242, 254, 0.035), transparent 50%),
+        radial-gradient(circle at 30% 75%, rgba(147, 51, 234, 0.035), transparent 55%) !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      opacity: 1 !important;
+      animation: breatheGlow 12s ease-in-out infinite !important;
+    }
+    @keyframes breatheGlow {
+      0%, 100% { opacity: .55; transform: scale(1); }
+      50%      { opacity: .85; transform: scale(1.04); }
+    }
+
+    /* 27. WSTAT — inner ambient glow that expands on hover */
+    .wstat {
+      position: relative !important;
+      overflow: hidden;
+      cursor: default;
+      padding: 32px !important;
+    }
+    .wstat::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: radial-gradient(circle at 50% 110%, rgba(62, 207, 190, 0.12), transparent 65%);
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .wstat:hover::after { opacity: 1; transform: scale(1); }
+    .wstat-num, .wstat-lbl { position: relative; z-index: 1; }
+    .wstat-num {
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    /* 28. TEAM CARDS — mouse-tracking spotlight */
+    .team-card {
+      position: relative !important;
+      overflow: hidden;
+    }
+    .team-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(62, 207, 190, 0.10), transparent 55%);
+      opacity: 0;
+      transition: opacity .4s ease;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .team-card:hover::after { opacity: 1; }
+    .team-card > * { position: relative; z-index: 1; }
+
+    /* 29. TEAM PHOTO — glass badge w/ photo, grayscale by default, color on card hover */
+    .team-photo {
+      background: rgba(255, 255, 255, 0.03) !important;
+      backdrop-filter: blur(8px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(8px) saturate(140%) !important;
+      border: 1px solid rgba(62, 207, 190, 0.38) !important;
+      color: rgba(255, 255, 255, 0.92) !important;
+      font-weight: 600 !important;
+      font-size: 1.5rem !important;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.3) !important;
+      overflow: hidden;
+    }
+    .team-photo img {
+      filter: grayscale(1) brightness(.85) contrast(1.05);
+      transition: filter .5s cubic-bezier(.22,1,.36,1), transform .6s cubic-bezier(.22,1,.36,1);
+    }
+    .team-card:hover .team-photo img {
+      filter: grayscale(0) brightness(1) contrast(1);
+      transform: scale(1.04);
+    }
+    .team-card:hover .team-photo {
+      border-color: rgba(62, 207, 190, 0.6) !important;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 6px 20px rgba(0, 0, 0, 0.4),
+        0 0 16px rgba(62, 207, 190, 0.18) !important;
+    }
+
+    /* 30. FORM FOCUS — sharp cyan illumination, no browser ring */
+    .cf-in {
+      transition: border-color .25s ease, background .25s ease, box-shadow .25s ease !important;
+    }
+    .cf-in:focus {
+      outline: none !important;
+      border-color: rgba(62, 207, 190, 0.60) !important;
+      background: rgba(255, 255, 255, 0.07) !important;
+      box-shadow:
+        0 0 0 1px rgba(62, 207, 190, 0.55),
+        0 0 20px rgba(62, 207, 190, 0.18) !important;
+    }
+
+    /* 31. EDITORIAL SPACING — give all major grids more breathing room */
+    .who-intro { gap: 80px !important; }
+    .values-grid { gap: 18px !important; }
+    .team-grid { gap: 20px !important; }
   </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-home">🏠 דף הבית</a>
+    <a href="index.html" class="nav-home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> דף הבית</a>
     <div class="nav-logo">
       <a href="index.html"><img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;" /></a>
     </div>
@@ -699,12 +1249,66 @@
       <div class="eyebrow">הערכים שלנו</div>
       <h2 class="sec-title fade-up">מה מניע אותנו</h2>
       <div class="values-grid stagger">
-        <div class="vcard"><div class="vcard-icon">🤝</div><h3>שותפות אמיתית</h3><p>אנחנו לא מוכרים מוצר — אנחנו בונים יחד עם הלקוח. כל פרויקט מתחיל בהקשבה ומסתיים בהצלחה משותפת.</p></div>
-        <div class="vcard"><div class="vcard-icon">🔬</div><h3>חדשנות מתמדת</h3><p>הפלטפורמה שלנו מתפתחת כל הזמן. אנחנו מקשיבים לשטח ומשחררים עדכונים שמשפרים את חיי העובד.</p></div>
-        <div class="vcard"><div class="vcard-icon">🎯</div><h3>פשטות בשירות המורכבות</h3><p>ארגונים גדולים מורכבים — הפתרון שלנו חייב להיות פשוט לשימוש. אנחנו לוקחים את הקושי על עצמנו.</p></div>
-        <div class="vcard"><div class="vcard-icon">🔒</div><h3>אבטחה ואמינות</h3><p>נתוני עובדים הם רגישים. אנחנו עומדים בתקני אבטחה מחמירים ומבטיחים זמינות של 99.9%.</p></div>
-        <div class="vcard"><div class="vcard-icon">📊</div><h3>נתונים מניעים החלטות</h3><p>כל פעולה בפלטפורמה מייצרת תובנה. אנחנו עוזרים לארגון לקבל החלטות מבוססות נתוני אמת.</p></div>
-        <div class="vcard"><div class="vcard-icon">🌱</div><h3>גדילה יחד</h3><p>המוצר גדל עם הלקוח. ממאה עובדים לעשרת אלפים — הפלטפורמה מתאימה את עצמה בלי כאבים.</p></div>
+        <div class="vcard">
+          <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+          <div class="vcard-content">
+            <div class="vcard-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
+            </div>
+            <h3>שותפות אמיתית</h3>
+            <p>אנחנו לא מוכרים מוצר — אנחנו בונים יחד עם הלקוח. כל פרויקט מתחיל בהקשבה ומסתיים בהצלחה משותפת.</p>
+          </div>
+        </div>
+        <div class="vcard">
+          <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+          <div class="vcard-content">
+            <div class="vcard-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 3h15"/><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"/><path d="M6 14h12"/></svg>
+            </div>
+            <h3>חדשנות מתמדת</h3>
+            <p>הפלטפורמה שלנו מתפתחת כל הזמן. אנחנו מקשיבים לשטח ומשחררים עדכונים שמשפרים את חיי העובד.</p>
+          </div>
+        </div>
+        <div class="vcard">
+          <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+          <div class="vcard-content">
+            <div class="vcard-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <h3>פשטות בשירות המורכבות</h3>
+            <p>ארגונים גדולים מורכבים — הפתרון שלנו חייב להיות פשוט לשימוש. אנחנו לוקחים את הקושי על עצמנו.</p>
+          </div>
+        </div>
+        <div class="vcard">
+          <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+          <div class="vcard-content">
+            <div class="vcard-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3>אבטחה ואמינות</h3>
+            <p>נתוני עובדים הם רגישים. אנחנו עומדים בתקני אבטחה מחמירים ומבטיחים זמינות של 99.9%.</p>
+          </div>
+        </div>
+        <div class="vcard">
+          <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+          <div class="vcard-content">
+            <div class="vcard-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 17v-5"/><path d="M12 17V8"/><path d="M17 17v-9"/></svg>
+            </div>
+            <h3>נתונים מניעים החלטות</h3>
+            <p>כל פעולה בפלטפורמה מייצרת תובנה. אנחנו עוזרים לארגון לקבל החלטות מבוססות נתוני אמת.</p>
+          </div>
+        </div>
+        <div class="vcard">
+          <canvas class="pixel-canvas" aria-hidden="true"></canvas>
+          <div class="vcard-content">
+            <div class="vcard-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+            </div>
+            <h3>גדילה יחד</h3>
+            <p>המוצר גדל עם הלקוח. ממאה עובדים לעשרת אלפים — הפלטפורמה מתאימה את עצמה בלי כאבים.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -716,24 +1320,44 @@
       <p class="sec-sub fade-up">צוות מנוסה של אנשי מוצר, טכנולוגיה ועולם HR — שמבינים גם את הארגון וגם את העובד.</p>
       <div class="team-grid stagger">
         <div class="team-card">
-          <div class="team-photo"><img src="team1.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='ש'"/></div>
+          <div class="team-photo"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face&auto=format" alt="שרית הכמון" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='ש'"/></div>
           <div class="team-name">שרית הכמון</div>
           <div class="team-role">מנכ"לית ומייסדת</div>
         </div>
         <div class="team-card">
-          <div class="team-photo"><img src="team2.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='א'"/></div>
+          <div class="team-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face&auto=format" alt="עמית לוי" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='א'"/></div>
           <div class="team-name">עמית לוי</div>
           <div class="team-role">סמנכ"ל טכנולוגיה</div>
         </div>
         <div class="team-card">
-          <div class="team-photo"><img src="team3.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='מ'"/></div>
+          <div class="team-photo"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face&auto=format" alt="מיכל כהן" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='מ'"/></div>
           <div class="team-name">מיכל כהן</div>
           <div class="team-role">ראש צוות מוצר</div>
         </div>
         <div class="team-card">
-          <div class="team-photo"><img src="team4.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='ד'"/></div>
+          <div class="team-photo"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face&auto=format" alt="דן שפירא" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='ד'"/></div>
           <div class="team-name">דן שפירא</div>
           <div class="team-role">ראש צוות לקוחות</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face&auto=format" alt="נועה בן-דוד" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='נ'"/></div>
+          <div class="team-name">נועה בן-דוד</div>
+          <div class="team-role">מעצבת מוצר ראשית</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&crop=face&auto=format" alt="רון אדלר" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='ר'"/></div>
+          <div class="team-name">רון אדלר</div>
+          <div class="team-role">מנהל הנדסה</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop&crop=face&auto=format" alt="תמר אלון" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='ת'"/></div>
+          <div class="team-name">תמר אלון</div>
+          <div class="team-role">ראש שיווק</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo"><img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&h=200&fit=crop&crop=face&auto=format" alt="אורי שגב" loading="lazy" onerror="this.style.display='none';this.parentElement.innerHTML='א'"/></div>
+          <div class="team-name">אורי שגב</div>
+          <div class="team-role">ראש מכירות</div>
         </div>
       </div>
     </div>
@@ -826,31 +1450,31 @@
       </div>
       <div class="gallery-grid stagger">
         <div class="gallery-item wide" data-cat="events">
-          <div class="gallery-placeholder"><div class="gp-icon">📸</div><div class="gp-lbl">כנס לקוחות 2024</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></div><div class="gp-lbl">כנס לקוחות 2024</div></div>
         </div>
         <div class="gallery-item" data-cat="team">
-          <div class="gallery-placeholder"><div class="gp-icon">👥</div><div class="gp-lbl">צוות Wendi</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="gp-lbl">צוות Wendi</div></div>
         </div>
         <div class="gallery-item" data-cat="clients">
-          <div class="gallery-placeholder"><div class="gp-icon">🏥</div><div class="gp-lbl">השקה באיכילוב</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v4"/><path d="M14 14h-4"/><path d="M14 18h-4"/><path d="M14 8h-4"/><path d="M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/><path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18"/></svg></div><div class="gp-lbl">השקה באיכילוב</div></div>
         </div>
         <div class="gallery-item" data-cat="product">
-          <div class="gallery-placeholder"><div class="gp-icon">📱</div><div class="gp-lbl">אפליקציה בפעולה</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div><div class="gp-lbl">אפליקציה בפעולה</div></div>
         </div>
         <div class="gallery-item" data-cat="events">
-          <div class="gallery-placeholder"><div class="gp-icon">🎤</div><div class="gp-lbl">הרצאה בכנס HR</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div><div class="gp-lbl">הרצאה בכנס HR</div></div>
         </div>
         <div class="gallery-item" data-cat="clients">
-          <div class="gallery-placeholder"><div class="gp-icon">🚚</div><div class="gp-lbl">השקה ארגון תחבורה</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></div><div class="gp-lbl">השקה ארגון תחבורה</div></div>
         </div>
         <div class="gallery-item wide" data-cat="events">
-          <div class="gallery-placeholder"><div class="gp-icon">🎉</div><div class="gp-lbl">יום גיבוש צוות</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-1.32-.32a2.5 2.5 0 0 0-2.4.96l-.95 1.27c-.42.56-1.21.71-1.81.35l-1.39-.85a1.92 1.92 0 0 0-2.4.38L9.5 17"/><path d="M11 2c-1 1-1.5 2-1.5 3 0 1.5 1.5 3 1.5 4.5"/></svg></div><div class="gp-lbl">יום גיבוש צוות</div></div>
         </div>
         <div class="gallery-item" data-cat="product">
-          <div class="gallery-placeholder"><div class="gp-icon">🖥️</div><div class="gp-lbl">דשבורד HR</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div><div class="gp-lbl">דשבורד HR</div></div>
         </div>
         <div class="gallery-item" data-cat="team">
-          <div class="gallery-placeholder"><div class="gp-icon">☕</div><div class="gp-lbl">המשרד שלנו</div></div>
+          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg></div><div class="gp-lbl">המשרד שלנו</div></div>
         </div>
       </div>
 
@@ -861,31 +1485,31 @@
         <p class="sec-sub fade-up">סרטוני הסבר, סיפורי לקוח וטיפים לשימוש.</p>
         <div class="video-grid stagger">
           <div class="video-card">
-            <div class="video-thumb"><div class="video-play">▶</div></div>
+            <div class="video-thumb"><div class="video-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
             <div class="video-info">
               <div class="video-title">Wendi — סקירת המוצר המלאה</div>
-              <div class="video-dur">🕐 8:24 דקות</div>
+              <div class="video-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 8:24 דקות</div>
             </div>
           </div>
           <div class="video-card">
-            <div class="video-thumb"><div class="video-play">▶</div></div>
+            <div class="video-thumb"><div class="video-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
             <div class="video-info">
               <div class="video-title">איכילוב — סיפור הצלחה</div>
-              <div class="video-dur">🕐 4:15 דקות</div>
+              <div class="video-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 4:15 דקות</div>
             </div>
           </div>
           <div class="video-card">
-            <div class="video-thumb"><div class="video-play">▶</div></div>
+            <div class="video-thumb"><div class="video-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
             <div class="video-info">
               <div class="video-title">כך עובד מודול ה-Workflow</div>
-              <div class="video-dur">🕐 3:40 דקות</div>
+              <div class="video-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3:40 דקות</div>
             </div>
           </div>
           <div class="video-card">
-            <div class="video-thumb"><div class="video-play">▶</div></div>
+            <div class="video-thumb"><div class="video-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
             <div class="video-info">
               <div class="video-title">Wendi AI — הדגמה חיה</div>
-              <div class="video-dur">🕐 5:10 דקות</div>
+              <div class="video-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5:10 דקות</div>
             </div>
           </div>
         </div>
@@ -1016,6 +1640,186 @@ if(location.hash==='#gallery')switchTab('gallery');
       const menu = document.getElementById('mobileMenu');
       const btn = document.getElementById('hamburger');
       menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = '';
+    });
+  });
+
+  /* ═══ PIXEL CANVAS — premium hover animation for value cards ═══
+     Vanilla JS port of the PixelCanvas web component.
+     Creates a grid of animated pixels that "spread" from bottom-left when card is hovered. */
+  class Pixel {
+    constructor(ctx, x, y, color, speed, delay) {
+      this.ctx = ctx;
+      this.x = x; this.y = y;
+      this.color = color;
+      this.speed = (Math.random() * 0.8 + 0.1) * speed;
+      this.size = 0;
+      this.sizeStep = Math.random() * 0.4;
+      this.minSize = 0.5;
+      this.maxSizeInteger = 2;
+      this.maxSize = Math.random() * (this.maxSizeInteger - this.minSize) + this.minSize;
+      this.delay = delay;
+      this.counter = 0;
+      this.counterStep = Math.random() * 4 + 4;
+      this.isIdle = false;
+      this.isReverse = false;
+      this.isShimmer = false;
+    }
+    draw() {
+      const centerOffset = this.maxSizeInteger * 0.5 - this.size * 0.5;
+      this.ctx.fillStyle = this.color;
+      this.ctx.fillRect(this.x + centerOffset, this.y + centerOffset, this.size, this.size);
+    }
+    appear() {
+      this.isIdle = false;
+      if (this.counter <= this.delay) { this.counter += this.counterStep; return; }
+      if (this.size >= this.maxSize) this.isShimmer = true;
+      if (this.isShimmer) this.shimmer(); else this.size += this.sizeStep;
+      this.draw();
+    }
+    disappear() {
+      this.isShimmer = false;
+      this.counter = 0;
+      if (this.size <= 0) { this.isIdle = true; return; }
+      this.size -= 0.1;
+      this.draw();
+    }
+    shimmer() {
+      if (this.size >= this.maxSize) this.isReverse = true;
+      else if (this.size <= this.minSize) this.isReverse = false;
+      if (this.isReverse) this.size -= this.speed;
+      else this.size += this.speed;
+    }
+  }
+
+  class PixelCanvas {
+    constructor(canvas, opts = {}) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d');
+      this.colors = opts.colors || ['#3ECFBE', '#6FE6D8', '#A855F7'];
+      this.gap = Math.max(4, Math.min(50, opts.gap || 8));
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      this.speed = reducedMotion ? 0 : Math.max(0, Math.min(100, opts.speed || 30)) * 0.001;
+      this.pixels = [];
+      this.animation = null;
+      this.timeInterval = 1000 / 60;
+      this.timePrevious = performance.now();
+      this.reducedMotion = reducedMotion;
+      this.resize();
+      const ro = new ResizeObserver(() => this.resize());
+      ro.observe(canvas);
+    }
+    resize() {
+      const rect = this.canvas.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return;
+      const dpr = window.devicePixelRatio || 1;
+      this.canvas.width = rect.width * dpr;
+      this.canvas.height = rect.height * dpr;
+      this.canvas.style.width = rect.width + 'px';
+      this.canvas.style.height = rect.height + 'px';
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0);
+      this.ctx.scale(dpr, dpr);
+      this.createPixels();
+    }
+    createPixels() {
+      this.pixels = [];
+      const w = this.canvas.width, h = this.canvas.height;
+      for (let x = 0; x < w; x += this.gap) {
+        for (let y = 0; y < h; y += this.gap) {
+          const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+          // delay from bottom-left — pixels spread from that corner
+          const dx = x, dy = h - y;
+          const delay = this.reducedMotion ? 0 : Math.sqrt(dx * dx + dy * dy);
+          this.pixels.push(new Pixel(this.ctx, x, y, color, this.speed, delay));
+        }
+      }
+    }
+    animate(name) {
+      if (this.animation) cancelAnimationFrame(this.animation);
+      const step = () => {
+        this.animation = requestAnimationFrame(step);
+        const now = performance.now();
+        const passed = now - this.timePrevious;
+        if (passed < this.timeInterval) return;
+        this.timePrevious = now - (passed % this.timeInterval);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        let allIdle = true;
+        for (const p of this.pixels) {
+          p[name]();
+          if (!p.isIdle) allIdle = false;
+        }
+        if (allIdle) { cancelAnimationFrame(this.animation); this.animation = null; }
+      };
+      step();
+    }
+  }
+
+  // Wire up value cards — pixel canvas on hover
+  document.querySelectorAll('.vcard').forEach(card => {
+    const canvas = card.querySelector('.pixel-canvas');
+    if (!canvas) return;
+    const pc = new PixelCanvas(canvas, {
+      gap: 8,
+      speed: 28,
+      colors: ['#3ECFBE', '#6FE6D8', '#A855F7']
+    });
+    card.addEventListener('mouseenter', () => pc.animate('appear'));
+    card.addEventListener('mouseleave', () => pc.animate('disappear'));
+  });
+
+  /* ═══ COUNT-UP ANIMATION — stats run from 0 to target when scrolled into view ═══ */
+  (function(){
+    const stats = document.querySelectorAll('.wstat-num');
+    if (!stats.length) return;
+    const observed = new WeakSet();
+
+    function parseTarget(text) {
+      // Match leading integer with optional + suffix; rejects "24/7", "n/a", etc.
+      const m = text.trim().match(/^(\d+)([+]?)$/);
+      return m ? { num: parseInt(m[1], 10), suffix: m[2] } : null;
+    }
+
+    function animate(el, target, duration = 1800) {
+      const start = performance.now();
+      function tick(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic — smooth elastic finish
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const value = Math.floor(eased * target.num);
+        el.textContent = value + target.suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target.num + target.suffix;
+      }
+      requestAnimationFrame(tick);
+    }
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting || observed.has(entry.target)) return;
+        const target = parseTarget(entry.target.textContent);
+        if (!target) return; // skip non-numeric like "24/7"
+        observed.add(entry.target);
+        if (reducedMotion) {
+          // Honor accessibility — show final value immediately
+          entry.target.textContent = target.num + target.suffix;
+        } else {
+          entry.target.textContent = '0' + target.suffix;
+          animate(entry.target, target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    stats.forEach(s => io.observe(s));
+  })();
+
+  /* ═══ MOUSE-TRACKING SPOTLIGHT on team cards ═══ */
+  document.querySelectorAll('.team-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   });
 

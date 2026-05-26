@@ -697,14 +697,445 @@
     }
     .nav-home:hover { color: var(--teal); background: rgba(255,255,255,.06); }
     nav.scrolled .nav-home { display: flex; align-items: center; gap: 5px; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       DESIGN SYSTEM OVERHAUL — Unified midnight glass (Apple/Linear/Reflect)
+       Content preserved 100%.
+       ═══════════════════════════════════════════════════════════════ */
+    body { background: #030014 !important; background-attachment: fixed !important; }
+    body::before { opacity: 0 !important; }
+    body::after {
+      content: '' !important; position: fixed !important; inset: 0 !important;
+      top:0!important; left:0!important; width:100%!important; height:100%!important;
+      transform: none !important; border-radius: 0 !important;
+      background:
+        radial-gradient(900px circle at 12% 8%, rgba(0,242,254,0.035), transparent 55%),
+        radial-gradient(800px circle at 88% 78%, rgba(147,51,234,0.040), transparent 55%) !important;
+      pointer-events: none !important; z-index: 0 !important; filter: none !important;
+      animation: pageBreathe 14s ease-in-out infinite;
+    }
+    @keyframes pageBreathe { 0%,100%{opacity:.85} 50%{opacity:1} }
+
+    nav {
+      background: rgba(3,0,20,0.72) !important;
+      backdrop-filter: blur(20px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(140%) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    }
+    nav.scrolled { background: rgba(3,0,20,0.85) !important; border:1px solid rgba(255,255,255,0.08) !important; }
+    .dropdown { background: rgba(8,5,24,0.95) !important; border:1px solid rgba(255,255,255,0.08) !important; backdrop-filter: blur(16px); }
+    .nav-home svg { width:16px; height:16px; vertical-align:middle; }
+
+    /* HERO ambient */
+    .page-hero { position: relative; }
+    .page-hero::before {
+      content:''; position:absolute; top:-180px; inset-inline-start:-100px;
+      width:720px; height:720px; border-radius:50%;
+      background: radial-gradient(circle, rgba(0,242,254,0.06) 0%, transparent 60%);
+      filter: blur(40px); pointer-events:none; z-index:0;
+    }
+    .page-hero-inner { position: relative; z-index: 2; }
+
+    /* EYEBROW glass pill */
+    .eyebrow {
+      background: rgba(255,255,255,0.04) !important;
+      border:1px solid rgba(255,255,255,0.10) !important;
+      color: rgba(255,255,255,0.7) !important;
+      backdrop-filter: blur(8px); padding:6px 16px !important; font-weight:600 !important;
+    }
+    .hero-bullets .bi {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; border-radius: 8px;
+      background: rgba(62,207,190,0.08); border: 1px solid rgba(62,207,190,0.20);
+      color: var(--teal); flex-shrink: 0; font-size: 0 !important;
+    }
+    .hero-bullets .bi svg { width: 15px; height: 15px; color: var(--teal); }
+    .hero-bullets li { display: flex; align-items: center; gap: 11px; color: rgba(255,255,255,0.78) !important; }
+
+    /* CONNECTION VISUAL — glass */
+    .conn-visual {
+      background: rgba(15,12,30,0.4) !important;
+      backdrop-filter: blur(16px) saturate(140%) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+    }
+    .conn-sys {
+      background: rgba(255,255,255,0.03) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      color: rgba(255,255,255,0.72) !important;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .conn-sys svg { width: 14px; height: 14px; color: var(--teal); flex-shrink: 0; }
+    .conn-wendi { background: linear-gradient(135deg, var(--teal), var(--blue)) !important; color:#000 !important; }
+
+    /* ═══ ANIMATED BEAM HUB (Magic UI / 21st.dev) — systems → Wendi → users ═══ */
+    .beam-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 460px;
+      aspect-ratio: 460 / 500;
+      margin: 0 auto;
+    }
+    .beam-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+    .beam-base path { fill: none; stroke: rgba(255,255,255,0.07); stroke-width: 1.5; }
+    .beam-flow path {
+      fill: none;
+      stroke: url(#beamGrad);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 16 260;
+      stroke-dashoffset: 276;
+      animation: beamFlow 2.6s linear infinite;
+    }
+    @keyframes beamFlow { to { stroke-dashoffset: 0; } }
+    .beam-flow path:nth-child(1) { animation-delay: 0s; }
+    .beam-flow path:nth-child(2) { animation-delay: .35s; }
+    .beam-flow path:nth-child(3) { animation-delay: .7s; }
+    .beam-flow path:nth-child(4) { animation-delay: 1.05s; }
+    .beam-flow path:nth-child(5) { animation-delay: 1.4s; }
+    .beam-flow path:nth-child(6) { animation-delay: 1.75s; }
+    .beam-flow path:nth-child(7) { animation-delay: .2s; }
+    .beam-flow path:nth-child(8) { animation-delay: .55s; }
+    .beam-flow path:nth-child(9) { animation-delay: .9s; }
+    .beam-flow path:nth-child(10){ animation-delay: 1.25s; }
+    .beam-flow path:nth-child(11){ animation-delay: 1.6s; }
+    .beam-flow path:nth-child(12){ animation-delay: 1.95s; }
+
+    .beam-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 11px;
+      background: rgba(15,12,30,0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 10px;
+      font-size: .74rem; font-weight: 600;
+      color: rgba(255,255,255,0.82);
+      white-space: nowrap; z-index: 2;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+      transition: border-color .3s ease, transform .3s ease;
+    }
+    .beam-node svg { width: 14px; height: 14px; color: var(--teal); flex-shrink: 0; }
+    .beam-node:hover { border-color: rgba(62,207,190,0.4); }
+    .beam-node.bn-l { left: 13%; }
+    .beam-node.bn-r { left: 87%; }
+    .beam-node.y1 { top: 8%; }
+    .beam-node.y2 { top: 25%; }
+    .beam-node.y3 { top: 42%; }
+    .beam-node.y4 { top: 58%; }
+    .beam-node.y5 { top: 75%; }
+    .beam-node.y6 { top: 92%; }
+
+    .beam-hub {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 96px; height: 96px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      color: #03121a; font-weight: 800; font-size: .9rem; text-align: center;
+      z-index: 3;
+      box-shadow: 0 0 0 6px rgba(62,207,190,0.10), 0 0 50px rgba(62,207,190,0.45);
+    }
+    .beam-hub::before, .beam-hub::after {
+      content:''; position:absolute; inset:0; border-radius:50%;
+      border: 1.5px solid rgba(62,207,190,0.5);
+      animation: hubPulse 2.8s ease-out infinite;
+    }
+    .beam-hub::after { animation-delay: 1.4s; }
+    @keyframes hubPulse {
+      0% { transform: scale(1); opacity: .7; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+    .beam-hub span { position: relative; z-index: 1; line-height: 1.15; }
+    @media (prefers-reduced-motion: reduce) {
+      .beam-flow path, .beam-hub::before, .beam-hub::after { animation: none; }
+      .beam-flow path { stroke-dashoffset: 0; stroke-dasharray: none; opacity: .5; }
+    }
+    @media (max-width: 600px) {
+      .beam-node { font-size: .66rem; padding: 5px 8px; }
+      .beam-node svg { width: 12px; height: 12px; }
+    }
+
+    /* SECTIONS — kill alternating white bg */
+    .why-section, .types-section, .systems-section, .process-section, .diff-section,
+    .section-white {
+      background: transparent !important;
+      border-top: 1px solid rgba(255,255,255,0.05) !important;
+    }
+    .section-white p, .section-white .sec-sub { color: rgba(255,255,255,0.55) !important; }
+
+    /* GLASS CARDS — type-card, diff-card, sys-cat, istep */
+    .type-card, .diff-card, .sys-cat, .istep {
+      background: rgba(15,12,30,0.4) !important;
+      backdrop-filter: blur(16px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+      border: 1px solid rgba(255,255,255,0.06) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+      transition: transform .5s cubic-bezier(.22,1,.36,1), border-color .5s ease, box-shadow .5s ease !important;
+      position: relative; overflow: hidden;
+    }
+    .type-card::after, .sys-cat::after {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(280px circle at var(--mx,50%) var(--my,50%), rgba(62,207,190,0.10), transparent 60%);
+      opacity:0; transition: opacity .4s ease; pointer-events:none; z-index:0;
+    }
+    .type-card:hover, .diff-card:hover, .sys-cat:hover, .istep:hover {
+      transform: translateY(-3px);
+      border-color: rgba(62,207,190,0.28) !important;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.55), 0 0 24px rgba(62,207,190,0.10) !important;
+    }
+    .type-card:hover::after, .sys-cat:hover::after { opacity: 1; }
+    .type-card > *, .sys-cat > * { position: relative; z-index: 1; }
+    .type-card h3, .diff-card h4, .sys-cat h4, .istep h3 { color:#fff !important; }
+    .type-card p, .diff-card p, .sys-cat li, .istep p { color: rgba(255,255,255,0.55) !important; }
+    .type-icon {
+      background: rgba(62,207,190,0.08) !important;
+      border: 1px solid rgba(62,207,190,0.20) !important;
+      width: 56px !important; height: 56px !important; border-radius: 14px !important;
+      font-size: 0 !important; color: var(--teal);
+    }
+    .type-icon svg { width: 26px; height: 26px; color: var(--teal); }
+    .type-tags span, .tag {
+      background: rgba(255,255,255,0.04) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      color: rgba(255,255,255,0.65) !important;
+    }
+    .sys-cat h4 { display: flex; align-items: center; gap: 9px; }
+    .sys-cat h4 .sc-dot {
+      width: 18px; height: 18px; flex-shrink: 0; color: var(--teal);
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .sys-cat h4 .sc-dot svg { width: 16px; height: 16px; }
+    .sys-cat li::before { color: var(--teal) !important; }
+
+    /* DIFF TABLE — glass */
+    .diff-table {
+      background: rgba(15,12,30,0.4) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      border-radius: 16px !important;
+      backdrop-filter: blur(16px);
+    }
+    .diff-header { background: rgba(255,255,255,0.03) !important; }
+    .diff-col-h { color: rgba(255,255,255,0.85) !important; }
+    .diff-col-h.wendi { color: var(--teal) !important; }
+    .diff-row { border-top-color: rgba(255,255,255,0.06) !important; }
+    .diff-cell { color: rgba(255,255,255,0.7) !important; }
+    .diff-cell .tick { color: var(--teal) !important; }
+    .diff-cell .cross { color: rgba(255,255,255,0.3) !important; }
+    .diff-card h4 { display: flex; align-items: center; gap: 9px; }
+    .diff-card h4 svg { width: 18px; height: 18px; color: var(--teal); flex-shrink: 0; }
+
+    /* ISTEP process */
+    .istep { padding: 28px !important; }
+
+    /* CONN arrows + diagram arrows keep teal */
+    .conn-arrow, .fa { color: var(--teal) !important; }
+
+    /* CTA + FORM + FOOTER */
+    .cta-band {
+      background: transparent !important;
+      border-top: 1px solid rgba(255,255,255,0.06) !important;
+      position: relative;
+    }
+    .cta-band::before {
+      content:'' !important; position:absolute !important; top:-120px !important; left:50% !important;
+      transform: translateX(-50%) !important; width:900px !important; height:700px !important;
+      border-radius:50% !important;
+      background: radial-gradient(ellipse, rgba(62,207,190,0.06) 0%, rgba(147,51,234,0.03) 35%, transparent 65%) !important;
+      filter: blur(50px) !important; pointer-events:none !important;
+    }
+    .cta-band h2 { color:#fff !important; }
+    .cta-band p { color: rgba(255,255,255,0.6) !important; }
+    .cf-in {
+      background: rgba(255,255,255,0.04) !important;
+      border:1px solid rgba(255,255,255,0.08) !important;
+      color: rgba(255,255,255,0.95) !important;
+    }
+    .cf-in::placeholder { color: rgba(255,255,255,0.35) !important; }
+    .cf-in:focus {
+      outline: none !important;
+      border-color: rgba(62,207,190,0.60) !important;
+      background: rgba(255,255,255,0.07) !important;
+      box-shadow: 0 0 0 1px rgba(62,207,190,0.55), 0 0 20px rgba(62,207,190,0.18) !important;
+    }
+    .cf-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") !important; }
+    .cf-btn { background: var(--teal) !important; color:#000 !important; box-shadow: 0 0 28px rgba(62,207,190,0.32); }
+    .cf-btn:hover { background:#fff !important; transform: translateY(-2px); }
+    .btn-p { background: var(--teal) !important; color:#000 !important; box-shadow: 0 0 28px rgba(62,207,190,0.28); }
+    .btn-o {
+      background: rgba(255,255,255,0.03) !important;
+      border:1px solid rgba(255,255,255,0.10) !important;
+      color: rgba(255,255,255,0.85) !important;
+    }
+    footer { background: transparent !important; border-top: 1px solid rgba(255,255,255,0.06) !important; }
+    .fcol h5 { color: rgba(255,255,255,0.92) !important; }
+    .fcol a, .ftagline, .fbot { color: rgba(255,255,255,0.5) !important; }
+    .fcol a:hover, .fbot a:hover { color: var(--teal) !important; }
+
+    /* PROCESS TIMELINE — refine to system palette */
+    .step-num { background: var(--teal) !important; color:#000 !important; box-shadow: 0 0 20px rgba(62,207,190,0.25); }
+    .step-body h3 { color:#fff !important; }
+    .step-body p { color: rgba(255,255,255,0.55) !important; }
+    .stag {
+      background: rgba(62,207,190,0.08) !important;
+      border: 1px solid rgba(62,207,190,0.20) !important;
+      color: var(--teal) !important;
+    }
+    .sec-title { color:#fff !important; }
+    .sec-sub { color: rgba(255,255,255,0.55) !important; }
+    .why-inner p, .why-text p { color: rgba(255,255,255,0.6) !important; }
+    h1 .ac { color: var(--teal) !important; }
+    .page-hero h1 { color:#fff !important; }
+    .page-hero p { color: rgba(255,255,255,0.65) !important; }
+
+    /* ═══ LIVING DATA PIPELINES — flow cards as animated data streams ═══ */
+    .example-flows { gap: 14px !important; }
+    .why-section .flow,
+    .section-white .flow,
+    .flow {
+      background: rgba(15,12,30,0.5) !important;
+      backdrop-filter: blur(14px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+      border: 1px solid rgba(255,255,255,0.07) !important;
+      border-radius: 14px !important;
+      padding: 18px 20px !important;
+      position: relative; overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4) !important;
+      transition: border-color .4s ease, box-shadow .4s ease !important;
+    }
+    .why-section .flow:hover,
+    .section-white .flow:hover,
+    .flow:hover {
+      border-color: rgba(62,207,190,0.28) !important;
+      box-shadow: 0 12px 38px rgba(0,0,0,0.5), 0 0 22px rgba(62,207,190,0.10) !important;
+    }
+    .flow .ft, .section-white .flow .ft {
+      color: var(--teal) !important;
+      font-weight: 700 !important;
+      letter-spacing: .06em;
+    }
+    .flow-steps { gap: 7px !important; position: relative; z-index: 1; }
+    .flow .fs, .section-white .flow .fs, .section-white .flow .fs {
+      background: rgba(255,255,255,0.04) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      color: rgba(255,255,255,0.78) !important;
+      border-radius: 7px !important;
+      padding: 5px 11px !important;
+    }
+    .flow .fa, .section-white .flow .fa { color: rgba(62,207,190,0.5) !important; }
+
+    /* The wave: each step + arrow lights up in sequence (right→left = RTL reading flow) */
+    .why-section .flow-steps > * {
+      animation: pipeWave 3.4s ease-in-out infinite;
+      will-change: box-shadow, color, transform;
+    }
+    .why-section .flow-steps > *:nth-child(1){ animation-delay: 0s; }
+    .why-section .flow-steps > *:nth-child(2){ animation-delay: .16s; }
+    .why-section .flow-steps > *:nth-child(3){ animation-delay: .32s; }
+    .why-section .flow-steps > *:nth-child(4){ animation-delay: .48s; }
+    .why-section .flow-steps > *:nth-child(5){ animation-delay: .64s; }
+    .why-section .flow-steps > *:nth-child(6){ animation-delay: .80s; }
+    .why-section .flow-steps > *:nth-child(7){ animation-delay: .96s; }
+    /* stagger each flow card so the 4 streams don't fire in unison */
+    .why-section .flow:nth-child(2) .flow-steps > * { animation-duration: 3.7s; }
+    .why-section .flow:nth-child(3) .flow-steps > * { animation-duration: 3.2s; }
+    .why-section .flow:nth-child(4) .flow-steps > * { animation-duration: 3.9s; }
+    @keyframes pipeWave {
+      0%, 26%, 100% {
+        color: rgba(255,255,255,0.78);
+        box-shadow: 0 0 0 0 rgba(62,207,190,0);
+        transform: translateY(0) scale(1);
+        border-color: rgba(255,255,255,0.08);
+      }
+      8% {
+        color: #ffffff;
+        box-shadow: 0 0 18px 2px rgba(62,207,190,0.45);
+        transform: translateY(-2px) scale(1.07);
+        border-color: rgba(62,207,190,0.55);
+      }
+    }
+    /* arrows glow brighter at their moment */
+    .why-section .flow-steps > .fa {
+      animation-name: pipeWaveArrow;
+    }
+    @keyframes pipeWaveArrow {
+      0%, 26%, 100% { color: rgba(62,207,190,0.4); transform: translateX(0) scale(1); }
+      8% { color: #6FE6D8; transform: translateX(-2px) scale(1.3); filter: drop-shadow(0 0 6px rgba(62,207,190,0.7)); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .why-section .flow-steps > * { animation: none !important; }
+    }
+
+    /* Why text — crisp */
+    .why-inner h2 { color: #fff !important; }
+
+    /* ═══ TYPE CARDS — dark glass + Glowing Effect (override the light section-white) ═══ */
+    @property --glow-angle { syntax: '<angle>'; initial-value: 90deg; inherits: false; }
+    .int-types.section-white .type-card,
+    .section-white .type-card,
+    .type-card {
+      background: rgba(15,12,30,0.4) !important;
+      border: 1px solid rgba(255,255,255,0.06) !important;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+    }
+    .section-white .type-card h3, .type-card h3 { color: #fff !important; }
+    .section-white .type-card p, .type-card p { color: rgba(255,255,255,0.55) !important; }
+    .section-white .tag, .type-tags .tag, .tag {
+      background: rgba(255,255,255,0.04) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      color: rgba(255,255,255,0.62) !important;
+      transition: background .3s ease, border-color .3s ease, color .3s ease;
+    }
+    .type-card:hover .tag { border-color: rgba(62,207,190,0.20) !important; }
+    /* Glowing Effect — conic border glow pointing toward cursor */
+    .type-card::before {
+      content:''; position:absolute; inset:0; border-radius: inherit; padding: 1.5px;
+      background: conic-gradient(from var(--glow-angle) at center,
+        transparent 0deg, rgba(62,207,190,0.85) 55deg, rgba(111,230,216,1) 90deg, rgba(62,207,190,0.85) 125deg, transparent 180deg);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: 0; transition: opacity .35s ease; z-index: 2; pointer-events: none;
+    }
+    .type-card:hover::before { opacity: 1; }
+    .type-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.55), 0 0 26px rgba(62,207,190,0.12) !important;
+    }
+    .type-icon { transition: background .3s ease, transform .45s cubic-bezier(.22,1,.36,1) !important; }
+    .type-card:hover .type-icon { background: rgba(62,207,190,0.18) !important; transform: scale(1.08) rotate(-4deg); }
+
+    /* Hide legacy tri-divider */
+    .tri-divider { display: none !important; }
+
+    /* ═══ AMBIENT FLOATING TRIANGLES ═══ */
+    .ambient-tri { position: absolute; pointer-events: none; z-index: 0; animation: ambientFloat ease-in-out infinite; }
+    .ambient-tri svg { width: 100%; height: 100%; display: block; }
+    .ambient-tri polygon { fill: rgba(62,207,190,0.04); stroke: rgba(62,207,190,0.15); stroke-width: 1; stroke-linejoin: round; }
+    @keyframes ambientFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .ambient-tri.atri-1 { width:180px; height:156px; top:240px; right:-50px; animation-duration:14s; }
+    .ambient-tri.atri-2 { width:110px; height:95px; top:900px; left:-30px; animation-duration:16s; animation-delay:-4s; }
+    .ambient-tri.atri-3 { width:90px; height:78px; top:1700px; right:7%; animation-duration:13s; animation-delay:-7s; }
+    .ambient-tri.atri-4 { width:70px; height:60px; bottom:300px; left:6%; animation-duration:12s; animation-delay:-2s; }
+    @media (prefers-reduced-motion: reduce) { .ambient-tri, body::after { animation: none !important; } }
+    @media (max-width: 960px) { .ambient-tri.atri-3 { display:none; } .ambient-tri.atri-1 { width:110px; height:95px; right:-30px; } }
   </style>
 </head>
 <body>
 
+<!-- AMBIENT FLOATING TRIANGLES — visual continuity with homepage -->
+<div class="ambient-tri atri-1" aria-hidden="true"><svg viewBox="0 0 100 87"><polygon points="50,5 95,82 5,82"/></svg></div>
+<div class="ambient-tri atri-2" aria-hidden="true"><svg viewBox="0 0 100 87"><polygon points="50,82 95,5 5,5"/></svg></div>
+<div class="ambient-tri atri-3" aria-hidden="true"><svg viewBox="0 0 100 87"><polygon points="50,5 95,82 5,82"/></svg></div>
+<div class="ambient-tri atri-4" aria-hidden="true"><svg viewBox="0 0 100 87"><polygon points="50,82 95,5 5,5"/></svg></div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-home">🏠 דף הבית</a>
+    <a href="index.html" class="nav-home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> דף הבית</a>
     <div class="nav-logo">
       <a href="index.html"><img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;" /></a>
     </div>
@@ -758,10 +1189,10 @@
       <h1>וונדי מתחברת<br/>לארגון שלכם —<br/><span class="ac">באמת.</span></h1>
       <p>בניגוד לפלטפורמות מדף, וונדי היא חברת מוצר שמבצעת ממשקים ייעודיים לפי צורך ארגוני, כדי לספק לעובדים One Stop Shop אמיתי.</p>
       <ul class="hero-bullets">
-        <li><span class="bi">🔗</span> ממשקים מותאמים אישית לפי תהליכים קיימים</li>
-        <li><span class="bi">🧩</span> חיבור למערכות ליבה — שכר, נוכחות, משמרות, HR, BI ועוד</li>
-        <li><span class="bi">🏢</span> ניסיון מוכח בארגונים גדולים ומורכבים</li>
-        <li><span class="bi">🚀</span> פיתוח, תחזוקה ותמיכה — במקום אחד</li>
+        <li><span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></svg></span> ממשקים מותאמים אישית לפי תהליכים קיימים</li>
+        <li><span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.5 7c.83 0 1.5-.67 1.5-1.5v-.5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v.5C7 6.33 7.67 7 8.5 7h7Z"/><path d="M19 7h-1a2 2 0 0 0-2 2c0 .83-.67 1.5-1.5 1.5h-5C8.67 10.5 8 9.83 8 9a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/></svg></span> חיבור למערכות ליבה — שכר, נוכחות, משמרות, HR, BI ועוד</li>
+        <li><span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg></span> ניסיון מוכח בארגונים גדולים ומורכבים</li>
+        <li><span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span> פיתוח, תחזוקה ותמיכה — במקום אחד</li>
       </ul>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
         <a href="#contact" class="btn-p">דברו איתנו על אינטגרציה</a>
@@ -769,37 +1200,66 @@
       </div>
     </div>
 
-    <!-- Connection visual -->
-    <div class="conn-visual fade-up">
-      <div class="conn-center">
-        <div class="conn-systems">
-          <div class="conn-sys">SAP HR</div>
-          <div class="conn-sys">Priority</div>
-          <div class="conn-sys">Oracle</div>
-          <div class="conn-sys">Agresso</div>
-          <div class="conn-sys">Comeet</div>
-          <div class="conn-sys">BI / Data</div>
-        </div>
-        <div class="conn-arrows">
-          <span class="conn-arrow">↓</span>
-          <span class="conn-arrow">↓</span>
-          <span class="conn-arrow">↓</span>
-        </div>
-        <div class="conn-wendi">Wendi — One Stop Shop</div>
-        <div class="conn-arrows">
-          <span class="conn-arrow">↓</span>
-          <span class="conn-arrow">↓</span>
-          <span class="conn-arrow">↓</span>
-        </div>
-        <div class="conn-systems">
-          <div class="conn-sys">💼 מנהל</div>
-          <div class="conn-sys">👷 עובד שטח</div>
-          <div class="conn-sys">🏥 קליני</div>
-          <div class="conn-sys">📱 מובייל</div>
-          <div class="conn-sys">💻 דסקטופ</div>
-          <div class="conn-sys">🌐 כל מכשיר</div>
-        </div>
-      </div>
+    <!-- Animated Beam Hub — systems flow into Wendi, out to every user/device -->
+    <div class="beam-wrap fade-up">
+      <svg class="beam-svg" viewBox="0 0 460 500" fill="none" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="beamGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#3ECFBE" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#6FE6D8"/>
+            <stop offset="1" stop-color="#3ECFBE" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- base connection lines -->
+        <g class="beam-base">
+          <path d="M105 40 C 165 40, 165 250, 182 250"/>
+          <path d="M105 125 C 170 125, 175 250, 182 250"/>
+          <path d="M105 210 C 175 210, 178 250, 182 250"/>
+          <path d="M105 290 C 175 290, 178 250, 182 250"/>
+          <path d="M105 375 C 170 375, 175 250, 182 250"/>
+          <path d="M105 460 C 165 460, 165 250, 182 250"/>
+          <path d="M278 250 C 295 250, 295 40, 355 40"/>
+          <path d="M278 250 C 290 250, 285 125, 355 125"/>
+          <path d="M278 250 C 285 250, 282 210, 355 210"/>
+          <path d="M278 250 C 285 250, 282 290, 355 290"/>
+          <path d="M278 250 C 290 250, 285 375, 355 375"/>
+          <path d="M278 250 C 295 250, 295 460, 355 460"/>
+        </g>
+        <!-- animated light pulses (same paths, gradient stroke + traveling dash) -->
+        <g class="beam-flow">
+          <path d="M105 40 C 165 40, 165 250, 182 250" pathLength="276"/>
+          <path d="M105 125 C 170 125, 175 250, 182 250" pathLength="276"/>
+          <path d="M105 210 C 175 210, 178 250, 182 250" pathLength="276"/>
+          <path d="M105 290 C 175 290, 178 250, 182 250" pathLength="276"/>
+          <path d="M105 375 C 170 375, 175 250, 182 250" pathLength="276"/>
+          <path d="M105 460 C 165 460, 165 250, 182 250" pathLength="276"/>
+          <path d="M278 250 C 295 250, 295 40, 355 40" pathLength="276"/>
+          <path d="M278 250 C 290 250, 285 125, 355 125" pathLength="276"/>
+          <path d="M278 250 C 285 250, 282 210, 355 210" pathLength="276"/>
+          <path d="M278 250 C 285 250, 282 290, 355 290" pathLength="276"/>
+          <path d="M278 250 C 290 250, 285 375, 355 375" pathLength="276"/>
+          <path d="M278 250 C 295 250, 295 460, 355 460" pathLength="276"/>
+        </g>
+      </svg>
+
+      <!-- LEFT: source systems -->
+      <div class="beam-node bn-l y1">SAP HR</div>
+      <div class="beam-node bn-l y2">Priority</div>
+      <div class="beam-node bn-l y3">Oracle</div>
+      <div class="beam-node bn-l y4">Agresso</div>
+      <div class="beam-node bn-l y5">Comeet</div>
+      <div class="beam-node bn-l y6">BI / Data</div>
+
+      <!-- CENTER: Wendi hub -->
+      <div class="beam-hub"><span>Wendi<br/>One Stop Shop</span></div>
+
+      <!-- RIGHT: users / devices -->
+      <div class="beam-node bn-r y1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> מנהל</div>
+      <div class="beam-node bn-r y2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 21a8 8 0 0 0-12 0"/><circle cx="12" cy="11" r="4"/><path d="M2.5 12a9.5 9.5 0 0 1 19 0"/></svg> עובד שטח</div>
+      <div class="beam-node bn-r y3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v4"/><path d="M14 14h-4"/><path d="M14 18h-4"/><path d="M14 8h-4"/><path d="M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/><path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18"/></svg> קליני</div>
+      <div class="beam-node bn-r y4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg> מובייל</div>
+      <div class="beam-node bn-r y5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg> דסקטופ</div>
+      <div class="beam-node bn-r y6"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> כל מכשיר</div>
     </div>
   </div>
 </section>
@@ -909,19 +1369,19 @@
       </div>
       <div class="diff-text fade-up">
         <div class="diff-card">
-          <h4>🤝 אפיון משותף</h4>
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg> אפיון משותף</h4>
           <p>אנחנו מתחילים בהבנת הצורך העסקי שלכם — מה המידע, מי המשתמשים, ומה המטרה. לא מוכרים לכם חיבור גנרי.</p>
         </div>
         <div class="diff-card">
-          <h4>⚙️ פיתוח ייעודי</h4>
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> פיתוח ייעודי</h4>
           <p>כל ממשק מפותח במיוחד לארגון שלכם — לפי תהליכים, הרשאות ומבנה ארגוני. לא Template, לא "plug and play" שלא עובד.</p>
         </div>
         <div class="diff-card">
-          <h4>🛡️ אחריות מלאה</h4>
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg> אחריות מלאה</h4>
           <p>פיתוח, בדיקות, עלייה לאוויר, תחזוקה ושדרוגים — הכל תחת אחריות של גורם אחד. אתם לא נעים בין ספקים.</p>
         </div>
         <div class="diff-card">
-          <h4>📈 גדל עם הארגון</h4>
+          <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg> גדל עם הארגון</h4>
           <p>כשהארגון גדל, הממשק גדל איתו. מבצעים שינויים ועדכונים לאורך כל חיי המוצר.</p>
         </div>
       </div>
@@ -937,7 +1397,7 @@
     <p class="sec-sub fade-up">וונדי יודעת להתחבר לכל סוג מערכת — ישנה, חדשה, פנים-ארגונית או חיצונית.</p>
     <div class="types-grid">
       <div class="type-card fade-up">
-        <div class="type-icon">👥</div>
+        <div class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
         <h3>מערכות HR ושכר</h3>
         <p>נתוני עובדים, מבנה ארגוני, תפקידים, מחלקות וסטטוס העסקה — בזמן אמת ולפי הרשאות.</p>
         <div class="type-tags">
@@ -949,7 +1409,7 @@
         </div>
       </div>
       <div class="type-card fade-up">
-        <div class="type-icon">⏰</div>
+        <div class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
         <h3>נוכחות, משמרות וגיוס</h3>
         <p>הצגת משמרות, דיווח נוכחות, חבר מביא חבר ומכרזים פנימיים — ישירות לעובד בנייד.</p>
         <div class="type-tags">
@@ -960,7 +1420,7 @@
         </div>
       </div>
       <div class="type-card fade-up">
-        <div class="type-icon">📊</div>
+        <div class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16h2v3H7z" fill="currentColor"/><path d="M12 11h2v8h-2z" fill="currentColor"/><path d="M17 7h2v12h-2z" fill="currentColor"/></svg></div>
         <h3>מערכות BI ו-Data</h3>
         <p>מדדי שימושיות, מעורבות עובדים ומדדים ניהוליים — מחוברים למקורות הנתונים שלכם.</p>
         <div class="type-tags">
@@ -971,7 +1431,7 @@
         </div>
       </div>
       <div class="type-card fade-up">
-        <div class="type-icon">🔧</div>
+        <div class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
         <h3>מערכות ייעודיות ו-Legacy</h3>
         <p>מערכות פנים-ארגוניות, פתרונות ישנים ופיתוחים פנימיים של הלקוח — מחוברים דרך API מותאם.</p>
         <div class="type-tags">
@@ -995,7 +1455,7 @@
     <p class="sec-sub fade-up">אלה חלק מהמערכות שחיברנו בפועל אצל לקוחותינו.</p>
     <div class="systems-grid fade-up">
       <div class="sys-cat">
-        <h4>🔹 HR ושכר</h4>
+        <h4><span class="sc-dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" transform="rotate(45 12 12)"/></svg></span>HR ושכר</h4>
         <ul>
           <li>SAP HR / SAP SuccessFactors</li>
           <li>Oracle HCM</li>
@@ -1006,7 +1466,7 @@
         </ul>
       </div>
       <div class="sys-cat">
-        <h4>🔹 גיוס ונוכחות</h4>
+        <h4><span class="sc-dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" transform="rotate(45 12 12)"/></svg></span>גיוס ונוכחות</h4>
         <ul>
           <li>Comeet</li>
           <li>Synerion</li>
@@ -1017,7 +1477,7 @@
         </ul>
       </div>
       <div class="sys-cat">
-        <h4>🔹 למידה ו-LMS</h4>
+        <h4><span class="sc-dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" transform="rotate(45 12 12)"/></svg></span>למידה ו-LMS</h4>
         <ul>
           <li>Moodle</li>
           <li>TalentLMS</li>
@@ -1028,7 +1488,7 @@
         </ul>
       </div>
       <div class="sys-cat">
-        <h4>🔹 תפעול ותקשורת</h4>
+        <h4><span class="sc-dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" transform="rotate(45 12 12)"/></svg></span>תפעול ותקשורת</h4>
         <ul>
           <li>Microsoft Teams</li>
           <li>SharePoint</li>
@@ -1200,6 +1660,18 @@
       const menu = document.getElementById('mobileMenu');
       const btn = document.getElementById('hamburger');
       menu.classList.remove('open'); btn.classList.remove('open'); document.body.style.overflow = '';
+    });
+  });
+
+  /* ═══ 21st.dev GLOWING EFFECT — border glow follows cursor angle + spotlight ═══ */
+  document.querySelectorAll('.type-card, .sys-cat').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      card.style.setProperty('--mx', x + 'px');
+      card.style.setProperty('--my', y + 'px');
+      const cx = r.width / 2, cy = r.height / 2;
+      card.style.setProperty('--glow-angle', (Math.atan2(y - cy, x - cx) * 180 / Math.PI - 90) + 'deg');
     });
   });
 
