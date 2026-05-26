@@ -2039,7 +2039,8 @@
       font-size: .9rem;
       max-width: 82%;
       line-height: 1.55;
-      animation: mxMsgIn .55s cubic-bezier(.22,1,.36,1) both;
+      animation: mxMsgIn .5s cubic-bezier(.22,1,.36,1) both;
+      flex-shrink: 0;
     }
     .mx-msg.user {
       background: rgba(255,255,255,.07);
@@ -2055,13 +2056,20 @@
       color: rgba(255,255,255,.95);
     }
     .mx-msg.bot strong { color: var(--teal); font-weight: 600; }
-    /* Stagger conversation timing */
-    .mx-msg:nth-child(1) { animation-delay: .25s; }
-    .mx-msg:nth-child(2) { animation-delay: 1.0s; }
-    .mx-msg:nth-child(3) { animation-delay: 2.0s; }
-    .mx-msg:nth-child(4) { animation-delay: 2.9s; }
-    .mx-msg:nth-child(5) { animation-delay: 4.1s; }
-    .mx-msg:nth-child(6) { animation-delay: 5.0s; }
+    /* Leaving message — slide up + fade out */
+    .mx-msg.is-leaving, .mx-typing-row.is-leaving {
+      animation: mxMsgOut .55s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    @keyframes mxMsgOut {
+      to {
+        opacity: 0;
+        transform: translateY(-14px) scale(.96);
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: -12px;
+      }
+    }
     .mx-typing-row {
       display: inline-flex;
       align-self: flex-start;
@@ -2070,7 +2078,8 @@
       border-radius: 14px;
       border-bottom-left-radius: 4px;
       gap: 5px;
-      animation: mxMsgIn .55s cubic-bezier(.22,1,.36,1) 6.0s both;
+      animation: mxMsgIn .5s cubic-bezier(.22,1,.36,1) both;
+      flex-shrink: 0;
     }
     .mx-typing-row span {
       width: 6px; height: 6px;
@@ -3059,15 +3068,7 @@
             <span class="mx-chat-chrome-url">wendi.ai/dana</span>
             <span class="mx-chat-status">פעיל עכשיו</span>
           </div>
-          <div class="mx-chat-body">
-            <div class="mx-msg user">כמה ימי חופש נשארו לי?</div>
-            <div class="mx-msg bot">נשארו לך <strong>14 ימים</strong> — ניתן לנצל עד 31.12.</div>
-            <div class="mx-msg user">אפשר להזמין ל-14–21 באפריל?</div>
-            <div class="mx-msg bot">בדקתי, אין חפיפה. אישרתי אוטומטית ✓<br/>שלחתי עדכון גם לסמנכ"ל.</div>
-            <div class="mx-msg user">תודה! ומתי המשכורת?</div>
-            <div class="mx-msg bot">תועבר ב-<strong>12.6</strong> כרגיל.</div>
-            <div class="mx-typing-row"><span></span><span></span><span></span></div>
-          </div>
+          <div class="mx-chat-body" id="mxChatBody"></div>
           <div class="mx-chat-input">
             <span class="mx-chat-input-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
@@ -4085,6 +4086,124 @@
 
     window.addEventListener('resize', () => { resize(); }, { passive: true });
     resize();
+  })();
+
+  /* ═══ MODULES CHAT — infinite-loop conversation player ═══ */
+  (function(){
+    const body = document.getElementById('mxChatBody');
+    if (!body) return;
+
+    // Conversation script — loops forever
+    const script = [
+      { type: 'user',   text: 'כמה ימי חופש נשארו לי?' },
+      { type: 'typing', dur:  1100 },
+      { type: 'bot',    text: 'נשארו לך <strong>14 ימים</strong> — ניתן לנצל עד 31.12.', after: 1700 },
+      { type: 'user',   text: 'אפשר להזמין ל-14–21 באפריל?', after: 1300 },
+      { type: 'typing', dur:  1200 },
+      { type: 'bot',    text: 'בדקתי, אין חפיפה. אישרתי אוטומטית ✓<br/>שלחתי עדכון גם לסמנכ"ל.', after: 2000 },
+      { type: 'user',   text: 'תודה! ומתי המשכורת?', after: 1400 },
+      { type: 'typing', dur:  900  },
+      { type: 'bot',    text: 'תועבר ב-<strong>12.6</strong> כרגיל.', after: 2100 },
+      { type: 'user',   text: 'מה הקורס הקרוב לבטיחות?', after: 1400 },
+      { type: 'typing', dur:  1100 },
+      { type: 'bot',    text: 'הקורס הקרוב: <strong>15.6 ב-09:00</strong>. אשלח לך תזכורת.', after: 2200 },
+      { type: 'user',   text: 'איך מאשרים תקציב לכנס?', after: 1400 },
+      { type: 'typing', dur:  1200 },
+      { type: 'bot',    text: 'הוועדה הכספית. שלחתי בקשה — תגובה תוך 2 ימים.', after: 2200 },
+      { type: 'user',   text: 'מה ההטבות לעובד חדש?', after: 1400 },
+      { type: 'typing', dur:  1100 },
+      { type: 'bot',    text: 'קרן השתלמות, ביטוח בריאות, סבסוד ארוחות וצ׳ופרים. שלחתי PDF מפורט.', after: 2400 },
+      { type: 'user',   text: 'מי המנהל הישיר שלי?', after: 1400 },
+      { type: 'typing', dur:  900  },
+      { type: 'bot',    text: '<strong>איתי כהן</strong> — מנהל מחלקת תפעול. נוכח היום.', after: 2200 },
+      { type: 'user',   text: 'יש משוב 360 השנה?', after: 1400 },
+      { type: 'typing', dur:  1000 },
+      { type: 'bot',    text: 'כן, מחזור הערכות נפתח ב-<strong>1.7</strong>. אשלח לך הזמנה.', after: 2500 },
+    ];
+
+    const MAX_VISIBLE = 7;
+    const tracked = [];
+    let typingEl = null;
+    let i = 0;
+    let timerId = null;
+    let started = false;
+
+    function createMsg(type, html) {
+      const el = document.createElement('div');
+      if (type === 'typing') {
+        el.className = 'mx-typing-row';
+        el.innerHTML = '<span></span><span></span><span></span>';
+      } else {
+        el.className = 'mx-msg ' + type;
+        el.innerHTML = html;
+      }
+      return el;
+    }
+
+    function cull() {
+      while (tracked.length > MAX_VISIBLE) {
+        const old = tracked.shift();
+        if (!old || !old.parentNode) continue;
+        old.classList.add('is-leaving');
+        // Allow CSS exit animation to finish then remove from DOM
+        setTimeout(() => { if (old.parentNode) old.remove(); }, 600);
+      }
+    }
+
+    function removeTyping() {
+      if (!typingEl) return;
+      const idx = tracked.indexOf(typingEl);
+      if (idx >= 0) tracked.splice(idx, 1);
+      if (typingEl.parentNode) typingEl.remove();
+      typingEl = null;
+    }
+
+    function step() {
+      if (i >= script.length) i = 0;
+      const ev = script[i++];
+
+      if (ev.type === 'typing') {
+        // make sure no stale typing
+        removeTyping();
+        typingEl = createMsg('typing');
+        body.appendChild(typingEl);
+        tracked.push(typingEl);
+        cull();
+        timerId = setTimeout(step, ev.dur || 1000);
+        return;
+      }
+
+      // user/bot message: clear typing if present, append message
+      removeTyping();
+      const msg = createMsg(ev.type, ev.text);
+      body.appendChild(msg);
+      tracked.push(msg);
+      cull();
+      timerId = setTimeout(step, ev.after || 1200);
+    }
+
+    function start() {
+      if (started) return;
+      started = true;
+      body.innerHTML = '';
+      tracked.length = 0;
+      i = 0;
+      timerId = setTimeout(step, 400);
+    }
+
+    function stop() {
+      started = false;
+      if (timerId) { clearTimeout(timerId); timerId = null; }
+    }
+
+    // Start when chat is in viewport, pause when out (save CPU)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) start();
+        else stop();
+      });
+    }, { threshold: .15 });
+    io.observe(body);
   })();
 
   /* ═══ APPS MARQUEE — cursor-tracking glow on iPhone cards ═══ */
