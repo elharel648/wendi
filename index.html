@@ -2336,72 +2336,143 @@
       align-items: stretch;
     }
 
-    /* LEFT: AI Chat with ongoing conversation */
-    .mx-chat-col { position: relative; }
-    .mx-chat {
-      background: rgba(0,0,0,.5);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 18px;
+    /* LEFT: AI Chat in an iPhone frame */
+    .mx-chat-col {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 12px;
+    }
+    /* Ambient teal glow behind the phone */
+    .mx-chat-col::before {
+      content: '';
+      position: absolute;
+      inset: 10% 5%;
+      background: radial-gradient(circle at center, rgba(62,207,190,.18), rgba(74,144,196,.06) 45%, transparent 70%);
+      filter: blur(36px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .mx-phone {
+      position: relative;
+      width: 320px;
+      height: 640px;
+      background: linear-gradient(180deg, #1a2438 0%, #0c1320 100%);
+      border-radius: 44px;
+      padding: 7px;
+      box-shadow:
+        0 40px 80px rgba(0,0,0,.6),
+        0 0 0 1px rgba(255,255,255,.08),
+        inset 0 1px 0 rgba(255,255,255,.08),
+        inset 0 0 0 1px rgba(0,0,0,.4);
+      transform: perspective(1400px) rotateY(-4deg) rotateX(1deg);
+      transition: transform .8s cubic-bezier(.22,1,.36,1);
+      z-index: 1;
+    }
+    .mx-phone:hover {
+      transform: perspective(1400px) rotateY(0deg) rotateX(0deg);
+    }
+    .mx-phone-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 38px;
+      background: linear-gradient(180deg, #061425 0%, #0a1a30 100%);
       overflow: hidden;
-      box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
-      height: 100%;
-      min-height: 620px;
+      position: relative;
     }
-    .mx-chat-chrome {
-      background: rgba(255,255,255,.025);
-      padding: 12px 16px;
+    /* Dynamic Island notch (modern iPhone style) */
+    .mx-phone-notch {
+      position: absolute;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      width: 90px; height: 26px;
+      background: #000;
+      border-radius: 18px;
+      z-index: 3;
+    }
+    /* Status bar (time + signal/battery) */
+    .mx-phone-status {
+      padding: 14px 22px 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: .68rem;
+      color: rgba(255,255,255,.7);
+      font-weight: 600;
+      font-feature-settings: "tnum";
+    }
+    .mx-phone-status-icons {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .mx-phone-status-icons svg { width: 14px; height: 14px; }
+    /* App header (Wendi branding) */
+    .mx-phone-header {
+      padding: 16px 18px 14px;
       display: flex;
       align-items: center;
-      gap: 9px;
-      border-bottom: 1px solid rgba(255,255,255,.05);
+      gap: 10px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      margin-top: 14px;
     }
-    .mx-chat-chrome-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-    .mx-chat-chrome-dot.r { background: #ff5f56; }
-    .mx-chat-chrome-dot.y { background: #ffbd2e; }
-    .mx-chat-chrome-dot.g { background: #27c93f; }
-    .mx-chat-chrome-url {
-      font-size: .72rem;
-      color: rgba(255,255,255,.4);
-      margin-right: auto;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      direction: ltr;
+    .mx-phone-logo {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #061520;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 14px rgba(62,207,190,.4);
     }
-    .mx-chat-status {
-      font-size: .68rem;
-      color: rgba(76,217,100,.9);
+    .mx-phone-meta { flex: 1; min-width: 0; }
+    .mx-phone-meta strong {
+      display: block;
+      font-size: .92rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -.1px;
+    }
+    .mx-phone-meta span {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
+      font-size: .68rem;
+      color: rgba(76,217,100,.9);
       font-weight: 500;
     }
-    .mx-chat-status::before {
+    .mx-phone-meta span::before {
       content: '';
-      width: 6px; height: 6px;
+      width: 5px; height: 5px;
       border-radius: 50%;
       background: #4cd964;
-      box-shadow: 0 0 8px #4cd964;
+      box-shadow: 0 0 6px #4cd964;
       animation: mxStatusPulse 2s ease-in-out infinite;
     }
     @keyframes mxStatusPulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
     .mx-chat-body {
       flex: 1;
-      padding: 26px 22px;
+      padding: 18px 14px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       overflow: hidden;
     }
     .mx-msg {
-      padding: 11px 16px;
+      padding: 9px 13px;
       border-radius: 14px;
-      font-size: .9rem;
-      max-width: 82%;
-      line-height: 1.55;
+      font-size: .82rem;
+      max-width: 80%;
+      line-height: 1.5;
       animation: mxMsgIn .5s cubic-bezier(.22,1,.36,1) both;
       flex-shrink: 0;
     }
@@ -2437,15 +2508,15 @@
       display: inline-flex;
       align-self: flex-start;
       background: rgba(255,255,255,.04);
-      padding: 12px 16px;
+      padding: 10px 14px;
       border-radius: 14px;
       border-bottom-left-radius: 4px;
-      gap: 5px;
+      gap: 4px;
       animation: mxMsgIn .5s cubic-bezier(.22,1,.36,1) both;
       flex-shrink: 0;
     }
     .mx-typing-row span {
-      width: 6px; height: 6px;
+      width: 5px; height: 5px;
       border-radius: 50%;
       background: rgba(62,207,190,.85);
       animation: mxTypeDot 1.4s ease-in-out infinite;
@@ -2460,20 +2531,44 @@
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .mx-chat-input {
-      border-top: 1px solid rgba(255,255,255,.05);
-      padding: 14px 18px;
+    /* Phone-style input bar */
+    .mx-phone-input {
+      margin: 0 12px 14px;
+      padding: 11px 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: .85rem;
-      color: rgba(255,255,255,.32);
+      font-size: .78rem;
+      color: rgba(255,255,255,.4);
     }
-    .mx-chat-input-icon {
+    .mx-phone-input-icon {
       width: 16px; height: 16px;
-      color: rgba(255,255,255,.35);
+      color: rgba(255,255,255,.4);
+      flex-shrink: 0;
     }
-    .mx-chat-input-icon svg { width: 100%; height: 100%; stroke-width: 1.6; }
+    .mx-phone-input-icon svg { width: 100%; height: 100%; stroke-width: 1.6; }
+    .mx-phone-input-mic {
+      margin-right: auto;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #061520;
+      flex-shrink: 0;
+    }
+    .mx-phone-input-mic svg { width: 14px; height: 14px; stroke-width: 2; }
+    /* Home indicator at bottom */
+    .mx-phone-home-bar {
+      width: 100px; height: 4px;
+      background: rgba(255,255,255,.4);
+      border-radius: 2px;
+      margin: 0 auto 8px;
+    }
 
     /* RIGHT: Module grid — blueprint style */
     .mx-grid {
@@ -2585,7 +2680,8 @@
 
     @media (max-width: 1100px) {
       .mx-layout { grid-template-columns: 1fr; gap: 24px; }
-      .mx-chat { min-height: 520px; }
+      .mx-phone { transform: none; }
+      .mx-chat-col { padding: 20px 0; }
       .mx-grid { min-height: 540px; }
     }
     @media (max-width: 640px) {
@@ -3423,23 +3519,38 @@
 
       <!-- LEFT: AI Chat with ongoing conversation -->
       <div class="mx-chat-col">
-        <div class="mx-chat">
-          <div class="mx-chat-chrome">
-            <span class="mx-chat-chrome-dot r"></span>
-            <span class="mx-chat-chrome-dot y"></span>
-            <span class="mx-chat-chrome-dot g"></span>
-            <span class="mx-chat-chrome-url">wendi.ai/dana</span>
-            <span class="mx-chat-status">פעיל עכשיו</span>
-          </div>
-          <div class="mx-chat-body" id="mxChatBody"></div>
-          <div class="mx-chat-input">
-            <span class="mx-chat-input-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
-            </span>
-            <span>שאלו אותי כל דבר על HR…</span>
-          </div>
-        </div>
-      </div>
+        <div class="mx-phone">
+          <div class="mx-phone-screen">
+            <div class="mx-phone-notch"></div>
+            <div class="mx-phone-status">
+              <span>9:41</span>
+              <span class="mx-phone-status-icons">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 14h2v6H1zm5-4h2v10H6zm5-4h2v14h-2zm5-4h2v18h-2z"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="8" width="18" height="10" rx="2" stroke="currentColor" fill="none" stroke-width="1.5"/><rect x="3" y="9" width="14" height="8" rx="1"/><rect x="21" y="11" width="2" height="4" rx="0.5"/></svg>
+              </span>
+            </div>
+            <div class="mx-phone-header">
+              <div class="mx-phone-logo">W</div>
+              <div class="mx-phone-meta">
+                <strong>Wendi</strong>
+                <span>פעיל עכשיו</span>
+              </div>
+            </div>
+            <div class="mx-chat-body" id="mxChatBody"></div>
+            <div class="mx-phone-input">
+              <span class="mx-phone-input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              </span>
+              <span>שאלו אותי כל דבר על HR…</span>
+              <span class="mx-phone-input-mic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              </span>
+            </div>
+            <div class="mx-phone-home-bar"></div>
+          </div><!-- /mx-phone-screen -->
+        </div><!-- /mx-phone -->
+      </div><!-- /mx-chat-col -->
 
       <!-- RIGHT: Module grid (blueprint feel) -->
       <div class="mx-grid">
