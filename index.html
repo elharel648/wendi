@@ -271,6 +271,50 @@
     .trust-pill { background: var(--surface-2); border: 1px solid var(--border); padding: 5px 14px; border-radius: 7px; font-size: .78rem; color: var(--muted); font-weight: 600; }
     .hero-char img { width: 100%; height: auto; mix-blend-mode: screen; filter: drop-shadow(0 0 40px rgba(62,207,190,.35)) drop-shadow(0 0 80px rgba(62,207,190,.15)); animation: float 4s ease-in-out infinite; }
 
+    /* ── HERO SPOTLIGHT — aceternity-inspired static angled blur ── */
+    .hero-spotlight-svg {
+      position: absolute;
+      height: 169%;
+      width: 138%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      z-index: 0;
+      pointer-events: none;
+      animation: heroSpotlightIn 2s cubic-bezier(.22,1,.36,1) .25s forwards;
+      will-change: opacity, transform;
+    }
+    @media (min-width: 1024px) { .hero-spotlight-svg { width: 84%; } }
+    @keyframes heroSpotlightIn {
+      0%   { opacity: 0; transform: translate(-72%, -62%) scale(.96); }
+      100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
+    }
+
+    /* ── HERO INTERACTIVE GLOW — mouse-follow radial gradient ── */
+    .hero-interactive-glow {
+      position: absolute;
+      width: 540px; height: 540px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center,
+                  rgba(62,207,190,.22) 0%,
+                  rgba(74,144,196,.10) 32%,
+                  transparent 72%);
+      filter: blur(28px);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .45s ease;
+      z-index: 0;
+      mix-blend-mode: screen;
+      transform: translate3d(-50%, -50%, 0);
+      left: 0; top: 0;
+      will-change: transform, opacity;
+    }
+    .hero:hover .hero-interactive-glow { opacity: 1; }
+
+    /* keep hero content above spotlight layers */
+    .hero-inner { position: relative; z-index: 2; }
+    .hero-g1, .hero-g2 { z-index: 0; }
+
     /* ══ PARTNER ══ */
     .partner { padding: 96px 0; background: var(--surface); border-top: 1px solid var(--border); }
 
@@ -313,6 +357,518 @@
     .wcard h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 9px; }
     .wcard p { font-size: .88rem; color: var(--muted); line-height: 1.7; }
 
+    /* ══ "WHAT WENDI DOES" — cinematic ══ */
+    #what {
+      position: relative;
+      overflow: hidden;
+    }
+    #what::before {
+      content: '';
+      position: absolute; left: 50%; top: 8%;
+      width: 900px; height: 900px; transform: translateX(-50%);
+      background: radial-gradient(circle at center, rgba(62,207,190,.08) 0%, rgba(74,144,196,.04) 30%, transparent 65%);
+      pointer-events: none; z-index: 0;
+      animation: ambientBreathe 8s ease-in-out infinite;
+    }
+    @keyframes ambientBreathe {
+      0%,100% { opacity: .55; transform: translateX(-50%) scale(1); }
+      50%     { opacity: .85; transform: translateX(-50%) scale(1.08); }
+    }
+    #what .container { position: relative; z-index: 1; }
+
+    /* ══ LINEAR-STYLE BENTO — product cards with real UI ══ */
+    .bx {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 300px 300px;
+      gap: 14px;
+    }
+    .bx-card {
+      --mx: 50%; --my: 50%;
+      position: relative;
+      background:
+        radial-gradient(circle at top right, rgba(62,207,190,.05), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      overflow: hidden;
+      isolation: isolate;
+      transition: transform .5s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .35s ease;
+      opacity: 0; transform: translateY(24px);
+    }
+    .bx.in-view .bx-card { opacity: 1; transform: translateY(0); transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1), border-color .35s ease, box-shadow .35s ease; }
+    .bx.in-view .bx-card:nth-child(1) { transition-delay: .05s; }
+    .bx.in-view .bx-card:nth-child(2) { transition-delay: .15s; }
+    .bx.in-view .bx-card:nth-child(3) { transition-delay: .25s; }
+    .bx.in-view .bx-card:nth-child(4) { transition-delay: .35s; }
+    .bx.in-view .bx-card:nth-child(5) { transition-delay: .45s; }
+    .bx.in-view .bx-card:hover { transform: translateY(-4px); }
+    .bx-card:hover {
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 28px 60px rgba(0,0,0,.5);
+    }
+    .bx-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(420px circle at var(--mx) var(--my), rgba(62,207,190,.14), transparent 45%);
+      opacity: 0; transition: opacity .4s ease;
+      pointer-events: none; z-index: 0;
+    }
+    .bx-card:hover::before { opacity: 1; }
+
+    .bx-visual {
+      position: absolute; inset: 0;
+      padding: 22px 22px 0;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .bx-meta {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 22px;
+      background: linear-gradient(180deg, transparent 0%, rgba(5,15,30,.6) 30%, rgba(5,15,30,.85) 100%);
+      z-index: 2;
+    }
+    .bx-meta h3 {
+      font-size: 1.02rem; font-weight: 600; color: #fff;
+      margin-bottom: 5px; letter-spacing: -.15px;
+    }
+    .bx-meta p {
+      font-size: .82rem; color: rgba(255,255,255,.55);
+      line-height: 1.55; font-weight: 400;
+    }
+
+    /* Grid placement */
+    .bx-ai    { grid-column: span 2; grid-row: span 2; }
+    .bx-learn { grid-column: span 1; grid-row: span 1; }
+    .bx-comm  { grid-column: span 1; grid-row: span 1; }
+    .bx-perf  { grid-column: span 1; grid-row: span 1; }
+    .bx-flow  { grid-column: span 1; grid-row: span 1; }
+
+    /* ─── AI HERO — chat UI ─── */
+    .bx-ai .bx-visual { padding: 28px 28px 0; }
+    .ai-frame {
+      background: rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
+      width: 100%;
+      transform: translateY(0) rotate(0);
+      transition: transform .6s cubic-bezier(.22,1,.36,1);
+    }
+    .bx-ai:hover .ai-frame { transform: translateY(-3px) rotate(-.4deg); }
+    .ai-chrome {
+      background: rgba(255,255,255,.025);
+      padding: 9px 14px;
+      display: flex; align-items: center; gap: 7px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .ai-chrome-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .ai-chrome-dot.r { background: #ff5f56; }
+    .ai-chrome-dot.y { background: #ffbd2e; }
+    .ai-chrome-dot.g { background: #27c93f; }
+    .ai-chrome-url {
+      font-size: .68rem; color: rgba(255,255,255,.35);
+      margin-right: auto; font-family: ui-monospace, monospace;
+    }
+    .ai-body {
+      padding: 16px 18px;
+      display: flex; flex-direction: column; gap: 9px;
+      min-height: 150px;
+    }
+    .ai-msg-x {
+      padding: 9px 13px; border-radius: 12px;
+      font-size: .82rem; max-width: 78%;
+      line-height: 1.45;
+      animation: aiMsgIn .55s cubic-bezier(.22,1,.36,1) both;
+    }
+    .ai-msg-x.user {
+      background: rgba(255,255,255,.06);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      color: rgba(255,255,255,.92);
+      animation-delay: .2s;
+    }
+    .ai-msg-x.bot {
+      background: linear-gradient(135deg, rgba(62,207,190,.14), rgba(62,207,190,.04));
+      border: 1px solid rgba(62,207,190,.22);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      color: rgba(255,255,255,.92);
+      animation-delay: .7s;
+    }
+    .ai-msg-x.bot strong { color: var(--teal); font-weight: 600; }
+    .ai-typing-x {
+      align-self: flex-start;
+      background: rgba(255,255,255,.04);
+      padding: 10px 14px;
+      border-radius: 12px;
+      border-bottom-left-radius: 4px;
+      display: inline-flex; gap: 4px;
+      animation: aiMsgIn .55s cubic-bezier(.22,1,.36,1) both;
+      animation-delay: 1.3s;
+    }
+    .ai-typing-x span {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(62,207,190,.8);
+      animation: aiTypeDot 1.4s ease-in-out infinite;
+    }
+    .ai-typing-x span:nth-child(2) { animation-delay: .2s; }
+    .ai-typing-x span:nth-child(3) { animation-delay: .4s; }
+    @keyframes aiTypeDot {
+      0%,60%,100% { opacity: .3; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-4px); }
+    }
+    @keyframes aiMsgIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── Learning — big progress ring ─── */
+    .bx-learn .bx-visual { display: flex; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 80px; }
+    .learn-ring-x { position: relative; width: 150px; height: 150px; }
+    .learn-ring-x svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .learn-ring-x .rbg { stroke: rgba(255,255,255,.06); }
+    .learn-ring-x .rfill {
+      stroke: url(#bxRingGrad);
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 8px rgba(62,207,190,.4));
+      stroke-dasharray: 408; stroke-dashoffset: 408;
+      animation: ringDraw 1.8s cubic-bezier(.22,1,.36,1) .4s forwards;
+    }
+    @keyframes ringDraw { to { stroke-dashoffset: 53; } }
+    .learn-num-x {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .learn-num-x strong {
+      font-size: 2.4rem; font-weight: 700; color: #fff;
+      line-height: 1; letter-spacing: -1.5px;
+    }
+    .learn-num-x sup { font-size: .42em; color: rgba(255,255,255,.6); font-weight: 500; }
+    .learn-num-x span {
+      font-size: .68rem; color: rgba(255,255,255,.5);
+      margin-top: 5px; letter-spacing: .02em;
+    }
+
+    /* ─── Communication — single big notification ─── */
+    .bx-comm .bx-visual { display: flex; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 80px; }
+    .notif-x {
+      width: 100%; max-width: 240px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      padding: 14px 16px;
+      box-shadow: 0 18px 40px rgba(0,0,0,.4);
+      backdrop-filter: blur(12px);
+      transform: rotate(-1deg);
+      transition: transform .5s cubic-bezier(.22,1,.36,1);
+    }
+    .bx-comm:hover .notif-x { transform: rotate(0); }
+    .notif-x-head { display: flex; align-items: center; gap: 9px; margin-bottom: 8px; }
+    .notif-x-logo {
+      width: 30px; height: 30px; border-radius: 9px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+      color: #000; font-weight: 800; font-size: .82rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .notif-x-meta { flex: 1; display: flex; align-items: baseline; gap: 6px; }
+    .notif-x-meta strong { font-size: .85rem; color: #fff; font-weight: 600; }
+    .notif-x-meta span { font-size: .7rem; color: rgba(255,255,255,.45); }
+    .notif-x-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--teal); box-shadow: 0 0 10px var(--teal);
+      animation: notifPulse 2s ease-in-out infinite;
+    }
+    @keyframes notifPulse {
+      0%,100% { opacity: 1; }
+      50%     { opacity: .4; }
+    }
+    .notif-x-body { font-size: .8rem; color: rgba(255,255,255,.75); line-height: 1.45; }
+
+    /* ─── Performance — big stat with sparkline ─── */
+    .bx-perf .bx-visual { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 80px; gap: 18px; }
+    .perf-x-num {
+      display: flex; align-items: baseline; gap: 8px;
+      color: var(--teal);
+    }
+    .perf-x-arrow {
+      font-size: 1.4rem; line-height: 1;
+      animation: perfBounce 2s ease-in-out infinite;
+    }
+    @keyframes perfBounce {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-3px); }
+    }
+    .perf-x-num strong {
+      font-size: 3rem; font-weight: 700; line-height: 1;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, var(--teal), #6FE6D8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .perf-x-spark { width: 100%; max-width: 180px; height: 36px; }
+    .perf-x-spark svg { width: 100%; height: 100%; }
+    .perf-x-spark .sp-path {
+      stroke: url(#bxSparkGrad);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 200; stroke-dashoffset: 200;
+      animation: sparkDraw 1.4s cubic-bezier(.22,1,.36,1) .6s forwards;
+      filter: drop-shadow(0 0 4px rgba(62,207,190,.5));
+    }
+    @keyframes sparkDraw { to { stroke-dashoffset: 0; } }
+    .perf-x-spark .sp-fill {
+      fill: url(#bxSparkFill);
+      opacity: 0; animation: sparkFade .6s ease 1.6s forwards;
+    }
+    @keyframes sparkFade { to { opacity: 1; } }
+
+    /* ─── Workflows — flow chain ─── */
+    .bx-flow .bx-visual { display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 80px; gap: 14px; }
+    .flow-x {
+      display: flex; align-items: center; gap: 8px; width: 100%; max-width: 220px;
+    }
+    .flow-x-step {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; font-weight: 700; color: rgba(255,255,255,.65);
+      flex-shrink: 0;
+      transition: all .3s ease;
+    }
+    .flow-x-step.done {
+      background: var(--teal-glow); border-color: var(--border-teal);
+      color: var(--teal);
+    }
+    .flow-x-step.active {
+      background: var(--teal); border-color: var(--teal);
+      color: #000;
+      box-shadow: 0 0 18px rgba(62,207,190,.5);
+      animation: flowActive 2s ease-in-out infinite;
+    }
+    @keyframes flowActive {
+      0%,100% { box-shadow: 0 0 18px rgba(62,207,190,.4); }
+      50%     { box-shadow: 0 0 28px rgba(62,207,190,.75); }
+    }
+    .flow-x-line {
+      flex: 1; height: 2px;
+      background: linear-gradient(to left, var(--teal), rgba(62,207,190,.15));
+      position: relative; overflow: hidden;
+    }
+    .flow-x-line.dim { background: rgba(255,255,255,.08); }
+    .flow-x-line::after {
+      content: ''; position: absolute; top: 0; right: -10px; width: 10px; height: 100%;
+      background: linear-gradient(to left, var(--teal), transparent);
+      animation: flowLineFlow 1.8s linear infinite;
+    }
+    .flow-x-line.dim::after { display: none; }
+    @keyframes flowLineFlow {
+      from { right: 100%; } to { right: -10px; }
+    }
+    .flow-x-labels {
+      display: flex; justify-content: space-between; width: 100%; max-width: 220px;
+      font-size: .68rem; color: rgba(255,255,255,.5);
+    }
+
+    @media (max-width: 1100px) {
+      .bx { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+      .bx-ai { grid-column: span 2; grid-row: span 1; min-height: 380px; }
+      .bx-learn, .bx-comm, .bx-perf, .bx-flow { grid-column: span 1; min-height: 260px; }
+    }
+    @media (max-width: 700px) {
+      .bx { grid-template-columns: 1fr; }
+      .bx-ai, .bx-learn, .bx-comm, .bx-perf, .bx-flow { grid-column: span 1; min-height: 280px; }
+    }
+
+    /* ══ ORBITAL — cinematic integrations showcase ══ */
+    .orbital-section {
+      margin-top: 96px;
+      padding-top: 72px;
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .orbital-section::before {
+      content: '';
+      position: absolute; left: 50%; top: 0;
+      width: 1100px; height: 700px; transform: translateX(-50%);
+      background: radial-gradient(ellipse at center, rgba(62,207,190,.13) 0%, rgba(74,144,196,.06) 30%, transparent 65%);
+      pointer-events: none; z-index: 0;
+      animation: ambientBreathe 7s ease-in-out infinite;
+      filter: blur(20px);
+    }
+
+    .orbital-stage {
+      position: relative;
+      width: min(620px, 100%);
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      perspective: 1200px;
+      transform-style: preserve-3d;
+      z-index: 1;
+    }
+    .orbital-tilt {
+      position: absolute; inset: 0;
+      transition: transform .4s cubic-bezier(.22,1,.36,1);
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    /* Static rings — premium light-from-above */
+    .orbital-ring {
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1px solid transparent;
+      background:
+        linear-gradient(transparent, transparent) padding-box,
+        linear-gradient(180deg, rgba(62,207,190,.5), rgba(255,255,255,.04) 30%, transparent 55%) border-box;
+    }
+    .orbital-ring.mid   { inset: 14%; background: linear-gradient(transparent,transparent) padding-box, linear-gradient(180deg, rgba(62,207,190,.4), rgba(255,255,255,.03) 30%, transparent 55%) border-box; }
+    .orbital-ring.inner { inset: 28%; background: linear-gradient(transparent,transparent) padding-box, linear-gradient(180deg, rgba(62,207,190,.3), rgba(255,255,255,.02) 30%, transparent 55%) border-box; }
+
+    /* Continuously rotating light beam on each ring */
+    .orbital-spin {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid transparent;
+      background: conic-gradient(from 0deg, transparent 0%, rgba(62,207,190,.55) 8%, transparent 16%) border-box;
+      -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      animation: orbitSpin 14s linear infinite;
+      opacity: .6;
+    }
+    .orbital-spin.mid   { inset: 14%; animation-duration: 18s; animation-direction: reverse; }
+    .orbital-spin.inner { inset: 28%; animation-duration: 22s; }
+    @keyframes orbitSpin { to { transform: rotate(360deg); } }
+
+    /* Connection lines from center to each node (SVG) */
+    .orbital-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+    .orbital-line { stroke: rgba(62,207,190,.25); stroke-width: 1; fill: none; stroke-dasharray: 3 6; animation: orbitDash 1.4s linear infinite; }
+    @keyframes orbitDash { to { stroke-dashoffset: -18; } }
+    .orbital-line.glow { stroke: rgba(62,207,190,.7); stroke-width: 1.5; filter: drop-shadow(0 0 6px rgba(62,207,190,.6)); opacity: 0; transition: opacity .35s ease; }
+
+    /* Nodes */
+    .orbital-node {
+      position: absolute;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      z-index: 4;
+      transform-style: preserve-3d;
+      animation: orbitFloat 6s ease-in-out infinite;
+    }
+    .orbital-node:nth-child(2) { animation-delay: -1s; }
+    .orbital-node:nth-child(3) { animation-delay: -2s; }
+    .orbital-node:nth-child(4) { animation-delay: -3s; }
+    .orbital-node:nth-child(5) { animation-delay: -4s; }
+    .orbital-node:nth-child(6) { animation-delay: -5s; }
+    @keyframes orbitFloat {
+      0%,100% { transform: translate(var(--tx,0), var(--ty,0)) translateY(0); }
+      50%     { transform: translate(var(--tx,0), var(--ty,0)) translateY(-6px); }
+    }
+    .orbital-node-chip {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.12);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 12px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.06);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform .35s cubic-bezier(.22,1,.36,1), border-color .3s ease, box-shadow .3s ease;
+      color: #fff; font-weight: 700; font-size: .78rem;
+    }
+    .orbital-node:hover .orbital-node-chip {
+      transform: scale(1.12) translateY(-2px);
+      border-color: var(--border-teal);
+      box-shadow: 0 18px 44px rgba(0,0,0,.5), 0 0 24px rgba(62,207,190,.4), inset 0 1px 0 rgba(255,255,255,.1);
+    }
+    .orbital-node-label {
+      font-size: .72rem; color: rgba(255,255,255,.55);
+      letter-spacing: .01em; font-weight: 500;
+      transition: color .3s ease;
+    }
+    .orbital-node:hover .orbital-node-label { color: #fff; }
+
+    /* Brand-color accent dot per node */
+    .orbital-node-chip::after {
+      content: '';
+      position: absolute; bottom: 8px; right: 8px;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--brand, var(--teal));
+      box-shadow: 0 0 8px var(--brand, var(--teal));
+    }
+
+    /* Hexagonal positions: 3 on outer ring (12/4/8 o'clock), 3 on mid ring (2/6/10) */
+    .orbital-node.n1 { top: 0%;   left: 50%;  --tx: -50%; --ty: -50%; }
+    .orbital-node.n2 { top: 75%;  left: 93%;  --tx: -50%; --ty: -50%; }
+    .orbital-node.n3 { top: 75%;  left: 7%;   --tx: -50%; --ty: -50%; }
+    .orbital-node.n4 { top: 32%;  left: 81%;  --tx: -50%; --ty: -50%; }
+    .orbital-node.n5 { top: 86%;  left: 50%;  --tx: -50%; --ty: -50%; }
+    .orbital-node.n6 { top: 32%;  left: 19%;  --tx: -50%; --ty: -50%; }
+
+    /* Center: Wendi logo — breathing halo */
+    .orbital-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px; height: 120px; border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(62,207,190,.15), rgba(74,144,196,.08) 60%, transparent 100%);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 5;
+    }
+    .orbital-center::before {
+      content: '';
+      position: absolute; inset: 8px; border-radius: 50%;
+      background: linear-gradient(160deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow:
+        0 0 0 6px rgba(62,207,190,.06),
+        0 0 40px rgba(62,207,190,.35),
+        inset 0 1px 0 rgba(255,255,255,.08);
+      backdrop-filter: blur(12px);
+      animation: centerBreathe 4s ease-in-out infinite;
+    }
+    @keyframes centerBreathe {
+      0%,100% { box-shadow: 0 0 0 6px rgba(62,207,190,.06), 0 0 40px rgba(62,207,190,.35), inset 0 1px 0 rgba(255,255,255,.08); }
+      50%     { box-shadow: 0 0 0 14px rgba(62,207,190,.02), 0 0 60px rgba(62,207,190,.55), inset 0 1px 0 rgba(255,255,255,.1); }
+    }
+    .orbital-center img {
+      width: 64px; height: 64px; object-fit: contain;
+      position: relative; z-index: 2;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,.4));
+    }
+
+    /* Text below */
+    .orbital-text {
+      max-width: 540px; margin: 56px auto 0; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .orbital-text h3 {
+      font-size: clamp(1.5rem, 2.2vw, 1.85rem); font-weight: 700; color: #fff;
+      letter-spacing: -.4px; margin-bottom: 14px;
+    }
+    .orbital-text p {
+      font-size: .95rem; color: rgba(255,255,255,.6);
+      line-height: 1.7; margin-bottom: 28px;
+    }
+    .orbital-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 10px;
+      background: rgba(62,207,190,.08);
+      border: 1px solid var(--border-teal);
+      color: var(--teal); font-size: .9rem; font-weight: 600;
+      text-decoration: none; transition: all .25s ease;
+    }
+    .orbital-cta:hover { background: var(--teal); color: #000; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(62,207,190,.35); }
+
+    @media (max-width: 700px) {
+      .orbital-stage { width: min(360px, 100%); }
+      .orbital-node-chip { width: 52px; height: 52px; border-radius: 15px; font-size: .68rem; }
+      .orbital-center { width: 96px; height: 96px; }
+      .orbital-center img { width: 52px; height: 52px; }
+    }
+
     /* ══ SECTORS ══ */
     .sectors { padding: 96px 0; background: var(--surface); }
     .sectors-hd { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 44px; flex-wrap: wrap; gap: 16px; }
@@ -328,6 +884,447 @@
     .sbullets li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
     .slink { display: inline-flex; align-items: center; gap: 6px; font-size: .83rem; font-weight: 600; color: var(--teal); margin-top: auto; transition: gap .2s; }
     .scard:hover .slink { gap: 10px; }
+
+    /* ══ SECTORS PREMIUM v2 — asymmetric bento, aurora bg, 3D parallax ══ */
+    .sx-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      grid-template-rows: 1fr 1fr;
+      gap: 18px;
+      min-height: 720px;
+      perspective: 1400px;
+    }
+    .sx-card {
+      --mx: 50%; --my: 50%;
+      --rx: 0deg; --ry: 0deg;
+      --brand: #3ECFBE;
+      --brand-rgb: 62, 207, 190;
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      isolation: isolate;
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(16px);
+      transition:
+        opacity .9s cubic-bezier(.22,1,.36,1),
+        filter .9s cubic-bezier(.22,1,.36,1),
+        transform .9s cubic-bezier(.22,1,.36,1);
+      transform-style: preserve-3d;
+      will-change: transform, filter;
+    }
+    .sx-card.hero { grid-row: 1 / span 2; }
+    .sx-grid.in-view .sx-card {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+    .sx-grid.in-view .sx-card:nth-child(1) { transition-delay: .1s; }
+    .sx-grid.in-view .sx-card:nth-child(2) { transition-delay: .28s; }
+    .sx-grid.in-view .sx-card:nth-child(3) { transition-delay: .46s; }
+
+    /* Aurora background — unique to each sector */
+    .sx-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 100% 80% at 80% 0%, rgba(var(--brand-rgb), .28), transparent 55%),
+        radial-gradient(ellipse 80% 60% at 20% 100%, rgba(var(--brand-rgb), .12), transparent 60%),
+        linear-gradient(160deg, rgba(255,255,255,.045) 0%, rgba(255,255,255,0) 50%);
+      z-index: 0;
+      transition: opacity .6s ease;
+      animation: sxAuroraBreathe 10s ease-in-out infinite;
+    }
+    @keyframes sxAuroraBreathe {
+      0%,100% { opacity: .85; }
+      50%     { opacity: 1; }
+    }
+    /* Cursor spotlight */
+    .sx-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(520px circle at var(--mx) var(--my), rgba(var(--brand-rgb), .22), transparent 50%);
+      opacity: 0; transition: opacity .45s ease;
+      pointer-events: none; z-index: 1;
+    }
+    .sx-card:hover::after { opacity: 1; }
+
+    /* Architectural grid pattern overlay — blueprint feel */
+    .sx-grid-pattern {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 80%;
+      z-index: 1;
+      pointer-events: none;
+      -webkit-mask: radial-gradient(farthest-side at 70% 0%, #000, transparent 75%);
+              mask: radial-gradient(farthest-side at 70% 0%, #000, transparent 75%);
+      opacity: .85;
+    }
+    .sx-grid-pattern::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 22px 22px;
+      background-position: -1px -1px;
+      mix-blend-mode: overlay;
+    }
+    /* Lit squares — sprinkled architectural highlights */
+    .sx-grid-pattern::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle 11px at 110px 18px,  rgba(var(--brand-rgb), .35), transparent 65%),
+        radial-gradient(circle 11px at 190px 62px,  rgba(var(--brand-rgb), .22), transparent 65%),
+        radial-gradient(circle 11px at 264px 18px,  rgba(var(--brand-rgb), .28), transparent 65%),
+        radial-gradient(circle 11px at 88px  84px,  rgba(var(--brand-rgb), .18), transparent 65%),
+        radial-gradient(circle 11px at 220px 106px, rgba(var(--brand-rgb), .22), transparent 65%);
+      animation: sxGridPulse 6s ease-in-out infinite;
+    }
+    @keyframes sxGridPulse {
+      0%, 100% { opacity: .6; }
+      50%      { opacity: 1; }
+    }
+    /* Hero card — denser grid, more visible */
+    .sx-card.hero .sx-grid-pattern {
+      -webkit-mask: radial-gradient(farthest-side at 80% 0%, #000, transparent 70%);
+              mask: radial-gradient(farthest-side at 80% 0%, #000, transparent 70%);
+      height: 65%;
+    }
+    .sx-card.hero .sx-grid-pattern::after {
+      background-image:
+        radial-gradient(circle 13px at 140px 22px,  rgba(var(--brand-rgb), .38), transparent 65%),
+        radial-gradient(circle 13px at 260px 74px,  rgba(var(--brand-rgb), .25), transparent 65%),
+        radial-gradient(circle 13px at 360px 22px,  rgba(var(--brand-rgb), .3),  transparent 65%),
+        radial-gradient(circle 13px at 100px 116px, rgba(var(--brand-rgb), .2),  transparent 65%),
+        radial-gradient(circle 13px at 420px 138px, rgba(var(--brand-rgb), .28), transparent 65%),
+        radial-gradient(circle 13px at 300px 160px, rgba(var(--brand-rgb), .18), transparent 65%);
+    }
+
+    /* Dashed corner accents — architectural blueprint vibes */
+    .sx-card-dashes {
+      position: absolute; inset: 14px;
+      pointer-events: none;
+      z-index: 1;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,.06);
+      opacity: 0;
+      transition: opacity .4s ease;
+    }
+    .sx-card:hover .sx-card-dashes { opacity: 1; }
+
+    /* Card chrome — glass on dark, depth */
+    .sx-card-shell {
+      position: absolute; inset: 0;
+      border-radius: inherit;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.025), rgba(255,255,255,0) 40%),
+        rgba(8, 18, 36, .45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.06),
+        0 24px 60px rgba(0,0,0,.4);
+      z-index: 0;
+      transition: border-color .35s ease, box-shadow .35s ease;
+    }
+    .sx-card:hover .sx-card-shell {
+      border-color: rgba(var(--brand-rgb), .35);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        0 36px 80px rgba(0,0,0,.55),
+        0 0 0 1px rgba(var(--brand-rgb), .15);
+    }
+
+    /* 3D tilt wrapper */
+    .sx-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      transform: rotateX(var(--rx)) rotateY(var(--ry));
+      transition: transform .35s cubic-bezier(.22,1,.36,1);
+      transform-style: preserve-3d;
+      z-index: 2;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    .sx-card.hero .sx-inner { padding: 36px; }
+
+    /* Eyebrow tag — sector category at top */
+    /* Sector header: icon + tag side by side */
+    .sx-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px;
+      transform: translateZ(20px);
+    }
+    .sx-icon {
+      width: 38px; height: 38px;
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      background: rgba(var(--brand-rgb), .08);
+      border: 1px solid rgba(var(--brand-rgb), .22);
+      color: var(--brand);
+    }
+    .sx-icon svg { width: 18px; height: 18px; stroke-width: 1.5; }
+    .sx-card.hero .sx-icon { width: 44px; height: 44px; border-radius: 12px; }
+    .sx-card.hero .sx-icon svg { width: 22px; height: 22px; }
+
+    .sx-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--brand);
+      padding: 6px 12px; border-radius: 100px;
+      background: rgba(var(--brand-rgb), .1);
+      border: 1px dashed rgba(var(--brand-rgb), .35);
+    }
+    .sx-tag::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 10px var(--brand);
+      animation: sxTagPulse 2s ease-in-out infinite;
+    }
+    @keyframes sxTagPulse { 0%,100%{opacity:1} 50%{opacity:.45} }
+
+    /* Mockup region */
+    .sx-visual {
+      position: relative;
+      flex: 1; min-height: 0;
+      transform: translateZ(30px);
+      margin-bottom: 22px;
+    }
+    .sx-card.hero .sx-visual { margin-bottom: 28px; }
+
+    .sx-mockup {
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.01)),
+        rgba(0, 0, 0, .55);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      padding: 16px 18px;
+      box-shadow:
+        0 24px 50px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.06);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform .6s cubic-bezier(.22,1,.36,1), box-shadow .35s ease;
+    }
+    .sx-card.hero .sx-mockup { padding: 22px 24px; min-height: 280px; }
+    .sx-card:hover .sx-mockup {
+      transform: translateY(-4px);
+      box-shadow:
+        0 36px 70px rgba(0,0,0,.65),
+        0 0 40px rgba(var(--brand-rgb), .15),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    /* Mockup chrome */
+    .sx-mock-head {
+      display: flex; align-items: center; gap: 10px;
+      padding-bottom: 14px; margin-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .sx-mock-head strong { font-size: .88rem; color: #fff; font-weight: 600; letter-spacing: -.1px; }
+    .sx-mock-pill {
+      margin-right: auto;
+      font-size: .72rem; padding: 4px 10px; border-radius: 20px;
+      background: rgba(var(--brand-rgb), .14);
+      color: var(--brand);
+      border: 1px solid rgba(var(--brand-rgb), .35);
+      font-weight: 600;
+    }
+    .sx-mock-amount {
+      margin-right: auto;
+      font-size: .82rem; color: #fff; font-weight: 700;
+      font-feature-settings: "tnum";
+    }
+
+    /* Row pattern (used by healthcare) — animated stagger */
+    .sx-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; font-size: .82rem; color: rgba(255,255,255,.88);
+      opacity: 0; transform: translateX(8px);
+      transition: opacity .5s ease, transform .5s ease;
+    }
+    .sx-grid.in-view .sx-row { opacity: 1; transform: translateX(0); }
+    .sx-grid.in-view .sx-row:nth-child(2) { transition-delay: .5s; }
+    .sx-grid.in-view .sx-row:nth-child(3) { transition-delay: .65s; }
+    .sx-grid.in-view .sx-row:nth-child(4) { transition-delay: .8s; }
+    .sx-row + .sx-row { border-top: 1px solid rgba(255,255,255,.05); }
+    .sx-row-icon {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: .68rem; font-weight: 800; flex-shrink: 0;
+    }
+    .sx-row-icon.ok    { background: rgba(40,200,64,.18);  color: #4cd964; box-shadow: 0 0 12px rgba(40,200,64,.25); }
+    .sx-row-icon.warn  { background: rgba(255,196,0,.18);  color: #ffc400; box-shadow: 0 0 12px rgba(255,196,0,.2); }
+    .sx-row-icon.urgent{ background: rgba(255,80,80,.18);  color: #ff6b6b; box-shadow: 0 0 12px rgba(255,80,80,.25); }
+    .sx-row-text { flex: 1; min-width: 0; }
+    .sx-row-meta { font-size: .72rem; color: rgba(255,255,255,.45); font-feature-settings: "tnum"; }
+
+    /* Finance approval chain */
+    .sx-chain { display: flex; align-items: center; gap: 0; padding: 16px 0; }
+    .sx-chain-step {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,.04);
+      border: 1.5px solid rgba(255,255,255,.1);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.6);
+      position: relative;
+      flex-shrink: 0;
+      transition: all .3s ease;
+    }
+    .sx-chain-step.done {
+      background: rgba(76,217,100,.14);
+      border-color: #4cd964;
+      color: #4cd964;
+    }
+    .sx-chain-step.done::after {
+      content: '✓';
+      position: absolute; top: -4px; right: -4px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: #4cd964; color: #061520;
+      font-size: .62rem; display: flex; align-items: center; justify-content: center;
+      font-weight: 900;
+      box-shadow: 0 0 8px rgba(76,217,100,.5);
+    }
+    .sx-chain-step.active {
+      background: rgba(var(--brand-rgb), .15);
+      border-color: var(--brand);
+      color: var(--brand);
+      box-shadow: 0 0 18px rgba(var(--brand-rgb), .45);
+      animation: sxChainPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes sxChainPulse {
+      0%,100% { box-shadow: 0 0 18px rgba(var(--brand-rgb), .4); transform: scale(1); }
+      50%     { box-shadow: 0 0 32px rgba(var(--brand-rgb), .8); transform: scale(1.04); }
+    }
+    .sx-chain-line {
+      flex: 1; height: 2px;
+      background: linear-gradient(to left, rgba(255,255,255,.15), rgba(255,255,255,.05));
+      margin: 0 -2px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sx-chain-line.done {
+      background: linear-gradient(to left, #4cd964, rgba(76,217,100,.3));
+    }
+    .sx-chain-line.done::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to left, transparent, rgba(255,255,255,.8), transparent);
+      animation: sxChainFlow 2s linear infinite;
+    }
+    @keyframes sxChainFlow {
+      from { transform: translateX(100%); }
+      to   { transform: translateX(-100%); }
+    }
+    .sx-chain-label {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 0; margin-top: 10px;
+      font-size: .7rem; color: rgba(255,255,255,.55);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* Logistics route — bigger, more cinematic */
+    .sx-route { position: relative; padding: 8px 0; }
+    .sx-route svg { width: 100%; height: 100px; overflow: visible; }
+    .sx-route .route-line { stroke: rgba(255,255,255,.12); stroke-width: 1.5; fill: none; stroke-dasharray: 3 5; }
+    .sx-route .route-done {
+      stroke: var(--brand); stroke-width: 2.5; fill: none;
+      filter: drop-shadow(0 0 8px rgba(var(--brand-rgb), .6));
+      stroke-linecap: round;
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: sxRouteDraw 2.2s cubic-bezier(.22,1,.36,1) .8s forwards;
+    }
+    @keyframes sxRouteDraw { to { stroke-dashoffset: 0; } }
+    .sx-route .route-pt   { fill: rgba(255,255,255,.3); }
+    .sx-route .route-pt.done {
+      fill: var(--brand);
+      filter: drop-shadow(0 0 10px var(--brand));
+      opacity: 0;
+      animation: sxPtAppear .4s ease forwards;
+    }
+    .sx-route .route-pt.done:nth-of-type(2) { animation-delay: 1.0s; }
+    .sx-route .route-pt.done:nth-of-type(3) { animation-delay: 1.5s; }
+    .sx-route .route-pt.done:nth-of-type(4) { animation-delay: 2.0s; }
+    @keyframes sxPtAppear { to { opacity: 1; } }
+    .sx-route .route-pt.now {
+      fill: #fff;
+      animation: sxPtPulse 1.6s ease-in-out 2.4s infinite;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+    @keyframes sxPtPulse {
+      0%   { opacity: 1; r: 6; filter: drop-shadow(0 0 6px #fff); }
+      50%  { opacity: .6; r: 9; filter: drop-shadow(0 0 14px #fff); }
+      100% { opacity: 1; r: 6; filter: drop-shadow(0 0 6px #fff); }
+    }
+    .sx-route-meta {
+      display: flex; justify-content: space-between;
+      font-size: .82rem; color: rgba(255,255,255,.6);
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      font-feature-settings: "tnum";
+    }
+    .sx-route-meta strong { color: var(--brand); font-weight: 700; font-size: 1rem; }
+
+    /* Bottom: meta — premium typography */
+    .sx-meta {
+      position: relative;
+      transform: translateZ(10px);
+    }
+    .sx-meta h3 {
+      font-size: 1.3rem; font-weight: 700; color: #fff;
+      margin-bottom: 10px; letter-spacing: -.4px;
+      line-height: 1.25;
+    }
+    .sx-card.hero .sx-meta h3 {
+      font-size: 1.9rem; letter-spacing: -.6px;
+      margin-bottom: 14px;
+    }
+    .sx-meta p {
+      font-size: .92rem; color: rgba(255,255,255,.6);
+      line-height: 1.6; margin-bottom: 20px;
+      max-width: 520px;
+    }
+    .sx-card.hero .sx-meta p {
+      font-size: 1.04rem; line-height: 1.7;
+      margin-bottom: 26px;
+    }
+    .sx-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: .9rem; font-weight: 600;
+      color: var(--brand);
+      transition: gap .3s ease, color .3s ease;
+      text-decoration: none;
+    }
+    .sx-card.hero .sx-cta { font-size: 1rem; }
+    .sx-cta-arrow {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(var(--brand-rgb), .12);
+      border: 1px solid rgba(var(--brand-rgb), .35);
+      transition: all .3s ease;
+    }
+    .sx-card:hover .sx-cta { gap: 11px; }
+    .sx-card:hover .sx-cta-arrow {
+      background: var(--brand);
+      color: #061520;
+      transform: translateX(-4px);
+    }
+
+    @media (max-width: 1100px) {
+      .sx-grid { grid-template-columns: 1fr; grid-template-rows: auto; min-height: 0; }
+      .sx-card.hero { grid-row: auto; min-height: 460px; }
+      .sx-card { min-height: 360px; }
+    }
 
     /* ══ MODULES — interactive ══ */
     .modules { padding: 96px 0; }
@@ -404,30 +1401,157 @@
     /* Typewriter cursor */
     #heroTyped::after { content: '|'; color: var(--teal); animation: blink .7s infinite; }
 
-    /* ══ LOGOS BAND ══ */
-    .logos { padding: 32px 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
-    @keyframes marqueeRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
-    .logos-row { display: flex; align-items: center; flex-wrap: nowrap; width: max-content; animation: marqueeRight 35s linear infinite; gap: 0; }
-    .logos-row:hover { animation-play-state: paused; }
-    .logo-box {
-      padding: 20px 36px;
-      border-left: 1px solid rgba(255,255,255,.06);
-      display: flex; align-items: center; justify-content: center;
-      transition: all .3s ease;
+    /* ══ TRUST BAR — compact premium customer wall ══ */
+    .trust-bar {
+      padding: 52px 0 96px;
+      background: transparent;
+      position: relative;
+      overflow: hidden;
     }
-    .logo-box:first-child { border-right: 1px solid rgba(255,255,255,.06); }
-    .logo-box img {
-      height: 38px; width: auto; max-width: 110px;
+    .trust-bar-caption, .trust-bar-subcaption, .trust-bar-marquee { position: relative; z-index: 4; }
+
+    /* FX layer — sparkles + glow + curved horizon */
+    .trust-fx {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      -webkit-mask: radial-gradient(85% 90% at 50% 55%, #000, transparent 98%);
+              mask: radial-gradient(85% 90% at 50% 55%, #000, transparent 98%);
+    }
+    /* Bottom glow — compact + breathes */
+    .trust-fx-glow {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(55% 65% at 50% 110%, rgba(62,207,190,.85) 0%, rgba(74,144,196,.3) 30%, transparent 65%),
+        radial-gradient(30% 40% at 50% 105%, rgba(62,207,190,.6) 0%, transparent 55%);
+      opacity: .8;
+      z-index: 1;
+      animation: trustGlowBreathe 8s ease-in-out infinite;
+    }
+    @keyframes trustGlowBreathe {
+      0%, 100% { opacity: .65; transform: translateY(0); }
+      50%      { opacity: .9;  transform: translateY(-5px); }
+    }
+
+    /* The curved "horizon" — flatter & lower for compact section */
+    .trust-fx-surface {
+      position: absolute;
+      left: -35%;
+      top: 70%;
+      width: 170%;
+      aspect-ratio: 1 / 0.4;
+      border-radius: 50%;
+      border-top: 1.5px solid rgba(255,255,255,.3);
+      background:
+        linear-gradient(180deg, rgba(7,22,42,.75) 0%, rgba(5,15,30,.25) 35%, rgba(5,15,30,0) 65%);
+      z-index: 2;
+      box-shadow:
+        0 -1px 0 0 rgba(62,207,190,.5) inset,
+        0 -50px 120px -30px rgba(62,207,190,.4);
+      animation: trustHorizonBreathe 8s ease-in-out infinite;
+    }
+    @keyframes trustHorizonBreathe {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50%      { transform: translateY(-3px) scale(1.005); }
+    }
+    .trust-fx-surface::before {
+      content: '';
+      position: absolute;
+      top: -3px; left: 22%; right: 22%;
+      height: 1px;
+      background: linear-gradient(to left, transparent, rgba(62,207,190,.5), transparent);
+      filter: blur(.5px);
+    }
+
+    .trust-fx-sparkles {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      z-index: 3;
+      -webkit-mask: radial-gradient(60% 50% at 50% 82%, #000, transparent 95%);
+              mask: radial-gradient(60% 50% at 50% 82%, #000, transparent 95%);
+    }
+    @media (max-width: 760px) {
+      .trust-bar { padding: 56px 0 96px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .trust-fx-sparkles { display: none; }
+      .trust-fx-glow, .trust-fx-surface { animation: none; }
+    }
+    .trust-bar-caption {
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 600;
+      letter-spacing: -.2px;
+      text-transform: none;
+      color: rgba(255,255,255,.95);
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .trust-bar-subcaption {
+      text-align: center;
+      font-size: .95rem;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 3;
+      font-weight: 400;
+    }
+    .trust-bar-subcaption .accent {
+      background: linear-gradient(135deg, var(--teal), #6FE6D8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 600;
+    }
+    /* Single-row marquee — Stripe/Linear style */
+    .trust-bar-marquee {
+      position: relative;
+      overflow: hidden;
+      z-index: 3;
+      direction: ltr;
+      -webkit-mask: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+              mask: linear-gradient(to right, transparent 0%, #000 10%, #000 90%, transparent 100%);
+    }
+    .trust-bar-grid {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 110px;
+      width: max-content;
+      padding: 4px 0;
+      animation: trustMarquee 55s linear infinite;
+      will-change: transform;
+    }
+    .trust-bar-marquee:hover .trust-bar-grid { animation-play-state: paused; }
+    @keyframes trustMarquee {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+    .trust-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 34px;
+      flex-shrink: 0;
+      transition: opacity .35s ease, transform .35s ease, filter .35s ease;
+      opacity: .55;
+      cursor: default;
+    }
+    .trust-logo:hover { opacity: 1; transform: translateY(-2px); }
+    .trust-logo img {
+      max-height: 100%;
+      width: auto;
+      max-width: 170px;
       object-fit: contain;
       filter: brightness(0) invert(1);
-      opacity: .4;
-      transition: all .35s ease;
     }
-    .logo-box:hover img {
-      filter: none;
-      opacity: 1;
-      transform: scale(1.06);
-    }
+    @media (max-width: 900px) { .trust-bar-grid { gap: 70px; } .trust-logo { height: 32px; } }
+    @media (max-width: 540px) { .trust-bar-grid { gap: 56px; } .trust-logo { height: 28px; } }
+
+    /* legacy .logos hidden */
+    .logos { display: none; }
 
     /* ══ SCI-FI DIVIDERS ══ */
     .scifi-divider {
@@ -840,6 +1964,201 @@
     .dc-feat strong { display:block; font-size:.9rem; font-weight:700; color:#fff; margin-bottom:1px; }
     .dc-feat p { font-size:.8rem; color:var(--muted); line-height:1.5; margin:0; }
     @media(max-width:960px){ .dc-inner { grid-template-columns:1fr; } .dc-text { order:1; } .dc-visual { order:2; } }
+
+    /* ══ APPS SHOWCASE — Liveblocks-style customer apps marquee ══ */
+    .apps-showcase {
+      padding: 96px 0 108px;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+    }
+    .apps-showcase::before {
+      content: '';
+      position: absolute; left: 50%; top: 20%;
+      width: 1200px; height: 600px;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse at center, rgba(62,207,190,.06) 0%, rgba(74,144,196,.03) 30%, transparent 65%);
+      pointer-events: none;
+      filter: blur(20px);
+    }
+    .apps-header {
+      max-width: 760px;
+      margin: 0 auto 64px;
+      text-align: center;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .apps-header .eyebrow { margin-bottom: 18px; }
+    .apps-header h2 {
+      font-size: clamp(1.85rem, 3.2vw, 2.8rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.5px;
+      margin-bottom: 18px;
+      line-height: 1.18;
+    }
+    .apps-header h2 .accent {
+      background: linear-gradient(135deg, var(--teal), #6FE6D8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .apps-header p {
+      font-size: 1.02rem;
+      color: rgba(255,255,255,.6);
+      line-height: 1.75;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .apps-marquee {
+      position: relative;
+      -webkit-mask: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+      mask: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+      padding: 24px 0;
+      direction: ltr;     /* override page RTL so the marquee + its duplicate sit on the right side, not the left */
+    }
+    .apps-track {
+      display: flex;
+      gap: 28px;
+      width: max-content;
+      animation: appsMarquee 110s linear infinite;
+      will-change: transform;
+    }
+    .apps-marquee:hover .apps-track { animation-play-state: paused; }
+    @keyframes appsMarquee {
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
+    }
+
+    .app-card {
+      flex-shrink: 0;
+      width: 248px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      transition: transform .4s cubic-bezier(.22,1,.36,1);
+      position: relative;
+    }
+    .app-card:hover { transform: translateY(-8px); }
+
+    /* Cursor-tracking spotlight glow (fixed-attached gradient → only card under cursor lights up) */
+    .app-card::after {
+      content: '';
+      position: absolute;
+      inset: -28px;
+      border-radius: 56px;
+      background: radial-gradient(
+        420px 420px at calc(var(--mx, 0) * 1px) calc(var(--my, 0) * 1px),
+        rgba(62, 207, 190, .55),
+        rgba(74, 144, 196, .22) 35%,
+        transparent 65%
+      );
+      background-attachment: fixed;
+      filter: blur(22px);
+      opacity: 0;
+      transition: opacity .45s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .apps-marquee:hover .app-card::after { opacity: 1; }
+    @media (hover: none) { .app-card::after { display: none; } }
+
+    .app-label {
+      text-align: center;
+      padding: 0 6px;
+      width: 100%;
+    }
+    .app-label-cat {
+      display: block;
+      font-size: .68rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.4);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .app-label-name {
+      display: block;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.1px;
+    }
+
+    .app-frame {
+      position: relative;
+      width: 248px;
+      height: 506px;
+      background: linear-gradient(180deg, #1c2333 0%, #0e1320 100%);
+      border: 1.5px solid rgba(255,255,255,.1);
+      border-radius: 38px;
+      padding: 10px;
+      box-shadow:
+        0 32px 64px rgba(0,0,0,.55),
+        0 0 0 1px rgba(255,255,255,.04),
+        inset 0 1px 0 rgba(255,255,255,.06);
+      overflow: hidden;
+      isolation: isolate;
+      transition: box-shadow .4s ease, border-color .35s ease;
+    }
+    .app-card:hover .app-frame {
+      border-color: rgba(62,207,190,.3);
+      box-shadow:
+        0 40px 80px rgba(0,0,0,.65),
+        0 0 0 1px rgba(62,207,190,.18),
+        0 0 60px rgba(62,207,190,.18),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .app-frame::before {
+      content: '';
+      position: absolute; inset: 10px;
+      border-radius: 28px;
+      background: radial-gradient(circle at 50% 0%, rgba(62,207,190,.18), transparent 55%);
+      pointer-events: none; z-index: 2;
+      opacity: 0; transition: opacity .4s ease;
+    }
+    .app-card:hover .app-frame::before { opacity: 1; }
+
+    .app-notch {
+      position: absolute;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      width: 78px; height: 22px;
+      background: #000;
+      border-radius: 0 0 16px 16px;
+      z-index: 3;
+    }
+    .app-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 28px;
+      display: block;
+      position: relative;
+      z-index: 1;
+      background: #f4f7fb;
+    }
+    /* fallback when image missing/loading */
+    .app-frame img::after {
+      content: attr(alt);
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, var(--brand-bg, #1a2236), #0c1424);
+      color: rgba(255,255,255,.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; text-align: center;
+      border-radius: 28px;
+    }
+
+    @media (max-width: 760px) {
+      .apps-showcase { padding: 64px 0 80px; }
+      .apps-header { margin-bottom: 44px; }
+      .app-card { width: 200px; }
+      .app-frame { width: 200px; height: 408px; }
+    }
 
     /* ══ TESTIMONIALS — hover slider ══ */
     .testimonials { padding:80px 0; background:var(--dark); }
@@ -1287,6 +2606,27 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-g1"></div><div class="hero-g2"></div>
+
+  <!-- Static spotlight (aceternity-inspired) -->
+  <svg class="hero-spotlight-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3787 2842" fill="none" aria-hidden="true">
+    <g filter="url(#hero-sp-filter)">
+      <ellipse cx="1924.71" cy="273.501" rx="1924.71" ry="273.501"
+               transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
+               fill="#3ECFBE" fill-opacity="0.28"></ellipse>
+    </g>
+    <defs>
+      <filter id="hero-sp-filter" x="0.860352" y="0.838989" width="3785.16" height="2840.26"
+              filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+        <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8"></feGaussianBlur>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Interactive mouse-follow glow -->
+  <div class="hero-interactive-glow" id="heroGlow"></div>
+
   <div class="wendi-triangles">
     <div class="wtri wtri-1"></div>
     <div class="wtri wtri-2"></div>
@@ -1314,126 +2654,83 @@
   </div>
 </section>
 
-<!-- DEVICE SHOWCASE -->
-<section class="device-compact section-white" id="showcase">
-  <div class="container">
-    <div class="dc-inner">
+<!-- TRUST BAR — clients (monochrome ghost logos, Linear/Stripe style) -->
+<section class="trust-bar" aria-label="ארגונים שסומכים על Wendi">
+  <!-- Sparkles + glow + curved horizon FX -->
+  <div class="trust-fx" aria-hidden="true">
+    <div class="trust-fx-glow"></div>
+    <canvas class="trust-fx-sparkles" id="trustSparkles"></canvas>
+    <div class="trust-fx-surface"></div>
+  </div>
 
-      <!-- RIGHT: text -->
-      <div class="dc-text fade-up">
-        <div class="eyebrow" style="text-align:left">חוויית משתמש</div>
-        <h2 class="sec-title" style="font-size:clamp(2rem,3.5vw,3rem);letter-spacing:-.5px;margin-bottom:16px">בכל מכשיר. בכל רגע.</h2>
-        <p style="color:var(--muted);line-height:1.8;margin-bottom:28px;max-width:440px">וונדי מותאמת במיוחד לכל פלטפורמה — עובד שטח בנייד, מנהל בדסקטופ. חוויה אחת, שתי עולמות.</p>
+  <h2 class="trust-bar-caption">בחברות הגדולות בישראל סומכים על וונדי.</h2>
+  <p class="trust-bar-subcaption"><span class="accent">מאות אלפי עובדים</span> מתחילים את היום עם אפליקציה שאנחנו מפעילים.</p>
 
-        <!-- Device label -->
-        <div class="dc-device-label" id="dc-label">
-          <span class="dl-dot"></span>
-          <span id="dc-label-text">אפליקציה נייטיב — עובד שטח</span>
-        </div>
-      </div>
+  <div class="trust-bar-marquee">
+    <div class="trust-bar-grid">
+      <!-- Set 1 -->
+      <div class="trust-logo"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt="מכבי"/></div>
+      <div class="trust-logo"><img src="ShufersalLogo.svg.png"     alt="שופרסל"/></div>
+      <div class="trust-logo"><img src="Super_Pharm_Logo.svg.png"  alt="סופר-פארם"/></div>
+      <div class="trust-logo"><img src="Soraski2021.svg.png"       alt="איכילוב"/></div>
+      <div class="trust-logo"><img src="Logoegged.svg.png"         alt="אגד"/></div>
+      <!-- Set 2 (duplicate for seamless loop) -->
+      <div class="trust-logo" aria-hidden="true"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt=""/></div>
+      <div class="trust-logo" aria-hidden="true"><img src="ShufersalLogo.svg.png"     alt=""/></div>
+      <div class="trust-logo" aria-hidden="true"><img src="Super_Pharm_Logo.svg.png"  alt=""/></div>
+      <div class="trust-logo" aria-hidden="true"><img src="Soraski2021.svg.png"       alt=""/></div>
+      <div class="trust-logo" aria-hidden="true"><img src="Logoegged.svg.png"         alt=""/></div>
+    </div>
+  </div>
+</section>
 
-      <!-- LEFT: device mockup -->
-      <div class="dc-visual fade-up">
+<!-- APPS SHOWCASE — 16 real customer apps powered by Wendi -->
+<section class="apps-showcase" id="showcase">
+  <div class="apps-header">
+    <div class="eyebrow">מוצרים בייצור</div>
+    <h2>16 אפליקציות. <span class="accent">מאות אלפי עובדים.</span><br/>וונדי מאחורי כולן.</h2>
+    <p>חברות התחבורה, הבריאות, האנרגיה והרשתות הגדולות בישראל בנו את אפליקציית העובד שלהן על וונדי — ממותגות, מותאמות, ועובדות מהיום הראשון.</p>
+  </div>
 
-        <!-- MOBILE VIEW -->
-        <div class="dc-device-wrap" id="view-mobile">
-          <div class="phone-frame" style="width:220px">
-            <div class="phone-notch"></div>
-            <div class="phone-screen">
-              <div class="phone-status"><span>09:41</span><span>●●● WiFi 🔋</span></div>
-              <div class="app-header">
-                <div class="app-logo">W</div>
-                <div class="app-name">Wendi</div>
-                <div class="app-bell">🔔</div>
-              </div>
-              <!-- Welcome -->
-              <div style="background:rgba(62,207,190,.1);border-radius:9px;padding:10px 12px;margin-bottom:10px;display:flex;align-items:center;gap:8px">
-                <span style="font-size:1.2rem">😊</span>
-                <div>
-                  <div style="font-size:.82rem;font-weight:700;color:#fff">שלום, דנה</div>
-                  <div style="font-size:.72rem;color:var(--muted)">יש לך 3 עדכונים חדשים</div>
-                </div>
-              </div>
-              <div class="qa-row">
-                <div class="qa-item"><div class="qa-icon">💬</div><div class="qa-lbl">עדכונים</div></div>
-                <div class="qa-item"><div class="qa-icon">📚</div><div class="qa-lbl">הכשרות</div></div>
-                <div class="qa-item"><div class="qa-icon">📅</div><div class="qa-lbl">משמרות</div></div>
-                <div class="qa-item"><div class="qa-icon">📋</div><div class="qa-lbl">טפסים</div></div>
-              </div>
-              <div class="feed-label">עדכונים אחרונים</div>
-              <div class="feed-item"><div class="feed-icon" style="background:rgba(62,207,190,.15);color:var(--teal)">📢</div><div class="feed-text"><div class="feed-title">עדכון מהנהלה</div><div class="feed-sub">סיכום חודש נובמבר...</div></div><div class="feed-time">09:30</div></div>
-              <div class="feed-item"><div class="feed-icon" style="background:rgba(255,196,0,.12);color:#ffc400">🎓</div><div class="feed-text"><div class="feed-title">הכשרת בטיחות</div><div class="feed-sub">נדרשת השלמה עד 30/11</div></div><div class="feed-time">אתמול</div></div>
-              <div class="feed-item"><div class="feed-icon" style="background:rgba(74,144,196,.15);color:var(--blue)">👏</div><div class="feed-text"><div class="feed-title">פרגון מהמנהל</div><div class="feed-sub">כל הכבוד על הביצועים!</div></div><div class="feed-time">שלשום</div></div>
-              <div class="phone-bottom-nav">
-                <div class="pbn-item active"><div>🏠</div><div>ראשי</div></div>
-                <div class="pbn-item"><div>📋</div><div>טפסים</div></div>
-                <div class="pbn-item"><div>🎓</div><div>למידה</div></div>
-                <div class="pbn-item"><div>👤</div><div>פרופיל</div></div>
-              </div>
-            </div>
-          </div>
-          <div class="phone-glow-fx"></div>
-        </div>
+  <div class="apps-marquee">
+    <div class="apps-track">
 
-        <!-- DESKTOP VIEW -->
-        <div class="dc-device-wrap hidden" id="view-desktop">
-          <div class="desktop-frame" style="width:460px">
-            <div class="browser-bar">
-              <div class="browser-dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
-              <div class="browser-url">app.wendi.co.il/dashboard</div>
-            </div>
-            <div class="desk-layout">
-              <!-- Sidebar -->
-              <div class="desk-sidebar" style="width:52px;background:var(--dark);border-left:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:16px">
-                <div style="width:28px;height:28px;border-radius:8px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.9rem;color:#000">W</div>
-                <div style="font-size:1rem;opacity:.6;cursor:pointer">🏠</div>
-                <div style="font-size:1rem;opacity:.6">👥</div>
-                <div style="font-size:1rem;opacity:.6">📋</div>
-                <div style="font-size:1rem;opacity:.6">🎓</div>
-                <div style="font-size:1rem;opacity:.6">📊</div>
-                <div style="font-size:1rem;opacity:.4;margin-top:auto">⚙️</div>
-              </div>
-              <!-- Main -->
-              <div style="flex:1;padding:16px;overflow:hidden">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-                  <div style="font-size:.88rem;font-weight:700;color:#fff">דשבורד HR</div>
-                  <div style="font-size:.72rem;background:var(--surface-2);border:1px solid var(--border);padding:4px 10px;border-radius:6px;color:var(--muted)">🔍 חיפוש...</div>
-                </div>
-                <!-- Stats row -->
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px">
-                  <div style="background:var(--surface-2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:1.1rem;font-weight:900;color:var(--teal)">2,847</div><div style="font-size:.62rem;color:var(--muted)">עובדים פעילים</div><div style="font-size:.55rem;color:#28c840">↑ 3.2%</div></div>
-                  <div style="background:var(--surface-2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:1.1rem;font-weight:900;color:var(--teal)">91%</div><div style="font-size:.62rem;color:var(--muted)">מעורבות</div><div style="font-size:.55rem;color:#28c840">↑ 5%</div></div>
-                  <div style="background:var(--surface-2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:1.1rem;font-weight:900;color:#ffc400">78%</div><div style="font-size:.62rem;color:var(--muted)">השלמת הכשרות</div><div style="font-size:.55rem;color:var(--muted)">→ יציב</div></div>
-                  <div style="background:var(--surface-2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:1.1rem;font-weight:900;color:#e05c5c">8</div><div style="font-size:.62rem;color:var(--muted)">טפסים ממתינים</div><div style="font-size:.55rem;color:#e05c5c">לטיפול</div></div>
-                </div>
-                <!-- Table -->
-                <div style="font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:6px">תהליכים פעילים</div>
-                <div style="background:var(--surface-2);border-radius:8px;overflow:hidden">
-                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 80px;padding:7px 10px;border-bottom:1px solid var(--border);font-size:.62rem;color:var(--muted);font-weight:700">
-                    <span>שם העובד</span><span>תהליך</span><span>סטטוס</span><span>תאריך</span>
-                  </div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 80px;padding:7px 10px;border-bottom:1px solid var(--border);font-size:.65rem;color:var(--text)">
-                    <span>דנה לוי</span><span>קליטת עובד</span><span><em style="background:rgba(40,200,64,.15);color:#28c840;border-radius:4px;padding:2px 7px;font-style:normal">הושלם</em></span><span style="color:var(--muted)">30/11</span>
-                  </div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 80px;padding:7px 10px;border-bottom:1px solid var(--border);font-size:.65rem;color:var(--text)">
-                    <span>יוסי כהן</span><span>הכשרת חובה</span><span><em style="background:rgba(255,196,0,.15);color:#ffc400;border-radius:4px;padding:2px 7px;font-style:normal">בתהליך</em></span><span style="color:var(--muted)">15/12</span>
-                  </div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 80px;padding:7px 10px;font-size:.65rem;color:var(--text)">
-                    <span>רינת שלום</span><span>בקשת חופשה</span><span><em style="background:rgba(74,144,196,.15);color:var(--blue);border-radius:4px;padding:2px 7px;font-style:normal">ממתין</em></span><span style="color:var(--muted)">01/12</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Set 1 (16 apps) -->
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_1.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_2.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_3.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_4.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_5.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_6.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_7.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_8.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_9.png"  alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_10.png" alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_11.png" alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_12.png" alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_13.png" alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_14.png" alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_15.png" alt="אפליקציית לקוח"/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_16.png" alt="אפליקציית לקוח"/></div></article>
 
-        <!-- Toggle — below device -->
-        <div class="device-toggle">
-          <button class="dtoggle active" id="btn-mobile" onclick="showView('mobile')">📱 מובייל</button>
-          <button class="dtoggle" id="btn-desktop" onclick="showView('desktop')">🖥️ דשבורד דסקטופ</button>
-        </div>
+      <!-- Set 2 (duplicate for seamless marquee loop) -->
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_1.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_2.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_3.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_4.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_5.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_6.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_7.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_8.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_9.png"  alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_10.png" alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_11.png" alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_12.png" alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_13.png" alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_14.png" alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_15.png" alt=""/></div></article>
+      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_16.png" alt=""/></div></article>
 
-      </div><!-- /dc-visual -->
     </div>
   </div>
 </section>
@@ -1466,55 +2763,372 @@
 
 <!-- WHAT -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="section-white" id="what" style="padding:72px 0;">
+<section id="what" style="padding:96px 0;">
   <div class="container">
-    <div class="eyebrow">מה וונדי עושה</div>
+    <div class="eyebrow fade-up">מה וונדי עושה</div>
     <h2 class="sec-title fade-up">פלטפורמה אחת. כל מה שהעובד צריך.</h2>
-    <p class="sec-sub fade-up" style="margin-bottom:36px">תקשורת, למידה, ממשקים ו-AI — ממקום אחד.</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="stagger fade-up">
-      <div class="wcard section-white"><div class="wicon">💬</div><h3>תקשורת פנים-ארגונית</h3><p>ערוץ אחיד לכל עובד — לפי תפקיד, מחלקה ומיקום.</p></div>
-      <div class="wcard section-white"><div class="wicon">🎓</div><h3>למידה והכשרה</h3><p>LMS מלא עם מעקב, הסמכות ואינטגרציה למערכות קיימות.</p></div>
-      <div class="wcard section-white"><div class="wicon">🤖</div><h3>Wendi AI</h3><p>עוזר חכם שעונה על שאלות HR בשפה טבעית.</p></div>
-      <div class="wcard section-white"><div class="wicon">📋</div><h3>Workflows וטפסים</h3><p>אוטומציה של תהליכים — קליטה, חופשות, אישורים.</p></div>
-      <div class="wcard section-white"><div class="wicon">🔗</div><h3>ממשקים</h3><p>חיבור ל-SAP, Priority, Oracle ועוד — ב-One Stop Shop.</p></div>
-      <div class="wcard section-white"><div class="wicon">📊</div><h3>הערכת ביצועים</h3><p>מחזורי הערכה ומשוב 360 — פשוטים לעובד ולמנהל.</p></div>
+    <p class="sec-sub fade-up" style="margin-bottom:44px">תקשורת, למידה, ממשקים ו-AI — ממקום אחד.</p>
+
+    <!-- SVG gradient defs (shared) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="bxRingGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%"  stop-color="#3ECFBE"/>
+          <stop offset="100%" stop-color="#4A90C4"/>
+        </linearGradient>
+        <linearGradient id="bxSparkGrad" x1="0" x2="1">
+          <stop offset="0%"  stop-color="rgba(62,207,190,.25)"/>
+          <stop offset="100%" stop-color="#3ECFBE"/>
+        </linearGradient>
+        <linearGradient id="bxSparkFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="rgba(62,207,190,.18)"/>
+          <stop offset="100%" stop-color="rgba(62,207,190,0)"/>
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="bx">
+
+      <!-- HERO — Wendi AI -->
+      <article class="bx-card bx-ai">
+        <div class="bx-visual">
+          <div class="ai-frame">
+            <div class="ai-chrome">
+              <span class="ai-chrome-dot r"></span>
+              <span class="ai-chrome-dot y"></span>
+              <span class="ai-chrome-dot g"></span>
+              <span class="ai-chrome-url">wendi.ai/chat</span>
+            </div>
+            <div class="ai-body">
+              <div class="ai-msg-x user">כמה ימי חופש נשארו לי השנה?</div>
+              <div class="ai-msg-x bot">נשארו לך <strong>14 ימים</strong>, ניתן לנצל עד 31.12.</div>
+              <div class="ai-typing-x"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="bx-meta">
+          <h3>Wendi AI</h3>
+          <p>עוזר חכם שעונה על שאלות HR בשפה טבעית — חופשות, שכר, נהלים.</p>
+        </div>
+      </article>
+
+      <!-- Learning -->
+      <article class="bx-card bx-learn">
+        <div class="bx-visual">
+          <div class="learn-ring-x">
+            <svg viewBox="0 0 150 150">
+              <circle class="rbg"   cx="75" cy="75" r="65" fill="none" stroke-width="10"/>
+              <circle class="rfill" cx="75" cy="75" r="65" fill="none" stroke-width="10"/>
+            </svg>
+            <div class="learn-num-x">
+              <strong>87<sup>%</sup></strong>
+              <span>השלמת קורסים</span>
+            </div>
+          </div>
+        </div>
+        <div class="bx-meta">
+          <h3>למידה והכשרה</h3>
+          <p>LMS מלא עם מעקב והסמכות.</p>
+        </div>
+      </article>
+
+      <!-- Communication -->
+      <article class="bx-card bx-comm">
+        <div class="bx-visual">
+          <div class="notif-x">
+            <div class="notif-x-head">
+              <div class="notif-x-logo">W</div>
+              <div class="notif-x-meta">
+                <strong>Wendi</strong>
+                <span>· עכשיו</span>
+              </div>
+              <span class="notif-x-dot"></span>
+            </div>
+            <div class="notif-x-body">סיכום רבעון של המנכ"ל — קראו עכשיו</div>
+          </div>
+        </div>
+        <div class="bx-meta">
+          <h3>תקשורת פנים-ארגונית</h3>
+          <p>ערוץ אחיד לכל עובד.</p>
+        </div>
+      </article>
+
+      <!-- Performance -->
+      <article class="bx-card bx-perf">
+        <div class="bx-visual">
+          <div class="perf-x-num">
+            <span class="perf-x-arrow">↑</span>
+            <strong>34<sup style="font-size:.45em;font-weight:600">%</sup></strong>
+          </div>
+          <div class="perf-x-spark">
+            <svg viewBox="0 0 200 36" preserveAspectRatio="none">
+              <path class="sp-fill" d="M 0,28 L 30,25 L 60,21 L 90,18 L 120,12 L 150,8 L 200,4 L 200,36 L 0,36 Z"/>
+              <path class="sp-path" d="M 0,28 L 30,25 L 60,21 L 90,18 L 120,12 L 150,8 L 200,4"/>
+            </svg>
+          </div>
+        </div>
+        <div class="bx-meta">
+          <h3>הערכת ביצועים</h3>
+          <p>מעורבות עובדים שעולה עם משוב 360.</p>
+        </div>
+      </article>
+
+      <!-- Workflows -->
+      <article class="bx-card bx-flow">
+        <div class="bx-visual">
+          <div class="flow-x">
+            <div class="flow-x-step done">✓</div>
+            <div class="flow-x-line"></div>
+            <div class="flow-x-step active">2</div>
+            <div class="flow-x-line dim"></div>
+            <div class="flow-x-step">3</div>
+          </div>
+          <div class="flow-x-labels">
+            <span>קליטה</span><span>אישור</span><span>תיעוד</span>
+          </div>
+        </div>
+        <div class="bx-meta">
+          <h3>Workflows וטפסים</h3>
+          <p>אוטומציה של תהליכים.</p>
+        </div>
+      </article>
+
     </div>
-    <div style="text-align:center;margin-top:36px">
-      <a href="modulim_5.html" class="btn-p" style="display:inline-block">לכל המודולים ←</a>
+
+    <!-- ORBITAL — cinematic integrations -->
+    <div class="orbital-section">
+      <div class="orbital-stage" id="orbitalStage">
+        <div class="orbital-tilt" id="orbitalTilt">
+
+          <!-- Concentric rings -->
+          <div class="orbital-ring outer"></div>
+          <div class="orbital-ring mid"></div>
+          <div class="orbital-ring inner"></div>
+
+          <!-- Rotating light beams -->
+          <div class="orbital-spin outer"></div>
+          <div class="orbital-spin mid"></div>
+          <div class="orbital-spin inner"></div>
+
+          <!-- Connection lines (dashed pulsing) — center to each node center -->
+          <svg class="orbital-lines" viewBox="0 0 620 620" preserveAspectRatio="none" aria-hidden="true">
+            <line class="orbital-line" x1="310" y1="310" x2="310" y2="0"  />
+            <line class="orbital-line" x1="310" y1="310" x2="577" y2="465"/>
+            <line class="orbital-line" x1="310" y1="310" x2="43"  y2="465"/>
+            <line class="orbital-line" x1="310" y1="310" x2="502" y2="198"/>
+            <line class="orbital-line" x1="310" y1="310" x2="310" y2="533"/>
+            <line class="orbital-line" x1="310" y1="310" x2="118" y2="198"/>
+          </svg>
+
+          <!-- 6 brand nodes -->
+          <div class="orbital-node n1" style="--brand:#0FAAFF">
+            <div class="orbital-node-chip">SAP</div>
+            <div class="orbital-node-label">SAP SuccessFactors</div>
+          </div>
+          <div class="orbital-node n2" style="--brand:#F58220">
+            <div class="orbital-node-chip">Pri</div>
+            <div class="orbital-node-label">Priority</div>
+          </div>
+          <div class="orbital-node n3" style="--brand:#F80000">
+            <div class="orbital-node-chip">O</div>
+            <div class="orbital-node-label">Oracle HCM</div>
+          </div>
+          <div class="orbital-node n4" style="--brand:#0078D4">
+            <div class="orbital-node-chip">AD</div>
+            <div class="orbital-node-label">Active Directory</div>
+          </div>
+          <div class="orbital-node n5" style="--brand:#D83B01">
+            <div class="orbital-node-chip">365</div>
+            <div class="orbital-node-label">Microsoft 365</div>
+          </div>
+          <div class="orbital-node n6" style="--brand:#7E3FF2">
+            <div class="orbital-node-chip">BI</div>
+            <div class="orbital-node-label">Sisense BI</div>
+          </div>
+
+          <!-- Center: Wendi -->
+          <div class="orbital-center">
+            <img src="wendi-logo.png" alt="Wendi"/>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="orbital-text">
+        <h3>ממשקים לכל המערכות שלכם</h3>
+        <p>סנכרון דו-כיווני עם SAP, Priority, Oracle, Active Directory, Microsoft 365 ו-Sisense BI — ב-One Stop Shop, ללא ריצה בין מערכות.</p>
+        <a href="modulim_5.html" class="orbital-cta">לכל המודולים ←</a>
+      </div>
     </div>
+
   </div>
 </section>
 
 <!-- SECTORS TEASER -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="sectors" id="sectors" style="padding:72px 0;background:linear-gradient(135deg,#122040 0%,#1a2f55 40%,#162847 70%,#0f1e3a 100%);">
+<section class="sectors" id="sectors" style="padding:96px 0;background:linear-gradient(135deg,#0b1733 0%,#0e1d3f 50%,#0a1730 100%);position:relative;overflow:hidden">
+  <div style="position:absolute;left:50%;top:0;width:1100px;height:600px;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(62,207,190,.07) 0%,rgba(74,144,196,.04) 30%,transparent 65%);pointer-events:none;filter:blur(20px)"></div>
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:16px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;flex-wrap:wrap;gap:16px">
       <div>
         <div class="eyebrow">תחומי פעילות</div>
         <h2 class="sec-title fade-up" style="margin-bottom:0">פתרון לכל מגזר</h2>
       </div>
       <a href="pitronot.html" class="btn-o fade-up">לכל המגזרים ←</a>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px" class="stagger">
-      <div class="scard fade-up">
-        <div class="scard-icon">🏥</div>
-        <h3>שירותי בריאות</h3>
-        <p>ידע, תקשורת והדרכה 24/7 בסביבה רפואית תובענית.</p>
-        <a href="pitronot.html#briut" class="slink">לפתרון →</a>
-      </div>
-      <div class="scard fade-up">
-        <div class="scard-icon">🏦</div>
-        <h3>פיננסים</h3>
-        <p>תקשורת ולמידה בסביבה רגולטורית — שליטה מלאה בהרשאות.</p>
-        <a href="pitronot.html#finantsim" class="slink">לפתרון →</a>
-      </div>
-      <div class="scard fade-up">
-        <div class="scard-icon">🚚</div>
-        <h3>לוגיסטיקה ותחבורה</h3>
-        <p>חיבור אמיתי לעובדי שטח — מובייל-first, בזמן אמת.</p>
-        <a href="pitronot.html#logistika" class="slink">לפתרון →</a>
-      </div>
+
+    <div class="sx-grid">
+
+      <!-- HERO — Logistics (cinematic route tracker) -->
+      <article class="sx-card hero" style="--brand:#0FAAFF;--brand-rgb:15,170,255" id="sxLogistics">
+        <div class="sx-grid-pattern"></div>
+        <div class="sx-card-shell"></div>
+        <div class="sx-card-dashes"></div>
+        <div class="sx-inner">
+          <div class="sx-header">
+            <div class="sx-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                <path d="M15 18H9"/>
+                <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                <circle cx="17" cy="18" r="2"/>
+                <circle cx="7" cy="18" r="2"/>
+              </svg>
+            </div>
+            <span class="sx-tag">לוגיסטיקה ותחבורה</span>
+          </div>
+          <div class="sx-visual">
+            <div class="sx-mockup">
+              <div class="sx-mock-head">
+                <strong>מסלול חלוקה #4892</strong>
+                <span class="sx-mock-pill">בתנועה</span>
+              </div>
+              <div class="sx-route">
+                <svg viewBox="0 0 600 100" preserveAspectRatio="none">
+                  <path class="route-line" d="M 30,50 Q 130,15 230,50 Q 330,85 430,40 Q 510,12 570,50"/>
+                  <path class="route-done" d="M 30,50 Q 130,15 230,50 Q 330,85 400,50"/>
+                  <circle class="route-pt done" cx="30"  cy="50" r="5"/>
+                  <circle class="route-pt done" cx="130" cy="22" r="5"/>
+                  <circle class="route-pt done" cx="230" cy="50" r="5"/>
+                  <circle class="route-pt now"  cx="400" cy="50" r="6"/>
+                  <circle class="route-pt"      cx="570" cy="50" r="5"/>
+                </svg>
+              </div>
+              <div class="sx-route-meta">
+                <span><strong>3/5</strong> נקודות הושלמו</span>
+                <span>ETA · <strong>14:32</strong></span>
+              </div>
+              <div class="sx-row" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)">
+                <span class="sx-row-icon ok">✓</span>
+                <span class="sx-row-text">דיווח בזמן אמת — נחתם בנייד של הנהג</span>
+              </div>
+            </div>
+          </div>
+          <div class="sx-meta">
+            <h3>השטח לא חוזר למשרד.<br/>וונדי הולכת איתו.</h3>
+            <p>נהגים, טכנאים ומנהלי מחסנים מקבלים משימות, מדווחים סטטוסים וחותמים על אישורים — מהנייד, בזמן אמת.</p>
+            <a href="pitronot.html#logistika" class="sx-cta">
+              <span>לפתרון המלא לסקטור</span>
+              <span class="sx-cta-arrow">←</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Healthcare -->
+      <article class="sx-card" style="--brand:#4cd964;--brand-rgb:76,217,100">
+        <div class="sx-grid-pattern"></div>
+        <div class="sx-card-shell"></div>
+        <div class="sx-card-dashes"></div>
+        <div class="sx-inner">
+          <div class="sx-header">
+            <div class="sx-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 11a2 2 0 0 0 2 2 4 4 0 0 1 4 4 6 6 0 0 1-12 0c0-1.7.7-3.2 1.8-4.2"/>
+                <path d="M8 15a2 2 0 1 0 4 0v-3a4 4 0 0 0-8 0v3"/>
+                <circle cx="20" cy="10" r="2"/>
+              </svg>
+            </div>
+            <span class="sx-tag">שירותי בריאות</span>
+          </div>
+          <div class="sx-visual">
+            <div class="sx-mockup">
+              <div class="sx-mock-head">
+                <strong>הסמכות חובה</strong>
+                <span class="sx-mock-pill">23/24 פעילות</span>
+              </div>
+              <div class="sx-row">
+                <span class="sx-row-icon ok">✓</span>
+                <span class="sx-row-text">החייאה בסיסית</span>
+                <span class="sx-row-meta">בתוקף · 8 חודשים</span>
+              </div>
+              <div class="sx-row">
+                <span class="sx-row-icon warn">!</span>
+                <span class="sx-row-text">בטיחות בעבודה</span>
+                <span class="sx-row-meta">פג בעוד · 2 חודשים</span>
+              </div>
+              <div class="sx-row">
+                <span class="sx-row-icon urgent">!</span>
+                <span class="sx-row-text">הגנת הפרטיות</span>
+                <span class="sx-row-meta">פג תוקף</span>
+              </div>
+            </div>
+          </div>
+          <div class="sx-meta">
+            <h3>הסמכות חיות, התראה לפני פקיעה.</h3>
+            <p>אפס הפתעות בביקורת רגולטורית.</p>
+            <a href="pitronot.html#briut" class="sx-cta">
+              <span>לפתרון</span>
+              <span class="sx-cta-arrow">←</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Finance -->
+      <article class="sx-card" style="--brand:#FFB23E;--brand-rgb:255,178,62">
+        <div class="sx-grid-pattern"></div>
+        <div class="sx-card-shell"></div>
+        <div class="sx-card-dashes"></div>
+        <div class="sx-inner">
+          <div class="sx-header">
+            <div class="sx-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 7 13.5 15.5 8.5 10.5 2 17"/>
+                <path d="M16 7h6v6"/>
+              </svg>
+            </div>
+            <span class="sx-tag">פיננסים</span>
+          </div>
+          <div class="sx-visual">
+            <div class="sx-mockup">
+              <div class="sx-mock-head">
+                <strong>בקשת הוצאה #4892</strong>
+                <span class="sx-mock-amount">12,400 ₪</span>
+              </div>
+              <div class="sx-chain">
+                <div class="sx-chain-step done">מ"י</div>
+                <div class="sx-chain-line done"></div>
+                <div class="sx-chain-step active">סמ"כ</div>
+                <div class="sx-chain-line"></div>
+                <div class="sx-chain-step">מנכ"ל</div>
+              </div>
+              <div class="sx-chain-label">
+                <span>מנהל ישיר</span><span>סמנכ"ל</span><span>מנכ"ל</span>
+              </div>
+            </div>
+          </div>
+          <div class="sx-meta">
+            <h3>אישורים דיגיטליים<br/>עם מסלולי ביקורת מלאים.</h3>
+            <p>הרשאות לפי תפקיד. בלי דפים. בלי טעויות.</p>
+            <a href="pitronot.html#finantsim" class="sx-cta">
+              <span>לפתרון</span>
+              <span class="sx-cta-arrow">←</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
     </div>
   </div>
 </section>
@@ -1738,45 +3352,6 @@
 
   </div>
 </section>
-
-<!-- LOGOS BAND -->
-<div class="scifi-divider">
-  <canvas id="divider1"></canvas>
-  <div class="scifi-divider-label">ארגונים שסומכים על Wendi</div>
-</div>
-<div class="logos">
-  <div class="logos-row" aria-hidden="false">
-    <div class="logo-box"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt="מכבי שירותי בריאות" /></div>
-    <div class="logo-box"><img src="Pazlogo.svg" alt="פז" /></div>
-    <div class="logo-box"><img src="ShufersalLogo.svg.png" alt="שופרסל" /></div>
-    <div class="logo-box"><img src="Soraski2021.svg.png" alt="איכילוב" /></div>
-    <div class="logo-box"><img src="Super_Pharm_Logo.svg.png" alt="סופר-פארם" /></div>
-    <div class="logo-box"><img src="bezeq 1.png" alt="בזק" /></div>
-    <div class="logo-box"><img src="doralon 1.png" alt="דור אלון" /></div>
-    <div class="logo-box"><img src="ikea 1.png" alt="IKEA" /></div>
-    <div class="logo-box"><img src="zoglovek 1.png" alt="זוגלובק" /></div>
-    <div class="logo-box"><img src="fatal 1.png" alt="פטל" /></div>
-    <div class="logo-box"><img src="gmc 1.png" alt="GMC" /></div>
-    <div class="logo-box"><img src="logo-ampm.svg" alt="am:pm" /></div>
-    <!-- duplicate for seamless loop -->
-    <div class="logo-box" aria-hidden="true"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="Pazlogo.svg" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="ShufersalLogo.svg.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="Soraski2021.svg.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="Super_Pharm_Logo.svg.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="bezeq 1.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="doralon 1.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="ikea 1.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="zoglovek 1.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="fatal 1.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="gmc 1.png" alt="" /></div>
-    <div class="logo-box" aria-hidden="true"><img src="logo-ampm.svg" alt="" /></div>
-  </div>
-</div>
-<div class="scifi-divider">
-  <canvas id="divider2"></canvas>
-  <div class="scifi-divider-label">בואו נבנה יחד</div>
-</div>
 
 <!-- CTA BAND -->
 <section class="cta-band" id="contact">
@@ -2132,8 +3707,6 @@
     draw();
   }
 
-  initDivider('divider1');
-  initDivider('divider2');
 
   /* ═══ HAMBURGER MENU ═══ */
   function toggleMenu() {
@@ -2161,6 +3734,254 @@
       document.body.style.overflow = '';
     });
   });
+
+  /* ═══ TRUST BAR — sparkles canvas (native, no library) ═══ */
+  (function(){
+    const canvas = document.getElementById('trustSparkles');
+    if (!canvas) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0, particles = [], rafId = null, isVisible = false;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      W = rect.width; H = rect.height;
+      canvas.width = W * DPR;
+      canvas.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      seed();
+    }
+
+    function seed() {
+      // Density scales with area — denser for cinematic effect, capped for perf
+      const target = Math.min(1100, Math.floor((W * H) / 750));
+      particles = new Array(target).fill(0).map(() => ({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.5 + 0.25,
+        baseA: Math.random() * 0.8 + 0.15,    // base opacity
+        phase: Math.random() * Math.PI * 2,    // for sin twinkle
+        speed: 0.5 + Math.random() * 1.4,      // twinkle frequency
+        drift: (Math.random() - 0.5) * 0.06,   // tiny horizontal drift
+        vy: 0.02 + Math.random() * 0.1,        // slow upward float
+        // 10% are "bright" — slightly larger and brighter, like leading stars
+        bright: Math.random() < 0.08
+      }));
+    }
+
+    let lastTs = 0;
+    function frame(ts) {
+      if (!lastTs) lastTs = ts;
+      const dt = Math.min(40, ts - lastTs) / 16.667; // normalized to 60fps
+      lastTs = ts;
+
+      ctx.clearRect(0, 0, W, H);
+      const t = ts * 0.001;
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        // gentle rise + drift
+        p.y -= p.vy * dt;
+        p.x += p.drift * dt;
+        if (p.y < -2) { p.y = H + 2; p.x = Math.random() * W; }
+        if (p.x < -2) p.x = W + 2;
+        if (p.x > W + 2) p.x = -2;
+
+        const tw = (Math.sin(t * p.speed + p.phase) + 1) * 0.5; // 0..1
+        const a = p.baseA * (0.35 + 0.65 * tw);
+        if (p.bright) {
+          // glowing star — draw soft halo + bright core
+          ctx.globalAlpha = a * 0.4;
+          ctx.fillStyle = 'rgba(62,207,190,1)';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 3.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = a;
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 1.2, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.globalAlpha = a;
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.globalAlpha = 1;
+      rafId = requestAnimationFrame(frame);
+    }
+
+    function start() { if (!rafId) { lastTs = 0; rafId = requestAnimationFrame(frame); } }
+    function stop()  { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+
+    // Only animate when on-screen
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        isVisible = e.isIntersecting;
+        if (isVisible) start(); else stop();
+      });
+    }, { threshold: 0 });
+    io.observe(canvas);
+
+    window.addEventListener('resize', () => { resize(); }, { passive: true });
+    resize();
+  })();
+
+  /* ═══ APPS MARQUEE — cursor-tracking glow on iPhone cards ═══ */
+  (function(){
+    const marquee = document.querySelector('.apps-marquee');
+    if (!marquee) return;
+    let targetX = 0, targetY = 0, rafId = null;
+    marquee.addEventListener('pointermove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      if (!rafId) rafId = requestAnimationFrame(flush);
+    });
+    function flush() {
+      marquee.style.setProperty('--mx', targetX);
+      marquee.style.setProperty('--my', targetY);
+      rafId = null;
+    }
+  })();
+
+  /* ═══ CARDS — mouse-follow spotlight (bento + sector) ═══ */
+  (function(){
+    const cards = document.querySelectorAll('.bx-card, .sx-card');
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  })();
+
+  /* ═══ SECTOR CARDS — 3D tilt parallax on mouse ═══ */
+  (function(){
+    if (window.matchMedia('(hover: none)').matches) return;
+    const cards = document.querySelectorAll('.sx-card');
+    cards.forEach(card => {
+      const inner = card.querySelector('.sx-inner');
+      if (!inner) return;
+      let targetRx = 0, targetRy = 0, curRx = 0, curRy = 0;
+      let rafId = null, active = false;
+
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;   // 0..1
+        const py = (e.clientY - r.top)  / r.height;  // 0..1
+        // tilt up to ±4.5deg
+        targetRy = (px - 0.5) * 9;
+        targetRx = -(py - 0.5) * 9;
+        if (!active) { active = true; loop(); }
+      });
+      card.addEventListener('mouseleave', () => {
+        targetRx = 0; targetRy = 0;
+      });
+
+      function loop() {
+        curRx += (targetRx - curRx) * 0.12;
+        curRy += (targetRy - curRy) * 0.12;
+        inner.style.setProperty('--rx', curRx.toFixed(2) + 'deg');
+        inner.style.setProperty('--ry', curRy.toFixed(2) + 'deg');
+        if (Math.abs(targetRx - curRx) > 0.05 || Math.abs(targetRy - curRy) > 0.05) {
+          rafId = requestAnimationFrame(loop);
+        } else {
+          inner.style.setProperty('--rx', '0deg');
+          inner.style.setProperty('--ry', '0deg');
+          active = false;
+          if (rafId) cancelAnimationFrame(rafId);
+        }
+      }
+    });
+  })();
+
+  /* ═══ GRIDS — scroll reveal stagger (bento + sector) ═══ */
+  (function(){
+    const grids = document.querySelectorAll('.bx, .sx-grid');
+    if (!grids.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: .15 });
+    grids.forEach(g => io.observe(g));
+  })();
+
+  /* ═══ ORBITAL — mouse parallax (3D tilt) ═══ */
+  (function(){
+    const stage = document.getElementById('orbitalStage');
+    const tilt  = document.getElementById('orbitalTilt');
+    if (!stage || !tilt) return;
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    let targetRx = 0, targetRy = 0, curRx = 0, curRy = 0;
+    let active = false, rafId = null;
+
+    stage.addEventListener('mousemove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      // -1 to 1 normalized
+      const dx = (e.clientX - cx) / (r.width / 2);
+      const dy = (e.clientY - cy) / (r.height / 2);
+      // tilt angles (subtle): up to ±8deg
+      targetRx = -dy * 8;
+      targetRy = dx * 8;
+      if (!active) { active = true; loop(); }
+    });
+    stage.addEventListener('mouseleave', () => {
+      targetRx = 0; targetRy = 0;
+    });
+
+    function loop(){
+      curRx += (targetRx - curRx) * 0.08;
+      curRy += (targetRy - curRy) * 0.08;
+      tilt.style.transform = `rotateX(${curRx}deg) rotateY(${curRy}deg)`;
+      if (Math.abs(targetRx - curRx) > 0.05 || Math.abs(targetRy - curRy) > 0.05 || active) {
+        rafId = requestAnimationFrame(loop);
+        // If we're at rest and mouse left, stop loop
+        if (Math.abs(targetRx) < 0.05 && Math.abs(targetRy) < 0.05 && Math.abs(curRx) < 0.1 && Math.abs(curRy) < 0.1) {
+          active = false; cancelAnimationFrame(rafId);
+        }
+      }
+    }
+  })();
+
+  /* ═══ HERO INTERACTIVE MOUSE-FOLLOW GLOW ═══ */
+  (function(){
+    const hero = document.querySelector('.hero');
+    const glow = document.getElementById('heroGlow');
+    if (!hero || !glow) return;
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    let rafId = null, active = false;
+
+    const rect = () => hero.getBoundingClientRect();
+
+    hero.addEventListener('mousemove', (e) => {
+      const r = rect();
+      targetX = e.clientX - r.left;
+      targetY = e.clientY - r.top;
+      if (!active) { active = true; loop(); }
+    });
+    hero.addEventListener('mouseleave', () => { active = false; });
+
+    function loop(){
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+      glow.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) translate(-50%, -50%)`;
+      if (active) rafId = requestAnimationFrame(loop);
+      else if (rafId) cancelAnimationFrame(rafId);
+    }
+  })();
 
 </script>
 </body>
