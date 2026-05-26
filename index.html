@@ -3698,94 +3698,125 @@
 
     <div class="sf-grid">
 
-      <!-- FIG 0.1 — Logistics -->
+      <!-- FIG 0.1 — Logistics: Isometric box truck -->
       <article class="sf-card">
         <div class="sf-visual" data-fig="logistics">
           <span class="sf-fig-label">FIG 0.1</span>
           <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <!-- Stacked isometric pallet (3 layers, bottom widest) -->
-            <g class="sf-art-layer sf-art-l1">
-              <path d="M 40 130 L 120 90 L 200 130 L 120 170 Z" />
-              <path d="M 40 130 L 40 140 L 120 180 L 120 170" />
-              <path d="M 200 130 L 200 140 L 120 180" />
+            <!-- CARGO BOX (rear, larger) -->
+            <g class="sf-art-cargo">
+              <!-- top face -->
+              <path d="M 95 70 L 200 70 L 215 85 L 110 85 Z" />
+              <!-- back face (right edge in isometric) -->
+              <path d="M 200 70 L 215 85 L 215 130 L 200 115 Z" />
+              <!-- front face (facing viewer) -->
+              <path d="M 110 85 L 215 85 L 215 130 L 110 130 Z" />
+              <!-- left edge (back of cargo, connecting to cab) -->
+              <path d="M 95 70 L 95 115 L 110 130 L 110 85 Z" />
+              <!-- door lines -->
+              <path d="M 145 89 L 145 126" opacity=".4" />
+              <path d="M 180 89 L 180 126" opacity=".4" />
             </g>
-            <g class="sf-art-layer sf-art-l2" opacity=".8">
-              <path d="M 60 100 L 120 70 L 180 100 L 120 130 Z" />
-              <path d="M 60 100 L 60 112 L 120 142 L 120 130" />
-              <path d="M 180 100 L 180 112 L 120 142" />
+            <!-- CAB (front, smaller) -->
+            <g class="sf-art-cab">
+              <!-- top -->
+              <path d="M 45 95 L 95 95 L 110 110 L 60 110 Z" opacity=".9" />
+              <!-- front face -->
+              <path d="M 45 95 L 45 130 L 60 145 L 60 110 Z" opacity=".9" />
+              <!-- right face (connecting to cargo) -->
+              <path d="M 95 95 L 110 110 L 110 130 L 95 130" opacity=".9" />
+              <!-- windshield (slanted) -->
+              <path d="M 50 110 L 90 110 L 90 122 L 50 122 Z" opacity=".35" />
             </g>
-            <g class="sf-art-layer sf-art-l3" opacity=".6">
-              <path d="M 80 75 L 120 55 L 160 75 L 120 95 Z" />
-              <path d="M 80 75 L 80 85 L 120 105 L 120 95" />
-              <path d="M 160 75 L 160 85 L 120 105" />
+            <!-- WHEELS -->
+            <ellipse cx="55" cy="143" rx="6" ry="3" />
+            <ellipse cx="80" cy="143" rx="6" ry="3" />
+            <ellipse cx="155" cy="143" rx="6" ry="3" />
+            <ellipse cx="195" cy="143" rx="6" ry="3" />
+            <!-- ROUTE / motion dashes (teal, behind truck) -->
+            <g stroke="#3ECFBE">
+              <path d="M 218 95 L 232 92" stroke-width="1.4" />
+              <path d="M 220 108 L 234 105" stroke-width="1.4" opacity=".6" />
             </g>
-            <!-- Route dots — teal accent -->
-            <g stroke="none" fill="#3ECFBE">
-              <circle class="sf-art-dot sf-dot-a" cx="218" cy="148" r="2.2" />
-              <circle class="sf-art-dot sf-dot-b" cx="228" cy="138" r="1.6" opacity=".55" />
-              <circle class="sf-art-dot sf-dot-c" cx="236" cy="128" r="1.2" opacity=".3" />
-            </g>
+            <circle class="sf-art-pulse" cx="232" cy="92" r="2.2" fill="#3ECFBE" stroke="none" />
           </svg>
         </div>
         <h3 class="sf-title">לוגיסטיקה ותחבורה</h3>
         <p class="sf-desc">חיבור אמיתי לעובדי שטח — מובייל-first, בזמן אמת.</p>
       </article>
 
-      <!-- FIG 0.2 — Finance -->
+      <!-- FIG 0.2 — Finance: Stacked coins + rising chart -->
       <article class="sf-card">
         <div class="sf-visual" data-fig="finance">
           <span class="sf-fig-label">FIG 0.2</span>
           <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <!-- Isometric vault — cube with horizontal ledger layers + lock dot -->
-            <g class="sf-art-vault">
-              <!-- top face -->
-              <path d="M 60 60 L 120 35 L 180 60 L 120 85 Z" />
-              <!-- left face -->
-              <path d="M 60 60 L 60 130 L 120 155 L 120 85" />
-              <!-- right face -->
-              <path d="M 180 60 L 180 130 L 120 155 L 120 85" />
-              <!-- horizontal ledger layers (left face) -->
-              <path d="M 60 80 L 120 105" opacity=".5" />
-              <path d="M 60 100 L 120 125" opacity=".5" />
-              <path d="M 60 120 L 120 145" opacity=".5" />
-              <!-- horizontal ledger layers (right face) -->
-              <path d="M 180 80 L 120 105" opacity=".5" />
-              <path d="M 180 100 L 120 125" opacity=".5" />
-              <path d="M 180 120 L 120 145" opacity=".5" />
+            <!-- STACKED COINS — 4 isometric ellipses -->
+            <g class="sf-art-coins">
+              <!-- coin 4 (bottom) -->
+              <ellipse cx="90" cy="140" rx="55" ry="14" />
+              <path d="M 35 140 L 35 132" />
+              <path d="M 145 140 L 145 132" />
+              <path d="M 35 132 Q 90 117 145 132" opacity=".4" />
+              <!-- coin 3 -->
+              <ellipse cx="90" cy="120" rx="55" ry="14" opacity=".85" />
+              <path d="M 35 120 L 35 112" opacity=".85" />
+              <path d="M 145 120 L 145 112" opacity=".85" />
+              <path d="M 35 112 Q 90 97 145 112" opacity=".35" />
+              <!-- coin 2 -->
+              <ellipse cx="90" cy="100" rx="55" ry="14" opacity=".7" />
+              <path d="M 35 100 L 35 92" opacity=".7" />
+              <path d="M 145 100 L 145 92" opacity=".7" />
+              <path d="M 35 92 Q 90 77 145 92" opacity=".3" />
+              <!-- coin 1 (top) -->
+              <ellipse cx="90" cy="80" rx="55" ry="14" opacity=".55" />
+              <!-- shekel symbol hint on top coin -->
+              <path d="M 84 76 L 84 84 M 84 76 Q 88 76 90 80 M 96 84 L 96 76 M 96 84 Q 92 84 90 80" stroke-width="1.1" opacity=".45" />
             </g>
-            <!-- Lock indicator (teal dot) -->
-            <circle class="sf-art-pulse" cx="120" cy="60" r="3" fill="#3ECFBE" stroke="none" />
-            <!-- Approval line (dashed, teal) extending right -->
-            <path d="M 192 90 L 215 100 L 230 92" stroke="#3ECFBE" stroke-width="1.2" stroke-dasharray="3 3" opacity=".55" />
+            <!-- RISING CHART (teal) -->
+            <g class="sf-art-chart">
+              <path d="M 170 142 L 188 122 L 205 100 L 222 72" stroke="#3ECFBE" stroke-width="1.5" />
+              <!-- arrowhead -->
+              <path d="M 215 72 L 222 72 L 222 79" stroke="#3ECFBE" stroke-width="1.5" />
+              <!-- baseline tick marks -->
+              <path d="M 170 145 L 170 148 M 185 145 L 185 148 M 200 145 L 200 148" stroke-width="1" opacity=".4" />
+            </g>
+            <!-- Live dot at the chart peak -->
+            <circle class="sf-art-pulse" cx="222" cy="72" r="2.5" fill="#3ECFBE" stroke="none" />
           </svg>
         </div>
         <h3 class="sf-title">פיננסים</h3>
         <p class="sf-desc">תקשורת ולמידה בסביבה רגולטורית — שליטה מלאה בהרשאות.</p>
       </article>
 
-      <!-- FIG 0.3 — Healthcare -->
+      <!-- FIG 0.3 — Healthcare: 3D medical cross + pulse line -->
       <article class="sf-card">
         <div class="sf-visual" data-fig="healthcare">
           <span class="sf-fig-label">FIG 0.3</span>
           <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <!-- Isometric cube with medical plus on top + pulse line beside it -->
-            <g class="sf-art-shield">
-              <!-- top face -->
-              <path d="M 80 65 L 130 40 L 180 65 L 130 90 Z" />
-              <!-- left face -->
-              <path d="M 80 65 L 80 130 L 130 155 L 130 90" />
-              <!-- right face -->
-              <path d="M 180 65 L 180 130 L 130 155 L 130 90" />
-              <!-- plus on top face -->
-              <path d="M 122 60 L 138 68" stroke-width="2" />
-              <path d="M 130 53 L 130 69" stroke-width="2" />
+            <!-- 3D EXTRUDED MEDICAL PLUS -->
+            <g class="sf-art-plus">
+              <!-- Front face of plus (large, prominent) -->
+              <path d="M 85 50 L 115 50 L 115 75 L 140 75 L 140 105 L 115 105 L 115 130 L 85 130 L 85 105 L 60 105 L 60 75 L 85 75 Z" />
+              <!-- Depth lines (top-right diagonal offset to simulate 3D extrusion) -->
+              <!-- top edge -->
+              <path d="M 85 50 L 95 42 L 125 42 L 115 50" opacity=".55" />
+              <!-- right arm top edge -->
+              <path d="M 115 75 L 125 67 L 150 67 L 140 75" opacity=".55" />
+              <!-- right edge -->
+              <path d="M 140 75 L 150 67 L 150 97 L 140 105" opacity=".55" />
+              <!-- right arm bottom edge -->
+              <path d="M 115 105 L 125 97 L 150 97" opacity=".55" />
+              <!-- right vertical bottom -->
+              <path d="M 125 42 L 125 67" opacity=".45" />
+              <!-- right top arm right vertical -->
+              <path d="M 115 105 L 125 97 M 115 130 L 125 122 L 125 97" opacity=".45" />
             </g>
-            <!-- Pulse line (right side, teal) -->
+            <!-- PULSE LINE (teal, animated) -->
             <g class="sf-art-pulse-line">
-              <path d="M 195 100 L 205 100 L 210 88 L 215 112 L 220 100 L 232 100" stroke="#3ECFBE" stroke-width="1.4" />
+              <path d="M 165 95 L 178 95 L 184 80 L 192 115 L 200 95 L 232 95" stroke="#3ECFBE" stroke-width="1.5" />
             </g>
             <!-- Live dot -->
-            <circle class="sf-art-pulse" cx="232" cy="100" r="2.5" fill="#3ECFBE" stroke="none" />
+            <circle class="sf-art-pulse" cx="232" cy="95" r="2.5" fill="#3ECFBE" stroke="none" />
           </svg>
         </div>
         <h3 class="sf-title">שירותי בריאות</h3>
