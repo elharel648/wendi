@@ -48,7 +48,7 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: center;
-      padding: 0 48px; height: 68px;
+      padding: 0 58px; height: 82px;
       background: rgba(5,15,30,.97);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,.08);
@@ -65,30 +65,31 @@
       right: auto;
       transform: translateX(-50%);
       width: auto;
-      min-width: 560px;
-      height: 50px;
+      min-width: 672px;
+      height: 60px;
       border-radius: 50px;
-      padding: 0 8px 0 20px;
+      padding: 0 10px 0 24px;
       background: rgba(5,15,30,.99);
       border: 1px solid rgba(62,207,190,.35);
       box-shadow: 0 8px 40px rgba(0,0,0,.4), 0 0 0 1px rgba(62,207,190,.08);
     }
     nav.scrolled .nav-logo { opacity: 0; width: 0; overflow: hidden; margin: 0; }
-    nav.scrolled .nav-links { gap: 18px; }
-    nav.scrolled .nav-links > li > a { font-size: .82rem; }
-    nav.scrolled .nav-cta { padding: 7px 18px; font-size: .82rem; }
-    nav.scrolled .nav-inner { justify-content: center; gap: 12px; }
+    nav.scrolled .nav-links { gap: 35px; }
+    nav.scrolled .nav-links > li > a { font-size: 1.09rem; }
+    nav.scrolled .nav-links > li > a .arr { margin-left: 0; margin-right: 4px; }
+    nav.scrolled .nav-cta { padding: 8px 20px; font-size: .9rem; margin-right: auto; }
+    nav.scrolled .nav-inner { justify-content: space-between; gap: 12px; }
 
     .nav-logo { display: flex; align-items: center; transition: all .35s; flex-shrink: 0; }
-    .nav-logo img { height: 36px; width: auto; filter: brightness(0) invert(1); }
+    .nav-logo img { height: 36px; width: auto; }
     .nav-links { display: flex; gap: 28px; list-style: none; }
     .nav-links > li { position: relative; }
     .nav-links > li > a {
-      font-size: .88rem; font-weight: 500; color: rgba(255,255,255,.78);
+      font-size: 1.09rem; font-weight: 500; color: rgba(255,255,255,.78);
       transition: color .2s; display: flex; align-items: center; gap: 3px;
     }
     .nav-links > li > a:hover, .nav-links > li > a.active-page { color: var(--teal); }
-    .arr { font-size: .6rem; opacity: .7; }
+    .arr { font-size: .78rem; opacity: .7; }
     .dropdown {
       position: absolute; top: calc(100% + 10px); right: 0;
       background: #050f1e; border: 1px solid rgba(62,207,190,.2);
@@ -257,14 +258,14 @@
     .hero-g2 { position: absolute; bottom: -200px; right: -80px; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(74,144,196,.08) 0%, transparent 65%); pointer-events: none; }
     .hero-inner { display: grid; grid-template-columns: 500px 1fr; gap: 48px; align-items: center; max-width: 1440px; margin: 0 auto; width: 100%; direction: ltr; }
     .hero-inner > div:last-child { direction: rtl; text-align: right; }
-    .hero-char { position: relative; display: flex; justify-content: center; align-items: flex-end; }
+    .hero-char { position: relative; display: flex; justify-content: center; align-items: flex-end; left: 15%; }
     .hero-char img { width: 100%; max-width: 500px; height: auto; mix-blend-mode: screen; filter: drop-shadow(0 0 60px rgba(62,207,190,.4)) drop-shadow(0 0 120px rgba(62,207,190,.2)) brightness(1.05); animation: float 4s ease-in-out infinite; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-glow); border: 1px solid var(--border-teal); padding: 5px 14px; border-radius: 100px; font-size: .77rem; font-weight: 600; color: var(--teal); margin-bottom: 26px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-glow); border: 1px solid var(--border-teal); padding: 5px 14px; border-radius: 100px; font-size: .77rem; font-weight: 600; color: var(--teal); margin-bottom: 26px; transform: translateY(-10%); }
     .hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: blink 2s infinite; }
     .hero h1 { font-size: clamp(2.4rem, 4.5vw, 4.1rem); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; color: #fff; margin-bottom: 22px; }
     .hero h1 .ac { color: var(--teal); }
-    .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 510px; margin-bottom: 38px; line-height: 1.8; }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+    .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 700px; margin-bottom: 38px; line-height: 1.8; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; position: relative; top: 15%; }
     .hero-trust { border-top: 1px solid var(--border); padding-top: 28px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .hero-trust span { font-size: .78rem; color: var(--muted); }
     .trust-pill { background: var(--surface-2); border: 1px solid var(--border); padding: 5px 14px; border-radius: 7px; font-size: .78rem; color: var(--muted); font-weight: 600; }
@@ -272,6 +273,27 @@
 
     /* ══ PARTNER ══ */
     .partner { padding: 96px 0; background: var(--surface); border-top: 1px solid var(--border); }
+
+    /* ── Partner entrance animations ── */
+    @keyframes partnerFadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes partnerFadeScale {
+      from { opacity: 0; transform: scale(.94) translateY(18px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes partnerSlideIn {
+      from { opacity: 0; transform: translateX(24px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .partner-anim { opacity: 0; }
+    .partner-anim.p-visible { animation-fill-mode: both; animation-timing-function: cubic-bezier(.22,1,.36,1); }
+    .pa-eyebrow.p-visible  { animation: partnerFadeUp    .6s .05s both cubic-bezier(.22,1,.36,1); }
+    .pa-title.p-visible    { animation: partnerFadeScale .75s .2s  both cubic-bezier(.22,1,.36,1); }
+    .pa-p1.p-visible       { animation: partnerFadeUp    .6s .42s  both cubic-bezier(.22,1,.36,1); }
+    .pa-p2.p-visible       { animation: partnerFadeUp    .6s .58s  both cubic-bezier(.22,1,.36,1); }
+    .pa-btns.p-visible     { animation: partnerSlideIn   .55s .75s both cubic-bezier(.22,1,.36,1); }
     .partner-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
     .big-q { font-size: clamp(1.25rem, 1.9vw, 1.7rem); font-weight: 800; line-height: 1.5; color: #fff; margin-bottom: 22px; }
     .big-q .tc { color: var(--teal); }
@@ -383,8 +405,10 @@
     #heroTyped::after { content: '|'; color: var(--teal); animation: blink .7s infinite; }
 
     /* ══ LOGOS BAND ══ */
-    .logos { padding: 52px 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .logos-row { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; }
+    .logos { padding: 32px 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; }
+    @keyframes marqueeRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+    .logos-row { display: flex; align-items: center; flex-wrap: nowrap; width: max-content; animation: marqueeRight 35s linear infinite; gap: 0; }
+    .logos-row:hover { animation-play-state: paused; }
     .logo-box {
       padding: 20px 36px;
       border-left: 1px solid rgba(255,255,255,.06);
@@ -477,7 +501,7 @@
     /* ══ CTA BAND ══ */
     .cta-band { padding: 72px 48px; text-align: center; position: relative; overflow: hidden; background: linear-gradient(160deg,#071d3e 0%,#0e2f5a 50%,#071d3e 100%); border-top: 1px solid rgba(62,207,190,.18); }
     .cta-band::before { content: ''; position: absolute; top: -180px; left: 50%; transform: translateX(-50%); width: 650px; height: 650px; border-radius: 50%; background: radial-gradient(circle, rgba(62,207,190,.09) 0%, transparent 65%); }
-    .cta-char { position: absolute; left: 0; bottom: 0; height: 400px; filter: drop-shadow(0 0 36px rgba(62,207,190,.18)); }
+    .cta-char { position: absolute; left: 15%; bottom: 0; height: 400px; filter: drop-shadow(0 0 36px rgba(62,207,190,.18)); mix-blend-mode: screen; }
     .cta-content { position: relative; z-index: 1; }
     .cta-band h2 { font-size: clamp(1.75rem, 3.2vw, 3rem); font-weight: 900; color: #fff; margin-bottom: 14px; letter-spacing: -.4px; }
     .cta-band p { font-size: 1.02rem; color: var(--muted); margin-bottom: 36px; }
@@ -801,9 +825,10 @@
 
     /* ══ DEVICE COMPACT ══ */
     .device-compact { padding:32px 0 64px; background:var(--surface); border-top:1px solid var(--border); }
-    .dc-inner { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center; }
-    .dc-text { }
-    .dc-visual { display:flex; justify-content:center; position:relative; }
+    .device-compact.section-white { background: var(--white-bg) !important; border-color: var(--white-border) !important; }
+    .dc-inner { display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:flex-start; }
+    .dc-text { padding-top: 0; }
+    .dc-visual { display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; gap:24px; }
     .dc-device-wrap { position:relative; }
     .dc-device-wrap.hidden { display:none; }
     .phone-glow-fx { position:absolute; width:240px; height:240px; border-radius:50%; background:radial-gradient(circle,rgba(62,207,190,.2) 0%,transparent 70%); bottom:-40px; left:50%; transform:translateX(-50%); pointer-events:none; animation:glow-pulse 3s ease-in-out infinite; }
@@ -1198,18 +1223,18 @@
     /* Home button — visible only in scrolled pill nav */
     .nav-home {
       display: none;
-      font-size: .82rem;
-      font-weight: 600;
-      color: rgba(255,255,255,.75);
-      padding: 6px 12px;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,.8);
+      padding: 6px 10px;
       border-radius: 8px;
       transition: all .2s;
-      white-space: nowrap;
       flex-shrink: 0;
       text-decoration: none;
     }
+    .nav-home svg { width: 20px; height: 20px; fill: currentColor; }
     .nav-home:hover { color: var(--teal); background: rgba(255,255,255,.06); }
-    nav.scrolled .nav-home { display: flex; align-items: center; gap: 5px; }
+    nav.scrolled .nav-home { display: flex; }
   </style>
 </head>
 <body>
@@ -1217,9 +1242,11 @@
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-home">🏠 דף הבית</a>
+    <a href="index.html" class="nav-home" title="דף הבית">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+    </a>
     <div class="nav-logo">
-      <a href="index.html"><img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;filter:brightness(0) invert(1);" /></a>
+      <a href="index.html"><img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;" /></a>
     </div>
     <ul class="nav-links">
       <li>
@@ -1241,7 +1268,7 @@
           <a href="pitronot.html#tayarut">תיירות</a>
         </div>
       </li>
-      <li><a href="modulim.html">מודולים</a></li>
+      <li><a href="modulim_5.html">מודולים</a></li>
       <li>
         <a href="mamashkim.html">ממשקים <span class="arr">▾</span></a>
         <div class="dropdown">
@@ -1277,32 +1304,26 @@
       </h1>
       <p class="hero-sub">
         וונדי היא הפלטפורמה שמנהלי HR בחרו.<br/>
-        תקשורת, למידה, Workflows וממשקים — ב<strong>מקום אחד</strong>, בלי ריצה בין מערכות.
+        תקשורת למידה, תהליכים דיגיטליים וממשקים- ב<strong>מקום אחד</strong> ! בלי ריצה בין&nbsp;מערכות.
       </p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-p">קבל הדגמה חינמית ←</a>
-        <a href="#what" class="btn-o">ראה איך זה עובד</a>
+        <a href="#contact" class="btn-p">קבלו הדגמה חינמית ←</a>
+        <a href="#what" class="btn-o">ראו איך זה עובד</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- DEVICE SHOWCASE -->
-<section class="device-compact" id="showcase">
+<section class="device-compact section-white" id="showcase">
   <div class="container">
     <div class="dc-inner">
 
-      <!-- RIGHT: text + toggle -->
+      <!-- RIGHT: text -->
       <div class="dc-text fade-up">
         <div class="eyebrow" style="text-align:left">חוויית משתמש</div>
         <h2 class="sec-title" style="font-size:clamp(2rem,3.5vw,3rem);letter-spacing:-.5px;margin-bottom:16px">בכל מכשיר. בכל רגע.</h2>
         <p style="color:var(--muted);line-height:1.8;margin-bottom:28px;max-width:440px">וונדי מותאמת במיוחד לכל פלטפורמה — עובד שטח בנייד, מנהל בדסקטופ. חוויה אחת, שתי עולמות.</p>
-
-        <!-- Toggle — above device, matches screenshot style -->
-        <div class="device-toggle" style="margin-bottom:28px">
-          <button class="dtoggle active" id="btn-mobile" onclick="showView('mobile')">📱 מובייל</button>
-          <button class="dtoggle" id="btn-desktop" onclick="showView('desktop')">🖥️ דסקטופ</button>
-        </div>
 
         <!-- Device label -->
         <div class="dc-device-label" id="dc-label">
@@ -1316,7 +1337,7 @@
 
         <!-- MOBILE VIEW -->
         <div class="dc-device-wrap" id="view-mobile">
-          <div class="phone-frame" style="width:256px">
+          <div class="phone-frame" style="width:220px">
             <div class="phone-notch"></div>
             <div class="phone-screen">
               <div class="phone-status"><span>09:41</span><span>●●● WiFi 🔋</span></div>
@@ -1356,7 +1377,7 @@
 
         <!-- DESKTOP VIEW -->
         <div class="dc-device-wrap hidden" id="view-desktop">
-          <div class="desktop-frame" style="width:520px">
+          <div class="desktop-frame" style="width:460px">
             <div class="browser-bar">
               <div class="browser-dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div>
               <div class="browser-url">app.wendi.co.il/dashboard</div>
@@ -1406,6 +1427,12 @@
           </div>
         </div>
 
+        <!-- Toggle — below device -->
+        <div class="device-toggle">
+          <button class="dtoggle active" id="btn-mobile" onclick="showView('mobile')">📱 מובייל</button>
+          <button class="dtoggle" id="btn-desktop" onclick="showView('desktop')">🖥️ דשבורד דסקטופ</button>
+        </div>
+
       </div><!-- /dc-visual -->
     </div>
   </div>
@@ -1413,26 +1440,25 @@
 
 
 <!-- PARTNER SECTION -->
-<section class="partner" id="about" style="padding:64px 0;background:var(--surface);border-top:1px solid var(--border);">
+<section class="partner" id="about" style="padding:112px 0;background:var(--surface);border-top:1px solid var(--border);">
   <!-- Triangles -->
   <div class="ptri-1"></div>
   <div class="ptri-2"></div>
   <div class="ptri-3"></div>
   <div class="container">
-    <div class="fade-up" style="text-align:center;max-width:680px;margin:0 auto;">
-      <div class="eyebrow" style="margin-bottom:20px">השותפה שלכם</div>
-      <p class="big-q" style="font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:900;line-height:1.35;margin-bottom:20px">
+    <div class="partner-block" style="text-align:center;max-width:680px;margin:0 auto;">
+      <div class="eyebrow partner-anim pa-eyebrow" style="margin-bottom:32px;margin-top:-24px">השותפה שלכם</div>
+      <p class="big-q partner-anim pa-title" style="font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:900;line-height:1.49;margin-bottom:36px">
         וונדי היא הרבה יותר ממערכת.<br/><span class="tc">היא שותפה.</span>
       </p>
-      <p style="font-size:1.05rem;color:var(--muted);line-height:1.8;margin-bottom:12px">
+      <p class="partner-anim pa-p1" style="font-size:1.15rem;color:var(--muted);line-height:1.98;margin-bottom:14px">
         אנחנו הולכים יד ביד עם עשרות ארגונים בישראל — ובונים יחד מוצר שמשרת את העובדים ביום-יום, בכל מקום ובכל רגע.
       </p>
-      <p style="font-size:1.02rem;color:var(--muted);line-height:1.8;margin-bottom:32px">
+      <p class="partner-anim pa-p2" style="font-size:1.02rem;color:var(--muted);line-height:1.98;margin-bottom:52px">
         אנחנו מאמינים שמה שעובד טוב לעובדים — עובד טוב לארגון. וזה לא קורה לבד, אלא ביחד.
       </p>
-      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <div class="partner-anim pa-btns" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
         <a href="about.html" class="btn-p">מי אנחנו</a>
-        <a href="sipurim.html" class="btn-o">סיפורי לקוחות</a>
       </div>
     </div>
   </div>
@@ -1454,14 +1480,14 @@
       <div class="wcard section-white"><div class="wicon">📊</div><h3>הערכת ביצועים</h3><p>מחזורי הערכה ומשוב 360 — פשוטים לעובד ולמנהל.</p></div>
     </div>
     <div style="text-align:center;margin-top:36px">
-      <a href="modulim.html" class="btn-p" style="display:inline-block">לכל המודולים ←</a>
+      <a href="modulim_5.html" class="btn-p" style="display:inline-block">לכל המודולים ←</a>
     </div>
   </div>
 </section>
 
 <!-- SECTORS TEASER -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="sectors" id="sectors" style="padding:72px 0;background:var(--surface);">
+<section class="sectors" id="sectors" style="padding:72px 0;background:linear-gradient(135deg,#122040 0%,#1a2f55 40%,#162847 70%,#0f1e3a 100%);">
   <div class="container">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:16px">
       <div>
@@ -1594,6 +1620,15 @@
             </div>
           </div>
           <div class="tc-card">
+            <p class="tc-text">"אפליקציית הסברס שלנו שינתה סדרי עולם בצבר רפואה. כשאיש צוות מגיע למטופלים בביתם, הכל מחכה לו במקום אחד בנייד שלו — קורא נהלים, מתייעץ, שולח למטופלים הוראות ומסמכים, לומד, מזמין ציוד, ומאחל מזל טוב לחברים. עולם ומלואו באפליקציה אחת. מקצוענות אמיתית."</p>
+            <div class="tc-author">
+              <div class="tc-av" style="background:none;border-color:rgba(62,207,190,.4);overflow:hidden;padding:0">
+                <img src="Orit Levi.jpg" alt="אורית לוי" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;border-radius:50%" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#3ECFBE,#0a307d)';this.parentElement.innerHTML='א'"/>
+              </div>
+              <div><div class="tc-name">אורית לוי</div><div class="tc-role">אחראית למידה, צבר רפואה</div></div>
+            </div>
+          </div>
+          <div class="tc-card">
             <p class="tc-text">"הצוות של וונדי עבד איתנו יד ביד מהיום הראשון. ההטמעה הייתה חלקה, הצוות הרגיש את הפרויקט כשלו."</p>
             <div class="tc-author">
               <div class="tc-av" style="background:linear-gradient(135deg,#e05c5c,#b33)">ר</div>
@@ -1607,6 +1642,7 @@
               <div><div class="tc-name">נועה ברנשטיין</div><div class="tc-role">מנהלת הדרכה, חברת קמעונאות</div></div>
             </div>
           </div>
+          <!-- duplicate -->
           <div class="tc-card">
             <p class="tc-text">"אפליקציית העובדים של Wendi אפשרה לנו לקדם את התקשורת הפנים ארגונית ולהפוך אותה לחוויה חדשנית, נגישה ומחברת יותר. בזכות הליווי המקצועי, החשיבה והיצירתיות הצלחנו לייצר מעורבות גבוהה של העובדים והמנהלים ולקבל פתרונות מדויקים עבורנו."</p>
             <div class="tc-author">
@@ -1616,12 +1652,20 @@
               <div><div class="tc-name">שירה לוי</div><div class="tc-role">מנהלת משאבי אנוש, הפניקס בית השקעות</div></div>
             </div>
           </div>
-          <!-- duplicate -->
           <div class="tc-card">
             <p class="tc-text">"האפליקציה מהווה אמצעי עיקרי לתקשורת פנים ארגונית, להנגשת המידע לעובדים וחוסכת זמן רב למנהלים."</p>
             <div class="tc-author">
               <div class="tc-av"><img src="arit.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='א'"/></div>
               <div><div class="tc-name">אורית שלום</div><div class="tc-role">סמנכ"לית משאבי אנוש, איקאה ישראל</div></div>
+            </div>
+          </div>
+          <div class="tc-card">
+            <p class="tc-text">"אפליקציית הסברס שלנו שינתה סדרי עולם בצבר רפואה. כשאיש צוות מגיע למטופלים בביתם, הכל מחכה לו במקום אחד בנייד שלו — קורא נהלים, מתייעץ, שולח למטופלים הוראות ומסמכים, לומד, מזמין ציוד, ומאחל מזל טוב לחברים. עולם ומלואו באפליקציה אחת. מקצוענות אמיתית."</p>
+            <div class="tc-author">
+              <div class="tc-av" style="background:none;border-color:rgba(62,207,190,.4);overflow:hidden;padding:0">
+                <img src="Orit Levi.jpg" alt="אורית לוי" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;border-radius:50%" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#3ECFBE,#0a307d)';this.parentElement.innerHTML='א'"/>
+              </div>
+              <div><div class="tc-name">אורית לוי</div><div class="tc-role">אחראית למידה, צבר רפואה</div></div>
             </div>
           </div>
           <div class="tc-card">
@@ -1692,9 +1736,6 @@
 
     </div><!-- /testi-cols-wrap -->
 
-    <div style="text-align:center;margin-top:40px">
-      <a href="sipurim.html" class="btn-o" style="display:inline-block">כל סיפורי הלקוחות ←</a>
-    </div>
   </div>
 </section>
 
@@ -1704,14 +1745,32 @@
   <div class="scifi-divider-label">ארגונים שסומכים על Wendi</div>
 </div>
 <div class="logos">
-  <div class="logos-row">
-    <div class="logo-box"><img src="logo-maccabi.png" alt="מכבי שירותי בריאות" /></div>
-    <div class="logo-box"><img src="logo-paz.png" alt="פז" /></div>
-    <div class="logo-box"><img src="logo-shufersal.png" alt="שופרסל" /></div>
-    <div class="logo-box"><img src="logo-egged.png" alt="אגד" /></div>
-    <div class="logo-box"><img src="logo-bank-jerusalem.png" alt="בנק ירושלים" /></div>
-    <div class="logo-box"><img src="logo-doralon.png" alt="דור אלון" /></div>
-    <div class="logo-box"><img src="logo-ikea.png" alt="IKEA" /></div>
+  <div class="logos-row" aria-hidden="false">
+    <div class="logo-box"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt="מכבי שירותי בריאות" /></div>
+    <div class="logo-box"><img src="Pazlogo.svg" alt="פז" /></div>
+    <div class="logo-box"><img src="ShufersalLogo.svg.png" alt="שופרסל" /></div>
+    <div class="logo-box"><img src="Soraski2021.svg.png" alt="איכילוב" /></div>
+    <div class="logo-box"><img src="Super_Pharm_Logo.svg.png" alt="סופר-פארם" /></div>
+    <div class="logo-box"><img src="bezeq 1.png" alt="בזק" /></div>
+    <div class="logo-box"><img src="doralon 1.png" alt="דור אלון" /></div>
+    <div class="logo-box"><img src="ikea 1.png" alt="IKEA" /></div>
+    <div class="logo-box"><img src="zoglovek 1.png" alt="זוגלובק" /></div>
+    <div class="logo-box"><img src="fatal 1.png" alt="פטל" /></div>
+    <div class="logo-box"><img src="gmc 1.png" alt="GMC" /></div>
+    <div class="logo-box"><img src="logo-ampm.svg" alt="am:pm" /></div>
+    <!-- duplicate for seamless loop -->
+    <div class="logo-box" aria-hidden="true"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="Pazlogo.svg" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="ShufersalLogo.svg.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="Soraski2021.svg.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="Super_Pharm_Logo.svg.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="bezeq 1.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="doralon 1.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="ikea 1.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="zoglovek 1.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="fatal 1.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="gmc 1.png" alt="" /></div>
+    <div class="logo-box" aria-hidden="true"><img src="logo-ampm.svg" alt="" /></div>
   </div>
 </div>
 <div class="scifi-divider">
@@ -1768,11 +1827,7 @@
   <div class="footer-grid">
     <div>
       <div class="fbrand">
-        <svg viewBox="0 0 54 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="0,0 18,44 27,20 36,44 54,0 44,0 36,22 27,44 18,22 10,0" fill="url(#wg3)"/>
-          <defs><linearGradient id="wg3" x1="0" y1="0" x2="54" y2="44" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3ECFBE"/><stop offset="100%" stop-color="#4A90C4"/></linearGradient></defs>
-        </svg>
-        <span class="fbrand-n">Wendi</span>
+        <img src="wendi-logo.png" alt="Wendi" style="height:36px;width:auto;" />
       </div>
       <p class="ftagline">פלטפורמת העובד המובילה בישראל — תקשורת, למידה וממשקים ביחד.</p>
     </div>
@@ -1807,7 +1862,7 @@
     </div>
   </div>
   <div class="fbot">
-    <span>© 2024 Wendi. כל הזכויות שמורות.</span>
+    <span>© 2026 Wendi. כל הזכויות שמורות.</span>
     <div><a href="#">פרטיות</a><a href="#">תנאי שימוש</a><a href="#">נגישות</a></div>
   </div>
 </footer>
@@ -1949,6 +2004,17 @@
     inputs.forEach(inp => { inp.value = ''; inp.style.borderColor = ''; });
     setTimeout(() => { btn.textContent = 'שליחה »'; btn.style.background = ''; btn.style.color = ''; btn.disabled = false; }, 3000);
   }
+  /* ── Partner section stagger animation ── */
+  const partnerObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.partner-anim').forEach(el => el.classList.add('p-visible'));
+        partnerObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.partner-block').forEach(el => partnerObs.observe(el));
+
   const navEl = document.querySelector('nav');
   window.addEventListener('scroll', () => {
     navEl.classList.toggle('scrolled', window.scrollY > 100);
