@@ -2585,17 +2585,52 @@
     .mx-mod {
       position: relative;
       overflow: hidden;
-      padding: 32px 28px;
-      border-inline-end: 1px dashed rgba(255,255,255,.07);
-      border-block-end: 1px dashed rgba(255,255,255,.07);
+      padding: 38px 32px 42px;
+      border-inline-end: 1px dashed rgba(255,255,255,.08);
+      border-block-end: 1px dashed rgba(255,255,255,.08);
       background: transparent;
       transition: background .35s ease;
       text-decoration: none;
       display: block;
+      cursor: pointer;
+      color: inherit;
     }
     .mx-mod:nth-child(3n) { border-inline-end: 0; }
     .mx-mod:nth-last-child(-n+3) { border-block-end: 0; }
-    .mx-mod:hover { background: rgba(62,207,190,.025); }
+    .mx-mod:hover { background: rgba(62,207,190,.04); }
+
+    /* Hover accent line at bottom — grows on hover */
+    .mx-mod .mx-mod-line {
+      position: absolute;
+      bottom: 0;
+      inset-inline-end: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to left, var(--teal), rgba(62,207,190,.2));
+      transition: width .45s cubic-bezier(.22,1,.36,1);
+      z-index: 2;
+    }
+    .mx-mod:hover .mx-mod-line { width: 100%; }
+
+    /* Chevron arrow in top-left corner of card (RTL: end of reading direction) */
+    .mx-mod-chev {
+      position: absolute;
+      top: 30px;
+      inset-inline-start: 30px;
+      width: 22px;
+      height: 22px;
+      color: rgba(62,207,190,.35);
+      opacity: 0;
+      transform: translateX(8px);
+      transition: opacity .35s ease, transform .35s ease, color .25s ease;
+      z-index: 2;
+    }
+    .mx-mod-chev svg { width: 100%; height: 100%; stroke-width: 1.6; }
+    .mx-mod:hover .mx-mod-chev {
+      opacity: 1;
+      transform: translateX(0);
+      color: var(--teal);
+    }
 
     /* Grid pattern overlay — top */
     .mx-mod::before {
@@ -2634,32 +2669,36 @@
     .mx-mod-icon {
       position: relative;
       z-index: 1;
-      width: 28px;
-      height: 28px;
-      color: rgba(255,255,255,.7);
-      margin-bottom: 36px;
+      width: 32px;
+      height: 32px;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 30px;
       transition: color .25s ease;
     }
-    .mx-mod-icon svg { width: 100%; height: 100%; stroke-width: 1; }
+    .mx-mod-icon svg { width: 100%; height: 100%; stroke-width: 1.1; }
     .mx-mod:hover .mx-mod-icon { color: var(--teal); }
 
     .mx-mod-title {
       position: relative;
       z-index: 1;
-      font-size: 1rem;
-      font-weight: 600;
+      font-size: 1.22rem;
+      font-weight: 700;
       color: #fff;
       margin: 0;
-      letter-spacing: -.1px;
+      letter-spacing: -.3px;
+      line-height: 1.25;
+      transition: color .25s ease;
     }
+    .mx-mod:hover .mx-mod-title { color: var(--teal); }
+
     .mx-mod-desc {
       position: relative;
       z-index: 1;
-      font-size: .82rem;
-      font-weight: 300;
-      color: rgba(255,255,255,.55);
-      margin-top: 8px;
-      line-height: 1.6;
+      font-size: .92rem;
+      font-weight: 400;
+      color: rgba(255,255,255,.6);
+      margin-top: 10px;
+      line-height: 1.65;
     }
 
     /* CTA card variant */
@@ -3746,7 +3785,8 @@
       <!-- RIGHT: Module grid (blueprint feel) -->
       <div class="mx-grid">
 
-        <div class="mx-mod">
+        <a href="modulim_5.html#comm" class="mx-mod">
+          <span class="mx-mod-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg></span>
           <div class="mx-mod-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -3754,9 +3794,11 @@
           </div>
           <h3 class="mx-mod-title">תקשורת פנים-ארגונית</h3>
           <p class="mx-mod-desc">ערוץ אחיד לכל עובד — לפי תפקיד, מחלקה ומיקום.</p>
-        </div>
+          <span class="mx-mod-line"></span>
+        </a>
 
-        <div class="mx-mod">
+        <a href="modulim_5.html#learning" class="mx-mod">
+          <span class="mx-mod-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg></span>
           <div class="mx-mod-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
@@ -3765,9 +3807,11 @@
           </div>
           <h3 class="mx-mod-title">למידה והכשרה</h3>
           <p class="mx-mod-desc">LMS מלא עם מעקב, הסמכות ואינטגרציה למערכות קיימות.</p>
-        </div>
+          <span class="mx-mod-line"></span>
+        </a>
 
-        <div class="mx-mod">
+        <a href="modulim_5.html#workflows" class="mx-mod">
+          <span class="mx-mod-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg></span>
           <div class="mx-mod-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <rect x="3" y="3" width="7" height="7" rx="1"/>
@@ -3778,9 +3822,11 @@
           </div>
           <h3 class="mx-mod-title">Workflows וטפסים</h3>
           <p class="mx-mod-desc">אוטומציה של תהליכים — קליטה, חופשות, אישורים.</p>
-        </div>
+          <span class="mx-mod-line"></span>
+        </a>
 
-        <div class="mx-mod">
+        <a href="modulim_5.html#integrations" class="mx-mod">
+          <span class="mx-mod-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg></span>
           <div class="mx-mod-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
@@ -3789,9 +3835,11 @@
           </div>
           <h3 class="mx-mod-title">ממשקים</h3>
           <p class="mx-mod-desc">חיבור ל-SAP, Priority, Oracle ועוד — ב-One Stop Shop.</p>
-        </div>
+          <span class="mx-mod-line"></span>
+        </a>
 
-        <div class="mx-mod">
+        <a href="modulim_5.html#performance" class="mx-mod">
+          <span class="mx-mod-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg></span>
           <div class="mx-mod-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M3 3v18h18"/>
@@ -3802,7 +3850,8 @@
           </div>
           <h3 class="mx-mod-title">הערכת ביצועים</h3>
           <p class="mx-mod-desc">מחזורי הערכה ומשוב 360 — פשוטים לעובד ולמנהל.</p>
-        </div>
+          <span class="mx-mod-line"></span>
+        </a>
 
         <a href="modulim_5.html" class="mx-mod is-cta">
           <div class="mx-mod-icon">
