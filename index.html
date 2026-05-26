@@ -1965,6 +1965,266 @@
     .dc-feat p { font-size:.8rem; color:var(--muted); line-height:1.5; margin:0; }
     @media(max-width:960px){ .dc-inner { grid-template-columns:1fr; } .dc-text { order:1; } .dc-visual { order:2; } }
 
+    /* ══ MODULES SPLIT — AI chat (continuing) + minimal feature grid ══ */
+    .mx-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    /* LEFT: AI Chat with ongoing conversation */
+    .mx-chat-col { position: relative; }
+    .mx-chat {
+      background: rgba(0,0,0,.5);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 620px;
+    }
+    .mx-chat-chrome {
+      background: rgba(255,255,255,.025);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .mx-chat-chrome-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .mx-chat-chrome-dot.r { background: #ff5f56; }
+    .mx-chat-chrome-dot.y { background: #ffbd2e; }
+    .mx-chat-chrome-dot.g { background: #27c93f; }
+    .mx-chat-chrome-url {
+      font-size: .72rem;
+      color: rgba(255,255,255,.4);
+      margin-right: auto;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      direction: ltr;
+    }
+    .mx-chat-status {
+      font-size: .68rem;
+      color: rgba(76,217,100,.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .mx-chat-status::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4cd964;
+      box-shadow: 0 0 8px #4cd964;
+      animation: mxStatusPulse 2s ease-in-out infinite;
+    }
+    @keyframes mxStatusPulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .mx-chat-body {
+      flex: 1;
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+    }
+    .mx-msg {
+      padding: 11px 16px;
+      border-radius: 14px;
+      font-size: .9rem;
+      max-width: 82%;
+      line-height: 1.55;
+      animation: mxMsgIn .55s cubic-bezier(.22,1,.36,1) both;
+    }
+    .mx-msg.user {
+      background: rgba(255,255,255,.07);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+      color: rgba(255,255,255,.92);
+    }
+    .mx-msg.bot {
+      background: linear-gradient(135deg, rgba(62,207,190,.16), rgba(62,207,190,.05));
+      border: 1px solid rgba(62,207,190,.22);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+      color: rgba(255,255,255,.95);
+    }
+    .mx-msg.bot strong { color: var(--teal); font-weight: 600; }
+    /* Stagger conversation timing */
+    .mx-msg:nth-child(1) { animation-delay: .25s; }
+    .mx-msg:nth-child(2) { animation-delay: 1.0s; }
+    .mx-msg:nth-child(3) { animation-delay: 2.0s; }
+    .mx-msg:nth-child(4) { animation-delay: 2.9s; }
+    .mx-msg:nth-child(5) { animation-delay: 4.1s; }
+    .mx-msg:nth-child(6) { animation-delay: 5.0s; }
+    .mx-typing-row {
+      display: inline-flex;
+      align-self: flex-start;
+      background: rgba(255,255,255,.04);
+      padding: 12px 16px;
+      border-radius: 14px;
+      border-bottom-left-radius: 4px;
+      gap: 5px;
+      animation: mxMsgIn .55s cubic-bezier(.22,1,.36,1) 6.0s both;
+    }
+    .mx-typing-row span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(62,207,190,.85);
+      animation: mxTypeDot 1.4s ease-in-out infinite;
+    }
+    .mx-typing-row span:nth-child(2) { animation-delay: .2s; }
+    .mx-typing-row span:nth-child(3) { animation-delay: .4s; }
+    @keyframes mxTypeDot {
+      0%, 60%, 100% { opacity: .3; transform: translateY(0); }
+      30% { opacity: 1; transform: translateY(-4px); }
+    }
+    @keyframes mxMsgIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .mx-chat-input {
+      border-top: 1px solid rgba(255,255,255,.05);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .85rem;
+      color: rgba(255,255,255,.32);
+    }
+    .mx-chat-input-icon {
+      width: 16px; height: 16px;
+      color: rgba(255,255,255,.35);
+    }
+    .mx-chat-input-icon svg { width: 100%; height: 100%; stroke-width: 1.6; }
+
+    /* RIGHT: Module grid — blueprint style */
+    .mx-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 1fr 1fr;
+      border: 1px dashed rgba(255,255,255,.1);
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 620px;
+    }
+    .mx-mod {
+      position: relative;
+      overflow: hidden;
+      padding: 32px 28px;
+      border-inline-end: 1px dashed rgba(255,255,255,.07);
+      border-block-end: 1px dashed rgba(255,255,255,.07);
+      background: transparent;
+      transition: background .35s ease;
+      text-decoration: none;
+      display: block;
+    }
+    .mx-mod:nth-child(3n) { border-inline-end: 0; }
+    .mx-mod:nth-last-child(-n+3) { border-block-end: 0; }
+    .mx-mod:hover { background: rgba(62,207,190,.025); }
+
+    /* Grid pattern overlay — top */
+    .mx-mod::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      margin-left: -80px;
+      height: 100%;
+      width: 100%;
+      -webkit-mask: linear-gradient(to bottom, #000, transparent);
+              mask: linear-gradient(to bottom, #000, transparent);
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: .7;
+    }
+    /* Lit squares */
+    .mx-mod::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      -webkit-mask: linear-gradient(to bottom, #000, transparent 60%);
+              mask: linear-gradient(to bottom, #000, transparent 60%);
+      background-image:
+        radial-gradient(circle 10px at 120px 30px, rgba(62,207,190,.22), transparent 65%),
+        radial-gradient(circle 10px at 200px 70px, rgba(62,207,190,.15), transparent 65%),
+        radial-gradient(circle 10px at 80px  100px, rgba(62,207,190,.12), transparent 65%);
+      opacity: .85;
+    }
+    .mx-mod:hover::after { opacity: 1; }
+
+    .mx-mod-icon {
+      position: relative;
+      z-index: 1;
+      width: 28px;
+      height: 28px;
+      color: rgba(255,255,255,.7);
+      margin-bottom: 36px;
+      transition: color .25s ease;
+    }
+    .mx-mod-icon svg { width: 100%; height: 100%; stroke-width: 1; }
+    .mx-mod:hover .mx-mod-icon { color: var(--teal); }
+
+    .mx-mod-title {
+      position: relative;
+      z-index: 1;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 0;
+      letter-spacing: -.1px;
+    }
+    .mx-mod-desc {
+      position: relative;
+      z-index: 1;
+      font-size: .82rem;
+      font-weight: 300;
+      color: rgba(255,255,255,.55);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    /* CTA card variant */
+    .mx-mod.is-cta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .mx-mod.is-cta::before { opacity: .35; }
+    .mx-mod.is-cta::after {
+      background-image:
+        radial-gradient(circle 14px at 130px 50px, rgba(62,207,190,.35), transparent 65%),
+        radial-gradient(circle 12px at 210px 85px, rgba(62,207,190,.22), transparent 65%);
+    }
+    .mx-mod.is-cta .mx-mod-icon { color: var(--teal); margin-bottom: 18px; }
+    .mx-mod.is-cta .mx-mod-title { color: var(--teal); }
+    .mx-mod.is-cta:hover { background: rgba(62,207,190,.05); }
+    .mx-mod.is-cta:hover .mx-mod-icon { transform: translateX(-4px); transition: transform .25s ease; }
+
+    @media (max-width: 1100px) {
+      .mx-layout { grid-template-columns: 1fr; gap: 24px; }
+      .mx-chat { min-height: 520px; }
+      .mx-grid { min-height: 540px; }
+    }
+    @media (max-width: 640px) {
+      .mx-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 1fr); }
+      .mx-mod { padding: 24px 20px; }
+      .mx-mod:nth-child(3n) { border-inline-end: 1px dashed rgba(255,255,255,.07); }
+      .mx-mod:nth-child(2n) { border-inline-end: 0; }
+      .mx-mod:nth-last-child(-n+3) { border-block-end: 1px dashed rgba(255,255,255,.07); }
+      .mx-mod:nth-last-child(-n+2) { border-block-end: 0; }
+    }
+
     /* ══ APPS SHOWCASE — Liveblocks-style customer apps marquee ══ */
     .apps-showcase {
       padding: 96px 0 108px;
@@ -2787,111 +3047,108 @@
       </defs>
     </svg>
 
-    <div class="bx">
+    <div class="mx-layout">
 
-      <!-- HERO — Wendi AI -->
-      <article class="bx-card bx-ai">
-        <div class="bx-visual">
-          <div class="ai-frame">
-            <div class="ai-chrome">
-              <span class="ai-chrome-dot r"></span>
-              <span class="ai-chrome-dot y"></span>
-              <span class="ai-chrome-dot g"></span>
-              <span class="ai-chrome-url">wendi.ai/chat</span>
-            </div>
-            <div class="ai-body">
-              <div class="ai-msg-x user">כמה ימי חופש נשארו לי השנה?</div>
-              <div class="ai-msg-x bot">נשארו לך <strong>14 ימים</strong>, ניתן לנצל עד 31.12.</div>
-              <div class="ai-typing-x"><span></span><span></span><span></span></div>
-            </div>
+      <!-- LEFT: AI Chat with ongoing conversation -->
+      <div class="mx-chat-col">
+        <div class="mx-chat">
+          <div class="mx-chat-chrome">
+            <span class="mx-chat-chrome-dot r"></span>
+            <span class="mx-chat-chrome-dot y"></span>
+            <span class="mx-chat-chrome-dot g"></span>
+            <span class="mx-chat-chrome-url">wendi.ai/dana</span>
+            <span class="mx-chat-status">פעיל עכשיו</span>
+          </div>
+          <div class="mx-chat-body">
+            <div class="mx-msg user">כמה ימי חופש נשארו לי?</div>
+            <div class="mx-msg bot">נשארו לך <strong>14 ימים</strong> — ניתן לנצל עד 31.12.</div>
+            <div class="mx-msg user">אפשר להזמין ל-14–21 באפריל?</div>
+            <div class="mx-msg bot">בדקתי, אין חפיפה. אישרתי אוטומטית ✓<br/>שלחתי עדכון גם לסמנכ"ל.</div>
+            <div class="mx-msg user">תודה! ומתי המשכורת?</div>
+            <div class="mx-msg bot">תועבר ב-<strong>12.6</strong> כרגיל.</div>
+            <div class="mx-typing-row"><span></span><span></span><span></span></div>
+          </div>
+          <div class="mx-chat-input">
+            <span class="mx-chat-input-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+            </span>
+            <span>שאלו אותי כל דבר על HR…</span>
           </div>
         </div>
-        <div class="bx-meta">
-          <h3>Wendi AI</h3>
-          <p>עוזר חכם שעונה על שאלות HR בשפה טבעית — חופשות, שכר, נהלים.</p>
-        </div>
-      </article>
+      </div>
 
-      <!-- Learning -->
-      <article class="bx-card bx-learn">
-        <div class="bx-visual">
-          <div class="learn-ring-x">
-            <svg viewBox="0 0 150 150">
-              <circle class="rbg"   cx="75" cy="75" r="65" fill="none" stroke-width="10"/>
-              <circle class="rfill" cx="75" cy="75" r="65" fill="none" stroke-width="10"/>
-            </svg>
-            <div class="learn-num-x">
-              <strong>87<sup>%</sup></strong>
-              <span>השלמת קורסים</span>
-            </div>
-          </div>
-        </div>
-        <div class="bx-meta">
-          <h3>למידה והכשרה</h3>
-          <p>LMS מלא עם מעקב והסמכות.</p>
-        </div>
-      </article>
+      <!-- RIGHT: Module grid (blueprint feel) -->
+      <div class="mx-grid">
 
-      <!-- Communication -->
-      <article class="bx-card bx-comm">
-        <div class="bx-visual">
-          <div class="notif-x">
-            <div class="notif-x-head">
-              <div class="notif-x-logo">W</div>
-              <div class="notif-x-meta">
-                <strong>Wendi</strong>
-                <span>· עכשיו</span>
-              </div>
-              <span class="notif-x-dot"></span>
-            </div>
-            <div class="notif-x-body">סיכום רבעון של המנכ"ל — קראו עכשיו</div>
-          </div>
-        </div>
-        <div class="bx-meta">
-          <h3>תקשורת פנים-ארגונית</h3>
-          <p>ערוץ אחיד לכל עובד.</p>
-        </div>
-      </article>
-
-      <!-- Performance -->
-      <article class="bx-card bx-perf">
-        <div class="bx-visual">
-          <div class="perf-x-num">
-            <span class="perf-x-arrow">↑</span>
-            <strong>34<sup style="font-size:.45em;font-weight:600">%</sup></strong>
-          </div>
-          <div class="perf-x-spark">
-            <svg viewBox="0 0 200 36" preserveAspectRatio="none">
-              <path class="sp-fill" d="M 0,28 L 30,25 L 60,21 L 90,18 L 120,12 L 150,8 L 200,4 L 200,36 L 0,36 Z"/>
-              <path class="sp-path" d="M 0,28 L 30,25 L 60,21 L 90,18 L 120,12 L 150,8 L 200,4"/>
+        <div class="mx-mod">
+          <div class="mx-mod-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
           </div>
+          <h3 class="mx-mod-title">תקשורת פנים-ארגונית</h3>
+          <p class="mx-mod-desc">ערוץ אחיד לכל עובד — לפי תפקיד, מחלקה ומיקום.</p>
         </div>
-        <div class="bx-meta">
-          <h3>הערכת ביצועים</h3>
-          <p>מעורבות עובדים שעולה עם משוב 360.</p>
-        </div>
-      </article>
 
-      <!-- Workflows -->
-      <article class="bx-card bx-flow">
-        <div class="bx-visual">
-          <div class="flow-x">
-            <div class="flow-x-step done">✓</div>
-            <div class="flow-x-line"></div>
-            <div class="flow-x-step active">2</div>
-            <div class="flow-x-line dim"></div>
-            <div class="flow-x-step">3</div>
+        <div class="mx-mod">
+          <div class="mx-mod-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
           </div>
-          <div class="flow-x-labels">
-            <span>קליטה</span><span>אישור</span><span>תיעוד</span>
+          <h3 class="mx-mod-title">למידה והכשרה</h3>
+          <p class="mx-mod-desc">LMS מלא עם מעקב, הסמכות ואינטגרציה למערכות קיימות.</p>
+        </div>
+
+        <div class="mx-mod">
+          <div class="mx-mod-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <path d="M14 17.5h7M17.5 14v7"/>
+            </svg>
           </div>
+          <h3 class="mx-mod-title">Workflows וטפסים</h3>
+          <p class="mx-mod-desc">אוטומציה של תהליכים — קליטה, חופשות, אישורים.</p>
         </div>
-        <div class="bx-meta">
-          <h3>Workflows וטפסים</h3>
-          <p>אוטומציה של תהליכים.</p>
+
+        <div class="mx-mod">
+          <div class="mx-mod-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </div>
+          <h3 class="mx-mod-title">ממשקים</h3>
+          <p class="mx-mod-desc">חיבור ל-SAP, Priority, Oracle ועוד — ב-One Stop Shop.</p>
         </div>
-      </article>
+
+        <div class="mx-mod">
+          <div class="mx-mod-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 3v18h18"/>
+              <rect x="7"  y="13" width="3" height="5"/>
+              <rect x="12" y="9"  width="3" height="9"/>
+              <rect x="17" y="5"  width="3" height="13"/>
+            </svg>
+          </div>
+          <h3 class="mx-mod-title">הערכת ביצועים</h3>
+          <p class="mx-mod-desc">מחזורי הערכה ומשוב 360 — פשוטים לעובד ולמנהל.</p>
+        </div>
+
+        <a href="modulim_5.html" class="mx-mod is-cta">
+          <div class="mx-mod-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5M11 5l-7 7 7 7"/>
+            </svg>
+          </div>
+          <h3 class="mx-mod-title">לכל המודולים</h3>
+          <p class="mx-mod-desc">עוד מודולים — נוכחות, שכר, קליטה, פרישה ועוד.</p>
+        </a>
+
+      </div>
 
     </div>
 
