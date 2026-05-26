@@ -1047,6 +1047,207 @@
     .slink { display: inline-flex; align-items: center; gap: 6px; font-size: .83rem; font-weight: 600; color: var(--teal); margin-top: auto; transition: gap .2s; }
     .scard:hover .slink { gap: 10px; }
 
+    /* ══ SECTORS — Linear-style minimal figures ══ */
+    .sf-section {
+      padding: 110px 0 120px;
+      position: relative;
+      background: transparent;
+    }
+    .sf-section::before {
+      content: '';
+      position: absolute; left: 50%; top: 0;
+      width: 800px; height: 320px; transform: translateX(-50%);
+      background: radial-gradient(ellipse at center, rgba(62,207,190,.05), transparent 65%);
+      filter: blur(20px);
+      pointer-events: none;
+    }
+    .sf-header {
+      text-align: center;
+      max-width: 620px;
+      margin: 0 auto 72px;
+      position: relative;
+      z-index: 1;
+    }
+    .sf-header .eyebrow { margin-bottom: 20px; }
+    .sf-headline {
+      font-size: clamp(1.95rem, 3.4vw, 2.85rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.6px;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .sf-sub {
+      font-size: 1.02rem;
+      color: rgba(255,255,255,.55);
+      line-height: 1.7;
+    }
+
+    .sf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 56px;
+      position: relative;
+      z-index: 1;
+    }
+    .sf-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* Visual frame — blueprint feel */
+    .sf-visual {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      margin-bottom: 28px;
+      overflow: hidden;
+      color: rgba(255,255,255,.45);
+      transition: color .5s ease;
+    }
+    .sf-card:hover .sf-visual {
+      color: rgba(255,255,255,.68);
+    }
+    /* Blueprint grid background */
+    .sf-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 18px 18px;
+      -webkit-mask: radial-gradient(ellipse 70% 70% at center, #000, transparent 90%);
+              mask: radial-gradient(ellipse 70% 70% at center, #000, transparent 90%);
+      pointer-events: none;
+      opacity: .9;
+    }
+    /* Top-right corner glow on hover */
+    .sf-visual::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(420px circle at 80% 20%, rgba(62,207,190,.08), transparent 60%);
+      opacity: 0;
+      transition: opacity .45s ease;
+      pointer-events: none;
+    }
+    .sf-card:hover .sf-visual::after { opacity: 1; }
+
+    .sf-fig-label {
+      position: absolute;
+      top: 14px; left: 16px;
+      font-size: .64rem;
+      font-weight: 500;
+      letter-spacing: .2em;
+      color: rgba(255,255,255,.35);
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      direction: ltr;
+      z-index: 2;
+    }
+
+    .sf-art {
+      position: relative;
+      z-index: 1;
+      width: 80%;
+      height: 80%;
+      max-width: 280px;
+      animation: sfArtFloat 7s ease-in-out infinite;
+    }
+    @keyframes sfArtFloat {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-4px); }
+    }
+
+    /* Pulsing teal dots on illustrations */
+    .sf-art-pulse {
+      animation: sfArtPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes sfArtPulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: .35; }
+    }
+    /* Route dots: cascading shimmer */
+    .sf-dot-a { animation: sfArtPulse 1.8s ease-in-out infinite; }
+    .sf-dot-b { animation: sfArtPulse 1.8s ease-in-out .25s infinite; }
+    .sf-dot-c { animation: sfArtPulse 1.8s ease-in-out .5s infinite; }
+
+    /* Pulse line — slow shimmer */
+    .sf-art-pulse-line path {
+      stroke-dasharray: 80;
+      stroke-dashoffset: 80;
+      animation: sfPulseDraw 2.5s ease-in-out infinite;
+    }
+    @keyframes sfPulseDraw {
+      0%   { stroke-dashoffset: 80; }
+      60%  { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -80; }
+    }
+
+    .sf-title {
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -.15px;
+      line-height: 1.3;
+      margin: 0 0 10px;
+    }
+    .sf-desc {
+      font-size: .92rem;
+      color: rgba(255,255,255,.55);
+      line-height: 1.65;
+      font-weight: 400;
+      max-width: 95%;
+    }
+
+    /* Blur-fade entrance, staggered */
+    .sf-card {
+      opacity: 0;
+      filter: blur(6px);
+      transform: translateY(14px);
+      transition:
+        opacity .9s cubic-bezier(.22,1,.36,1),
+        filter .9s cubic-bezier(.22,1,.36,1),
+        transform .9s cubic-bezier(.22,1,.36,1);
+    }
+    .sf-section.in-view .sf-card { opacity: 1; filter: blur(0); transform: translateY(0); }
+    .sf-section.in-view .sf-card:nth-child(1) { transition-delay: .1s; }
+    .sf-section.in-view .sf-card:nth-child(2) { transition-delay: .26s; }
+    .sf-section.in-view .sf-card:nth-child(3) { transition-delay: .42s; }
+
+    /* CTA below grid */
+    .sf-cta-row {
+      text-align: center;
+      margin-top: 64px;
+      position: relative;
+      z-index: 1;
+    }
+    .sf-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 26px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      color: rgba(255,255,255,.88);
+      font-size: .92rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .25s ease;
+    }
+    .sf-cta:hover {
+      background: rgba(62,207,190,.08);
+      border-color: rgba(62,207,190,.4);
+      color: var(--teal);
+      transform: translateY(-2px);
+    }
+    .sf-cta svg { transition: transform .25s ease; }
+    .sf-cta:hover svg { transform: translateX(-4px); }
+
+    @media (max-width: 900px) {
+      .sf-grid { grid-template-columns: 1fr; gap: 56px; }
+      .sf-section { padding: 80px 0 90px; }
+    }
+
     /* ══ SECTORS PREMIUM v2 — asymmetric bento, aurora bg, 3D parallax ══ */
     .sx-grid {
       display: grid;
@@ -3484,172 +3685,122 @@
   </div>
 </section>
 
-<!-- SECTORS TEASER -->
+<!-- SECTORS — Linear-style minimal figures -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="sectors" id="sectors" style="padding:96px 0;background:linear-gradient(135deg,#0b1733 0%,#0e1d3f 50%,#0a1730 100%);position:relative;overflow:hidden">
-  <div style="position:absolute;left:50%;top:0;width:1100px;height:600px;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(62,207,190,.07) 0%,rgba(74,144,196,.04) 30%,transparent 65%);pointer-events:none;filter:blur(20px)"></div>
+<section class="sf-section" id="sectors">
   <div class="container">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;flex-wrap:wrap;gap:16px">
-      <div>
-        <div class="eyebrow">תחומי פעילות</div>
-        <h2 class="sec-title fade-up" style="margin-bottom:0">פתרון לכל מגזר</h2>
-      </div>
-      <a href="pitronot.html" class="btn-o fade-up">לכל המגזרים ←</a>
+
+    <div class="sf-header">
+      <div class="eyebrow">תחומי פעילות</div>
+      <h2 class="sf-headline">פתרון לכל מגזר.</h2>
+      <p class="sf-sub">מותאם לקצב, לרגולציה ולעובדים שלכם — בלי פשרות.</p>
     </div>
 
-    <div class="sx-grid">
+    <div class="sf-grid">
 
-      <!-- HERO — Logistics (cinematic route tracker) -->
-      <article class="sx-card hero" style="--brand:#0FAAFF;--brand-rgb:15,170,255" id="sxLogistics">
-        <div class="sx-grid-pattern"></div>
-        <div class="sx-card-shell"></div>
-        <div class="sx-card-dashes"></div>
-        <div class="sx-inner">
-          <div class="sx-header">
-            <div class="sx-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
-                <path d="M15 18H9"/>
-                <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
-                <circle cx="17" cy="18" r="2"/>
-                <circle cx="7" cy="18" r="2"/>
-              </svg>
-            </div>
-            <span class="sx-tag">לוגיסטיקה ותחבורה</span>
-          </div>
-          <div class="sx-visual">
-            <div class="sx-mockup">
-              <div class="sx-mock-head">
-                <strong>מסלול חלוקה #4892</strong>
-                <span class="sx-mock-pill">בתנועה</span>
-              </div>
-              <div class="sx-route">
-                <svg viewBox="0 0 600 100" preserveAspectRatio="none">
-                  <path class="route-line" d="M 30,50 Q 130,15 230,50 Q 330,85 430,40 Q 510,12 570,50"/>
-                  <path class="route-done" d="M 30,50 Q 130,15 230,50 Q 330,85 400,50"/>
-                  <circle class="route-pt done" cx="30"  cy="50" r="5"/>
-                  <circle class="route-pt done" cx="130" cy="22" r="5"/>
-                  <circle class="route-pt done" cx="230" cy="50" r="5"/>
-                  <circle class="route-pt now"  cx="400" cy="50" r="6"/>
-                  <circle class="route-pt"      cx="570" cy="50" r="5"/>
-                </svg>
-              </div>
-              <div class="sx-route-meta">
-                <span><strong>3/5</strong> נקודות הושלמו</span>
-                <span>ETA · <strong>14:32</strong></span>
-              </div>
-              <div class="sx-row" style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)">
-                <span class="sx-row-icon ok">✓</span>
-                <span class="sx-row-text">דיווח בזמן אמת — נחתם בנייד של הנהג</span>
-              </div>
-            </div>
-          </div>
-          <div class="sx-meta">
-            <h3>השטח לא חוזר למשרד.<br/>וונדי הולכת איתו.</h3>
-            <p>נהגים, טכנאים ומנהלי מחסנים מקבלים משימות, מדווחים סטטוסים וחותמים על אישורים — מהנייד, בזמן אמת.</p>
-            <a href="pitronot.html#logistika" class="sx-cta">
-              <span>לפתרון המלא לסקטור</span>
-              <span class="sx-cta-arrow">←</span>
-            </a>
-          </div>
+      <!-- FIG 0.1 — Logistics -->
+      <article class="sf-card">
+        <div class="sf-visual" data-fig="logistics">
+          <span class="sf-fig-label">FIG 0.1</span>
+          <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <!-- Stacked isometric pallet (3 layers, bottom widest) -->
+            <g class="sf-art-layer sf-art-l1">
+              <path d="M 40 130 L 120 90 L 200 130 L 120 170 Z" />
+              <path d="M 40 130 L 40 140 L 120 180 L 120 170" />
+              <path d="M 200 130 L 200 140 L 120 180" />
+            </g>
+            <g class="sf-art-layer sf-art-l2" opacity=".8">
+              <path d="M 60 100 L 120 70 L 180 100 L 120 130 Z" />
+              <path d="M 60 100 L 60 112 L 120 142 L 120 130" />
+              <path d="M 180 100 L 180 112 L 120 142" />
+            </g>
+            <g class="sf-art-layer sf-art-l3" opacity=".6">
+              <path d="M 80 75 L 120 55 L 160 75 L 120 95 Z" />
+              <path d="M 80 75 L 80 85 L 120 105 L 120 95" />
+              <path d="M 160 75 L 160 85 L 120 105" />
+            </g>
+            <!-- Route dots — teal accent -->
+            <g stroke="none" fill="#3ECFBE">
+              <circle class="sf-art-dot sf-dot-a" cx="218" cy="148" r="2.2" />
+              <circle class="sf-art-dot sf-dot-b" cx="228" cy="138" r="1.6" opacity=".55" />
+              <circle class="sf-art-dot sf-dot-c" cx="236" cy="128" r="1.2" opacity=".3" />
+            </g>
+          </svg>
         </div>
+        <h3 class="sf-title">לוגיסטיקה ותחבורה</h3>
+        <p class="sf-desc">חיבור אמיתי לעובדי שטח — מובייל-first, בזמן אמת.</p>
       </article>
 
-      <!-- Healthcare -->
-      <article class="sx-card" style="--brand:#4cd964;--brand-rgb:76,217,100">
-        <div class="sx-grid-pattern"></div>
-        <div class="sx-card-shell"></div>
-        <div class="sx-card-dashes"></div>
-        <div class="sx-inner">
-          <div class="sx-header">
-            <div class="sx-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M11 11a2 2 0 0 0 2 2 4 4 0 0 1 4 4 6 6 0 0 1-12 0c0-1.7.7-3.2 1.8-4.2"/>
-                <path d="M8 15a2 2 0 1 0 4 0v-3a4 4 0 0 0-8 0v3"/>
-                <circle cx="20" cy="10" r="2"/>
-              </svg>
-            </div>
-            <span class="sx-tag">שירותי בריאות</span>
-          </div>
-          <div class="sx-visual">
-            <div class="sx-mockup">
-              <div class="sx-mock-head">
-                <strong>הסמכות חובה</strong>
-                <span class="sx-mock-pill">23/24 פעילות</span>
-              </div>
-              <div class="sx-row">
-                <span class="sx-row-icon ok">✓</span>
-                <span class="sx-row-text">החייאה בסיסית</span>
-                <span class="sx-row-meta">בתוקף · 8 חודשים</span>
-              </div>
-              <div class="sx-row">
-                <span class="sx-row-icon warn">!</span>
-                <span class="sx-row-text">בטיחות בעבודה</span>
-                <span class="sx-row-meta">פג בעוד · 2 חודשים</span>
-              </div>
-              <div class="sx-row">
-                <span class="sx-row-icon urgent">!</span>
-                <span class="sx-row-text">הגנת הפרטיות</span>
-                <span class="sx-row-meta">פג תוקף</span>
-              </div>
-            </div>
-          </div>
-          <div class="sx-meta">
-            <h3>הסמכות חיות, התראה לפני פקיעה.</h3>
-            <p>אפס הפתעות בביקורת רגולטורית.</p>
-            <a href="pitronot.html#briut" class="sx-cta">
-              <span>לפתרון</span>
-              <span class="sx-cta-arrow">←</span>
-            </a>
-          </div>
+      <!-- FIG 0.2 — Finance -->
+      <article class="sf-card">
+        <div class="sf-visual" data-fig="finance">
+          <span class="sf-fig-label">FIG 0.2</span>
+          <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <!-- Isometric vault — cube with horizontal ledger layers + lock dot -->
+            <g class="sf-art-vault">
+              <!-- top face -->
+              <path d="M 60 60 L 120 35 L 180 60 L 120 85 Z" />
+              <!-- left face -->
+              <path d="M 60 60 L 60 130 L 120 155 L 120 85" />
+              <!-- right face -->
+              <path d="M 180 60 L 180 130 L 120 155 L 120 85" />
+              <!-- horizontal ledger layers (left face) -->
+              <path d="M 60 80 L 120 105" opacity=".5" />
+              <path d="M 60 100 L 120 125" opacity=".5" />
+              <path d="M 60 120 L 120 145" opacity=".5" />
+              <!-- horizontal ledger layers (right face) -->
+              <path d="M 180 80 L 120 105" opacity=".5" />
+              <path d="M 180 100 L 120 125" opacity=".5" />
+              <path d="M 180 120 L 120 145" opacity=".5" />
+            </g>
+            <!-- Lock indicator (teal dot) -->
+            <circle class="sf-art-pulse" cx="120" cy="60" r="3" fill="#3ECFBE" stroke="none" />
+            <!-- Approval line (dashed, teal) extending right -->
+            <path d="M 192 90 L 215 100 L 230 92" stroke="#3ECFBE" stroke-width="1.2" stroke-dasharray="3 3" opacity=".55" />
+          </svg>
         </div>
+        <h3 class="sf-title">פיננסים</h3>
+        <p class="sf-desc">תקשורת ולמידה בסביבה רגולטורית — שליטה מלאה בהרשאות.</p>
       </article>
 
-      <!-- Finance -->
-      <article class="sx-card" style="--brand:#FFB23E;--brand-rgb:255,178,62">
-        <div class="sx-grid-pattern"></div>
-        <div class="sx-card-shell"></div>
-        <div class="sx-card-dashes"></div>
-        <div class="sx-inner">
-          <div class="sx-header">
-            <div class="sx-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 7 13.5 15.5 8.5 10.5 2 17"/>
-                <path d="M16 7h6v6"/>
-              </svg>
-            </div>
-            <span class="sx-tag">פיננסים</span>
-          </div>
-          <div class="sx-visual">
-            <div class="sx-mockup">
-              <div class="sx-mock-head">
-                <strong>בקשת הוצאה #4892</strong>
-                <span class="sx-mock-amount">12,400 ₪</span>
-              </div>
-              <div class="sx-chain">
-                <div class="sx-chain-step done">מ"י</div>
-                <div class="sx-chain-line done"></div>
-                <div class="sx-chain-step active">סמ"כ</div>
-                <div class="sx-chain-line"></div>
-                <div class="sx-chain-step">מנכ"ל</div>
-              </div>
-              <div class="sx-chain-label">
-                <span>מנהל ישיר</span><span>סמנכ"ל</span><span>מנכ"ל</span>
-              </div>
-            </div>
-          </div>
-          <div class="sx-meta">
-            <h3>אישורים דיגיטליים<br/>עם מסלולי ביקורת מלאים.</h3>
-            <p>הרשאות לפי תפקיד. בלי דפים. בלי טעויות.</p>
-            <a href="pitronot.html#finantsim" class="sx-cta">
-              <span>לפתרון</span>
-              <span class="sx-cta-arrow">←</span>
-            </a>
-          </div>
+      <!-- FIG 0.3 — Healthcare -->
+      <article class="sf-card">
+        <div class="sf-visual" data-fig="healthcare">
+          <span class="sf-fig-label">FIG 0.3</span>
+          <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <!-- Isometric cube with medical plus on top + pulse line beside it -->
+            <g class="sf-art-shield">
+              <!-- top face -->
+              <path d="M 80 65 L 130 40 L 180 65 L 130 90 Z" />
+              <!-- left face -->
+              <path d="M 80 65 L 80 130 L 130 155 L 130 90" />
+              <!-- right face -->
+              <path d="M 180 65 L 180 130 L 130 155 L 130 90" />
+              <!-- plus on top face -->
+              <path d="M 122 60 L 138 68" stroke-width="2" />
+              <path d="M 130 53 L 130 69" stroke-width="2" />
+            </g>
+            <!-- Pulse line (right side, teal) -->
+            <g class="sf-art-pulse-line">
+              <path d="M 195 100 L 205 100 L 210 88 L 215 112 L 220 100 L 232 100" stroke="#3ECFBE" stroke-width="1.4" />
+            </g>
+            <!-- Live dot -->
+            <circle class="sf-art-pulse" cx="232" cy="100" r="2.5" fill="#3ECFBE" stroke="none" />
+          </svg>
         </div>
+        <h3 class="sf-title">שירותי בריאות</h3>
+        <p class="sf-desc">ידע, תקשורת והדרכה 24/7 בסביבה רפואית תובענית.</p>
       </article>
 
     </div>
+
+    <div class="sf-cta-row">
+      <a href="pitronot.html" class="sf-cta">
+        <span>לכל המגזרים</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg>
+      </a>
+    </div>
+
   </div>
 </section>
 
@@ -4537,9 +4688,9 @@
     });
   })();
 
-  /* ═══ GRIDS — scroll reveal stagger (bento + sector + orbital) ═══ */
+  /* ═══ GRIDS — scroll reveal stagger (bento + sector + orbital + figures) ═══ */
   (function(){
-    const grids = document.querySelectorAll('.bx, .sx-grid, .orbital-section');
+    const grids = document.querySelectorAll('.bx, .sx-grid, .orbital-section, .sf-section');
     if (!grids.length) return;
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
