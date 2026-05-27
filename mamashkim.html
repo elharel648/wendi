@@ -1176,6 +1176,9 @@
     @keyframes ctaShine { 0%,55%{left:-70%} 80%,100%{left:130%} }
     @media (prefers-reduced-motion: reduce) { nav.scrolled::before, .nav-cta::after { animation: none; } }
 
+  /* (light theme moved to its own toggleable stylesheet below) */
+  </style>
+  <style id="wendi-light" media="not all">
   /* ===== LIGHT MODE OVERHAUL ===== */
 
   /* ── CANVAS ── */
@@ -1799,6 +1802,15 @@
     filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
   }
   </style>
+  <style id="theme-toggle-css">
+    .theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:10px;background:rgba(127,127,127,.12);border:1px solid rgba(127,127,127,.28);color:#8896aa;cursor:pointer;transition:background .2s,color .2s,transform .2s,border-color .2s;flex-shrink:0;padding:0;margin:0 4px;}
+    .theme-toggle svg{width:18px;height:18px;}
+    .theme-toggle:hover{transform:translateY(-1px);}
+    html:not([data-theme="light"]) .theme-toggle:hover{background:rgba(62,207,190,.14);color:#3ECFBE;border-color:rgba(62,207,190,.4);}
+    html[data-theme="light"] .theme-toggle{color:#475569;background:rgba(15,23,42,.05);border-color:rgba(15,23,42,.12);}
+    html[data-theme="light"] .theme-toggle:hover{background:rgba(13,148,136,.10);color:#0D9488;border-color:rgba(13,148,136,.35);}
+  </style>
+  <script>(function(){try{if(localStorage.getItem('wendiTheme')==='light'){var s=document.getElementById('wendi-light');if(s)s.media='all';document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();</script>
 </head>
 <body>
 
@@ -1849,6 +1861,7 @@
       </li>
     </ul>
     <a href="#contact" class="nav-cta">דברו איתנו</a>
+    <button class="theme-toggle" id="themeToggle" type="button" onclick="toggleTheme()" aria-label="מצב כהה / בהיר" title="מצב כהה / בהיר"><svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="תפריט">
       <span></span><span></span><span></span>
     </button>
@@ -2358,6 +2371,12 @@
     });
   });
 
+</script>
+<script>
+/* ===== THEME TOGGLE (dark default, light persisted) ===== */
+function applyTheme(t){var light=t==='light';var s=document.getElementById('wendi-light');if(s)s.media=light?'all':'not all';document.documentElement.setAttribute('data-theme',light?'light':'dark');document.querySelectorAll('.theme-toggle .ic-sun').forEach(function(e){e.style.display=light?'none':'';});document.querySelectorAll('.theme-toggle .ic-moon').forEach(function(e){e.style.display=light?'':'none';});}
+function toggleTheme(){var cur='dark';try{cur=localStorage.getItem('wendiTheme')||'dark';}catch(e){}var next=cur==='light'?'dark':'light';try{localStorage.setItem('wendiTheme',next);}catch(e){}applyTheme(next);}
+(function(){var t='dark';try{t=localStorage.getItem('wendiTheme')||'dark';}catch(e){}applyTheme(t);})();
 </script>
 </body>
 </html>
