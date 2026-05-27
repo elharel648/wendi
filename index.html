@@ -4579,6 +4579,17 @@
       box-shadow:44px 10px 0 var(--m-coral), 94px -2px 0 var(--m-amber), 22px 34px 0 var(--m-teal), 128px 28px 0 var(--m-blue);
       opacity:.75; pointer-events:none; z-index:0;
     }
+    /* center the sector figures + livelier motion */
+    @property --sf-fy{ syntax:'<length>'; initial-value:0px; inherits:false; }
+    body .sf-visual{ display:flex !important; align-items:center !important; justify-content:center !important; }
+    body .sf-art{
+      transform: translateY(var(--sf-fy)) scale(var(--sf-sc,1));
+      transition: --sf-sc .45s cubic-bezier(.22,1,.36,1);
+      animation: sfFloatY 6.5s ease-in-out infinite;
+    }
+    @keyframes sfFloatY{ 0%,100%{--sf-fy:0px} 50%{--sf-fy:-7px} }
+    body .sf-card:hover .sf-art{ --sf-sc:1.07; }
+    @media (prefers-reduced-motion: reduce){ body .sf-art{ animation:none !important; } }
     /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
   <style id="theme-toggle-css">
