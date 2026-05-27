@@ -1808,6 +1808,63 @@
   body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
     filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
   }
+
+  /* ===== MONDAY-INSPIRED (interfaces, light only): clear Google palette ===== */
+  /* color-code each connection row of the beam hub → colorful constellation */
+  .beam-node.y1{ --bc:#4285F4; }
+  .beam-node.y2{ --bc:#34A853; }
+  .beam-node.y3{ --bc:#E8710A; }
+  .beam-node.y4{ --bc:#EA4335; }
+  .beam-node.y5{ --bc:#9334E6; }
+  .beam-node.y6{ --bc:#00ACC1; }
+  body .beam-node{
+    border-radius:14px !important;
+    border-inline-start:3px solid color-mix(in srgb, var(--bc,#4285F4) 75%, transparent) !important;
+    transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, border-color .35s ease !important;
+  }
+  body .beam-node svg{ color:var(--bc,#4285F4) !important; }
+  body .beam-node:hover{
+    transform:translateY(-3px) scale(1.04) !important;
+    box-shadow:0 10px 24px -6px color-mix(in srgb, var(--bc,#4285F4) 45%, transparent) !important;
+  }
+
+  /* type cards: color-cycle, soft, springy icon hover */
+  body .type-card:nth-child(4n+1){ --tc:#4285F4; }
+  body .type-card:nth-child(4n+2){ --tc:#34A853; }
+  body .type-card:nth-child(4n+3){ --tc:#E8710A; }
+  body .type-card:nth-child(4n){   --tc:#EA4335; }
+  body .type-card{
+    border-radius:18px !important;
+    box-shadow:0 2px 4px rgba(15,23,42,.04), 0 12px 28px -8px rgba(15,23,42,.10) !important;
+    transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease !important;
+  }
+  body .type-icon{
+    background:color-mix(in srgb, var(--tc,#4285F4) 12%, transparent) !important;
+    border-color:color-mix(in srgb, var(--tc,#4285F4) 28%, transparent) !important;
+    color:var(--tc,#4285F4) !important;
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1), background .3s ease !important;
+  }
+  body .type-icon svg{ color:var(--tc,#4285F4) !important; }
+  body .type-card:hover{
+    transform:translateY(-5px) !important;
+    border-color:color-mix(in srgb, var(--tc,#4285F4) 35%, transparent) !important;
+    box-shadow:0 10px 20px -6px rgba(15,23,42,.08), 0 26px 46px -12px color-mix(in srgb, var(--tc,#4285F4) 28%, rgba(15,23,42,.14)) !important;
+  }
+  body .type-card:hover .type-icon{
+    transform:scale(1.1) rotate(-5deg) !important;
+    background:linear-gradient(135deg, var(--tc,#4285F4), color-mix(in srgb, var(--tc,#4285F4) 55%, #fff)) !important;
+    color:#fff !important;
+  }
+  body .type-card:hover .type-icon svg{ color:#fff !important; }
+
+  /* soft rounding + monday shadow on the rest of the cards */
+  body .flow, body .sys-cat, body .diff-card{
+    border-radius:16px !important;
+    box-shadow:0 2px 4px rgba(15,23,42,.04), 0 10px 24px -8px rgba(15,23,42,.10) !important;
+  }
+  @media (prefers-reduced-motion: reduce){
+    body .beam-node, body .type-card, body .type-icon { transition:none !important; }
+  }
   </style>
   <style id="theme-toggle-css">
     /* Ark-UI dual-icon switch, adapted to vanilla (moon · track · sun) */
