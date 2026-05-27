@@ -986,6 +986,517 @@
     }
     @keyframes ctaShine { 0%,55%{left:-70%} 80%,100%{left:130%} }
     @media (prefers-reduced-motion: reduce) { nav.scrolled::before, .nav-cta::after { animation: none; } }
+
+  /* ===== LIGHT MODE OVERHAUL ===== */
+
+  /* ── CANVAS & BODY BACKGROUND ── */
+  html, body {
+    background: #FFFFFF !important;
+  }
+  body {
+    background: linear-gradient(180deg, #FFFFFF, #F9FAFB) !important;
+    background-attachment: fixed !important;
+    color: #475569 !important;
+  }
+  /* Kill noise overlay */
+  body::before {
+    opacity: 0 !important;
+  }
+  /* Soft ambient gradients on white */
+  body::after {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100% !important;
+    transform: none !important; border-radius: 0 !important;
+    background:
+      radial-gradient(900px circle at 12% 8%, rgba(6,182,212,0.05), transparent 55%),
+      radial-gradient(800px circle at 88% 80%, rgba(147,51,234,0.03), transparent 55%) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    filter: none !important;
+    animation: pageBreathe 14s ease-in-out infinite !important;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body::after { animation: none !important; }
+  }
+
+  /* ── BASE TEXT ── */
+  body h1, body h2, body h3, body h4, body h5, body h6,
+  body .sec-title, body .fc-title, body .fc-name, body .sc-org, body .sc-name {
+    color: #0F172A !important;
+  }
+  body p, body .fc-quote, body .sc-text, body .sc-result {
+    color: #475569 !important;
+  }
+  body .fc-role, body .sc-role-sm, body .fc-stat-lbl,
+  body .sc-challenge, body .filter-label, body .metric-lbl {
+    color: #64748B !important;
+  }
+
+  /* ── EYEBROW ── */
+  body .eyebrow {
+    background: rgba(13,148,136,0.08) !important;
+    border: 1px solid rgba(13,148,136,0.25) !important;
+    color: #0D9488 !important;
+    backdrop-filter: none !important;
+  }
+
+  /* ── HERO PAGE ── */
+  body .page-hero::before {
+    background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 60%) !important;
+  }
+
+  /* ── HERO heading inline style color override ── */
+  body .page-hero h1 {
+    color: #0F172A !important;
+  }
+  body .page-hero p {
+    color: #475569 !important;
+  }
+
+  /* ── GRADIENT SHIMMER TEXT — light mode: dark-to-teal gradient clipped (NOT white-on-white) ── */
+  body .gradient-shimmer {
+    background: linear-gradient(90deg, #0F172A, #0D9488, #0F172A) !important;
+    background-size: 220% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+    animation: shimmerMoveDark 4.5s linear infinite !important;
+  }
+  @keyframes shimmerMoveDark { to { background-position: -220% center; } }
+  @media (prefers-reduced-motion: reduce) {
+    body .gradient-shimmer { animation: none !important; }
+  }
+
+  /* ── LAMP EFFECT — soft on white ── */
+  body .lamp-cone {
+    background: conic-gradient(from 70deg at center top, rgba(6,182,212,0.10), transparent 60%) !important;
+    opacity: 0.45 !important;
+    filter: blur(4px) !important;
+  }
+  body .lamp-cone.right {
+    background: conic-gradient(from 290deg at center top, transparent 40%, rgba(6,182,212,0.10)) !important;
+  }
+  body .lamp-line {
+    background: linear-gradient(90deg, transparent, #06B6D4, transparent) !important;
+    box-shadow: 0 0 12px 2px rgba(6,182,212,0.20) !important;
+    opacity: 0.55 !important;
+  }
+  body .lamp-haze {
+    background: radial-gradient(ellipse at center, rgba(6,182,212,0.07), transparent 70%) !important;
+    filter: blur(24px) !important;
+    opacity: 0.6 !important;
+  }
+  body .lamp-title, body .lamp .sec-title {
+    color: #0F172A !important;
+  }
+
+  /* ── NAV ── */
+  body nav {
+    background: rgba(255,255,255,0.70) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border-bottom: 1px solid rgba(15,23,42,0.08) !important;
+  }
+  body nav .nav-links > li > a {
+    color: #475569 !important;
+  }
+  body nav .nav-links > li > a:hover,
+  body nav .nav-links > li > a.active-page {
+    color: #0D9488 !important;
+    background: rgba(13,148,136,0.08) !important;
+  }
+  body nav .nav-links > li > a::after {
+    background: linear-gradient(90deg, transparent, #0D9488, transparent) !important;
+  }
+  body .nav-home {
+    color: #475569 !important;
+  }
+  body .nav-home:hover {
+    color: #0D9488 !important;
+    background: rgba(13,148,136,0.06) !important;
+  }
+
+  /* Nav scrolled — floating pill on white */
+  body nav.scrolled {
+    background: rgba(255,255,255,0.85) !important;
+    border: 1px solid rgba(15,23,42,0.10) !important;
+    box-shadow: 0 10px 30px rgba(15,23,42,0.08) !important;
+    backdrop-filter: blur(26px) saturate(170%) !important;
+    -webkit-backdrop-filter: blur(26px) saturate(170%) !important;
+  }
+  /* Scrolled nav border-beam — subtle metallic cyan/silver on white */
+  body nav.scrolled::before {
+    background: conic-gradient(from var(--nav-beam) at 50% 50%,
+      transparent 0deg, rgba(13,148,136,0) 250deg, rgba(13,148,136,0.5) 322deg, rgba(6,182,212,0.7) 346deg, rgba(13,148,136,0) 360deg) !important;
+  }
+
+  /* Dropdown */
+  body .dropdown {
+    background: rgba(255,255,255,0.97) !important;
+    border: 1px solid rgba(15,23,42,0.08) !important;
+    box-shadow: 0 12px 40px rgba(15,23,42,0.10) !important;
+    backdrop-filter: blur(16px) !important;
+  }
+  body .dropdown a {
+    color: #475569 !important;
+  }
+  body .dropdown a:hover,
+  body .dropdown a.active-sub {
+    background: rgba(13,148,136,0.07) !important;
+    color: #0D9488 !important;
+  }
+
+  /* Nav CTA button */
+  body .nav-cta {
+    background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+  }
+  body .nav-cta:hover {
+    background: linear-gradient(135deg, #259089, #2BADA0) !important;
+    color: #fff !important;
+    transform: translateY(-2px) !important;
+    filter: brightness(1.05) !important;
+  }
+  /* Kill dark shimmer on nav-cta */
+  body .nav-cta::after {
+    background: linear-gradient(110deg, transparent, rgba(255,255,255,0.45), transparent) !important;
+  }
+
+  /* ── HAMBURGER ── */
+  body .hamburger span {
+    background: #0F172A !important;
+  }
+
+  /* ── MOBILE MENU ── */
+  body .mobile-menu {
+    background: rgba(255,255,255,0.97) !important;
+    backdrop-filter: blur(20px) !important;
+  }
+  body .mob-link {
+    color: #0F172A !important;
+    border-bottom-color: rgba(15,23,42,0.07) !important;
+  }
+  body .mob-link:hover, body .mob-link:active, body .mob-link.active-page {
+    color: #0D9488 !important;
+  }
+  body .mob-sub {
+    color: #64748B !important;
+  }
+  body .mob-sub:hover { color: #0D9488 !important; }
+  body .mob-cta {
+    background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+    color: #fff !important;
+  }
+
+  /* ── FILTER BAR ── */
+  body .filter-bar {
+    background: rgba(249,250,251,0.85) !important;
+    backdrop-filter: blur(16px) saturate(140%) !important;
+    border-bottom: 1px solid rgba(15,23,42,0.08) !important;
+  }
+  body .filter-label {
+    color: #64748B !important;
+  }
+  body .filter-btn {
+    background: rgba(255,255,255,0.80) !important;
+    border: 1px solid rgba(15,23,42,0.10) !important;
+    color: #475569 !important;
+    backdrop-filter: none !important;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.06) !important;
+  }
+  body .filter-btn:hover {
+    background: #F1F5F9 !important;
+    border-color: rgba(15,23,42,0.18) !important;
+    color: #0F172A !important;
+  }
+  body .filter-btn.active {
+    background: rgba(13,148,136,0.08) !important;
+    border-color: rgba(13,148,136,0.28) !important;
+    color: #0D9488 !important;
+    box-shadow: none !important;
+  }
+
+  /* ── FEATURED CASE CARD ── */
+  body .fc-inner {
+    background: rgba(255,255,255,0.65) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border: 1px solid rgba(15,23,42,0.06) !important;
+    box-shadow: 0 4px 6px -1px rgba(15,23,42,0.03), 0 20px 40px -4px rgba(15,23,42,0.06) !important;
+  }
+  body .fc-inner:hover {
+    border-color: rgba(13,148,136,0.30) !important;
+    box-shadow: 0 10px 20px -4px rgba(15,23,42,0.08), 0 30px 60px -6px rgba(15,23,42,0.10) !important;
+  }
+  /* Kill neon conic glow border on hover */
+  body .fc-inner::before {
+    background: conic-gradient(from var(--fc-angle) at center,
+      transparent 0deg, rgba(13,148,136,0.40) 60deg, rgba(6,182,212,0.55) 90deg, rgba(13,148,136,0.40) 120deg, transparent 180deg) !important;
+  }
+  body .fc-visual {
+    background: linear-gradient(135deg, rgba(6,182,212,0.04), rgba(147,51,234,0.02)) !important;
+  }
+  body .fc-glow {
+    background: radial-gradient(circle, rgba(6,182,212,0.07) 0%, transparent 70%) !important;
+  }
+  /* Featured case text */
+  body .fc-sector { color: #0D9488 !important; }
+  body .fc-title { color: #0F172A !important; }
+  body .fc-quote { color: #475569 !important; font-style: italic; }
+  body .fc-name { color: #0F172A !important; }
+  body .fc-role { color: #64748B !important; }
+  body .fc-stat-num { color: #0D9488 !important; }
+  body .fc-stat-lbl { color: #64748B !important; }
+  body .fc-stats {
+    border-top-color: rgba(15,23,42,0.08) !important;
+  }
+  body .fc-av {
+    background: linear-gradient(135deg, #F1F5F9, #E2E8F0) !important;
+    border: 2px solid rgba(13,148,136,0.28) !important;
+    color: #0F172A !important;
+  }
+  /* fc-badge */
+  body .fc-badge {
+    background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+  }
+  /* fc chips */
+  body .fchip {
+    background: #F1F5F9 !important;
+    border: 1px solid rgba(15,23,42,0.08) !important;
+    color: #475569 !important;
+  }
+  body .fchip svg { color: #0D9488 !important; }
+
+  /* ── ICHILOV MEDALLION — fc-logo-big (white glass circle) + fc-logo-ring (teal/silver on white) ── */
+  body .fc-logo-big {
+    background: rgba(255,255,255,0.92) !important;
+    box-shadow:
+      0 0 0 1px rgba(15,23,42,0.08),
+      0 8px 32px rgba(15,23,42,0.10),
+      inset 0 0 0 1px rgba(255,255,255,0.90) !important;
+  }
+  /* Rotating ring: teal/silver gleam clearly visible on white */
+  body .fc-logo-ring {
+    background: conic-gradient(from 0deg,
+      transparent 0deg, rgba(13,148,136,0) 180deg,
+      rgba(13,148,136,0.75) 280deg, rgba(6,182,212,0.90) 320deg, rgba(13,148,136,0) 350deg, transparent 360deg) !important;
+  }
+
+  /* ── STORY CARDS — white glass, 3D tilt preserved, conic glow softened ── */
+  body .story-card {
+    background: rgba(255,255,255,0.65) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border: 1px solid rgba(15,23,42,0.06) !important;
+    box-shadow: 0 4px 6px -1px rgba(15,23,42,0.03), 0 20px 40px -4px rgba(15,23,42,0.06) !important;
+  }
+  body .story-card:hover {
+    border-color: rgba(13,148,136,0.30) !important;
+    box-shadow: 0 10px 20px -4px rgba(15,23,42,0.08), 0 30px 60px -6px rgba(15,23,42,0.10) !important;
+  }
+  /* Conic glow border — teal/cyan but visible on white */
+  body .story-card::before {
+    background: conic-gradient(from var(--glow-angle) at center,
+      transparent 0deg, rgba(13,148,136,0.55) 55deg, rgba(6,182,212,0.70) 90deg, rgba(13,148,136,0.55) 125deg, transparent 180deg) !important;
+  }
+  /* Inner spotlight on white: teal tint */
+  body .story-card::after {
+    background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(13,148,136,0.08), transparent 60%) !important;
+  }
+  /* Group dimming — keep, slightly less aggressive on white */
+  body .stories-grid:hover .story-card:not(:hover) {
+    opacity: 0.50 !important;
+    filter: saturate(0.65) !important;
+  }
+  /* Story card text */
+  body .sc-org { color: #0F172A !important; }
+  body .sc-sector-tag {
+    background: rgba(13,148,136,0.08) !important;
+    border: 1px solid rgba(13,148,136,0.25) !important;
+    color: #0D9488 !important;
+  }
+  body .sc-challenge { color: #64748B !important; }
+  body .sc-text { color: #334155 !important; }
+  body .sc-text::before { color: #0D9488 !important; }
+  body .sc-result { color: #334155 !important; }
+  body .sc-result::before { color: #0D9488 !important; }
+  body .sc-footer { border-top-color: rgba(15,23,42,0.08) !important; }
+  body .sc-name { color: #0F172A !important; }
+  body .sc-role-sm { color: #64748B !important; }
+  body .sc-link { color: #0D9488 !important; }
+  body .sc-avatar {
+    background: linear-gradient(135deg, rgba(13,148,136,0.12), rgba(6,182,212,0.10)) !important;
+    border: 2px solid rgba(13,148,136,0.28) !important;
+    color: #0D9488 !important;
+  }
+
+  /* ── METRICS BAND ── */
+  body .metrics-band,
+  body .metrics-band.section-white {
+    background: rgba(249,250,251,0.80) !important;
+    border-top: 1px solid rgba(15,23,42,0.08) !important;
+  }
+  body .metric-item {
+    border-color: rgba(15,23,42,0.08) !important;
+  }
+  body .metric-num { color: #0D9488 !important; }
+  body .metric-lbl { color: #64748B !important; }
+
+  /* ── BUTTONS ── */
+  body .btn-p,
+  body .cf-btn {
+    background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+  }
+  body .btn-p:hover,
+  body .cf-btn:hover {
+    background: linear-gradient(135deg, #259089, #2BADA0) !important;
+    color: #fff !important;
+    transform: translateY(-2px) !important;
+    filter: brightness(1.05) !important;
+    box-shadow: 0 12px 32px rgba(20,184,166,0.32) !important;
+  }
+  body .btn-o {
+    background: rgba(255,255,255,0.80) !important;
+    border: 1px solid rgba(15,23,42,0.12) !important;
+    color: #0F172A !important;
+  }
+  body .btn-o:hover {
+    background: #F1F5F9 !important;
+    border-color: rgba(15,23,42,0.20) !important;
+  }
+
+  /* ── CTA BAND ── */
+  body .cta-band {
+    background: #F9FAFB !important;
+    border-top: 1px solid rgba(15,23,42,0.08) !important;
+  }
+  body .cta-band::before {
+    background: radial-gradient(ellipse, rgba(6,182,212,0.04) 0%, rgba(147,51,234,0.02) 35%, transparent 65%) !important;
+    filter: blur(50px) !important;
+  }
+  body .cta-band h2 { color: #0F172A !important; }
+  body .cta-band p { color: #475569 !important; }
+  /* Phone number accent */
+  body .cta-band strong[style*="color:var(--teal)"],
+  body .cta-band strong { color: #0D9488 !important; }
+
+  /* ── FORMS ── */
+  body .cf-in,
+  body .cta-in {
+    background: rgba(255,255,255,0.90) !important;
+    border: 1px solid rgba(15,23,42,0.12) !important;
+    color: #0F172A !important;
+  }
+  body .cf-in::placeholder,
+  body .cta-in::placeholder {
+    color: #94A3B8 !important;
+  }
+  body .cf-in:focus,
+  body .cta-in:focus {
+    border-color: #06B6D4 !important;
+    box-shadow: 0 0 0 3px rgba(6,182,212,0.15) !important;
+    background: #fff !important;
+  }
+  body .cf-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D9488' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+  }
+  body .cf-select option {
+    background: #fff !important;
+    color: #0F172A !important;
+  }
+
+  /* ── FOOTER ── */
+  body footer {
+    background: #F9FAFB !important;
+    border-top: 1px solid rgba(15,23,42,0.08) !important;
+  }
+  body .fcol h5 { color: #0F172A !important; }
+  body .fcol a { color: #64748B !important; }
+  body .fcol a:hover { color: #0D9488 !important; }
+  body .ftagline { color: #64748B !important; }
+  body .fbot {
+    color: #64748B !important;
+    border-top-color: rgba(15,23,42,0.08) !important;
+  }
+  body .fbot a { color: #64748B !important; }
+  body .fbot a:hover { color: #0D9488 !important; }
+
+  /* ── AMBIENT TRIANGLES ── */
+  body .ambient-tri polygon {
+    fill: rgba(13,148,136,0.04) !important;
+    stroke: rgba(13,148,136,0.14) !important;
+  }
+
+  /* ── SECTION-WHITE — make truly light, force inner text dark ── */
+  body .section-white {
+    background: rgba(249,250,251,0.80) !important;
+    color: #475569 !important;
+  }
+  body .section-white .sec-title,
+  body .section-white h2, body .section-white h3, body .section-white h4 {
+    color: #0F172A !important;
+  }
+  body .section-white .sec-sub,
+  body .section-white p,
+  body .section-white .sectors-note {
+    color: #475569 !important;
+  }
+  body .section-white .eyebrow {
+    background: rgba(13,148,136,0.08) !important;
+    border-color: rgba(13,148,136,0.25) !important;
+    color: #0D9488 !important;
+  }
+  /* story card inside section-white */
+  body .section-white .story-card {
+    background: rgba(255,255,255,0.65) !important;
+    border-color: rgba(15,23,42,0.06) !important;
+  }
+  body .section-white .sc-org,
+  body .section-white .sc-result { color: #0F172A !important; }
+  body .section-white .sc-text { color: #334155 !important; }
+  body .section-white .sc-challenge,
+  body .section-white .sc-role-sm { color: #64748B !important; }
+  body .section-white .sc-footer { border-color: rgba(15,23,42,0.08) !important; }
+  body .section-white .metric-num { color: #0D9488 !important; }
+  body .section-white .metric-lbl { color: #64748B !important; }
+
+  /* ── HERO PAGE AMBIENT BLOB ── */
+  body .page-hero {
+    background: transparent !important;
+  }
+
+  /* ── SECTOR / CTA section background ── */
+  body .sector-section {
+    background: #FFFFFF !important;
+    border-top: 1px solid rgba(15,23,42,0.06) !important;
+  }
+  body .sector-section:nth-child(odd) {
+    background: #F9FAFB !important;
+  }
+
+  /* ── SCROLLED NAV dropdown on white ── */
+  body nav.scrolled .dropdown {
+    background: rgba(255,255,255,0.97) !important;
+    border-color: rgba(15,23,42,0.08) !important;
+  }
+
+  /* light-mode logo: keep the W on-brand, flip the white wordmark dark */
+  body .nav-logo img, body .fbrand img,
+  body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
+    filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
+  }
+  /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
 </head>
 <body>

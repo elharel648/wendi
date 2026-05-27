@@ -1002,6 +1002,504 @@
     .sn-item:hover .sn-dot { border-color: rgba(62,207,190,0.65); }
     @media (max-width: 1180px) { .sector-nav { display: none; } }
     @media (prefers-reduced-motion: reduce) { .sn-progress { transition: none; } }
+
+    /* ===== LIGHT MODE OVERHAUL ===== */
+
+    /* ── CANVAS ── */
+    html, body {
+      background: #FFFFFF !important;
+    }
+    body {
+      background: linear-gradient(180deg,#FFFFFF,#F9FAFB) !important;
+      background-attachment: fixed !important;
+      color: #475569 !important;
+    }
+    /* Kill the dark noise texture */
+    body::before {
+      opacity: 0 !important;
+    }
+    /* Soft pastel ambient instead of neon glow */
+    body::after {
+      content: '' !important;
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important; left: 0 !important;
+      width: 100% !important; height: 100% !important;
+      transform: none !important; border-radius: 0 !important;
+      background:
+        radial-gradient(900px circle at 12% 8%,  rgba(6,182,212,0.05),  transparent 55%),
+        radial-gradient(800px circle at 88% 80%,  rgba(147,51,234,0.03), transparent 55%) !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      filter: none !important;
+      animation: pageBreathe 14s ease-in-out infinite;
+    }
+    /* Dim ambient triangles to be subtle on white */
+    body .ambient-tri polygon {
+      fill: rgba(13,148,136,0.04) !important;
+      stroke: rgba(13,148,136,0.14) !important;
+    }
+
+    /* ── GLOBAL TEXT ── */
+    body a { color: #475569; }
+    body h1, body h2, body h3, body h4, body h5 { color: #0F172A; }
+    body p { color: #475569; }
+
+    /* ── EYEBROW ── */
+    body .eyebrow {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+      backdrop-filter: none !important;
+    }
+
+    /* ── HERO ── */
+    body .page-hero {
+      background: transparent !important;
+    }
+    body .page-hero h1 {
+      color: #0F172A !important;
+    }
+    body .page-hero p {
+      color: #475569 !important;
+    }
+    /* Kill the dark radial blob behind hero */
+    body .page-hero::before {
+      background: radial-gradient(circle, rgba(13,148,136,0.06) 0%, transparent 60%) !important;
+    }
+    body .pg { display: none !important; }
+
+    /* ── BUTTONS ── */
+    body .btn-p, body .nav-cta, body .cf-btn {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+    }
+    body .btn-p:hover, body .nav-cta:hover, body .cf-btn:hover {
+      filter: brightness(1.05) !important;
+      transform: translateY(-2px) !important;
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+    }
+    body .btn-o {
+      background: rgba(255,255,255,0.8) !important;
+      border: 1px solid rgba(15,23,42,0.12) !important;
+      color: #0F172A !important;
+      box-shadow: none !important;
+    }
+    body .btn-o:hover {
+      background: #F1F5F9 !important;
+    }
+
+    /* ── NAV ── */
+    body nav {
+      background: rgba(255,255,255,0.70) !important;
+      backdrop-filter: blur(20px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      border-bottom: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .nav-links > li > a {
+      color: #475569 !important;
+    }
+    body .nav-links > li > a:hover,
+    body .nav-links > li > a.active-page {
+      color: #0D9488 !important;
+      background: rgba(13,148,136,0.07) !important;
+    }
+    body .nav-links > li > a::after {
+      background: linear-gradient(90deg, transparent, #0D9488, transparent) !important;
+    }
+    body .nav-home {
+      color: #475569 !important;
+    }
+    body .nav-home:hover {
+      color: #0D9488 !important;
+      background: rgba(13,148,136,0.07) !important;
+    }
+    body nav.scrolled {
+      background: rgba(255,255,255,0.85) !important;
+      border: 1px solid rgba(15,23,42,0.10) !important;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08) !important;
+      backdrop-filter: blur(26px) saturate(170%) !important;
+      -webkit-backdrop-filter: blur(26px) saturate(170%) !important;
+    }
+    /* Kill the dark neon border-beam on scrolled nav; replace with subtle metallic cyan */
+    body nav.scrolled::before {
+      background: conic-gradient(from var(--nav-beam) at 50% 50%,
+        transparent 0deg,
+        rgba(6,182,212,0) 250deg,
+        rgba(6,182,212,0.45) 322deg,
+        rgba(178,216,221,0.8) 346deg,
+        rgba(6,182,212,0) 360deg) !important;
+    }
+    /* nav-cta keep shine but lighter */
+    body .nav-cta {
+      box-shadow: 0 0 18px rgba(20,184,166,0.22) !important;
+    }
+    /* Dropdown white */
+    body .dropdown,
+    body nav.scrolled .dropdown {
+      background: rgba(255,255,255,0.96) !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      box-shadow: 0 12px 32px rgba(15,23,42,0.10) !important;
+      backdrop-filter: blur(16px) !important;
+    }
+    body .dropdown a {
+      color: #475569 !important;
+    }
+    body .dropdown a:hover,
+    body .dropdown a.active-sub {
+      background: rgba(13,148,136,0.08) !important;
+      color: #0D9488 !important;
+    }
+    /* Hamburger bars on white */
+    body .hamburger span {
+      background: #0F172A !important;
+    }
+
+    /* ── SECTOR QUICK CARDS ── */
+    body .sq-card {
+      background: rgba(255,255,255,0.65) !important;
+      backdrop-filter: blur(20px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+      box-shadow: 0 4px 6px -1px rgba(15,23,42,0.03), 0 20px 40px -4px rgba(15,23,42,0.06) !important;
+    }
+    body .sq-card:hover {
+      border-color: rgba(13,148,136,0.30) !important;
+      box-shadow: 0 10px 20px -4px rgba(15,23,42,0.08), 0 30px 60px -6px rgba(15,23,42,0.10) !important;
+    }
+    /* Spotlight teal tint instead of dark neon */
+    body .sq-card::after {
+      background: radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(13,148,136,0.10), transparent 60%) !important;
+    }
+    /* border-beam: metallic cyan/silver on white */
+    body .sq-card::before {
+      background: conic-gradient(from var(--beam-angle),
+        transparent 0%,
+        rgba(6,182,212,0.0) 60%,
+        rgba(6,182,212,0.75) 80%,
+        rgba(178,216,221,1) 88%,
+        rgba(6,182,212,0.0) 96%,
+        transparent 100%) !important;
+    }
+    /* Icon tile */
+    body .sq-icon {
+      background: rgba(13,148,136,0.10) !important;
+      border: 1px solid rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+    }
+    body .sq-card:hover .sq-icon {
+      background: rgba(13,148,136,0.16) !important;
+    }
+    body .sq-icon svg { color: #0D9488 !important; }
+    body .sq-name { color: #0F172A !important; }
+    body .sq-teaser { color: #64748B !important; }
+    body .sq-idx { color: #94A3B8 !important; }
+    body .sq-card:hover .sq-idx { color: #0D9488 !important; }
+
+    /* ── SECTOR SECTIONS ── */
+    body .sector-section {
+      background: transparent !important;
+      border-top: 1px solid rgba(15,23,42,0.06) !important;
+    }
+    /* section-white should be a soft light tint on white canvas */
+    body .sector-section.section-white {
+      background: rgba(249,250,251,0.7) !important;
+    }
+
+    /* ── SECTOR BADGE ── */
+    body .sector-badge {
+      color: #64748B !important;
+    }
+    body .sector-badge .sbi {
+      background: rgba(13,148,136,0.10) !important;
+      border: 1px solid rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+    }
+    body .sector-badge .sbi svg { color: #0D9488 !important; }
+    /* Per-sector accent: keep sbi bg using accent but ensure light contrast */
+    body .sector-section .sector-badge .sbi {
+      background: color-mix(in srgb, var(--accent,#0D9488) 11%, rgba(255,255,255,0.9)) !important;
+      border-color: color-mix(in srgb, var(--accent,#0D9488) 34%, transparent) !important;
+    }
+
+    /* ── SECTOR TITLES & TEXT ── */
+    body .sector-title { color: #0F172A !important; }
+    body .sector-desc   { color: #475569 !important; }
+    body .sf-item       { color: #334155 !important; }
+    /* Accent bar before title (keep using per-sector accent, teal fallback) */
+    body .sector-title::before {
+      background: linear-gradient(270deg, var(--accent,#0D9488), transparent) !important;
+    }
+
+    /* ── SF-DOT — use per-sector accent, ensure min visibility ── */
+    body .sf-dot {
+      background: var(--accent,#0D9488) !important;
+    }
+    /* dotPulse on white: softer pulse */
+    @keyframes dotPulseLight {
+      0%, 60%, 100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); transform: scale(1); }
+      30% { box-shadow: 0 0 8px 2px rgba(13,148,136,0.38); transform: scale(1.3); }
+    }
+    body .sector-features .sf-item .sf-dot {
+      animation: dotPulseLight 2.8s ease-in-out infinite !important;
+    }
+    body .sector-features .sf-item:nth-child(1) .sf-dot { animation-delay: 0s !important; }
+    body .sector-features .sf-item:nth-child(2) .sf-dot { animation-delay: .28s !important; }
+    body .sector-features .sf-item:nth-child(3) .sf-dot { animation-delay: .56s !important; }
+    body .sector-features .sf-item:nth-child(4) .sf-dot { animation-delay: .84s !important; }
+    body .sector-features .sf-item:nth-child(5) .sf-dot { animation-delay: 1.12s !important; }
+    @media (prefers-reduced-motion: reduce) {
+      body .sector-features .sf-item .sf-dot { animation: none !important; }
+    }
+
+    /* ── SECTOR STORY CARDS ── */
+    body .sector-story {
+      background: rgba(255,255,255,0.65) !important;
+      backdrop-filter: blur(20px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+      box-shadow: 0 4px 6px -1px rgba(15,23,42,0.03), 0 20px 40px -4px rgba(15,23,42,0.06) !important;
+    }
+    body .sector-story:hover {
+      border-color: rgba(13,148,136,0.30) !important;
+      box-shadow: 0 10px 20px -4px rgba(15,23,42,0.08), 0 30px 60px -6px rgba(15,23,42,0.10) !important;
+    }
+    /* Glowing border-beam on story: subtle cyan/silver */
+    body .sector-story::before {
+      background: conic-gradient(from var(--glow-angle) at center,
+        transparent 0deg,
+        rgba(6,182,212,0.6) 55deg,
+        rgba(178,216,221,0.9) 90deg,
+        rgba(6,182,212,0.6) 125deg,
+        transparent 180deg) !important;
+    }
+    /* Spotlight on white */
+    body .sector-story::after {
+      background: radial-gradient(340px circle at var(--mx,50%) var(--my,50%), rgba(13,148,136,0.08), transparent 60%) !important;
+    }
+    /* Per-sector accent hover glow on stories */
+    body .sector-section .sector-story:hover {
+      box-shadow: 0 10px 20px -4px rgba(15,23,42,0.08),
+                  0 30px 60px -6px rgba(15,23,42,0.10),
+                  0 0 22px color-mix(in srgb, var(--accent,#0D9488) 12%, transparent) !important;
+    }
+    body .story-label { color: #0D9488 !important; }
+    body .story-label svg { color: inherit !important; }
+    body .story-quote { color: #334155 !important; }
+    body .story-quote::before { color: #0D9488 !important; }
+    body .story-name  { color: #0F172A !important; }
+    body .story-role  { color: #64748B !important; }
+    /* Keep avatar with teal gradient + white text */
+    body .story-avatar {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      border: none !important;
+    }
+    /* Use per-sector accent for story-label where set */
+    body .sector-section .story-label {
+      color: var(--accent,#0D9488) !important;
+    }
+    body .sector-section .story-label svg {
+      color: var(--accent,#0D9488) !important;
+    }
+
+    /* ── CHIPS ── */
+    body .sch {
+      background: #F1F5F9 !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      color: #475569 !important;
+    }
+
+    /* ── SECTOR CTA MINI-BAND ── */
+    body .sector-cta {
+      background: rgba(255,255,255,0.65) !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      backdrop-filter: blur(12px) !important;
+    }
+    body .sector-cta p { color: #64748B !important; }
+
+    /* ── SECTOR INTRO TAG ── */
+    body .sector-intro-tag {
+      color: #0D9488 !important;
+      background: rgba(13,148,136,0.06) !important;
+      border: 1px solid rgba(13,148,136,0.20) !important;
+    }
+
+    /* ── GHOST NUMERALS ── */
+    body .sector-ghost {
+      background: linear-gradient(155deg,
+        color-mix(in srgb, var(--accent,#0D9488) 13%, transparent),
+        color-mix(in srgb, var(--accent,#0D9488) 4%, transparent)) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      color: transparent !important;
+      -webkit-text-stroke: 1px rgba(15,23,42,0.05) !important;
+    }
+
+    /* ── SCROLL-SPY NAVIGATOR RAIL ── */
+    body .sector-nav::before {
+      background: rgba(15,23,42,0.12) !important;
+    }
+    body .sector-nav .sn-progress {
+      background: linear-gradient(180deg,#2BADA0,#06B6D4) !important;
+      box-shadow: 0 0 8px rgba(13,148,136,0.40) !important;
+    }
+    body .sn-dot {
+      background: #FFFFFF !important;
+      border: 2px solid rgba(15,23,42,0.25) !important;
+    }
+    body .sn-item { color: #64748B !important; }
+    body .sn-item.active { color: #0F172A !important; }
+    body .sn-item.active .sn-dot {
+      background: #0D9488 !important;
+      border-color: #0D9488 !important;
+      box-shadow: 0 0 0 4px rgba(13,148,136,0.18), 0 0 12px rgba(13,148,136,0.50) !important;
+    }
+    body .sn-item:hover .sn-dot {
+      border-color: rgba(13,148,136,0.65) !important;
+    }
+
+    /* ── SECTION-WHITE — override all remaining dark-mode card rules ── */
+    body .section-white {
+      background: rgba(249,250,251,0.7) !important;
+      color: #475569 !important;
+    }
+    body .section-white .sec-title,
+    body .section-white h2,
+    body .section-white h3,
+    body .section-white h4 {
+      color: #0F172A !important;
+    }
+    body .section-white .sector-title { color: #0F172A !important; }
+    body .section-white .sector-desc  { color: #475569 !important; }
+    body .section-white .sector-badge { color: #64748B !important; }
+    body .section-white .sf-item      { color: #334155 !important; }
+    body .section-white .sch {
+      background: #F1F5F9 !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      color: #475569 !important;
+    }
+    body .section-white .sector-story {
+      background: rgba(255,255,255,0.65) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+      box-shadow: 0 4px 6px -1px rgba(15,23,42,0.03), 0 20px 40px -4px rgba(15,23,42,0.06) !important;
+    }
+    body .section-white .story-label { color: #0D9488 !important; }
+    body .section-white .story-quote  { color: #334155 !important; }
+    body .section-white .story-name   { color: #0F172A !important; }
+    body .section-white .story-role   { color: #64748B !important; }
+    body .section-white .sector-cta {
+      background: rgba(255,255,255,0.65) !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .section-white .sector-cta p { color: #64748B !important; }
+    body .section-white .eyebrow {
+      background: rgba(13,148,136,0.08) !important;
+      border-color: rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+    }
+
+    /* Non-white sector sections: text also should be dark on light canvas */
+    body .sector-section:not(.section-white) .sector-title { color: #0F172A !important; }
+    body .sector-section:not(.section-white) .sector-desc  { color: #475569 !important; }
+    body .sector-section:not(.section-white) .sf-item      { color: #334155 !important; }
+    body .sector-section:not(.section-white) .sector-badge { color: #64748B !important; }
+    body .sector-section:not(.section-white) .story-quote  { color: #334155 !important; }
+    body .sector-section:not(.section-white) .story-name   { color: #0F172A !important; }
+    body .sector-section:not(.section-white) .story-label  { color: #0D9488 !important; }
+    body .sector-section:not(.section-white) .sector-story {
+      background: rgba(255,255,255,0.65) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+    }
+    body .sector-section:not(.section-white) .sector-cta {
+      background: rgba(255,255,255,0.65) !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .sector-section:not(.section-white) .sector-cta p { color: #64748B !important; }
+    body .sector-section:not(.section-white) .sch {
+      background: #F1F5F9 !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      color: #475569 !important;
+    }
+
+    /* ── CTA BAND (#contact) ── */
+    body .cta-band {
+      background: linear-gradient(165deg,#F9FAFB,#EFF6F5) !important;
+      border-top: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .cta-band::before {
+      background: radial-gradient(ellipse,
+        rgba(13,148,136,0.06) 0%,
+        rgba(6,182,212,0.04) 35%,
+        transparent 65%) !important;
+      filter: blur(40px) !important;
+    }
+    body .cta-band h2 { color: #0F172A !important; }
+    body .cta-band p  { color: #475569 !important; }
+    body .cta-band strong { color: #0D9488 !important; }
+
+    /* ── CONTACT FORM FIELDS ── */
+    body .cf-in, body .cta-in {
+      background: rgba(255,255,255,0.9) !important;
+      border: 1px solid rgba(15,23,42,0.12) !important;
+      color: #0F172A !important;
+    }
+    body .cf-in::placeholder, body .cta-in::placeholder {
+      color: #94A3B8 !important;
+    }
+    body .cf-in:focus, body .cta-in:focus {
+      border-color: #06B6D4 !important;
+      box-shadow: 0 0 0 3px rgba(6,182,212,0.15) !important;
+      background: #fff !important;
+    }
+    /* Select chevron: teal on light bg */
+    body .cf-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D9488' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    }
+    body .cf-select option { background: #fff !important; color: #0F172A !important; }
+
+    /* ── FOOTER ── */
+    body footer {
+      background: #F9FAFB !important;
+      border-top: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .fcol h5     { color: #0F172A !important; }
+    body .fcol a,
+    body .ftagline,
+    body .fbot        { color: #64748B !important; }
+    body .fcol a:hover,
+    body .fbot a:hover { color: #0D9488 !important; }
+    body .fbot a { color: #64748B !important; }
+    body .fbot { border-top-color: rgba(15,23,42,0.08) !important; }
+
+    /* ── MOBILE MENU ── */
+    body .mobile-menu {
+      background: rgba(255,255,255,0.98) !important;
+      backdrop-filter: blur(20px) !important;
+    }
+    body .mob-link { color: #334155 !important; border-bottom-color: rgba(15,23,42,0.07) !important; }
+    body .mob-link:hover, body .mob-link.active-page { color: #0D9488 !important; }
+    body .mob-sub  { color: #64748B !important; }
+    body .mob-sub:hover { color: #0D9488 !important; }
+    body .mob-cta {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+    }
+
+    /* ── TRI-DIVIDER: keep hidden as set by existing dark CSS ── */
+    body .tri-divider { display: none !important; }
+
+    /* ── SEC-TITLE & general headings ── */
+    body .sec-title { color: #0F172A !important; }
+    /* light-mode logo: keep the W on-brand, flip the white wordmark dark */
+    body .nav-logo img, body .fbrand img,
+    body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
+      filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
+    }
+    /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
 </head>
 <body>

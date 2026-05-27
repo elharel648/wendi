@@ -729,6 +729,454 @@
     @media (prefers-reduced-motion: reduce) {
       nav.scrolled::before, .nav-cta::after { animation: none; }
     }
+
+    /* ===== LIGHT MODE OVERHAUL ===== */
+
+    /* ── 1. CANVAS ──────────────────────────────────────────────── */
+    html, body {
+      background: #FFFFFF !important;
+    }
+    body {
+      background: linear-gradient(180deg,#FFFFFF,#F9FAFB) fixed !important;
+      color: #475569 !important;
+    }
+    body::before {
+      opacity: 0 !important;
+    }
+    body::after {
+      content: '' !important;
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important; left: 0 !important;
+      width: 100% !important; height: 100% !important;
+      transform: none !important; border-radius: 0 !important;
+      background:
+        radial-gradient(900px circle at 12% 8%, rgba(6,182,212,0.05), transparent 55%),
+        radial-gradient(800px circle at 88% 80%, rgba(147,51,234,0.03), transparent 55%) !important;
+      opacity: 1 !important;
+      filter: none !important;
+      animation: none !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+    }
+
+    /* ── 2. TYPOGRAPHY ──────────────────────────────────────────── */
+    .sec-title,
+    h1, h2, h3, h4 {
+      color: #0F172A !important;
+    }
+    /* hero h1 & p inline-styled with var(--muted) and #fff — override by targeting parent */
+    .page-hero h1[style] {
+      color: #0F172A !important;
+    }
+    .page-hero p[style] {
+      color: #475569 !important;
+    }
+    /* CTA band inline p */
+    .cta-band p[style] {
+      color: #64748B !important;
+    }
+
+    /* ── 3. EYEBROW ─────────────────────────────────────────────── */
+    .eyebrow {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+      backdrop-filter: none !important;
+    }
+
+    /* ── 4. NAV ─────────────────────────────────────────────────── */
+    nav {
+      background: rgba(255,255,255,0.7) !important;
+      backdrop-filter: blur(20px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      border-bottom: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    .nav-links > li > a {
+      color: #475569 !important;
+    }
+    .nav-links > li > a:hover,
+    .nav-links > li > a.active-page {
+      color: #0D9488 !important;
+      background: rgba(13,148,136,0.07) !important;
+    }
+    .nav-links > li > a::after {
+      background: linear-gradient(90deg, #0D9488, #06B6D4) !important;
+    }
+    /* home link */
+    a.nav-home {
+      color: #475569 !important;
+    }
+    .dropdown {
+      background: #FFFFFF !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      box-shadow: 0 12px 32px rgba(15,23,42,0.10) !important;
+      backdrop-filter: none !important;
+    }
+    .dropdown a {
+      color: #475569 !important;
+    }
+    .dropdown a:hover {
+      background: rgba(13,148,136,0.08) !important;
+      color: #0D9488 !important;
+    }
+    /* primary CTA button */
+    .nav-cta {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+    }
+    .nav-cta:hover {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      filter: brightness(1.05) !important;
+      transform: translateY(-2px) !important;
+    }
+    .nav-cta::after {
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent) !important;
+    }
+    /* scrolled floating nav */
+    nav.scrolled {
+      background: rgba(255,255,255,0.85) !important;
+      border: 1px solid rgba(15,23,42,0.10) !important;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08) !important;
+      backdrop-filter: blur(26px) saturate(170%) !important;
+      -webkit-backdrop-filter: blur(26px) saturate(170%) !important;
+    }
+    /* scrolled border-beam: subtle metallic cyan/silver */
+    nav.scrolled::before {
+      background: conic-gradient(
+        from var(--nav-beam),
+        transparent 0deg,
+        transparent 300deg,
+        rgba(6,182,212,0.8) 340deg,
+        rgba(148,163,184,0.7) 350deg,
+        transparent 360deg
+      ) !important;
+    }
+    /* hamburger lines */
+    .hamburger span {
+      background: #0F172A !important;
+    }
+    /* mobile menu */
+    .mobile-menu {
+      background: rgba(255,255,255,0.97) !important;
+      backdrop-filter: blur(20px) !important;
+    }
+    .mob-link {
+      color: #0F172A !important;
+      border-bottom-color: rgba(15,23,42,0.07) !important;
+    }
+    .mob-link:hover { color: #0D9488 !important; }
+    .mob-sub { color: #64748B !important; }
+    .mob-sub:hover { color: #0D9488 !important; }
+    .mob-cta {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+    }
+
+    /* ── 5. PAGE HERO ───────────────────────────────────────────── */
+    .ph-glow { display: none !important; }
+    .page-hero::before {
+      background: radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 60%) !important;
+    }
+    .page-hero::after {
+      background: radial-gradient(circle, rgba(147,51,234,0.04) 0%, transparent 60%) !important;
+    }
+
+    /* ── 6. MODULE TABS ─────────────────────────────────────────── */
+    .mod-tab {
+      background: #F1F5F9 !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      color: #475569 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    .mod-tab:hover {
+      background: #E2E8F0 !important;
+      border-color: rgba(15,23,42,0.14) !important;
+      color: #0F172A !important;
+      transform: translateY(-2px) !important;
+    }
+    .mod-tab.active {
+      background: rgba(13,148,136,0.08) !important;
+      border-color: rgba(13,148,136,0.28) !important;
+      color: #0D9488 !important;
+      box-shadow: none !important;
+    }
+    .mod-tab.active svg { color: #0D9488 !important; }
+
+    /* ── 7. MODULE LIST (sidebar) ───────────────────────────────── */
+    body .mitem {
+      background: rgba(255,255,255,0.65) !important;
+      backdrop-filter: blur(20px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+      box-shadow: 0 4px 6px -1px rgba(15,23,42,0.03), 0 20px 40px -4px rgba(15,23,42,0.06) !important;
+    }
+    body .mitem::before {
+      background: linear-gradient(180deg,#0D9488,rgba(13,148,136,0.3)) !important;
+    }
+    body .mitem:hover {
+      background: #F1F5F9 !important;
+      border-color: rgba(13,148,136,0.20) !important;
+      box-shadow: 0 10px 20px -4px rgba(15,23,42,0.08), 0 30px 60px -6px rgba(15,23,42,0.10) !important;
+      transform: translateY(-2px) !important;
+    }
+    body .mitem.active {
+      background: rgba(13,148,136,0.06) !important;
+      border-color: rgba(13,148,136,0.30) !important;
+      box-shadow: 0 10px 20px -4px rgba(15,23,42,0.08), 0 30px 60px -6px rgba(15,23,42,0.10) !important;
+    }
+    body .mitem h4 {
+      color: #64748B !important;
+    }
+    body .mitem.active h4,
+    body .mitem:hover h4 {
+      color: #0F172A !important;
+    }
+    body .mitem p {
+      color: #64748B !important;
+    }
+    body .mitem-icon {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.22) !important;
+    }
+    body .mitem.active .mitem-icon {
+      background: rgba(13,148,136,0.16) !important;
+      border-color: rgba(13,148,136,0.36) !important;
+    }
+    body .mitem-icon svg {
+      color: #0D9488 !important;
+    }
+    body .mitem-arrow {
+      color: #94A3B8 !important;
+    }
+    body .mitem:hover .mitem-arrow,
+    body .mitem.active .mitem-arrow {
+      color: #0D9488 !important;
+    }
+
+    /* ── 8. MODULE PANEL (mpanel + detail) ─────────────────────── */
+    body .mpanel {
+      background: rgba(255,255,255,0.65) !important;
+      backdrop-filter: blur(20px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+      box-shadow: 0 4px 6px -1px rgba(15,23,42,0.03), 0 20px 40px -4px rgba(15,23,42,0.06) !important;
+    }
+    /* remove the dark cyan top-line shimmer */
+    body .mpanel::before {
+      background: linear-gradient(90deg, transparent, rgba(13,148,136,0.15), transparent) !important;
+    }
+    body .mod-detail-header {
+      border-bottom: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .mod-detail-icon {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.28) !important;
+      box-shadow: none !important;
+    }
+    body .mod-detail-icon svg {
+      color: #0D9488 !important;
+    }
+    body .mod-detail-title {
+      color: #0F172A !important;
+    }
+    body .mod-detail-sub {
+      color: #64748B !important;
+    }
+    body .mod-desc {
+      background: #F1F5F9 !important;
+      border-right: 2px solid #0D9488 !important;
+      color: #475569 !important;
+    }
+    body .mod-note {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.28) !important;
+      color: #0D9488 !important;
+    }
+
+    /* ── 9. BENTO FEAT-GRID / FEAT-CHIP ────────────────────────── */
+    body .feat-chip {
+      background: rgba(255,255,255,0.65) !important;
+      backdrop-filter: blur(12px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(12px) saturate(160%) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+      box-shadow: 0 4px 6px -1px rgba(15,23,42,0.03), 0 20px 40px -4px rgba(15,23,42,0.06) !important;
+    }
+    /* first chip (full-width bento hero) gets a teal tint wash */
+    body .feat-grid > .feat-chip:first-child {
+      background: linear-gradient(135deg, rgba(13,148,136,0.06), rgba(147,51,234,0.02)) !important;
+      border-color: rgba(13,148,136,0.14) !important;
+    }
+    body .feat-chip:hover {
+      background: rgba(255,255,255,0.90) !important;
+      border-color: rgba(13,148,136,0.30) !important;
+      box-shadow: 0 10px 20px -4px rgba(15,23,42,0.08), 0 30px 60px -6px rgba(15,23,42,0.10) !important;
+      transform: translateY(-3px) !important;
+    }
+    /* glowing conic border: metallic cyan/silver, lower opacity */
+    body .feat-chip::before {
+      background: conic-gradient(from var(--glow-angle) at center,
+        transparent 0deg,
+        rgba(6,182,212,0.65) 55deg,
+        rgba(148,163,184,0.8) 90deg,
+        rgba(6,182,212,0.65) 125deg,
+        transparent 180deg) !important;
+    }
+    /* inner spotlight: lighter teal on white */
+    body .feat-chip::after {
+      background: radial-gradient(240px circle at var(--mx,50%) var(--my,50%), rgba(13,148,136,0.09), transparent 60%) !important;
+    }
+    body .fc-icon {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.20) !important;
+    }
+    body .fc-icon svg {
+      color: #0D9488 !important;
+    }
+    body .feat-chip:hover .fc-icon {
+      background: rgba(13,148,136,0.14) !important;
+    }
+    body .feat-chip strong {
+      color: #0F172A !important;
+    }
+    body .feat-chip p {
+      color: #64748B !important;
+    }
+
+    /* ── 10. CTA BAND ───────────────────────────────────────────── */
+    .cta-band {
+      background: #F9FAFB !important;
+      border-top: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    .cta-band::before {
+      background: radial-gradient(ellipse,
+        rgba(13,148,136,0.06) 0%,
+        rgba(147,51,234,0.02) 35%,
+        transparent 65%) !important;
+      filter: blur(50px) !important;
+    }
+    .cta-band h2 {
+      color: #0F172A !important;
+    }
+    .cta-band p {
+      color: #475569 !important;
+    }
+
+    /* ── 11. CONTACT FORM ───────────────────────────────────────── */
+    .cf-in {
+      background: rgba(255,255,255,0.9) !important;
+      border: 1px solid rgba(15,23,42,0.12) !important;
+      color: #0F172A !important;
+    }
+    .cf-in::placeholder {
+      color: #94A3B8 !important;
+    }
+    .cf-in:focus {
+      border-color: #06B6D4 !important;
+      box-shadow: 0 0 0 3px rgba(6,182,212,0.15) !important;
+      background: #fff !important;
+    }
+    /* select chevron: teal stroke */
+    .cf-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D9488' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    }
+    .cf-select option {
+      background: #fff !important;
+      color: #0F172A !important;
+    }
+    .cf-btn {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+    }
+    .cf-btn:hover {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      filter: brightness(1.05) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    /* ── 12. BUTTONS (general) ──────────────────────────────────── */
+    .btn-p {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+    }
+    .btn-p:hover {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      filter: brightness(1.05) !important;
+      transform: translateY(-2px) !important;
+    }
+    .btn-o {
+      background: rgba(255,255,255,0.8) !important;
+      border: 1px solid rgba(15,23,42,0.12) !important;
+      color: #0F172A !important;
+    }
+    .btn-o:hover {
+      background: #F1F5F9 !important;
+    }
+
+    /* ── 13. FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: #F9FAFB !important;
+      border-top: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    .fcol h5 {
+      color: #0F172A !important;
+    }
+    .fcol a,
+    .ftagline {
+      color: #64748B !important;
+    }
+    .fcol a:hover { color: #0D9488 !important; }
+    .fbot {
+      color: #64748B !important;
+      border-top-color: rgba(15,23,42,0.08) !important;
+    }
+    .fbot a { color: #64748B !important; }
+    .fbot a:hover { color: #0D9488 !important; }
+
+    /* ── 14. AMBIENT TRIANGLES ──────────────────────────────────── */
+    .ambient-tri polygon {
+      fill: rgba(13,148,136,0.04) !important;
+      stroke: rgba(13,148,136,0.14) !important;
+    }
+
+    /* ── 15. SECTION-WHITE (any dark overrides on section-white) ── */
+    body .section-white {
+      background: transparent !important;
+    }
+    body .section-white h1,
+    body .section-white h2,
+    body .section-white h3,
+    body .section-white h4,
+    body .section-white .sec-title {
+      color: #0F172A !important;
+    }
+    body .section-white p,
+    body .section-white li,
+    body .section-white span {
+      color: #475569 !important;
+    }
+
+    /* ── 16. REDUCED MOTION ─────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .ambient-tri, body::after { animation: none !important; }
+      nav.scrolled::before, .nav-cta::after { animation: none !important; }
+    }
+
+    /* light-mode logo: keep the W on-brand, flip the white wordmark dark */
+    body .nav-logo img, body .fbrand img,
+    body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
+      filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
+    }
+
   </style>
 </head>
 <body>

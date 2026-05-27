@@ -1201,6 +1201,481 @@
     }
     @keyframes ctaShine { 0%,55%{left:-70%} 80%,100%{left:130%} }
     @media (prefers-reduced-motion: reduce) { nav.scrolled::before, .nav-cta::after { animation: none; } }
+
+    /* ===== LIGHT MODE OVERHAUL ===== */
+
+    /* ── 1. CANVAS ── */
+    html, body {
+      background: #FFFFFF !important;
+    }
+    body {
+      background: linear-gradient(180deg, #FFFFFF, #F9FAFB) !important;
+      background-attachment: fixed !important;
+      color: #475569 !important;
+    }
+    body::before {
+      opacity: 0 !important;
+      animation: none !important;
+      background: none !important;
+    }
+    body::after {
+      content: '' !important;
+      position: fixed !important;
+      inset: 0 !important;
+      top: 0 !important; left: 0 !important;
+      width: 100% !important; height: 100% !important;
+      transform: none !important; border-radius: 0 !important;
+      background:
+        radial-gradient(900px circle at 12% 8%, rgba(6,182,212,0.05), transparent 55%),
+        radial-gradient(800px circle at 88% 80%, rgba(147,51,234,0.03), transparent 55%) !important;
+      opacity: 1 !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      filter: none !important;
+    }
+
+    /* ── 2. TYPOGRAPHY BASE ── */
+    body .sec-title,
+    body h1, body h2, body h3, body h4, body h5 {
+      color: #0F172A !important;
+      letter-spacing: -.4px;
+    }
+    body p,
+    body .sec-sub {
+      color: #475569 !important;
+    }
+    body .wstat-lbl,
+    body .team-role,
+    body .video-dur,
+    body .ftagline,
+    body .fbot {
+      color: #64748B !important;
+    }
+    /* Override any inline color:#fff on hero headings and paragraphs */
+    body .page-hero h1 { color: #0F172A !important; }
+    body .page-hero p  { color: #475569 !important; }
+
+    /* ── 3. EYEBROW CHIPS ── */
+    body .eyebrow {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+    body .faq-tag {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+    }
+
+    /* ── 4. NAV ── */
+    nav {
+      background: rgba(255,255,255,0.7) !important;
+      backdrop-filter: blur(20px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      border-bottom: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .nav-links > li > a {
+      color: #475569 !important;
+    }
+    body .nav-links > li > a:hover,
+    body .nav-links > li > a.active-page {
+      color: #0D9488 !important;
+      background: rgba(13,148,136,0.06) !important;
+    }
+    body .nav-links > li > a::after {
+      background: linear-gradient(90deg, transparent, #0D9488, transparent) !important;
+    }
+    body .nav-home {
+      color: #475569 !important;
+    }
+    body .nav-home:hover {
+      color: #0D9488 !important;
+      background: rgba(13,148,136,0.06) !important;
+    }
+    body .dropdown {
+      background: #ffffff !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      box-shadow: 0 12px 32px rgba(15,23,42,0.10) !important;
+      backdrop-filter: none !important;
+    }
+    body .dropdown a {
+      color: #475569 !important;
+    }
+    body .dropdown a:hover,
+    body .dropdown a.active-sub {
+      background: rgba(13,148,136,0.06) !important;
+      color: #0D9488 !important;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,0.85) !important;
+      border: 1px solid rgba(15,23,42,0.10) !important;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.08) !important;
+      backdrop-filter: blur(26px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(26px) saturate(180%) !important;
+    }
+    /* Scrolled border-beam → metallic cyan/silver instead of neon green */
+    nav.scrolled::before {
+      background: conic-gradient(from var(--nav-beam) at 50% 50%,
+        transparent 0deg,
+        rgba(6,182,212,0) 250deg,
+        rgba(6,182,212,0.8) 322deg,
+        rgba(148,163,184,0.7) 346deg,
+        rgba(6,182,212,0) 360deg) !important;
+    }
+    .nav-cta {
+      background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+    }
+    .nav-cta:hover {
+      filter: brightness(1.05) !important;
+      transform: translateY(-1px) !important;
+      background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+      color: #fff !important;
+    }
+
+    /* ── 5. HAMBURGER ── */
+    body .hamburger span {
+      background: #475569 !important;
+    }
+    body .mobile-menu {
+      background: rgba(255,255,255,0.97) !important;
+      backdrop-filter: blur(20px) !important;
+    }
+    body .mob-link {
+      color: #0F172A !important;
+      border-bottom-color: rgba(15,23,42,0.07) !important;
+    }
+    body .mob-link:hover,
+    body .mob-link.active-page { color: #0D9488 !important; }
+    body .mob-sub { color: #64748B !important; }
+    body .mob-sub:hover { color: #0D9488 !important; }
+    body .mob-cta {
+      background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+      color: #fff !important;
+    }
+
+    /* ── 6. BUTTONS ── */
+    body .btn-p {
+      background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+    }
+    body .btn-p:hover {
+      filter: brightness(1.05) !important;
+      transform: translateY(-2px) !important;
+      background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+      color: #fff !important;
+    }
+    body .btn-o {
+      background: rgba(255,255,255,0.8) !important;
+      border: 1px solid rgba(15,23,42,0.12) !important;
+      color: #0F172A !important;
+      backdrop-filter: none !important;
+    }
+    body .btn-o:hover {
+      background: #F1F5F9 !important;
+      border-color: rgba(13,148,136,0.30) !important;
+      color: #0D9488 !important;
+    }
+
+    /* ── 7. PAGE HERO ambient ── */
+    body .page-hero::before {
+      background: radial-gradient(circle, rgba(6,182,212,0.07) 0%, transparent 60%) !important;
+    }
+    body .page-hero::after {
+      background: radial-gradient(circle, rgba(147,51,234,0.04) 0%, transparent 60%) !important;
+    }
+
+    /* ── 8. GLASS CARD TOKEN (universal) ── */
+    body .wstat,
+    body .vcard,
+    body .team-card,
+    body .gallery-item,
+    body .video-card,
+    body .faq-item {
+      background: rgba(255,255,255,0.65) !important;
+      backdrop-filter: blur(20px) saturate(160%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+      border: 1px solid rgba(15,23,42,0.06) !important;
+      box-shadow:
+        0 4px 6px -1px rgba(15,23,42,0.03),
+        0 20px 40px -4px rgba(15,23,42,0.06) !important;
+      color: #475569 !important;
+    }
+    body .wstat:hover,
+    body .vcard:hover,
+    body .team-card:hover,
+    body .gallery-item:hover,
+    body .video-card:hover {
+      border-color: rgba(13,148,136,0.30) !important;
+      box-shadow:
+        0 10px 20px -4px rgba(15,23,42,0.08),
+        0 30px 60px -6px rgba(15,23,42,0.10) !important;
+      background: rgba(255,255,255,0.80) !important;
+    }
+    body .faq-item.open {
+      border-color: rgba(13,148,136,0.30) !important;
+      background: rgba(255,255,255,0.85) !important;
+      box-shadow:
+        0 10px 20px -4px rgba(15,23,42,0.08),
+        0 30px 60px -6px rgba(15,23,42,0.10) !important;
+    }
+    /* remove dark neon glows from hover */
+    body .wstat:hover::after { opacity: 0 !important; }
+    body .wstat::after {
+      background: radial-gradient(circle at 50% 110%, rgba(13,148,136,0.08), transparent 65%) !important;
+    }
+
+    /* ── 9. SECTION BACKGROUNDS ── */
+    body .values-section,
+    body .team-section,
+    body .faq-section,
+    body .gallery-section,
+    body .section-white {
+      background: transparent !important;
+      border-top: 1px solid rgba(15,23,42,0.05) !important;
+      color: #475569 !important;
+    }
+    /* Kill the old dark .section-white overrides */
+    body .section-white .sec-title,
+    body .section-white h2,
+    body .section-white h3,
+    body .section-white h4 { color: #0F172A !important; }
+    body .section-white .sec-sub,
+    body .section-white p,
+    body .section-white .sectors-note { color: #475569 !important; }
+    body .section-white .eyebrow {
+      background: rgba(13,148,136,0.08) !important;
+      border-color: rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+    }
+    /* Cards inside .section-white */
+    body .section-white .vcard,
+    body .section-white .team-card,
+    body .section-white .wstat {
+      background: rgba(255,255,255,0.65) !important;
+      border-color: rgba(15,23,42,0.06) !important;
+    }
+    body .section-white .vcard h3,
+    body .section-white .team-name { color: #0F172A !important; }
+    body .section-white .vcard p,
+    body .section-white .team-role,
+    body .section-white .wstat-lbl { color: #64748B !important; }
+    body .section-white .big { color: #0F172A !important; }
+    body .section-white .big .tc,
+    body .section-white .wstat-num { color: #0D9488 !important; }
+    body .section-white .faq-q { color: #0F172A !important; }
+    body .section-white .faq-q:hover { color: #0D9488 !important; }
+    body .section-white .faq-a-inner { color: #475569 !important; }
+    body .section-white .faq-item { border-color: rgba(15,23,42,0.08) !important; }
+    body .section-white .faq-item.open { border-color: rgba(13,148,136,0.30) !important; }
+
+    /* ── 10. WHO TEXT ── */
+    body .who-text .big { color: #0F172A !important; }
+    body .who-text .big .tc { color: #0D9488 !important; }
+    body .who-text p { color: #475569 !important; }
+
+    /* ── 11. WSTAT ── */
+    body .wstat-num { color: #0D9488 !important; }
+    body .wstat-lbl { color: #64748B !important; }
+
+    /* ── 12. VALUE CARDS ── */
+    body .vcard h3 { color: #0F172A !important; }
+    body .vcard p  { color: #475569 !important; }
+    body .vcard-icon {
+      background: rgba(13,148,136,0.08) !important;
+      border: 1px solid rgba(13,148,136,0.28) !important;
+    }
+    body .vcard-icon svg { color: #0D9488 !important; }
+
+    /* ── 13. PIXEL CANVAS on light cards: the canvas pixels are drawn
+          with the JS colors array (updated below). The canvas element sits
+          inside .vcard which is now white. We nudge opacity slightly so
+          even faint pixels read. No CSS fix needed — color fix is in JS. ── */
+    body .vcard:hover .pixel-canvas { opacity: 0.85 !important; }
+
+    /* ── 14. TEAM CARDS ── */
+    body .team-name { color: #0F172A !important; }
+    body .team-role { color: #64748B !important; }
+    body .team-photo {
+      background: rgba(13,148,136,0.06) !important;
+      backdrop-filter: none !important;
+      border: 2px solid rgba(13,148,136,0.30) !important;
+      box-shadow: 0 4px 14px rgba(15,23,42,0.07) !important;
+      color: #0D9488 !important;
+    }
+    body .team-card:hover .team-photo {
+      border-color: rgba(13,148,136,0.55) !important;
+      box-shadow: 0 6px 20px rgba(15,23,42,0.10), 0 0 14px rgba(13,148,136,0.14) !important;
+    }
+    /* Mouse-spotlight: teal tint, lower opacity on white */
+    body .team-card::after {
+      background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(13,148,136,0.10), transparent 55%) !important;
+    }
+
+    /* ── 15. FAQ ── */
+    body .faq-q {
+      color: #0F172A !important;
+      font-weight: 600 !important;
+    }
+    body .faq-q:hover { color: #0D9488 !important; }
+    body .faq-a-inner { color: #475569 !important; }
+    body .faq-icon { color: #0D9488 !important; }
+    /* Filter pills */
+    body .faq-filter,
+    body .gfilter,
+    body .ptab {
+      background: #F1F5F9 !important;
+      border: 1px solid rgba(15,23,42,0.08) !important;
+      color: #475569 !important;
+      backdrop-filter: none !important;
+    }
+    body .faq-filter:hover,
+    body .gfilter:hover,
+    body .ptab:hover {
+      background: #E2E8F0 !important;
+      border-color: rgba(13,148,136,0.25) !important;
+      color: #0D9488 !important;
+    }
+    body .faq-filter.active,
+    body .gfilter.active,
+    body .ptab.active {
+      background: rgba(13,148,136,0.08) !important;
+      border-color: rgba(13,148,136,0.35) !important;
+      color: #0D9488 !important;
+      box-shadow: none !important;
+    }
+
+    /* ── 16. GALLERY ── */
+    body .gallery-placeholder { color: #64748B !important; }
+    body .gallery-placeholder .gp-lbl { color: #64748B !important; }
+    body .gallery-placeholder .gp-icon svg { color: #0D9488 !important; }
+
+    /* ── 17. VIDEO CARDS ── */
+    body .video-thumb {
+      background: rgba(15,23,42,0.03) !important;
+    }
+    body .video-play {
+      background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+      color: #fff !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+    }
+    body .video-play svg { color: #fff !important; }
+    body .video-title { color: #0F172A !important; }
+    body .video-dur { color: #64748B !important; }
+    body .video-dur svg { color: #0D9488 !important; }
+
+    /* ── 18. CTA BAND ── */
+    body .cta-band {
+      background: #F9FAFB !important;
+      border-top: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .cta-band::before {
+      background: radial-gradient(ellipse,
+        rgba(13,148,136,0.05) 0%,
+        rgba(147,51,234,0.02) 40%,
+        transparent 65%) !important;
+      filter: blur(50px) !important;
+    }
+    body .cta-band h2 { color: #0F172A !important; }
+    body .cta-band p  { color: #475569 !important; }
+    /* Phone accent */
+    body .cta-band strong { color: #0D9488 !important; }
+
+    /* ── 19. CONTACT FORM ── */
+    body .cf-in {
+      background: rgba(255,255,255,0.9) !important;
+      border: 1px solid rgba(15,23,42,0.12) !important;
+      color: #0F172A !important;
+    }
+    body .cf-in::placeholder { color: #94A3B8 !important; }
+    body .cf-in:focus {
+      border-color: #06B6D4 !important;
+      background: #fff !important;
+      box-shadow: 0 0 0 3px rgba(6,182,212,0.15) !important;
+    }
+    body .cf-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D9488' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    }
+    body .cf-select option {
+      background: #fff !important;
+      color: #0F172A !important;
+    }
+    body .cf-btn {
+      background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+      color: #fff !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,0.28) !important;
+    }
+    body .cf-btn:hover {
+      filter: brightness(1.05) !important;
+      background: linear-gradient(135deg, #2BADA0, #3ECFBE) !important;
+      color: #fff !important;
+      transform: translateY(-1px) !important;
+    }
+    /* inline small disclaimer */
+    body .cta-band > .cta-content p[style*="color:var(--muted)"],
+    body .cta-band p { color: #64748B !important; }
+
+    /* ── 20. FOOTER ── */
+    footer {
+      background: #F9FAFB !important;
+      border-top: 1px solid rgba(15,23,42,0.08) !important;
+    }
+    body .fcol h5 { color: #0F172A !important; }
+    body .fcol a,
+    body .ftagline { color: #64748B !important; }
+    body .fcol a:hover,
+    body .fbot a:hover { color: #0D9488 !important; }
+    body .fbot {
+      color: #64748B !important;
+      border-top-color: rgba(15,23,42,0.07) !important;
+    }
+    body .fbot a { color: #64748B !important; }
+
+    /* ── 21. PAGE HERO inline-style overrides ── */
+    /* The hero h1 + p use inline style="color:#fff" and "color:var(--muted)".
+       Those inline styles beat class rules, so we re-assert with !important. */
+    body .page-hero [style*="color:#fff"],
+    body .page-hero [style*="color: #fff"] {
+      color: #0F172A !important;
+    }
+    body .page-hero [style*="color:var(--muted)"],
+    body .page-hero [style*="color: var(--muted)"] {
+      color: #475569 !important;
+    }
+
+    /* ── 22. SECTOR / ALT SECTIONS (transparent on light canvas) ── */
+    body .sector-section {
+      background: transparent !important;
+      border-top: 1px solid rgba(15,23,42,0.05) !important;
+    }
+    body .sector-section:nth-child(odd) { background: rgba(15,23,42,0.015) !important; }
+
+    /* ── 23. NAV SCROLLED — pill nav links stay readable ── */
+    nav.scrolled .nav-links > li > a {
+      color: #475569 !important;
+    }
+    nav.scrolled .nav-links > li > a:hover,
+    nav.scrolled .nav-links > li > a.active-page {
+      color: #0D9488 !important;
+    }
+    nav.scrolled .dropdown { background: #fff !important; }
+    nav.scrolled .nav-home { color: #475569 !important; }
+
+    /* ── 24. REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      body::before, body::after { animation: none !important; }
+    }
+    /* light-mode logo: keep the W on-brand, flip the white wordmark dark */
+    body .nav-logo img, body .fbrand img,
+    body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
+      filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
+    }
   </style>
 </head>
 <body>
@@ -1746,7 +2221,7 @@ if(location.hash==='#gallery')switchTab('gallery');
     constructor(canvas, opts = {}) {
       this.canvas = canvas;
       this.ctx = canvas.getContext('2d');
-      this.colors = opts.colors || ['#3ECFBE', '#6FE6D8', '#A855F7'];
+      this.colors = opts.colors || ['#3ECFBE', '#06B6D4', '#CBD5E1'];
       this.gap = Math.max(4, Math.min(50, opts.gap || 8));
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       this.speed = reducedMotion ? 0 : Math.max(0, Math.min(100, opts.speed || 30)) * 0.001;
@@ -1811,7 +2286,7 @@ if(location.hash==='#gallery')switchTab('gallery');
     const pc = new PixelCanvas(canvas, {
       gap: 8,
       speed: 28,
-      colors: ['#3ECFBE', '#6FE6D8', '#A855F7']
+      colors: ['#3ECFBE', '#06B6D4', '#CBD5E1']
     });
     card.addEventListener('mouseenter', () => pc.animate('appear'));
     card.addEventListener('mouseleave', () => pc.animate('disappear'));

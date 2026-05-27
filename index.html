@@ -3962,6 +3962,580 @@
     .nav-home svg { width: 20px; height: 20px; fill: currentColor; }
     .nav-home:hover { color: var(--teal); background: rgba(255,255,255,.06); }
     nav.scrolled .nav-home { display: flex; }
+
+    /* ===== LIGHT MODE OVERHAUL ===== */
+    /* Premium Apple/Stripe/Vercel light theme. Appended last so it wins the cascade.
+       Re-tokenises the dark palette to readable light values, then re-skins every
+       signature component on the homepage. */
+    :root {
+      --teal:        #0D9488;   /* readable teal-600 for text/icons on white */
+      --teal-dark:   #0D9488;
+      --teal-glow:   rgba(13,148,136,.08);
+      --blue:        #2563EB;
+      --dark:        #FFFFFF;
+      --surface:     #FFFFFF;
+      --surface-2:   #F1F5F9;
+      --surface-3:   #E2E8F0;
+      --border:      rgba(15,23,42,.06);
+      --border-teal: rgba(13,148,136,.28);
+      --text:        #475569;
+      --muted:       #64748B;
+      /* alt-section tokens reused by .section-white logic */
+      --white-bg:     #FFFFFF;
+      --white-surface:#F8FAFC;
+      --white-border: rgba(15,23,42,.08);
+      --white-text:   #0F172A;
+      --white-muted:  #475569;
+    }
+
+    /* ── CANVAS ── */
+    html, body { background: #FFFFFF !important; }
+    body {
+      background: linear-gradient(180deg,#FFFFFF 0%,#F9FAFB 100%) !important;
+      background-attachment: fixed !important;
+      color: #475569 !important;
+    }
+    /* kill dark noise grain */
+    body::before { opacity: 0 !important; }
+    /* ambient soft light wash */
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(900px circle at 12% 8%, rgba(6,182,212,0.05), transparent 55%),
+        radial-gradient(800px circle at 88% 80%, rgba(147,51,234,0.03), transparent 55%);
+      opacity: 1;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    body h1, body h2, body h3, body h4,
+    body .sec-title, body .sec-headline, body .sf-headline,
+    body .apps-header h2, body .orbital-text h3, body .wol-header h2,
+    body .big-q, body .sx-meta h3, body .mod-detail-title { color: #0F172A !important; }
+    body .sec-sub, body .apps-header p, body .orbital-text p,
+    body .wol-header p, body .sf-sub, body .device-caption { color: #475569 !important; }
+    body .hero h1 { color: #0F172A !important; }
+    body .hero h1 .ac, body .hero h1 span[style*="#fff"] { color: #0F172A !important; }
+    body .hero h1 .ac { color: #0D9488 !important; }
+    body .hero-sub { color: #475569 !important; }
+    body .big-q .tc { color: #0D9488 !important; }
+    body .partner-inner p, body .partner-block p { color: #475569 !important; }
+    /* clear dark text-shadows / gradient text that hurts on white */
+    body .cta-band h2 { text-shadow: none !important; }
+    body .apps-header h2 .accent,
+    body .orbital-text h3 .accent,
+    body .orbital-stat-num,
+    body .perf-x-num strong {
+      background: none !important;
+      -webkit-text-fill-color: #0D9488 !important;
+      color: #0D9488 !important;
+    }
+
+    /* ── NAV ── */
+    body nav {
+      background: rgba(255,255,255,.7) !important;
+      backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid rgba(15,23,42,.08) !important;
+    }
+    body nav.scrolled {
+      background: rgba(255,255,255,.85) !important;
+      border: 1px solid rgba(15,23,42,.10) !important;
+      box-shadow: 0 10px 30px rgba(15,23,42,.08) !important;
+    }
+    body .nav-links > li > a { color: #475569 !important; }
+    body .nav-links > li > a:hover,
+    body .nav-links > li > a.active-page { color: #0D9488 !important; }
+    body .dropdown {
+      background: rgba(255,255,255,.96) !important;
+      border: 1px solid rgba(15,23,42,.08) !important;
+      box-shadow: 0 12px 40px rgba(15,23,42,.12) !important;
+    }
+    body .dropdown a { color: #475569 !important; }
+    body .dropdown a:hover { background: rgba(13,148,136,.08) !important; color: #0D9488 !important; }
+    body .nav-home { color: #475569 !important; }
+    body .nav-home:hover { color: #0D9488 !important; background: rgba(13,148,136,.06) !important; }
+    body .hamburger span { background: #0F172A !important; }
+    body .mobile-menu { background: rgba(255,255,255,.97) !important; }
+    body .mob-link { color: #0F172A !important; border-bottom-color: rgba(15,23,42,.08) !important; }
+    body .mob-link:hover, body .mob-link.active-page { color: #0D9488 !important; }
+    body .mob-sub { color: #475569 !important; }
+    body .mob-sub:hover { color: #0D9488 !important; }
+
+    /* ── BUTTONS ── */
+    body .btn-p, body .nav-cta, body .cf-btn, body .cta-btn, body .mob-cta,
+    body .orbital-cta, body .sf-cta:not(.btn-o) {
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      border: none !important;
+      box-shadow: 0 8px 24px rgba(20,184,166,.28) !important;
+    }
+    body .btn-p:hover, body .nav-cta:hover, body .cf-btn:hover,
+    body .cta-btn:hover, body .mob-cta:hover, body .orbital-cta:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+      background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important;
+      color: #fff !important;
+    }
+    body .btn-o {
+      background: rgba(255,255,255,.8) !important;
+      border: 1px solid rgba(15,23,42,.12) !important;
+      color: #0F172A !important;
+    }
+    body .btn-o:hover { background: #F1F5F9 !important; border-color: rgba(13,148,136,.30) !important; }
+
+    /* ── GLASS CARDS (generic surfaces) ── */
+    body .ps, body .wcard, body .scard, body .icat, body .tc-card,
+    body .wol-card, body .mx-mod, body .feat-chip, body .sx-card-shell,
+    body .orbital-stat, body .device-features, body .hero-social-proof,
+    body .trust-pill, body .dfp, body .int-why, body .irow, body .mod-desc,
+    body .sf-cta.btn-o {
+      background: rgba(255,255,255,.65) !important;
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid rgba(15,23,42,.06) !important;
+      box-shadow:
+        0 4px 6px -1px rgba(15,23,42,.03),
+        0 20px 40px -4px rgba(15,23,42,.06) !important;
+    }
+    body .ps:hover, body .wcard:hover, body .scard:hover, body .icat:hover,
+    body .tc-card:hover, body .wol-card:hover, body .mx-mod:hover,
+    body .feat-chip:hover, body .dfp:hover {
+      border-color: rgba(13,148,136,.30) !important;
+      box-shadow:
+        0 10px 20px -4px rgba(15,23,42,.08),
+        0 30px 60px -6px rgba(15,23,42,.10) !important;
+    }
+
+    /* ── CHIPS / EYEBROWS / DOTS ── */
+    body .eyebrow {
+      background: rgba(13,148,136,.08) !important;
+      border-color: rgba(13,148,136,.25) !important;
+      color: #0D9488 !important;
+    }
+    body .chip, body .tag, body .sch, body .fs, body .mxv-logo-chip {
+      background: #F1F5F9 !important;
+      border-color: rgba(15,23,42,.08) !important;
+      color: #475569 !important;
+    }
+    body .sbullets li::before, body .mitem::before, body .hs-item::after,
+    body .notif-x-dot, body .dl-dot { background: #0D9488 !important; }
+    body .wol-badge {
+      background: rgba(13,148,136,.08) !important;
+      border: 1px solid rgba(13,148,136,.25) !important;
+      color: #0D9488 !important;
+    }
+    body .wol-badge::before { background: #0D9488 !important; }
+
+    /* ── FORMS ── */
+    body .cf-in, body .cta-in {
+      background: rgba(255,255,255,.9) !important;
+      border: 1px solid rgba(15,23,42,.12) !important;
+      color: #0F172A !important;
+    }
+    body .cf-in::placeholder, body .cta-in::placeholder { color: #94A3B8 !important; }
+    body .cf-in:focus, body .cta-in:focus {
+      border-color: #06B6D4 !important;
+      background: #fff !important;
+      box-shadow: 0 0 0 3px rgba(6,182,212,.15) !important;
+    }
+    body .cf-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D9488' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+      background-repeat: no-repeat !important;
+      background-position: left 14px center !important;
+      background-size: 12px 8px !important;
+    }
+    body .cf-select option { background: #fff !important; color: #0F172A !important; }
+
+    /* ── FOOTER ── */
+    body footer { background: #F9FAFB !important; border-top: 1px solid rgba(15,23,42,.08) !important; }
+    body .fbrand-n { color: #0F172A !important; }
+    body .fcol h5 { color: #0F172A !important; }
+    body .fcol a, body .ftagline, body .fbot, body .fbot a { color: #64748B !important; }
+    body .fcol a:hover, body .fbot a:hover { color: #0D9488 !important; }
+
+    /* ── AMBIENT TRIANGLES ── */
+    body .ambient-tri polygon {
+      fill: rgba(13,148,136,0.04) !important;
+      stroke: rgba(13,148,136,0.14) !important;
+    }
+    /* signature decorative triangles — recolor to soft teal/silver so they read on white */
+    body .wtri-1 { border-bottom-color: rgba(13,148,136,.16) !important; }
+    body .wtri-2 { border-bottom-color: rgba(37,99,235,.14) !important; }
+    body .wtri-3 { border-bottom-color: rgba(13,148,136,.12) !important; }
+    body .ptri-1 { border-bottom-color: rgba(37,99,235,.12) !important; }
+    body .ptri-2 { border-bottom-color: rgba(13,148,136,.14) !important; }
+    body .ptri-3 { border-bottom-color: rgba(13,148,136,.10) !important; }
+
+    /* ── SECTION BACKGROUNDS — kill the midnight base, show the white canvas ── */
+    body .partner, body .sectors, body .integrations, body .device-showcase,
+    body .device-compact, body .trust-bar, body .apps-showcase, body .modules,
+    body .what, body .testimonials, body .sf-section, body #what {
+      background: transparent !important;
+      border-top: 0 !important;
+    }
+    /* inline-styled partner section override (it sets background:var(--surface) inline) */
+    body section.partner[style] { background: transparent !important; border-top: 0 !important; }
+    /* keep alt-section logic but force dark text colors on white */
+    body .section-white { background: #FFFFFF !important; }
+    body .section-white .sec-title,
+    body .section-white h2, body .section-white h3, body .section-white h4 { color: #0F172A !important; }
+    body .section-white .sec-sub, body .section-white p,
+    body .section-white .sectors-note { color: #475569 !important; }
+
+    /* ── HERO ── */
+    body .hero-tag {
+      background: rgba(13,148,136,.08) !important;
+      border: 1px solid rgba(13,148,136,.25) !important;
+      color: #0D9488 !important;
+    }
+    body .hero-tag::before { background: #0D9488 !important; }
+    body .hero-trust { border-top-color: rgba(15,23,42,.08) !important; }
+    body .hero-trust span { color: #64748B !important; }
+    /* hero character — soften & restore (mix-blend screen disappears on white) */
+    body .hero-char img {
+      mix-blend-mode: normal !important;
+      filter: drop-shadow(0 20px 50px rgba(13,148,136,.18))
+              drop-shadow(0 10px 24px rgba(15,23,42,.08)) !important;
+    }
+    /* hero ambient glows softened */
+    body .hero-g1 { background: radial-gradient(circle, rgba(13,148,136,.07) 0%, transparent 65%) !important; }
+    body .hero-g2 { background: radial-gradient(circle, rgba(37,99,235,.05) 0%, transparent 65%) !important; }
+    body .hero-interactive-glow {
+      mix-blend-mode: normal !important;
+      background: radial-gradient(circle at center,
+                  rgba(6,182,212,.12) 0%, rgba(147,51,234,.05) 32%, transparent 72%) !important;
+    }
+    /* hero spotlight SVG — refine to soft cyan polish */
+    body .hero-spotlight-svg ellipse { fill: #06B6D4 !important; fill-opacity: .10 !important; }
+    /* hero social proof bar */
+    body .hero-social-proof { background: rgba(255,255,255,.65) !important; border-color: rgba(15,23,42,.08) !important; }
+    body .hsp-num { color: #0D9488 !important; }
+    body .hsp-lbl { color: #64748B !important; }
+    body .hsp-sep { background: rgba(15,23,42,.12) !important; }
+    body #heroTyped::after { color: #0D9488 !important; }
+
+    /* ── PARTNER STATS ── */
+    body .ps-num { color: #0D9488 !important; }
+    body .ps-lbl { color: #64748B !important; }
+
+    /* ── TRUST BAR (logos) ── */
+    body .trust-bar-caption { color: #0F172A !important; }
+    body .trust-bar-subcaption { color: #64748B !important; }
+    body .trust-bar-subcaption .accent {
+      color: #0F172A !important; -webkit-text-fill-color: #0F172A !important;
+    }
+    /* logos: were inverted to white — make them slate, teal on hover */
+    body .trust-logo img { filter: brightness(0) saturate(100%) invert(38%) sepia(8%) saturate(900%) hue-rotate(176deg) brightness(92%) contrast(88%) !important; opacity: .7; }
+    body .trust-logo:hover img { filter: brightness(0) saturate(100%) invert(46%) sepia(58%) saturate(540%) hue-rotate(130deg) brightness(92%) contrast(90%) !important; opacity: 1; }
+    body .logo-box { color: #64748B !important; }
+    body .logo-box:hover { color: #0D9488 !important; }
+
+    /* ── APPS SHOWCASE (phone screenshot marquee) ── */
+    /* keep the dark phone bezel (premium on white) but soften shadow + ambient */
+    body .apps-showcase::before {
+      background: radial-gradient(ellipse at center, rgba(13,148,136,.05) 0%, rgba(37,99,235,.03) 30%, transparent 65%) !important;
+    }
+    body .app-frame { box-shadow: 0 24px 50px -10px rgba(15,23,42,.20), 0 0 0 1px rgba(15,23,42,.04) !important; }
+    body .app-card:hover .app-frame {
+      border-color: rgba(13,148,136,.30) !important;
+      box-shadow: 0 32px 64px -10px rgba(15,23,42,.26), 0 0 0 1px rgba(13,148,136,.18) !important;
+    }
+    body .app-label-cat { color: #94A3B8 !important; }
+    body .app-label-name { color: #0F172A !important; }
+
+    /* ── MODULES SPLIT (mx-*) — phone + bento ── */
+    body .mx-mod-title, body .mx-mod.is-cta .mx-mod-title { color: #0F172A !important; }
+    body .mx-mod-desc { color: #475569 !important; }
+    body .mx-mod, body .mx-mod.is-cta {
+      background: rgba(255,255,255,.65) !important;
+      border: 1px solid rgba(15,23,42,.06) !important;
+    }
+    body .mx-mod:hover, body .mx-mod.is-cta:hover {
+      background: rgba(255,255,255,.85) !important;
+      border-color: rgba(13,148,136,.30) !important;
+      box-shadow: 0 10px 20px -4px rgba(15,23,42,.08), 0 30px 60px -6px rgba(15,23,42,.10) !important;
+    }
+    body .mx-mod::after { background: radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(13,148,136,.06), transparent 60%) !important; }
+    body .mx-mod-line { background: linear-gradient(to left, rgba(13,148,136,.4), rgba(13,148,136,.05)) !important; }
+    body .mx-mod-arrow { color: rgba(15,23,42,.25) !important; }
+    body .mx-mod:hover .mx-mod-arrow { color: #0D9488 !important; }
+    /* preview mini-visuals — were white-on-dark, flip to slate-on-light */
+    body .mxv-avatar { background: linear-gradient(135deg,#E2E8F0,#CBD5E1) !important; color: #475569 !important; border-color: #fff !important; }
+    body .mxv-avatar.is-more { background: linear-gradient(135deg,#E2E8F0,#CBD5E1) !important; color: #475569 !important; }
+    body .mxv-status { background: #0D9488 !important; }
+    body .mxv-progress-meta strong { color: #0F172A !important; }
+    body .mxv-progress-meta span { color: #64748B !important; }
+    body .mxv-progress-bar { background: rgba(15,23,42,.08) !important; }
+    body .mxv-progress-fill { background: #0D9488 !important; }
+    body .mxv-flow-node { border-color: rgba(15,23,42,.18) !important; color: #64748B !important; }
+    body .mxv-flow-node.is-done { background: rgba(13,148,136,.10) !important; border-color: rgba(13,148,136,.4) !important; color: #0D9488 !important; }
+    body .mxv-flow-node.is-active { background: rgba(13,148,136,.08) !important; border-color: #0D9488 !important; color: #0D9488 !important; }
+    body .mxv-flow-line { background: rgba(15,23,42,.12) !important; }
+    body .mxv-flow-line.is-pending { background: rgba(15,23,42,.06) !important; }
+    body .mxv-flow-line.is-flowing { background: rgba(13,148,136,.4) !important; }
+    body .mxv-logo-chip { background: #F1F5F9 !important; border-color: rgba(15,23,42,.08) !important; color: #475569 !important; }
+    body .mxv-chart-bar { background: rgba(15,23,42,.16) !important; }
+    body .mxv-chart-bar:last-child { background: #0D9488 !important; }
+    body .mxv-chart-trend { color: #0D9488 !important; }
+    body .mxv-more-dot { border-color: rgba(15,23,42,.14) !important; }
+    body .mxv-more-dot.is-active { background: #0D9488 !important; border-color: #0D9488 !important; }
+    /* the mx phone — keep a tasteful dark device on the white canvas, soften shadow */
+    body .mx-phone { box-shadow: 0 24px 48px -12px rgba(15,23,42,.22), 0 0 0 1px rgba(15,23,42,.06) !important; }
+
+    /* ── ORBITAL (integrations showcase) ── */
+    body .orbital-section { border-top-color: rgba(15,23,42,.06) !important; }
+    body .orbital-section::before {
+      background: radial-gradient(ellipse at center, rgba(13,148,136,.10) 0%, rgba(37,99,235,.04) 30%, transparent 65%) !important;
+    }
+    /* rings: refined metallic cyan + silver sheen instead of neon teal */
+    body .orbital-ring {
+      background:
+        linear-gradient(transparent,transparent) padding-box,
+        linear-gradient(180deg, rgba(6,182,212,.55), rgba(148,163,184,.25) 30%, transparent 55%) border-box !important;
+    }
+    body .orbital-ring.mid { background: linear-gradient(transparent,transparent) padding-box, linear-gradient(180deg, rgba(6,182,212,.4), rgba(148,163,184,.2) 30%, transparent 55%) border-box !important; }
+    body .orbital-ring.inner { background: linear-gradient(transparent,transparent) padding-box, linear-gradient(180deg, rgba(6,182,212,.3), rgba(148,163,184,.15) 30%, transparent 55%) border-box !important; }
+    body .orbital-spin { background: conic-gradient(from 0deg, transparent 0%, rgba(6,182,212,.7) 8%, rgba(148,163,184,.5) 12%, transparent 16%) border-box !important; opacity: .8; }
+    body .orbital-line { stroke: rgba(13,148,136,.25) !important; }
+    body .orbital-line.glow { stroke: rgba(6,182,212,.8) !important; filter: drop-shadow(0 0 6px rgba(6,182,212,.5)) !important; }
+    body .orbital-node-label { color: #64748B !important; }
+    body .orbital-node:hover .orbital-node-label { color: #0F172A !important; }
+    /* white integration chips stay white but get a light border + softer shadow */
+    body .orbital-node-chip {
+      border: 1px solid rgba(15,23,42,.10) !important;
+      box-shadow: 0 8px 20px -4px rgba(15,23,42,.15), inset 0 1px 0 rgba(255,255,255,.9) !important;
+    }
+    body .orbital-node:hover .orbital-node-chip {
+      box-shadow: 0 12px 28px -6px rgba(15,23,42,.20), 0 0 0 1px rgba(13,148,136,.35), 0 0 24px rgba(6,182,212,.30) !important;
+    }
+    body .orbital-center {
+      background: radial-gradient(circle at center, rgba(13,148,136,.14), rgba(6,182,212,.06) 60%, transparent 100%) !important;
+    }
+    body .orbital-center::before {
+      background: linear-gradient(160deg, rgba(255,255,255,.9), rgba(255,255,255,.5)) !important;
+      border: 1px solid rgba(15,23,42,.08) !important;
+      box-shadow: 0 0 0 8px rgba(13,148,136,.06), 0 8px 30px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.9) !important;
+    }
+    body .orbital-center img { filter: drop-shadow(0 4px 12px rgba(15,23,42,.20)) !important; }
+    body .orbital-features li { color: #334155 !important; }
+    body .orbital-features-check {
+      background: rgba(13,148,136,.10) !important;
+      border: 1px solid rgba(13,148,136,.35) !important;
+      color: #0D9488 !important;
+    }
+    body .orbital-stat {
+      background: rgba(255,255,255,.65) !important;
+      border: 1px solid rgba(15,23,42,.06) !important;
+    }
+    body .orbital-stat::before { background: linear-gradient(180deg,#0D9488,rgba(13,148,136,.2)) !important; }
+    body .orbital-stat-text { color: #64748B !important; }
+    body .orbital-cta { color: #fff !important; }
+    body .orbital-cta-arrow { color: #fff !important; }
+
+    /* ── SECTORS — Linear-style figures (sf-*) ── */
+    body .sf-section::before {
+      background: radial-gradient(ellipse at center, rgba(13,148,136,.05), transparent 65%) !important;
+    }
+    body .sf-visual { color: rgba(15,23,42,.55) !important; }
+    body .sf-card:hover .sf-visual { color: rgba(15,23,42,.85) !important; }
+    body .sf-visual::before {
+      background-image:
+        linear-gradient(rgba(15,23,42,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,23,42,.05) 1px, transparent 1px) !important;
+    }
+    body .sf-visual::after { background: radial-gradient(420px circle at 80% 20%, rgba(13,148,136,.10), transparent 60%) !important; }
+    body .sf-fig-label { color: rgba(15,23,42,.35) !important; }
+    body .sf-title { color: #0F172A !important; }
+    body .sf-desc { color: #475569 !important; }
+    body .sf-cta {
+      background: rgba(255,255,255,.8) !important;
+      border: 1px solid rgba(15,23,42,.12) !important;
+      color: #0F172A !important;
+    }
+    body .sf-cta:hover {
+      background: rgba(13,148,136,.08) !important;
+      border-color: rgba(13,148,136,.40) !important;
+      color: #0D9488 !important;
+    }
+
+    /* ── SECTORS PREMIUM (sx-*) — defensive coverage ── */
+    body .sx-card-shell {
+      background: linear-gradient(180deg, rgba(255,255,255,.6), rgba(255,255,255,.3) 40%), rgba(255,255,255,.65) !important;
+      border: 1px solid rgba(15,23,42,.06) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 20px 40px -4px rgba(15,23,42,.06) !important;
+    }
+    body .sx-meta h3 { color: #0F172A !important; }
+    body .sx-meta p { color: #475569 !important; }
+    body .sx-mock-head strong, body .sx-mock-amount, body .sx-row { color: #0F172A !important; }
+    body .sx-mock-head { border-bottom-color: rgba(15,23,42,.08) !important; }
+    body .sx-mockup {
+      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.7)), #fff !important;
+      border: 1px solid rgba(15,23,42,.08) !important;
+      box-shadow: 0 20px 40px -8px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.8) !important;
+    }
+    body .sx-row-meta, body .sx-chain-label, body .sx-route-meta { color: #64748B !important; }
+
+    /* ── MODULES (legacy mod-* list/panel, defensive) ── */
+    body .mod-layout, body .mod-list { background: rgba(15,23,42,.06) !important; }
+    body .mitem:hover { background: #F8FAFC !important; }
+    body .mitem.active { background: #F1F5F9 !important; }
+    body .mitem h4 { color: #64748B !important; }
+    body .mitem.active h4, body .mitem:hover h4 { color: #0F172A !important; }
+    body .mitem p { color: #64748B !important; }
+    body .mpanel { background: #fff !important; }
+    body .mod-detail-sub { color: #475569 !important; }
+    body .mod-detail-header { border-bottom-color: rgba(15,23,42,.08) !important; }
+    body .mod-desc { color: #475569 !important; border-right-color: #0D9488 !important; }
+    body .mod-note { background: rgba(13,148,136,.08) !important; border-color: rgba(13,148,136,.25) !important; color: #0D9488 !important; }
+    body .feat-chip strong { color: #0F172A !important; }
+    body .feat-chip p { color: #475569 !important; }
+
+    /* ── WHAT/SECTORS grids (defensive) ── */
+    body .what-grid { background: rgba(15,23,42,.06) !important; border-color: rgba(15,23,42,.06) !important; }
+    body .wcard h3, body .scard h3 { color: #0F172A !important; }
+    body .wcard p, body .scard p, body .sbullets li { color: #475569 !important; }
+    body .wicon, body .scard-icon, body .mitem-icon, body .mod-detail-icon, body .dc-feat-icon {
+      background: rgba(13,148,136,.08) !important; border-color: rgba(13,148,136,.28) !important;
+    }
+    body .slink { color: #0D9488 !important; }
+
+    /* ── DEVICE COMPACT (dc-*) — defensive ── */
+    body .dc-device-label {
+      background: rgba(13,148,136,.08) !important;
+      border-color: rgba(13,148,136,.28) !important;
+      color: #0D9488 !important;
+    }
+    body .dc-feat strong { color: #0F172A !important; }
+    body .dc-feat p { color: #475569 !important; }
+    body .phone-glow-fx { background: radial-gradient(circle, rgba(13,148,136,.14) 0%, transparent 70%) !important; }
+
+    /* ── INTEGRATIONS (legacy int-*) ── */
+    body .icat h4 { color: #0D9488 !important; }
+    body .icat li { color: #475569 !important; }
+    body .icat li::before { color: #0D9488 !important; }
+    body .int-why h3 { color: #0F172A !important; }
+    body .int-why p { color: #475569 !important; }
+    body .irow .it { color: #0D9488 !important; }
+    body .istep-n { background: linear-gradient(135deg,#2BADA0,#3ECFBE) !important; color: #fff !important; }
+    body .istep h4 { color: #0F172A !important; }
+    body .istep p { color: #475569 !important; }
+
+    /* ── WALL OF LOVE — section stays light; cards = white glass ── */
+    body .wol-section { background: linear-gradient(180deg,#FFFFFF,#F9FAFB) !important; }
+    body .wol-header h2, body .wol-header h2 .accent {
+      color: #0F172A !important; -webkit-text-fill-color: #0F172A !important;
+    }
+    body .wol-header p { color: #475569 !important; }
+    body .wol-card { background: rgba(255,255,255,.65) !important; border: 1px solid rgba(15,23,42,.06) !important; box-shadow: 0 4px 6px -1px rgba(15,23,42,.03), 0 20px 40px -4px rgba(15,23,42,.06) !important; }
+    body .wol-card:hover { background: rgba(255,255,255,.85) !important; border-color: rgba(13,148,136,.30) !important; }
+    body .wol-card::after { background: radial-gradient(280px circle at var(--mx,50%) var(--my,50%), rgba(13,148,136,.05), transparent 60%) !important; }
+    body .wol-avatar { background: linear-gradient(135deg,#E2E8F0,#CBD5E1) !important; color: #475569 !important; border-color: #fff !important; }
+    body .wol-avatar img { filter: none !important; }
+    body .wol-meta strong { color: #0F172A !important; }
+    body .wol-meta span { color: #64748B !important; }
+    body .wol-quote { color: #334155 !important; }
+    body .wol-quote .hl { color: #0F172A !important; font-weight: 600 !important; }
+    /* edge fades: marquee dissolves into WHITE now, not black */
+    body .wol-marquee {
+      -webkit-mask: linear-gradient(to right, transparent 0%, rgba(255,255,255,.15) 4%, rgba(255,255,255,.6) 10%, #fff 18%, #fff 82%, rgba(255,255,255,.6) 90%, rgba(255,255,255,.15) 96%, transparent 100%) !important;
+              mask: linear-gradient(to right, transparent 0%, rgba(255,255,255,.15) 4%, rgba(255,255,255,.6) 10%, #fff 18%, #fff 82%, rgba(255,255,255,.6) 90%, rgba(255,255,255,.15) 96%, transparent 100%) !important;
+    }
+    /* THE GLASS HEART — near-transparent white glass + soft cyan halo */
+    body .wol-heart-light {
+      background: radial-gradient(ellipse at 50% 50%,
+        rgba(6,182,212,.18) 0%, rgba(13,148,136,.10) 22%,
+        rgba(147,51,234,.05) 45%, rgba(15,23,42,.02) 65%, transparent 85%) !important;
+    }
+    body .wol-heart-glass {
+      background: rgba(255,255,255,0.2) !important;
+      backdrop-filter: blur(30px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(140%) !important;
+    }
+    /* stars become faint slate dots on white */
+    body .wol-heart-stars g { fill: rgba(15,23,42,.35) !important; }
+    body .wol-particle { background: rgba(13,148,136,0.5) !important; }
+    /* the chasing laser — sharp metallic-silver core + bright-cyan bloom (reads on white) */
+    body .wol-edge-chase {
+      filter:
+        drop-shadow(0 0 1px rgba(148,163,184,1))
+        drop-shadow(0 0 4px rgba(6,182,212,0.85))
+        drop-shadow(0 0 9px rgba(6,182,212,0.5)) !important;
+    }
+
+    /* ── TESTIMONIALS hover-slider (defensive) ── */
+    body .hs-layout { border-color: rgba(15,23,42,.08) !important; }
+    body .hs-item { border-bottom-color: rgba(15,23,42,.08) !important; }
+    body .hs-item:hover, body .hs-item.active { background: #F1F5F9 !important; }
+    body .hs-name { color: rgba(15,23,42,.45) !important; }
+    body .hs-item.active .hs-name, body .hs-item:hover .hs-name { color: #0F172A !important; }
+    body .hs-q { color: #334155 !important; }
+    body .hs-aname { color: #0F172A !important; }
+    body .hs-arole, body .hs-arrow, body .hs-num { color: #64748B !important; }
+    body .tc-text { color: #334155 !important; }
+    body .tc-name { color: #0F172A !important; }
+    body .tc-role { color: #64748B !important; }
+
+    /* ── CTA BAND (#contact) — soft very-light tint band ── */
+    body .cta-band {
+      background:
+        radial-gradient(1000px 520px at 50% -15%, rgba(6,182,212,.08), transparent 62%),
+        radial-gradient(640px 460px at 88% 120%, rgba(147,51,234,.06), transparent 60%),
+        linear-gradient(165deg,#F9FAFB 0%,#EFF6F5 50%,#F9FAFB 100%) !important;
+      border-top: 1px solid rgba(15,23,42,.08) !important;
+    }
+    body .cta-band::before { background: radial-gradient(circle, rgba(6,182,212,.10) 0%, transparent 62%) !important; }
+    body .cta-band::after { background: radial-gradient(circle, rgba(147,51,234,.08) 0%, transparent 62%) !important; }
+    body .cta-band p { color: #475569 !important; }
+    /* contact form glass panel */
+    body .contact-form {
+      background: rgba(255,255,255,.7) !important;
+      backdrop-filter: blur(22px) saturate(150%) !important;
+      -webkit-backdrop-filter: blur(22px) saturate(150%) !important;
+      border: 1px solid rgba(15,23,42,.08) !important;
+      box-shadow: 0 30px 80px -12px rgba(15,23,42,.14), inset 0 1px 0 rgba(255,255,255,.8) !important;
+    }
+    body .contact-form::before {
+      background: linear-gradient(125deg, rgba(6,182,212,.45), transparent 38%, transparent 62%, rgba(147,51,234,.35)) !important;
+      opacity: .5 !important;
+    }
+    body .cf-btn { color: #fff !important; }
+    body .cf-btn::after { background: linear-gradient(110deg, transparent, rgba(255,255,255,.6), transparent) !important; }
+    /* cta character — soften glow for light bg */
+    body .cta-char {
+      mix-blend-mode: normal !important;
+      filter: drop-shadow(0 16px 40px rgba(13,148,136,.20))
+              drop-shadow(0 8px 20px rgba(15,23,42,.08)) !important;
+    }
+
+    /* ── SCI-FI DIVIDER LABEL (canvas keeps its teal lines) ── */
+    body .scifi-divider-label {
+      background: #FFFFFF !important;
+      border-color: rgba(13,148,136,.28) !important;
+      color: #0D9488 !important;
+    }
+
+    /* ── BENTO (bx-*) — defensive coverage if present ── */
+    body .bx-card {
+      background:
+        radial-gradient(circle at top right, rgba(13,148,136,.05), transparent 60%),
+        rgba(255,255,255,.65) !important;
+      border: 1px solid rgba(15,23,42,.06) !important;
+    }
+    body .bx-card:hover { border-color: rgba(13,148,136,.30) !important; box-shadow: 0 30px 60px -6px rgba(15,23,42,.12) !important; }
+    body .bx-card::before { background: radial-gradient(420px circle at var(--mx) var(--my), rgba(13,148,136,.10), transparent 45%) !important; }
+    body .bx-meta { background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,.7) 30%, rgba(255,255,255,.92) 100%) !important; }
+    body .bx-meta h3 { color: #0F172A !important; }
+    body .bx-meta p { color: #475569 !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      body::after { animation: none; }
+    }
+    /* light-mode logo: keep the W on-brand, flip the white wordmark dark */
+    body .nav-logo img, body .fbrand img,
+    body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
+      filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
+    }
+    /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
 </head>
 <body>
@@ -4781,9 +5355,9 @@
     <svg class="wol-heart-border" viewBox="0 0 600 460" preserveAspectRatio="xMidYMid meet">
       <defs>
         <linearGradient id="wolHeartEdge" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="#FFFFFF" stop-opacity="0.22"/>
-          <stop offset="40%"  stop-color="#FFFFFF" stop-opacity="0.10"/>
-          <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.02"/>
+          <stop offset="0%"   stop-color="#0F172A" stop-opacity="0.10"/>
+          <stop offset="40%"  stop-color="#0F172A" stop-opacity="0.07"/>
+          <stop offset="100%" stop-color="#0F172A" stop-opacity="0.04"/>
         </linearGradient>
       </defs>
       <!-- Static soft edge -->
@@ -4796,7 +5370,7 @@
       <path class="wol-edge-chase"
             d="M300 420 C 270 395 175 320 110 250 C 55 192 35 130 75 78 C 115 26 205 30 245 80 C 270 110 290 145 300 175 C 310 145 330 110 355 80 C 395 30 485 26 525 78 C 565 130 545 192 490 250 C 425 320 330 395 300 420 Z"
             fill="none"
-            stroke="rgba(255,255,255,0.95)"
+            stroke="rgba(6,182,212,0.95)"
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
