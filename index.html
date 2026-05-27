@@ -4538,6 +4538,47 @@
     body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
       filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
     }
+    /* ===== MONDAY-INSPIRED (light only): soft rounded cards + playful color motifs ===== */
+    :root{ --m-teal:#14B8A6; --m-purple:#8B5CF6; --m-coral:#FB7185; --m-amber:#F59E0B; --m-blue:#38BDF8; }
+    /* softer, rounder cards + monday-style diffused shadow */
+    body .sf-card, body .wol-card{
+      border-radius:22px !important;
+      box-shadow:0 2px 4px rgba(15,23,42,.04), 0 14px 30px -8px rgba(15,23,42,.12) !important;
+      transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease !important;
+    }
+    body .app-card{
+      border-radius:16px !important;
+      box-shadow:0 2px 4px rgba(15,23,42,.04), 0 10px 22px -8px rgba(15,23,42,.10) !important;
+      transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease !important;
+    }
+    body .sf-card:hover, body .wol-card:hover{
+      transform:translateY(-6px) !important;
+      box-shadow:0 8px 18px rgba(15,23,42,.07), 0 30px 54px -10px rgba(15,23,42,.18) !important;
+    }
+    body .app-card:hover{ transform:translateY(-4px) !important; }
+    /* SECTOR cards: monday-style color coding (teal / purple / coral) */
+    body .sf-grid .sf-card{ position:relative; overflow:hidden; }
+    body .sf-grid .sf-card::after{ content:''; position:absolute; top:0; left:0; right:0; height:5px; z-index:2; }
+    body .sf-grid .sf-card:nth-child(1)::after{ background:var(--m-teal); }
+    body .sf-grid .sf-card:nth-child(2)::after{ background:var(--m-purple); }
+    body .sf-grid .sf-card:nth-child(3)::after{ background:var(--m-coral); }
+    body .sf-grid .sf-card:nth-child(1) .sf-visual{ color:var(--m-teal) !important; }
+    body .sf-grid .sf-card:nth-child(2) .sf-visual{ color:var(--m-purple) !important; }
+    body .sf-grid .sf-card:nth-child(3) .sf-visual{ color:var(--m-coral) !important; }
+    /* WALL OF LOVE: playful cycling accent (avatar ring + highlighted words) */
+    body .wol-track .wol-card:nth-child(4n+1){ --c:var(--m-teal); }
+    body .wol-track .wol-card:nth-child(4n+2){ --c:var(--m-purple); }
+    body .wol-track .wol-card:nth-child(4n+3){ --c:var(--m-coral); }
+    body .wol-track .wol-card:nth-child(4n){ --c:var(--m-blue); }
+    body .wol-card .hl{ color:var(--c,#14B8A6) !important; }
+    body .wol-card .wol-avatar{ outline:2px solid var(--c,#14B8A6); outline-offset:2px; border-radius:50%; }
+    /* playful scattered colored dots near the sectors headline */
+    body .sf-section .container::before{
+      content:''; position:absolute; top:-4px; left:24px;
+      width:9px; height:9px; border-radius:50%; background:var(--m-purple);
+      box-shadow:44px 10px 0 var(--m-coral), 94px -2px 0 var(--m-amber), 22px 34px 0 var(--m-teal), 128px 28px 0 var(--m-blue);
+      opacity:.75; pointer-events:none; z-index:0;
+    }
     /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
   <style id="theme-toggle-css">
