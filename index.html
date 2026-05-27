@@ -4878,6 +4878,11 @@
   body .cin-meta-val{display:block;font-size:1.85rem;font-weight:800;color:#fff;line-height:1;}
   body .cin-meta-lbl{display:block;font-size:.67rem;color:rgba(255,255,255,.32);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px;}
   body .cin-sep{width:1px;height:36px;background:rgba(255,255,255,.12);}
+  /* edge vignettes — blend into surrounding sections */
+  body .cin-vignette-top{position:absolute;top:0;left:0;right:0;height:200px;background:linear-gradient(to bottom,#F4F4F5 0%,transparent 100%);z-index:15;pointer-events:none;transition:none;}
+  body .cin-vignette-bot{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,#ffffff 0%,transparent 100%);z-index:15;pointer-events:none;transition:none;}
+  html[data-theme="dark"] body .cin-vignette-top{background:linear-gradient(to bottom,var(--surface,#0A0721) 0%,transparent 100%)!important;}
+  html[data-theme="dark"] body .cin-vignette-bot{background:linear-gradient(to top,var(--surface,#0A0721) 0%,transparent 100%)!important;}
   @media(max-width:640px){
     body .cin-l1{font-size:clamp(2.6rem,11vw,4rem);}
     body .cin-l2{font-size:clamp(1.7rem,7.5vw,2.8rem);}
@@ -5040,6 +5045,8 @@
 <!-- CINEMATIC PLATFORM STATEMENT -->
 <div class="cin-outer" id="cin-statement">
   <div class="cin-sticky">
+    <div class="cin-vignette-top"></div>
+    <div class="cin-vignette-bot"></div>
     <div class="cin-ghost" aria-hidden="true">
       <span class="cin-ghost-word">פלטפורמה</span>
     </div>
@@ -6496,7 +6503,9 @@ function toggleTheme(){var cur='light';try{cur=localStorage.getItem('wendiTheme'
 (function(){
   var outer = document.getElementById('cin-statement');
   if (!outer) return;
-  var sticky = outer.querySelector('.cin-sticky');
+  var sticky  = outer.querySelector('.cin-sticky');
+  var vigTop  = outer.querySelector('.cin-vignette-top');
+  var vigBot  = outer.querySelector('.cin-vignette-bot');
 
   function tick() {
     var rect  = outer.getBoundingClientRect();
@@ -6510,6 +6519,9 @@ function toggleTheme(){var cur='light';try{cur=localStorage.getItem('wendiTheme'
     sticky.style.setProperty('--cin-pa', pa.toFixed(4));
     sticky.style.setProperty('--cin-pr', pr.toFixed(4));
     sticky.style.setProperty('--cin-pb', pb.toFixed(4));
+    /* vignette blend: entry 0→0.22, exit 0.78→1.0 */
+    if (vigTop) vigTop.style.opacity = Math.max(0, 1 - p / 0.22).toFixed(3);
+    if (vigBot) vigBot.style.opacity = Math.max(0, (p - 0.78) / 0.22).toFixed(3);
   }
 
   window.addEventListener('scroll', tick, {passive: true});
