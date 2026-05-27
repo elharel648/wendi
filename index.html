@@ -863,6 +863,29 @@
     }
     .orbital-node:hover .orbital-node-label { color: #fff; }
 
+    /* ─── Elegant whole-hub hover: the integration web "powers up" ─── */
+    .orbital-stage:hover .orbital-line { animation-duration: .7s; }
+    .orbital-stage:hover .orbital-line.glow { opacity: .9; }
+    .orbital-stage:hover .orbital-spin { animation-duration: 7s; }
+    .orbital-stage:hover .orbital-spin.mid { animation-duration: 9s; }
+    .orbital-stage:hover .orbital-spin.inner { animation-duration: 11s; }
+    .orbital-stage:hover .orbital-center::before { animation-duration: 2s; }
+    /* expanding signal ripple broadcast from the Wendi center */
+    .orbital-center::after {
+      content: ''; position: absolute; inset: 14px; border-radius: 50%;
+      border: 1.5px solid rgba(62,207,190,.5);
+      opacity: 0; pointer-events: none; z-index: -1;
+    }
+    .orbital-stage:hover .orbital-center::after { animation: orbitRipple 2s ease-out infinite; }
+    @keyframes orbitRipple {
+      0%   { transform: scale(.85); opacity: .55; }
+      70%  { opacity: .12; }
+      100% { transform: scale(2.8); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .orbital-stage:hover .orbital-center::after { animation: none; }
+    }
+
     /* Hexagonal positions: 3 on outer ring (12/4/8 o'clock), 3 on mid ring (2/6/10) */
     .orbital-node.n1 { top: 0%;   left: 50%;  --tx: -50%; --ty: -50%; }
     .orbital-node.n2 { top: 75%;  left: 93%;  --tx: -50%; --ty: -50%; }
