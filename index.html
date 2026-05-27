@@ -1038,6 +1038,14 @@
     }
     .orbital-cta:hover .orbital-cta-arrow { transform: translateX(-4px); }
 
+    /* Stat + CTA share one balanced, equal-height row */
+    .orbital-actions {
+      display: flex; align-items: stretch; gap: 14px;
+      flex-wrap: wrap; margin-top: 14px; margin-bottom: 4px;
+    }
+    .orbital-actions .orbital-stat { margin-bottom: 0; }
+    .orbital-actions .orbital-cta { white-space: nowrap; }
+
     /* Entrance animation — fade + blur + slide */
     .orbital-text > * {
       opacity: 0;
@@ -5063,17 +5071,19 @@
           </li>
         </ul>
 
-        <div class="orbital-stat">
-          <span class="orbital-stat-num">20+</span>
-          <span class="orbital-stat-text">ממשקים פעילים אצל לקוחותינו<br/>הגדולים בישראל</span>
-        </div>
+        <div class="orbital-actions">
+          <div class="orbital-stat">
+            <span class="orbital-stat-num">20+</span>
+            <span class="orbital-stat-text">ממשקים פעילים אצל לקוחותינו<br/>הגדולים בישראל</span>
+          </div>
 
-        <a href="modulim_5.html" class="orbital-cta">
-          <span>לכל הממשקים</span>
-          <span class="orbital-cta-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg>
-          </span>
-        </a>
+          <a href="modulim_5.html" class="orbital-cta">
+            <span>לכל הממשקים</span>
+            <span class="orbital-cta-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg>
+            </span>
+          </a>
+        </div>
       </div>
 
       <!-- LEFT: visual (orbital stage) -->
