@@ -4861,6 +4861,32 @@
   html[data-theme="dark"] body .st-trust{background:#030014!important;}
   html[data-theme="dark"] body .st-trust-logo img{filter:grayscale(1) brightness(4)!important;}
   html[data-theme="dark"] body .st-char-ring{border-color:rgba(255,255,255,.07)!important;}
+
+  /* ── CINEMATIC PLATFORM STATEMENT ── */
+  body .cin-outer{height:280vh;background:#0A0A0A;position:relative;}
+  body .cin-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0A0A0A;}
+  body .cin-sticky::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,.014) 2px,rgba(255,255,255,.014) 3px);pointer-events:none;z-index:0;}
+  body .cin-ghost{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;pointer-events:none;z-index:0;}
+  body .cin-ghost-word{font-size:clamp(8rem,22vw,26rem);font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.048);letter-spacing:-.06em;white-space:nowrap;transform:scale(calc(.86 + var(--cin-p,0)*.24)) rotate(-2deg);transition:none;will-change:transform;}
+  body .cin-stage{position:relative;z-index:2;text-align:center;padding:0 48px;display:flex;flex-direction:column;align-items:center;gap:18px;}
+  body .cin-l1{font-size:clamp(3.8rem,8.5vw,10rem);font-weight:900;line-height:1.0;color:#fff;letter-spacing:-.05em;transform:translateX(calc((1 - var(--cin-pa,0)) * 16vw));opacity:var(--cin-pa,0);will-change:transform,opacity;}
+  body .cin-l1 .cin-accent{color:#2BADA0;}
+  body .cin-l2{font-size:clamp(2.2rem,5vw,6rem);font-weight:800;line-height:1.1;color:rgba(255,255,255,.5);letter-spacing:-.035em;transform:translateX(calc((var(--cin-pa,0) - 1) * 16vw));opacity:var(--cin-pa,0);will-change:transform,opacity;}
+  body .cin-rule{width:clamp(60px,14vw,220px);height:3px;background:linear-gradient(90deg,#06B6D4,#2BADA0 55%,transparent);border-radius:2px;transform:scaleX(var(--cin-pr,0));transform-origin:center;opacity:var(--cin-pr,0);}
+  body .cin-meta{position:absolute;bottom:64px;inset-inline:0;display:flex;justify-content:center;align-items:center;gap:52px;z-index:3;opacity:var(--cin-pb,0);transform:translateY(calc((1 - var(--cin-pb,0)) * 28px));}
+  body .cin-meta-item{text-align:center;}
+  body .cin-meta-val{display:block;font-size:1.85rem;font-weight:800;color:#fff;line-height:1;}
+  body .cin-meta-lbl{display:block;font-size:.67rem;color:rgba(255,255,255,.32);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px;}
+  body .cin-sep{width:1px;height:36px;background:rgba(255,255,255,.12);}
+  @media(max-width:640px){
+    body .cin-l1{font-size:clamp(2.6rem,11vw,4rem);}
+    body .cin-l2{font-size:clamp(1.7rem,7.5vw,2.8rem);}
+    body .cin-meta{gap:24px;bottom:36px;}
+    body .cin-meta-val{font-size:1.4rem;}
+    body .cin-sep{height:24px;}
+  }
+  html[data-theme="dark"] body .cin-outer{background:#020817;}
+  html[data-theme="dark"] body .cin-sticky{background:#020817;}
   </style>
   <script>(function(){try{var t=localStorage.getItem('wendiTheme');if(t==='dark'){var s=document.getElementById('wendi-light');if(s)s.media='not all';document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();</script>
 </head>
@@ -5010,6 +5036,36 @@
     </div>
   </div>
 </section>
+
+<!-- CINEMATIC PLATFORM STATEMENT -->
+<div class="cin-outer" id="cin-statement">
+  <div class="cin-sticky">
+    <div class="cin-ghost" aria-hidden="true">
+      <span class="cin-ghost-word">פלטפורמה</span>
+    </div>
+    <div class="cin-stage">
+      <span class="cin-l1">פלטפורמה <span class="cin-accent">אחת.</span></span>
+      <div class="cin-rule"></div>
+      <span class="cin-l2">כל מה שהעובד צריך.</span>
+    </div>
+    <div class="cin-meta">
+      <div class="cin-meta-item">
+        <span class="cin-meta-val">16+</span>
+        <span class="cin-meta-lbl">אפליקציות</span>
+      </div>
+      <div class="cin-sep"></div>
+      <div class="cin-meta-item">
+        <span class="cin-meta-val">300K+</span>
+        <span class="cin-meta-lbl">עובדים</span>
+      </div>
+      <div class="cin-sep"></div>
+      <div class="cin-meta-item">
+        <span class="cin-meta-val">98%</span>
+        <span class="cin-meta-lbl">שביעות רצון</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- FEATURE TOUR (PINNED SCROLL) -->
 <div class="st-tour-outer" id="feature-tour">
@@ -6434,6 +6490,30 @@ function toggleTheme(){var cur='light';try{cur=localStorage.getItem('wendiTheme'
   document.querySelectorAll('.st-stat, .st-sec-card').forEach(function(el){
     visObs.observe(el);
   });
+})();
+
+/* ===== CINEMATIC PLATFORM STATEMENT ===== */
+(function(){
+  var outer = document.getElementById('cin-statement');
+  if (!outer) return;
+  var sticky = outer.querySelector('.cin-sticky');
+
+  function tick() {
+    var rect  = outer.getBoundingClientRect();
+    var total = outer.offsetHeight - window.innerHeight;
+    var scrolled = Math.max(0, -rect.top);
+    var p  = total > 0 ? Math.min(1, scrolled / total) : 0;
+    var pa = Math.min(1, p / 0.40);
+    var pr = Math.min(1, Math.max(0, (p - 0.28) / 0.26));
+    var pb = Math.min(1, Math.max(0, (p - 0.57) / 0.28));
+    sticky.style.setProperty('--cin-p',  p.toFixed(4));
+    sticky.style.setProperty('--cin-pa', pa.toFixed(4));
+    sticky.style.setProperty('--cin-pr', pr.toFixed(4));
+    sticky.style.setProperty('--cin-pb', pb.toFixed(4));
+  }
+
+  window.addEventListener('scroll', tick, {passive: true});
+  tick();
 })();
 </script>
 </body>
