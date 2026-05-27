@@ -4644,7 +4644,7 @@
   /* ═══════════════ SCROLLYTELLING CONCEPT ═══════════════ */
 
   /* ── HERO ── */
-  body .st-hero{min-height:100vh;padding:100px 64px 80px;display:flex;align-items:center;background:linear-gradient(145deg,#F8FAFF 0%,#EDFFFE 50%,#EFF6FF 100%);position:relative;overflow:hidden;}
+  body .st-hero{min-height:100vh;padding:100px 64px 80px;display:flex;align-items:center;background:#ffffff;position:relative;overflow:hidden;}
   body .st-hero-bg{position:absolute;inset:0;pointer-events:none;}
   body .st-blob{position:absolute;border-radius:50%;}
   body .st-blob-1{width:800px;height:800px;top:-200px;inset-inline-end:-100px;background:radial-gradient(circle,rgba(13,148,136,.14) 0%,transparent 70%);animation:stBlobDrift 18s ease-in-out infinite;}
@@ -4664,21 +4664,7 @@
   body .st-hero-sub{font-size:1.08rem;color:#475569;line-height:1.78;max-width:480px;margin-bottom:40px;opacity:0;animation:stWIn .8s cubic-bezier(.22,1,.36,1) .55s forwards;}
   body .st-hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:stWIn .7s cubic-bezier(.22,1,.36,1) .7s forwards;}
 
-  /* Phone stack */
-  body .st-phone-stack{position:relative;height:580px;flex-shrink:0;width:100%;}
-  body .st-phone{position:absolute;width:240px;background:#fff;border-radius:32px;overflow:hidden;box-shadow:0 32px 80px -12px rgba(15,23,42,.18),0 0 0 1px rgba(15,23,42,.07);}
-  body .st-phone img{width:100%;height:auto;display:block;}
-  body .st-ph-back{bottom:20px;left:5%;transform:rotate(-7deg);opacity:.55;z-index:1;animation:phDriftBack 6s ease-in-out .2s infinite;}
-  body .st-ph-mid{top:60px;left:50%;transform:translateX(-50%) rotate(-2deg);z-index:2;opacity:.78;animation:phDriftMid 7s ease-in-out .5s infinite;}
-  body .st-ph-front{top:10px;right:5%;transform:rotate(5deg);z-index:3;box-shadow:0 40px 100px -12px rgba(13,148,136,.28),0 0 0 1px rgba(255,255,255,.9);animation:phDriftFront 8s ease-in-out infinite;}
-  @keyframes phDriftBack{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(-7deg) translateY(-14px)}}
-  @keyframes phDriftMid{0%,100%{top:60px}50%{top:44px}}
-  @keyframes phDriftFront{0%,100%{transform:rotate(5deg) translateY(0)}50%{transform:rotate(5deg) translateY(-20px)}}
-
-  body .st-scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:#94A3B8;font-size:.76rem;animation:stWIn 1s ease .6s both;}
-  body .st-scroll-mouse{width:24px;height:38px;border:2px solid rgba(148,163,184,.4);border-radius:12px;position:relative;overflow:hidden;}
-  body .st-scroll-mouse::after{content:'';width:4px;height:8px;background:#0D9488;border-radius:2px;position:absolute;top:6px;left:50%;transform:translateX(-50%);animation:stScrollWh 1.6s ease-in-out infinite;}
-  @keyframes stScrollWh{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:0;transform:translateX(-50%) translateY(16px)}}
+  /* phone-stack removed — using wendi-char2 character instead */
 
   /* ── TRUST ── */
   body .st-trust{background:#fff;padding:56px 64px;text-align:center;border-top:1px solid rgba(15,23,42,.06);border-bottom:1px solid rgba(15,23,42,.06);}
@@ -4694,12 +4680,12 @@
 
   /* ── FEATURE TOUR ── */
   body .st-tour-outer{position:relative;height:500vh;}
-  body .st-tour-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:56px 4px 148px 1fr 48%;background:#F8FAFF;}
+  body .st-tour-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:56px 4px 148px 1fr 48%;background:#ffffff;}
 
   body .st-tp-rail{background:rgba(15,23,42,.07);position:relative;border-radius:4px;margin:64px 0;}
   body .st-tp-fill{position:absolute;top:0;left:0;right:0;height:12.5%;background:linear-gradient(180deg,#2BADA0,#4F46E5);border-radius:4px;transition:height .4s cubic-bezier(.4,0,.2,1);}
   body .st-tp-dot-col{position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;display:flex;flex-direction:column;justify-content:space-between;}
-  body .st-tp-dot{width:10px;height:10px;border-radius:50%;background:#CBD5E1;border:2px solid #F8FAFF;margin-inline-start:-3px;transition:background .3s,transform .3s;}
+  body .st-tp-dot{width:10px;height:10px;border-radius:50%;background:#CBD5E1;border:2px solid #ffffff;margin-inline-start:-3px;transition:background .3s,transform .3s;}
   body .st-tp-dot.active{background:#0D9488;transform:scale(1.35);}
 
   body .st-tp-labels{display:flex;flex-direction:column;justify-content:space-between;padding:64px 0;padding-inline-start:18px;overflow:hidden;}
@@ -4745,7 +4731,7 @@
   body .st-stat-bar{width:40px;height:3px;background:linear-gradient(90deg,#2BADA0,#4F46E5);border-radius:2px;margin:14px auto 0;}
 
   /* ── SECTORS MINI ── */
-  body .st-sectors{padding:96px 64px;background:#F8FAFF;}
+  body .st-sectors{padding:96px 64px;background:#F4F4F5;}
   body .st-sectors-inner{max-width:1440px;margin:0 auto;}
   body .st-sectors-hd{text-align:center;margin-bottom:56px;}
   body .st-sectors-hd h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:900;color:#0F172A;letter-spacing:-.03em;margin-bottom:12px;}
@@ -4788,6 +4774,85 @@
   html[data-theme="dark"] body .st-tp-dot{border-color:var(--surface,#0A0721)!important;}
   html[data-theme="dark"] body .st-sectors-hd h2{color:#fff!important;}
   html[data-theme="dark"] body .st-sectors-hd p{color:rgba(255,255,255,.5)!important;}
+
+  /* ── CHARACTER (B&W game) ── */
+  body .st-char-wrap{position:relative;display:flex;align-items:flex-end;justify-content:center;height:540px;opacity:0;animation:stWIn .9s cubic-bezier(.22,1,.36,1) .25s forwards;}
+  body .st-char-ring{position:absolute;border-radius:50%;border:1px solid rgba(15,23,42,.07);animation:stRingPulse 3.5s ease-in-out infinite;}
+  body .st-char-ring-1{width:360px;height:360px;bottom:20px;left:50%;transform:translateX(-50%);animation-delay:0s;}
+  body .st-char-ring-2{width:520px;height:520px;bottom:-50px;left:50%;transform:translateX(-50%);animation-delay:.9s;border-color:rgba(15,23,42,.04);}
+  @keyframes stRingPulse{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.04)}}
+  body .st-char-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:340px;height:200px;border-radius:50%;background:radial-gradient(ellipse,rgba(15,23,42,.05) 0%,transparent 70%);}
+  body .st-char-img{position:relative;z-index:1;height:500px;width:auto;object-fit:contain;
+    filter:grayscale(1) contrast(1.1) brightness(.97);
+    animation:stCharFloat 5.5s ease-in-out infinite;
+    transition:filter 1.8s cubic-bezier(.4,0,.2,1);
+    filter-origin:center bottom;}
+  body .st-char-wrap:hover .st-char-img{filter:grayscale(0) contrast(1) brightness(1);}
+  @keyframes stCharFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+
+  /* shadow under character — stays black even when color returns */
+  body .st-char-img::after{content:'';display:block;}
+
+  /* ── SCROLL INDICATOR (upgraded) ── */
+  body .st-scroll-hint{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;animation:stWIn 1s ease .9s both;}
+  body .st-scroll-label{font-size:.62rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#94A3B8;}
+  body .st-chv-wrap{display:flex;flex-direction:column;align-items:center;gap:0;}
+  body .st-chv{width:30px;height:18px;color:#0D9488;opacity:0;animation:stChvFlow 1.8s ease-in-out infinite;}
+  body .st-chv:nth-child(1){animation-delay:0s;}
+  body .st-chv:nth-child(2){animation-delay:.22s;}
+  body .st-chv:nth-child(3){animation-delay:.44s;}
+  @keyframes stChvFlow{
+    0%{opacity:0;transform:translateY(-6px);}
+    30%,65%{opacity:1;transform:translateY(2px);}
+    100%{opacity:0;transform:translateY(8px);}
+  }
+
+  /* ── B&W DESIGN LANGUAGE — hero overhaul ── */
+  /* Strong black noise grain over white bg */
+  body .st-hero::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.018;pointer-events:none;z-index:0;}
+  /* Subtle grid lines on hero — editorial feel */
+  body .st-hero::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(15,23,42,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(15,23,42,.03) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;z-index:0;}
+
+  /* Hero title — max contrast */
+  body .st-hero-title{color:#0A0A0A!important;}
+  body .st-hero-title .st-w:nth-child(3){color:#0D9488!important;}
+
+  /* Bold horizontal rule after tag */
+  body .st-hero-tag{border-color:rgba(13,148,136,.25)!important;}
+
+  /* Sector cards — B&W base, color on hover */
+  body .st-sec-card{transition:transform .3s,box-shadow .3s,background .3s!important;}
+  body .st-sec-icon svg{filter:grayscale(1);transition:filter .3s;}
+  body .st-sec-card:hover .st-sec-icon svg{filter:grayscale(0);}
+
+  /* Trust logos — stronger contrast on white */
+  body .st-trust{background:#0A0A0A!important;border:none!important;}
+  body .st-trust-label{color:rgba(255,255,255,.35)!important;}
+  body .st-trust-logo.st-visible{opacity:.55!important;}
+  body .st-trust-logo img{filter:grayscale(1) brightness(10)!important;}
+  body .st-trust-logo:hover{opacity:1!important;}
+
+  /* Feature tour — pure white, max-contrast typography */
+  body .st-tp-title{color:#0A0A0A!important;letter-spacing:-.04em!important;}
+  body .st-tp-num{letter-spacing:2.5px!important;}
+
+  /* Stats — deep black */
+  body .st-stats{background:#0A0A0A!important;}
+
+  /* Apps section — off-white */
+  body .st-apps{background:#F4F4F5!important;}
+  body .st-apps-label{color:#0A0A0A!important;opacity:.3;}
+
+  /* Sectors bg — light grey */
+  body .st-sectors-hd h2{color:#0A0A0A!important;}
+
+  /* dark overrides for tour */
+  html[data-theme="dark"] body .st-tour-sticky{background:var(--surface,#0A0721)!important;}
+  html[data-theme="dark"] body .st-hero{background:var(--dark,#030014)!important;}
+  html[data-theme="dark"] body .st-trust{background:#030014!important;}
+  html[data-theme="dark"] body .st-trust-logo img{filter:grayscale(1) brightness(4)!important;}
+  html[data-theme="dark"] body .st-char-img{filter:grayscale(1) contrast(1.1) brightness(1.05)!important;}
+  html[data-theme="dark"] body .st-char-ring{border-color:rgba(255,255,255,.07)!important;}
   </style>
   <script>(function(){try{var t=localStorage.getItem('wendiTheme');if(t==='dark'){var s=document.getElementById('wendi-light');if(s)s.media='not all';document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();</script>
 </head>
@@ -4863,16 +4928,21 @@
         <a href="#feature-tour" class="btn-o">ראו איך זה עובד</a>
       </div>
     </div>
-    <!-- Phone stack — inline-end (LEFT in RTL) -->
-    <div class="st-phone-stack">
-      <div class="st-phone st-ph-back"><img src="apps/Screenshot_3.png" alt="" loading="lazy"/></div>
-      <div class="st-phone st-ph-mid"><img src="apps/Screenshot_1.png" alt="" loading="lazy"/></div>
-      <div class="st-phone st-ph-front"><img src="apps/Screenshot_2.png" alt="" loading="lazy"/></div>
+    <!-- Character — inline-end (LEFT in RTL) -->
+    <div class="st-char-wrap">
+      <div class="st-char-ring st-char-ring-1"></div>
+      <div class="st-char-ring st-char-ring-2"></div>
+      <div class="st-char-glow"></div>
+      <img src="wendi-char2.png" alt="Wendi" class="st-char-img"/>
     </div>
   </div>
   <div class="st-scroll-hint" aria-hidden="true">
-    <div class="st-scroll-mouse"></div>
-    <span>גלגלו למטה</span>
+    <span class="st-scroll-label">גלגלו</span>
+    <div class="st-chv-wrap">
+      <svg class="st-chv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      <svg class="st-chv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      <svg class="st-chv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
   </div>
 </section>
 
