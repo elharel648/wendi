@@ -4640,6 +4640,155 @@
     html[data-theme="dark"] .theme-toggle .tt-moon{color:#E2E8F0;}
     html[data-theme="dark"] .theme-toggle .tt-sun{color:#64748B;}
   </style>
+  <style id="scrollytelling-css">
+  /* ═══════════════ SCROLLYTELLING CONCEPT ═══════════════ */
+
+  /* ── HERO ── */
+  body .st-hero{min-height:100vh;padding:100px 64px 80px;display:flex;align-items:center;background:linear-gradient(145deg,#F8FAFF 0%,#EDFFFE 50%,#EFF6FF 100%);position:relative;overflow:hidden;}
+  body .st-hero-bg{position:absolute;inset:0;pointer-events:none;}
+  body .st-blob{position:absolute;border-radius:50%;}
+  body .st-blob-1{width:800px;height:800px;top:-200px;inset-inline-end:-100px;background:radial-gradient(circle,rgba(13,148,136,.14) 0%,transparent 70%);animation:stBlobDrift 18s ease-in-out infinite;}
+  body .st-blob-2{width:600px;height:600px;bottom:-100px;inset-inline-start:-50px;background:radial-gradient(circle,rgba(79,70,229,.10) 0%,transparent 70%);animation:stBlobDrift 22s ease-in-out 3s infinite reverse;}
+  @keyframes stBlobDrift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-30px,20px) scale(1.05)}66%{transform:translate(20px,-15px) scale(.96)}}
+
+  body .st-hero-inner{max-width:1440px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1;}
+
+  body .st-hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(13,148,136,.10);color:#0D9488;font-size:.82rem;font-weight:700;padding:6px 16px;border-radius:999px;margin-bottom:28px;border:1px solid rgba(13,148,136,.22);letter-spacing:.3px;}
+  body .st-hero-title{font-size:clamp(3rem,5.5vw,5.5rem);font-weight:900;line-height:1.06;color:#0F172A;letter-spacing:-.04em;margin-bottom:28px;}
+  body .st-w{display:block;opacity:0;transform:translateY(40px) skewY(2deg);animation:stWIn .8s cubic-bezier(.22,1,.36,1) forwards;}
+  body .st-w:nth-child(1){animation-delay:.15s;}
+  body .st-w:nth-child(2){animation-delay:.28s;}
+  body .st-w:nth-child(3){animation-delay:.40s;color:#0D9488;}
+  @keyframes stWIn{to{opacity:1;transform:translateY(0) skewY(0);}}
+
+  body .st-hero-sub{font-size:1.08rem;color:#475569;line-height:1.78;max-width:480px;margin-bottom:40px;opacity:0;animation:stWIn .8s cubic-bezier(.22,1,.36,1) .55s forwards;}
+  body .st-hero-actions{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:stWIn .7s cubic-bezier(.22,1,.36,1) .7s forwards;}
+
+  /* Phone stack */
+  body .st-phone-stack{position:relative;height:580px;flex-shrink:0;width:100%;}
+  body .st-phone{position:absolute;width:240px;background:#fff;border-radius:32px;overflow:hidden;box-shadow:0 32px 80px -12px rgba(15,23,42,.18),0 0 0 1px rgba(15,23,42,.07);}
+  body .st-phone img{width:100%;height:auto;display:block;}
+  body .st-ph-back{bottom:20px;left:5%;transform:rotate(-7deg);opacity:.55;z-index:1;animation:phDriftBack 6s ease-in-out .2s infinite;}
+  body .st-ph-mid{top:60px;left:50%;transform:translateX(-50%) rotate(-2deg);z-index:2;opacity:.78;animation:phDriftMid 7s ease-in-out .5s infinite;}
+  body .st-ph-front{top:10px;right:5%;transform:rotate(5deg);z-index:3;box-shadow:0 40px 100px -12px rgba(13,148,136,.28),0 0 0 1px rgba(255,255,255,.9);animation:phDriftFront 8s ease-in-out infinite;}
+  @keyframes phDriftBack{0%,100%{transform:rotate(-7deg) translateY(0)}50%{transform:rotate(-7deg) translateY(-14px)}}
+  @keyframes phDriftMid{0%,100%{top:60px}50%{top:44px}}
+  @keyframes phDriftFront{0%,100%{transform:rotate(5deg) translateY(0)}50%{transform:rotate(5deg) translateY(-20px)}}
+
+  body .st-scroll-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:#94A3B8;font-size:.76rem;animation:stWIn 1s ease .6s both;}
+  body .st-scroll-mouse{width:24px;height:38px;border:2px solid rgba(148,163,184,.4);border-radius:12px;position:relative;overflow:hidden;}
+  body .st-scroll-mouse::after{content:'';width:4px;height:8px;background:#0D9488;border-radius:2px;position:absolute;top:6px;left:50%;transform:translateX(-50%);animation:stScrollWh 1.6s ease-in-out infinite;}
+  @keyframes stScrollWh{0%,100%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:0;transform:translateX(-50%) translateY(16px)}}
+
+  /* ── TRUST ── */
+  body .st-trust{background:#fff;padding:56px 64px;text-align:center;border-top:1px solid rgba(15,23,42,.06);border-bottom:1px solid rgba(15,23,42,.06);}
+  body .st-trust-label{font-size:.78rem;color:#94A3B8;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:28px;}
+  body .st-trust-logos{display:flex;justify-content:center;align-items:center;gap:64px;flex-wrap:wrap;}
+  body .st-trust-logo{opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;}
+  body .st-trust-logo.st-visible{opacity:.38;transform:translateY(0);}
+  body .st-trust-logo:hover{opacity:.85!important;}
+  body .st-trust-logo img{height:36px;width:auto;object-fit:contain;filter:grayscale(1);}
+  body .st-trust-logo:nth-child(1){transition-delay:.08s;}
+  body .st-trust-logo:nth-child(2){transition-delay:.18s;}
+  body .st-trust-logo:nth-child(3){transition-delay:.28s;}
+
+  /* ── FEATURE TOUR ── */
+  body .st-tour-outer{position:relative;height:500vh;}
+  body .st-tour-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:56px 4px 148px 1fr 48%;background:#F8FAFF;}
+
+  body .st-tp-rail{background:rgba(15,23,42,.07);position:relative;border-radius:4px;margin:64px 0;}
+  body .st-tp-fill{position:absolute;top:0;left:0;right:0;height:12.5%;background:linear-gradient(180deg,#2BADA0,#4F46E5);border-radius:4px;transition:height .4s cubic-bezier(.4,0,.2,1);}
+  body .st-tp-dot-col{position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;display:flex;flex-direction:column;justify-content:space-between;}
+  body .st-tp-dot{width:10px;height:10px;border-radius:50%;background:#CBD5E1;border:2px solid #F8FAFF;margin-inline-start:-3px;transition:background .3s,transform .3s;}
+  body .st-tp-dot.active{background:#0D9488;transform:scale(1.35);}
+
+  body .st-tp-labels{display:flex;flex-direction:column;justify-content:space-between;padding:64px 0;padding-inline-start:18px;overflow:hidden;}
+  body .st-tp-lbl{font-size:.76rem;font-weight:600;color:#CBD5E1;letter-spacing:.5px;white-space:nowrap;transition:color .3s;}
+  body .st-tp-lbl.active{color:#0D9488;}
+
+  body .st-tour-content{position:relative;overflow:hidden;}
+  body .st-tp{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 56px;opacity:0;transform:translateX(-20px);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);pointer-events:none;}
+  body .st-tp.active{opacity:1;transform:translateX(0);pointer-events:auto;}
+  body .st-tp-num{font-size:.72rem;font-weight:700;color:var(--tpc,#0D9488);letter-spacing:2px;margin-bottom:16px;}
+  body .st-tp-title{font-size:clamp(2rem,3.2vw,3rem);font-weight:900;color:#0F172A;line-height:1.1;letter-spacing:-.03em;margin-bottom:18px;}
+  body .st-tp-sub{font-size:1rem;color:#475569;line-height:1.78;max-width:380px;margin-bottom:28px;}
+  body .st-tp-feats{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  body .st-tp-feats li{display:flex;align-items:center;gap:10px;font-size:.9rem;color:#64748B;}
+  body .st-tp-feats li svg{width:16px;height:16px;flex-shrink:0;color:var(--tpc,#0D9488);}
+
+  body .st-tour-visual{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+  body .st-vis-bg{position:absolute;inset:0;transition:background 1.2s ease;}
+  body .st-vis-wrap{position:relative;z-index:1;width:280px;height:560px;}
+  body .st-vis{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .6s ease,transform .6s cubic-bezier(.4,0,.2,1);transform:scale(.95) translateY(14px);}
+  body .st-vis.active{opacity:1;transform:scale(1) translateY(0);}
+  body .st-vis-phone{width:260px;background:#fff;border-radius:36px;overflow:hidden;box-shadow:0 40px 80px -12px rgba(15,23,42,.22),0 0 0 8px rgba(255,255,255,.65),0 0 0 9px rgba(15,23,42,.06);}
+  body .st-vis-phone img{width:100%;height:auto;display:block;}
+  body .st-vis-dots{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2;}
+  body .st-vis-dot{width:8px;height:8px;border-radius:50%;background:rgba(15,23,42,.18);transition:background .3s,width .3s;}
+  body .st-vis-dot.active{background:#0D9488;width:24px;border-radius:4px;}
+
+  /* ── APPS MARQUEE TRANSITION ── */
+  body .st-apps{padding:80px 0;overflow:hidden;background:#fff;border-top:1px solid rgba(15,23,42,.05);}
+  body .st-apps-label{text-align:center;font-size:.78rem;color:#94A3B8;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:32px;}
+
+  /* ── STATS ── */
+  body .st-stats{background:#0F172A;padding:96px 64px;position:relative;overflow:hidden;}
+  body .st-stats::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 120% 60% at 50% 100%,rgba(13,148,136,.15),transparent);pointer-events:none;}
+  body .st-stats-inner{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;position:relative;z-index:1;}
+  body .st-stat{text-align:center;opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+  body .st-stat.st-visible{opacity:1;transform:translateY(0);}
+  body .st-stat:nth-child(2){transition-delay:.12s;}
+  body .st-stat:nth-child(3){transition-delay:.24s;}
+  body .st-stat-num{font-size:clamp(3.5rem,5.5vw,5.5rem);font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1;display:flex;justify-content:center;align-items:baseline;gap:4px;margin-bottom:12px;}
+  body .st-stat-suf{font-size:1.8rem;font-weight:700;color:#2BADA0;}
+  body .st-stat-lbl{font-size:.9rem;color:#94A3B8;font-weight:500;}
+  body .st-stat-bar{width:40px;height:3px;background:linear-gradient(90deg,#2BADA0,#4F46E5);border-radius:2px;margin:14px auto 0;}
+
+  /* ── SECTORS MINI ── */
+  body .st-sectors{padding:96px 64px;background:#F8FAFF;}
+  body .st-sectors-inner{max-width:1440px;margin:0 auto;}
+  body .st-sectors-hd{text-align:center;margin-bottom:56px;}
+  body .st-sectors-hd h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:900;color:#0F172A;letter-spacing:-.03em;margin-bottom:12px;}
+  body .st-sectors-hd p{color:#64748B;font-size:1rem;}
+  body .st-sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  body .st-sec-card{background:#fff;border-radius:20px;padding:28px;border:1px solid rgba(15,23,42,.07);transition:transform .3s ease,box-shadow .3s ease;position:relative;overflow:hidden;opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease,box-shadow .3s ease;}
+  body .st-sec-card.st-visible{opacity:1;transform:translateY(0);}
+  body .st-sec-card:hover{transform:translateY(-6px)!important;box-shadow:0 20px 60px -10px rgba(15,23,42,.12);}
+  body .st-sec-card::before{content:'';position:absolute;top:0;inset-inline-start:0;width:3px;height:100%;background:var(--sc,#0D9488);border-radius:0 2px 2px 0;}
+  body .st-sec-card:nth-child(1){transition-delay:.05s;}
+  body .st-sec-card:nth-child(2){transition-delay:.12s;}
+  body .st-sec-card:nth-child(3){transition-delay:.19s;}
+  body .st-sec-card:nth-child(4){transition-delay:.26s;}
+  body .st-sec-card:nth-child(5){transition-delay:.33s;}
+  body .st-sec-card:nth-child(6){transition-delay:.40s;}
+  body .st-sec-icon{width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--sc,#0D9488) 12%,transparent);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  body .st-sec-icon svg{width:22px;height:22px;color:var(--sc,#0D9488);}
+  body .st-sec-name{font-size:1.05rem;font-weight:700;color:#0F172A;margin-bottom:6px;}
+  body .st-sec-desc{font-size:.88rem;color:#64748B;line-height:1.6;}
+
+  /* ── DARK OVERRIDES ── */
+  html[data-theme="dark"] body .st-hero{background:var(--dark,#030014)!important;}
+  html[data-theme="dark"] body .st-hero-title{color:#fff!important;}
+  html[data-theme="dark"] body .st-hero-sub{color:rgba(255,255,255,.6)!important;}
+  html[data-theme="dark"] body .st-hero-tag{background:rgba(62,207,190,.1)!important;color:#3ECFBE!important;border-color:rgba(62,207,190,.2)!important;}
+  html[data-theme="dark"] body .st-trust{background:var(--surface,#0A0721)!important;border-color:rgba(255,255,255,.05)!important;}
+  html[data-theme="dark"] body .st-trust-label{color:rgba(255,255,255,.3)!important;}
+  html[data-theme="dark"] body .st-tour-sticky{background:var(--surface,#0A0721)!important;}
+  html[data-theme="dark"] body .st-tp-title{color:#fff!important;}
+  html[data-theme="dark"] body .st-tp-sub{color:rgba(255,255,255,.6)!important;}
+  html[data-theme="dark"] body .st-tp-feats li{color:rgba(255,255,255,.5)!important;}
+  html[data-theme="dark"] body .st-tp-lbl{color:rgba(255,255,255,.18)!important;}
+  html[data-theme="dark"] body .st-stats{background:#020817!important;}
+  html[data-theme="dark"] body .st-sectors{background:var(--surface,#0A0721)!important;}
+  html[data-theme="dark"] body .st-sec-card{background:var(--surface-2,#161236)!important;border-color:rgba(255,255,255,.06)!important;}
+  html[data-theme="dark"] body .st-sec-name{color:#fff!important;}
+  html[data-theme="dark"] body .st-sec-desc{color:rgba(255,255,255,.5)!important;}
+  html[data-theme="dark"] body .st-apps{background:var(--surface,#0A0721)!important;border-color:rgba(255,255,255,.04)!important;}
+  html[data-theme="dark"] body .st-tp-rail{background:rgba(255,255,255,.07)!important;}
+  html[data-theme="dark"] body .st-tp-dot{border-color:var(--surface,#0A0721)!important;}
+  html[data-theme="dark"] body .st-sectors-hd h2{color:#fff!important;}
+  html[data-theme="dark"] body .st-sectors-hd p{color:rgba(255,255,255,.5)!important;}
+  </style>
   <script>(function(){try{var t=localStorage.getItem('wendiTheme');if(t==='dark'){var s=document.getElementById('wendi-light');if(s)s.media='not all';document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();</script>
 </head>
 <body>
@@ -4690,119 +4839,75 @@
   </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-g1"></div><div class="hero-g2"></div>
-
-  <!-- Static spotlight (aceternity-inspired) -->
-  <svg class="hero-spotlight-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3787 2842" fill="none" aria-hidden="true">
-    <g filter="url(#hero-sp-filter)">
-      <ellipse cx="1924.71" cy="273.501" rx="1924.71" ry="273.501"
-               transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
-               fill="#3ECFBE" fill-opacity="0.28"></ellipse>
-    </g>
-    <defs>
-      <filter id="hero-sp-filter" x="0.860352" y="0.838989" width="3785.16" height="2840.26"
-              filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-        <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8"></feGaussianBlur>
-      </filter>
-    </defs>
-  </svg>
-
-  <!-- Interactive mouse-follow glow -->
-  <div class="hero-interactive-glow" id="heroGlow"></div>
-
-  <div class="wendi-triangles">
-    <div class="wtri wtri-1"></div>
-    <div class="wtri wtri-2"></div>
-    <div class="wtri wtri-3"></div>
+<!-- SCROLLYTELLING HERO -->
+<section class="st-hero">
+  <div class="st-hero-bg">
+    <div class="st-blob st-blob-1"></div>
+    <div class="st-blob st-blob-2"></div>
   </div>
-  <div class="hero-inner">
-    <!-- CHAR — physical LEFT -->
-    <div class="hero-char"><img src="wendi-char2.png" alt="Wendi" /></div>
-    <!-- TEXT — physical RIGHT -->
-    <div>
-      <div class="hero-tag">פלטפורמת העובד המובילה בישראל</div>
-      <h1>חוויית העובד<br/>
-        <span class="ac" id="heroTyped"></span><br/>
-        <span style="color:#fff">עם Wendi</span>
+  <div class="st-hero-inner">
+    <!-- Text — inline-start (RIGHT in RTL) -->
+    <div class="st-hero-text">
+      <div class="st-hero-tag">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        פלטפורמת העובד המובילה בישראל
+      </div>
+      <h1 class="st-hero-title">
+        <span class="st-w">חוויית</span>
+        <span class="st-w">העובד</span>
+        <span class="st-w">חכמה יותר.</span>
       </h1>
-      <p class="hero-sub">
-        וונדי היא הפלטפורמה שמנהלי HR בחרו.<br/>
-        תקשורת למידה, תהליכים דיגיטליים וממשקים- ב<strong>מקום אחד</strong> ! בלי ריצה בין&nbsp;מערכות.
-      </p>
-      <div class="hero-actions">
+      <p class="st-hero-sub">וונדי היא הפלטפורמה שמנהלי HR בחרו.<br/>תקשורת למידה, תהליכים דיגיטליים וממשקים- ב<strong>מקום אחד</strong>! בלי ריצה בין&nbsp;מערכות.</p>
+      <div class="st-hero-actions">
         <a href="#contact" class="btn-p">קבלו הדגמה חינמית ←</a>
-        <a href="#what" class="btn-o">ראו איך זה עובד</a>
+        <a href="#feature-tour" class="btn-o">ראו איך זה עובד</a>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- TRUST BAR — clients (monochrome ghost logos, Linear/Stripe style) -->
-<section class="trust-bar" aria-label="ארגונים שסומכים על Wendi">
-  <!-- Sparkles + glow + curved horizon FX -->
-  <div class="trust-fx" aria-hidden="true">
-    <div class="trust-fx-glow"></div>
-    <canvas class="trust-fx-sparkles" id="trustSparkles"></canvas>
-    <div class="trust-fx-surface"></div>
-  </div>
-
-  <h2 class="trust-bar-caption">בחברות הגדולות בישראל סומכים על וונדי.</h2>
-  <p class="trust-bar-subcaption"><span class="accent">מאות אלפי עובדים</span> מתחילים את היום עם אפליקציה שאנחנו מפעילים.</p>
-
-  <div class="trust-bar-marquee">
-    <div class="trust-bar-grid">
-      <!-- Set 1 — only confirmed clean-rendering logos in monochrome -->
-      <div class="trust-logo"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt="מכבי"/></div>
-      <div class="trust-logo"><img src="ShufersalLogo.svg.png"     alt="שופרסל"/></div>
-      <div class="trust-logo"><img src="Super_Pharm_Logo.svg.png"  alt="סופר-פארם"/></div>
-      <div class="trust-logo"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt="מכבי"/></div>
-      <div class="trust-logo"><img src="ShufersalLogo.svg.png"     alt="שופרסל"/></div>
-      <div class="trust-logo"><img src="Super_Pharm_Logo.svg.png"  alt="סופר-פארם"/></div>
-      <!-- Set 2 (duplicate for seamless loop) -->
-      <div class="trust-logo" aria-hidden="true"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt=""/></div>
-      <div class="trust-logo" aria-hidden="true"><img src="ShufersalLogo.svg.png"     alt=""/></div>
-      <div class="trust-logo" aria-hidden="true"><img src="Super_Pharm_Logo.svg.png"  alt=""/></div>
-      <div class="trust-logo" aria-hidden="true"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt=""/></div>
-      <div class="trust-logo" aria-hidden="true"><img src="ShufersalLogo.svg.png"     alt=""/></div>
-      <div class="trust-logo" aria-hidden="true"><img src="Super_Pharm_Logo.svg.png"  alt=""/></div>
+    <!-- Phone stack — inline-end (LEFT in RTL) -->
+    <div class="st-phone-stack">
+      <div class="st-phone st-ph-back"><img src="apps/Screenshot_3.png" alt="" loading="lazy"/></div>
+      <div class="st-phone st-ph-mid"><img src="apps/Screenshot_1.png" alt="" loading="lazy"/></div>
+      <div class="st-phone st-ph-front"><img src="apps/Screenshot_2.png" alt="" loading="lazy"/></div>
     </div>
   </div>
+  <div class="st-scroll-hint" aria-hidden="true">
+    <div class="st-scroll-mouse"></div>
+    <span>גלגלו למטה</span>
+  </div>
 </section>
 
-<!-- APPS SHOWCASE — 16 real customer apps powered by Wendi -->
-<section class="apps-showcase" id="showcase">
-  <div class="apps-header">
-    <div class="eyebrow">מוצרים בייצור</div>
-    <h2>16 אפליקציות. <span class="accent">מאות אלפי עובדים.</span><br/>וונדי מאחורי כולן.</h2>
-    <p>חברות התחבורה, הבריאות, האנרגיה והרשתות הגדולות בישראל בנו את אפליקציית העובד שלהן על וונדי — ממותגות, מותאמות, ועובדות מהיום הראשון.</p>
+<!-- TRUST BAR -->
+<section class="st-trust">
+  <p class="st-trust-label">סומכים עלינו</p>
+  <div class="st-trust-logos">
+    <div class="st-trust-logo"><img src="Maccabi_Health_Care_Services_2011_logo.svg.png" alt="מכבי" loading="lazy"/></div>
+    <div class="st-trust-logo"><img src="ShufersalLogo.svg.png" alt="שופרסל" loading="lazy"/></div>
+    <div class="st-trust-logo"><img src="Super_Pharm_Logo.svg.png" alt="סופר-פארם" loading="lazy"/></div>
   </div>
+</section>
 
+<!-- APPS MARQUEE -->
+<section class="st-apps">
+  <p class="st-apps-label">16 אפליקציות בייצור — מאות אלפי עובדים</p>
   <div class="apps-marquee">
     <div class="apps-track">
-
-      <!-- Set 1 (16 apps) -->
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_1.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_2.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_3.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_4.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_5.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_6.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_7.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_8.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_9.png"  alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_10.png" alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_11.png" alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_12.png" alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_13.png" alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_14.png" alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_15.png" alt="אפליקציית לקוח"/></div></article>
-      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_16.png" alt="אפליקציית לקוח"/></div></article>
-
-      <!-- Set 2 (duplicate for seamless marquee loop) -->
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_1.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_2.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_3.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_4.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_5.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_6.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_7.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_8.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_9.png"  alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_10.png" alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_11.png" alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_12.png" alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_13.png" alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_14.png" alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_15.png" alt=""/></div></article>
+      <article class="app-card"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_16.png" alt=""/></div></article>
+      <!-- duplicate for seamless loop -->
       <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_1.png"  alt=""/></div></article>
       <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_2.png"  alt=""/></div></article>
       <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_3.png"  alt=""/></div></article>
@@ -4811,561 +4916,154 @@
       <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_6.png"  alt=""/></div></article>
       <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_7.png"  alt=""/></div></article>
       <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_8.png"  alt=""/></div></article>
-      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_9.png"  alt=""/></div></article>
-      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_10.png" alt=""/></div></article>
-      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_11.png" alt=""/></div></article>
-      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_12.png" alt=""/></div></article>
-      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_13.png" alt=""/></div></article>
-      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_14.png" alt=""/></div></article>
-      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_15.png" alt=""/></div></article>
-      <article class="app-card" aria-hidden="true"><div class="app-frame"><div class="app-notch"></div><img src="apps/Screenshot_16.png" alt=""/></div></article>
-
     </div>
   </div>
 </section>
 
-
-<!-- PARTNER SECTION -->
-<section class="partner" id="about" style="padding:112px 0;background:var(--surface);border-top:1px solid var(--border);">
-  <!-- Triangles -->
-  <div class="ptri-1"></div>
-  <div class="ptri-2"></div>
-  <div class="ptri-3"></div>
-  <div class="container">
-    <div class="partner-block" style="text-align:center;max-width:680px;margin:0 auto;">
-      <div class="eyebrow partner-anim pa-eyebrow" style="margin-bottom:32px;margin-top:-24px">השותפה שלכם</div>
-      <p class="big-q partner-anim pa-title" style="font-size:clamp(1.6rem,2.8vw,2.4rem);font-weight:900;line-height:1.49;margin-bottom:36px">
-        וונדי היא הרבה יותר ממערכת.<br/><span class="tc">היא שותפה.</span>
-      </p>
-      <p class="partner-anim pa-p1" style="font-size:1.15rem;color:var(--muted);line-height:1.98;margin-bottom:14px">
-        אנחנו הולכים יד ביד עם עשרות ארגונים בישראל — ובונים יחד מוצר שמשרת את העובדים ביום-יום, בכל מקום ובכל רגע.
-      </p>
-      <p class="partner-anim pa-p2" style="font-size:1.02rem;color:var(--muted);line-height:1.98;margin-bottom:52px">
-        אנחנו מאמינים שמה שעובד טוב לעובדים — עובד טוב לארגון. וזה לא קורה לבד, אלא ביחד.
-      </p>
-      <div class="partner-anim pa-btns" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-        <a href="about.html" class="btn-p">מי אנחנו</a>
+<!-- FEATURE TOUR (PINNED SCROLL) -->
+<div class="st-tour-outer" id="feature-tour">
+  <div class="st-tour-sticky">
+    <!-- spacer -->
+    <div></div>
+    <!-- progress rail -->
+    <div class="st-tp-rail">
+      <div class="st-tp-fill" id="stTpFill"></div>
+      <div class="st-tp-dot-col">
+        <div class="st-tp-dot active"></div>
+        <div class="st-tp-dot"></div>
+        <div class="st-tp-dot"></div>
+        <div class="st-tp-dot"></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- WHAT -->
-<section id="what" style="padding:96px 0;">
-  <!-- Ambient floating glass triangles (asymmetric scatter, behind content) -->
-  <div class="ambient-tri atri-1" aria-hidden="true">
-    <svg viewBox="0 0 100 87"><polygon points="50,5 95,82 5,82"/></svg>
-  </div>
-  <div class="ambient-tri atri-2" aria-hidden="true">
-    <svg viewBox="0 0 100 87"><polygon points="50,82 95,5 5,5"/></svg>
-  </div>
-  <div class="container">
-    <div class="eyebrow fade-up">מה וונדי עושה</div>
-    <h2 class="sec-title fade-up">פלטפורמה אחת. כל מה שהעובד צריך.</h2>
-    <p class="sec-sub fade-up" style="margin-bottom:44px">תקשורת, למידה, ממשקים ו-AI — ממקום אחד.</p>
-
-    <!-- SVG gradient defs (shared) -->
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <defs>
-        <linearGradient id="bxRingGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%"  stop-color="#3ECFBE"/>
-          <stop offset="100%" stop-color="#4A90C4"/>
-        </linearGradient>
-        <linearGradient id="bxSparkGrad" x1="0" x2="1">
-          <stop offset="0%"  stop-color="rgba(62,207,190,.25)"/>
-          <stop offset="100%" stop-color="#3ECFBE"/>
-        </linearGradient>
-        <linearGradient id="bxSparkFill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"   stop-color="rgba(62,207,190,.18)"/>
-          <stop offset="100%" stop-color="rgba(62,207,190,0)"/>
-        </linearGradient>
-      </defs>
-    </svg>
-
-    <div class="mx-layout">
-
-      <!-- LEFT: AI Chat with ongoing conversation -->
-      <div class="mx-chat-col">
-        <div class="mx-phone">
-          <div class="mx-phone-screen">
-            <div class="mx-phone-notch"></div>
-            <div class="mx-phone-status">
-              <span>9:41</span>
-              <span class="mx-phone-status-icons">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M1 14h2v6H1zm5-4h2v10H6zm5-4h2v14h-2zm5-4h2v18h-2z"/></svg>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/></svg>
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="2" y="8" width="18" height="10" rx="2" stroke="currentColor" fill="none" stroke-width="1.5"/><rect x="3" y="9" width="14" height="8" rx="1"/><rect x="21" y="11" width="2" height="4" rx="0.5"/></svg>
-              </span>
-            </div>
-            <div class="mx-phone-header">
-              <div class="mx-phone-logo">W</div>
-              <div class="mx-phone-meta">
-                <strong>Wendi</strong>
-                <span>פעיל עכשיו</span>
-              </div>
-            </div>
-            <div class="mx-chat-body" id="mxChatBody"></div>
-            <div class="mx-phone-input">
-              <span class="mx-phone-input-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
-              </span>
-              <span>שאלו אותי כל דבר על HR…</span>
-              <span class="mx-phone-input-mic">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-              </span>
-            </div>
-            <div class="mx-phone-home-bar"></div>
-          </div><!-- /mx-phone-screen -->
-        </div><!-- /mx-phone -->
-      </div><!-- /mx-chat-col -->
-
-      <!-- RIGHT: Module grid (blueprint feel) -->
-      <div class="mx-grid">
-
-        <!-- 1. Communication — overlapping avatars + live status -->
-        <a href="modulim_5.html#comm" class="mx-mod">
-          <div class="mx-mod-preview">
-            <div class="mxv-avatars" aria-hidden="true">
-              <span class="mxv-avatar">DR</span>
-              <span class="mxv-avatar">YL</span>
-              <span class="mxv-avatar">MK</span>
-              <span class="mxv-avatar">OR</span>
-              <span class="mxv-avatar is-more">+12</span>
-            </div>
-            <span class="mxv-status" aria-hidden="true"></span>
-          </div>
-          <h3 class="mx-mod-title">תקשורת פנים-ארגונית</h3>
-          <p class="mx-mod-desc">ערוץ אחיד לכל עובד — לפי תפקיד, מחלקה ומיקום.</p>
-          <span class="mx-mod-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-          <span class="mx-mod-line"></span>
-        </a>
-
-        <!-- 2. Learning — real progress -->
-        <a href="modulim_5.html#learning" class="mx-mod">
-          <div class="mx-mod-preview">
-            <div class="mxv-progress" aria-hidden="true">
-              <div class="mxv-progress-meta">
-                <strong>12 / 15 הסמכות</strong>
-                <span>78%</span>
-              </div>
-              <div class="mxv-progress-bar">
-                <div class="mxv-progress-fill"></div>
-              </div>
-            </div>
-          </div>
-          <h3 class="mx-mod-title">למידה והכשרה</h3>
-          <p class="mx-mod-desc">LMS מלא עם מעקב, הסמכות ואינטגרציה למערכות קיימות.</p>
-          <span class="mx-mod-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-          <span class="mx-mod-line"></span>
-        </a>
-
-        <!-- 3. Workflows — flow diagram in motion -->
-        <a href="modulim_5.html#workflows" class="mx-mod">
-          <div class="mx-mod-preview">
-            <div class="mxv-flow" aria-hidden="true">
-              <span class="mxv-flow-node is-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
-              <span class="mxv-flow-line"></span>
-              <span class="mxv-flow-node is-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
-              <span class="mxv-flow-line is-flowing"></span>
-              <span class="mxv-flow-node is-active">3</span>
-              <span class="mxv-flow-line is-pending"></span>
-              <span class="mxv-flow-node">4</span>
-            </div>
-          </div>
-          <h3 class="mx-mod-title">Workflows וטפסים</h3>
-          <p class="mx-mod-desc">אוטומציה של תהליכים — קליטה, חופשות, אישורים.</p>
-          <span class="mx-mod-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-          <span class="mx-mod-line"></span>
-        </a>
-
-        <!-- 4. Integrations — real system chips -->
-        <a href="modulim_5.html#integrations" class="mx-mod">
-          <div class="mx-mod-preview">
-            <div class="mxv-logos" aria-hidden="true">
-              <span class="mxv-logo-chip">SAP</span>
-              <span class="mxv-logo-chip">Priority</span>
-              <span class="mxv-logo-chip">Oracle</span>
-              <span class="mxv-logo-chip">M365</span>
-              <span class="mxv-logo-chip">AD</span>
-            </div>
-          </div>
-          <h3 class="mx-mod-title">ממשקים לכל מערכת</h3>
-          <p class="mx-mod-desc">חיבור ל-SAP, Priority, Oracle ועוד — ב-One Stop Shop.</p>
-          <span class="mx-mod-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-          <span class="mx-mod-line"></span>
-        </a>
-
-        <!-- 5. Performance — sparkline + trend -->
-        <a href="modulim_5.html#performance" class="mx-mod">
-          <div class="mx-mod-preview">
-            <div class="mxv-chart" aria-hidden="true">
-              <span class="mxv-chart-bar" style="height:22%"></span>
-              <span class="mxv-chart-bar" style="height:38%"></span>
-              <span class="mxv-chart-bar" style="height:30%"></span>
-              <span class="mxv-chart-bar" style="height:52%"></span>
-              <span class="mxv-chart-bar" style="height:46%"></span>
-              <span class="mxv-chart-bar" style="height:68%"></span>
-              <span class="mxv-chart-bar" style="height:84%"></span>
-            </div>
-            <span class="mxv-chart-trend" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l5-5 4 4 5-7"/><path d="M14 9h7v7"/></svg>
-              +24%
-            </span>
-          </div>
-          <h3 class="mx-mod-title">הערכת ביצועים</h3>
-          <p class="mx-mod-desc">מחזורי הערכה ומשוב 360 — פשוטים לעובד ולמנהל.</p>
-          <span class="mx-mod-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg></span>
-          <span class="mx-mod-line"></span>
-        </a>
-
-        <!-- 6. CTA — "+6 more modules" with dot grid -->
-        <a href="modulim_5.html" class="mx-mod is-cta">
-          <div class="mx-mod-preview">
-            <div class="mxv-more" aria-hidden="true">
-              <span class="mxv-more-dot is-active"></span>
-              <span class="mxv-more-dot is-active"></span>
-              <span class="mxv-more-dot"></span>
-              <span class="mxv-more-dot"></span>
-              <span class="mxv-more-dot is-active"></span>
-              <span class="mxv-more-dot"></span>
-              <span class="mxv-more-dot is-active"></span>
-              <span class="mxv-more-dot"></span>
-            </div>
-          </div>
-          <h3 class="mx-mod-title">עוד 6 מודולים →</h3>
-          <p class="mx-mod-desc">נוכחות, שכר, קליטה, פרישה ו-AI Concierge.</p>
-        </a>
-
-      </div>
-
+    <!-- chapter labels -->
+    <div class="st-tp-labels">
+      <div class="st-tp-lbl active">פורטל</div>
+      <div class="st-tp-lbl">Workflow</div>
+      <div class="st-tp-lbl">למידה</div>
+      <div class="st-tp-lbl">ביצועים</div>
     </div>
-
-    <!-- ORBITAL — cinematic integrations (side-by-side: text right, visual left) -->
-    <div class="orbital-section" id="orbitalSection">
-      <div class="orbital-layout">
-
-      <!-- RIGHT (RTL: first): text content -->
-      <div class="orbital-text">
-        <div class="eyebrow">ממשקים · INTEGRATIONS</div>
-        <h3>כל המערכות שלכם<br/><span class="accent">מדברות עם וונדי.</span></h3>
-        <p>סנכרון דו-כיווני בזמן אמת עם SAP, Priority, Oracle, Active Directory, Microsoft 365 ו-Sisense BI. נתונים זורמים פנימה והחוצה — בלי עוד ריצה בין מערכות.</p>
-
-        <ul class="orbital-features">
-          <li>
-            <span class="orbital-features-check">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
-            </span>
-            סנכרון דו-כיווני בזמן אמת
-          </li>
-          <li>
-            <span class="orbital-features-check">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
-            </span>
-            הגדרה פשוטה ב-15 דקות
-          </li>
-          <li>
-            <span class="orbital-features-check">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
-            </span>
-            אבטחה ארגונית מלאה (SSO · SAML · Audit)
-          </li>
+    <!-- content panels -->
+    <div class="st-tour-content">
+      <div class="st-tp active" data-ch="0" style="--tpc:#2BADA0">
+        <div class="st-tp-num">01 — PORTAL</div>
+        <h2 class="st-tp-title">פורטל העובד</h2>
+        <p class="st-tp-sub">אפליקציה ממותגת לכל עובד בארגון — על iOS, Android ודסקטופ, מוכנה ביום הראשון.</p>
+        <ul class="st-tp-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>ממותגת בלוגו ובצבעי החברה שלכם</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>ניהול הרשאות לפי תפקיד ומחלקה</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Push notifications ו-AI עוזר אישי</li>
         </ul>
-
-        <div class="orbital-actions">
-          <div class="orbital-stat">
-            <span class="orbital-stat-num">20+</span>
-            <span class="orbital-stat-text">ממשקים פעילים אצל לקוחותינו<br/>הגדולים בישראל</span>
-          </div>
-
-          <a href="modulim_5.html" class="orbital-cta">
-            <span>לכל הממשקים</span>
-            <span class="orbital-cta-arrow">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg>
-            </span>
-          </a>
-        </div>
       </div>
-
-      <!-- LEFT: visual (orbital stage) -->
-      <div class="orbital-visual-col">
-        <div class="orbital-stage" id="orbitalStage">
-        <div class="orbital-tilt" id="orbitalTilt">
-
-          <!-- Concentric rings -->
-          <div class="orbital-ring outer"></div>
-          <div class="orbital-ring mid"></div>
-          <div class="orbital-ring inner"></div>
-
-          <!-- Rotating light beams -->
-          <div class="orbital-spin outer"></div>
-          <div class="orbital-spin mid"></div>
-          <div class="orbital-spin inner"></div>
-
-          <!-- Connection lines (dashed pulsing) — center to each node center -->
-          <svg class="orbital-lines" viewBox="0 0 620 620" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <line class="orbital-line" x1="310" y1="310" x2="310" y2="0"  />
-            <line class="orbital-line" x1="310" y1="310" x2="577" y2="465"/>
-            <line class="orbital-line" x1="310" y1="310" x2="43"  y2="465"/>
-            <line class="orbital-line" x1="310" y1="310" x2="502" y2="198"/>
-            <line class="orbital-line" x1="310" y1="310" x2="310" y2="533"/>
-            <line class="orbital-line" x1="310" y1="310" x2="118" y2="198"/>
-          </svg>
-
-          <!-- 6 brand nodes (real SVG logos in white circular badges) -->
-
-          <!-- SAP — official blue gradient -->
-          <div class="orbital-node n1" style="--brand:#0FAAFF">
-            <div class="orbital-node-chip" aria-label="SAP">
-              <svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <linearGradient id="sap-grad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#00AEEF"/>
-                    <stop offset="100%" stop-color="#003D8F"/>
-                  </linearGradient>
-                </defs>
-                <path d="M0 4 Q0 0 4 0 H56 Q60 0 60 4 L52 28 Q51 32 47 32 H4 Q0 32 0 28 Z" fill="url(#sap-grad)"/>
-                <text x="30" y="22" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="white" text-anchor="middle" letter-spacing=".5">SAP</text>
-              </svg>
-            </div>
-            <div class="orbital-node-label">SAP SuccessFactors</div>
-          </div>
-
-          <!-- Priority Software — red -->
-          <div class="orbital-node n2" style="--brand:#E1262D">
-            <div class="orbital-node-chip" aria-label="Priority">
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="16" cy="16" r="15" fill="#E1262D"/>
-                <text x="16" y="22" font-family="Arial Black, sans-serif" font-size="17" font-weight="900" fill="white" text-anchor="middle">P</text>
-              </svg>
-            </div>
-            <div class="orbital-node-label">Priority</div>
-          </div>
-
-          <!-- Oracle — iconic red wordmark -->
-          <div class="orbital-node n3" style="--brand:#F80000">
-            <div class="orbital-node-chip" aria-label="Oracle">
-              <svg viewBox="0 0 64 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <text x="32" y="20" font-family="Arial Black, sans-serif" font-size="13" font-weight="900" fill="#F80000" text-anchor="middle" letter-spacing=".5">ORACLE</text>
-              </svg>
-            </div>
-            <div class="orbital-node-label">Oracle HCM</div>
-          </div>
-
-          <!-- Active Directory — Entra-style two-tone diamond -->
-          <div class="orbital-node n4" style="--brand:#0078D4">
-            <div class="orbital-node-chip" aria-label="Active Directory">
-              <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <defs>
-                  <linearGradient id="ad-grad-a" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#32BEDD"/>
-                    <stop offset="100%" stop-color="#0078D4"/>
-                  </linearGradient>
-                  <linearGradient id="ad-grad-b" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stop-color="#0078D4"/>
-                    <stop offset="100%" stop-color="#00188F"/>
-                  </linearGradient>
-                </defs>
-                <path d="M16 3 L4 24 L16 28 Z" fill="url(#ad-grad-a)"/>
-                <path d="M16 3 L28 24 L16 28 Z" fill="url(#ad-grad-b)"/>
-              </svg>
-            </div>
-            <div class="orbital-node-label">Active Directory</div>
-          </div>
-
-          <!-- Microsoft 365 — iconic 4-color squares -->
-          <div class="orbital-node n5" style="--brand:#F25022">
-            <div class="orbital-node-chip" aria-label="Microsoft 365">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <rect x="1"  y="1"  width="10" height="10" fill="#F25022"/>
-                <rect x="13" y="1"  width="10" height="10" fill="#7FBA00"/>
-                <rect x="1"  y="13" width="10" height="10" fill="#00A4EF"/>
-                <rect x="13" y="13" width="10" height="10" fill="#FFB900"/>
-              </svg>
-            </div>
-            <div class="orbital-node-label">Microsoft 365</div>
-          </div>
-
-          <!-- Sisense BI — purple wordmark -->
-          <div class="orbital-node n6" style="--brand:#5328AC">
-            <div class="orbital-node-chip" aria-label="Sisense BI">
-              <svg viewBox="0 0 64 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <text x="32" y="20" font-family="Arial Black, sans-serif" font-size="13" font-weight="900" fill="#5328AC" text-anchor="middle" letter-spacing=".3">sisense</text>
-              </svg>
-            </div>
-            <div class="orbital-node-label">Sisense BI</div>
-          </div>
-
-          <!-- Center: Wendi -->
-          <div class="orbital-center">
-            <img src="wendi-logo.png" alt="Wendi"/>
-          </div>
-
-        </div>
+      <div class="st-tp" data-ch="1" style="--tpc:#4F46E5">
+        <div class="st-tp-num">02 — WORKFLOW</div>
+        <h2 class="st-tp-title">Workflow וטפסים</h2>
+        <p class="st-tp-sub">תהליכים דיגיטליים בלי IT. בונה חכם ל-drag & drop, אישורים, חתימה דיגיטלית ומעקב.</p>
+        <ul class="st-tp-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>בונה תהליכים ויזואלי — ללא קוד</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>חתימה דיגיטלית ואישורים מסועפים</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>אינטגרציה לשכר, ERP ו-SAP</li>
+        </ul>
       </div>
-
-      </div><!-- /orbital-visual-col -->
-
-      </div><!-- /orbital-layout -->
+      <div class="st-tp" data-ch="2" style="--tpc:#059669">
+        <div class="st-tp-num">03 — LMS</div>
+        <h2 class="st-tp-title">למידה והכשרה</h2>
+        <p class="st-tp-sub">12,000+ תכנים מוכנים, קורסים מותאמים אישית וכלי בניית תוכן מובנה.</p>
+        <ul class="st-tp-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>SCORM, ויקיאו ותוכן בעברית</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>מסלולי למידה אוטומטיים לפי תפקיד</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>דוחות ציות והסמכות בזמן אמת</li>
+        </ul>
+      </div>
+      <div class="st-tp" data-ch="3" style="--tpc:#D97706">
+        <div class="st-tp-num">04 — PERFORMANCE</div>
+        <h2 class="st-tp-title">הערכת ביצועים</h2>
+        <p class="st-tp-sub">360°, KPIs, חוזי מטרות וסקרי מעורבות — הכל מחובר לפורטל העובד.</p>
+        <ul class="st-tp-feats">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>הערכת 360° עמיתים ומנהלים</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>לוח KPIs אינטראקטיבי ועיצוב יעדים</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>סקרי מעורבות עם תובנות AI</li>
+        </ul>
+      </div>
     </div>
+    <!-- visual panel -->
+    <div class="st-tour-visual">
+      <div class="st-vis-bg" id="stVisBg" style="background:rgba(13,148,136,.09)"></div>
+      <div class="st-vis-wrap">
+        <div class="st-vis active" data-vis="0"><div class="st-vis-phone"><img src="apps/Screenshot_1.png" alt="פורטל" loading="lazy"/></div></div>
+        <div class="st-vis" data-vis="1"><div class="st-vis-phone"><img src="apps/Screenshot_4.png" alt="Workflow" loading="lazy"/></div></div>
+        <div class="st-vis" data-vis="2"><div class="st-vis-phone"><img src="apps/Screenshot_7.png" alt="LMS" loading="lazy"/></div></div>
+        <div class="st-vis" data-vis="3"><div class="st-vis-phone"><img src="apps/Screenshot_10.png" alt="Performance" loading="lazy"/></div></div>
+      </div>
+      <div class="st-vis-dots" id="stVisDots">
+        <div class="st-vis-dot active"></div>
+        <div class="st-vis-dot"></div>
+        <div class="st-vis-dot"></div>
+        <div class="st-vis-dot"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- STATS -->
+<section class="st-stats">
+  <div class="st-stats-inner">
+    <div class="st-stat">
+      <div class="st-stat-num"><span class="st-count" data-to="16">0</span><span class="st-stat-suf">+</span></div>
+      <p class="st-stat-lbl">אפליקציות בייצור</p>
+      <div class="st-stat-bar"></div>
+    </div>
+    <div class="st-stat">
+      <div class="st-stat-num"><span class="st-count" data-to="300">0</span><span class="st-stat-suf">K+</span></div>
+      <p class="st-stat-lbl">עובדים פעילים</p>
+      <div class="st-stat-bar"></div>
+    </div>
+    <div class="st-stat">
+      <div class="st-stat-num"><span class="st-count" data-to="98">0</span><span class="st-stat-suf">%</span></div>
+      <p class="st-stat-lbl">שביעות רצון לקוחות</p>
+      <div class="st-stat-bar"></div>
+    </div>
   </div>
 </section>
 
-<!-- SECTORS — Linear-style minimal figures -->
-<section class="sf-section" id="sectors">
-  <!-- Ambient floating glass triangles -->
-  <div class="ambient-tri atri-3" aria-hidden="true">
-    <svg viewBox="0 0 100 87"><polygon points="50,5 95,82 5,82"/></svg>
-  </div>
-  <div class="ambient-tri atri-4" aria-hidden="true">
-    <svg viewBox="0 0 100 87"><polygon points="50,82 95,5 5,5"/></svg>
-  </div>
-  <div class="container">
-
-    <div class="sf-header">
-      <div class="eyebrow">תחומי פעילות</div>
-      <h2 class="sf-headline">פתרון לכל מגזר.</h2>
-      <p class="sf-sub">מותאם לקצב, לרגולציה ולעובדים שלכם — בלי פשרות.</p>
+<!-- SECTORS MINI CARDS -->
+<section class="st-sectors">
+  <div class="st-sectors-inner">
+    <div class="st-sectors-hd fade-up">
+      <h2>פתרון לכל מגזר.</h2>
+      <p>מותאם לקצב, לרגולציה ולעובדים שלכם — בלי פשרות.</p>
     </div>
-
-    <div class="sf-grid">
-
-      <!-- FIG 0.1 — Logistics: Isometric box truck -->
-      <article class="sf-card">
-        <div class="sf-visual" data-fig="logistics">
-          <span class="sf-fig-label">FIG 0.1</span>
-          <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <!-- CARGO BOX (rear, larger) -->
-            <g class="sf-art-cargo">
-              <!-- top face -->
-              <path d="M 95 70 L 200 70 L 215 85 L 110 85 Z" />
-              <!-- back face (right edge in isometric) -->
-              <path d="M 200 70 L 215 85 L 215 130 L 200 115 Z" />
-              <!-- front face (facing viewer) -->
-              <path d="M 110 85 L 215 85 L 215 130 L 110 130 Z" />
-              <!-- left edge (back of cargo, connecting to cab) -->
-              <path d="M 95 70 L 95 115 L 110 130 L 110 85 Z" />
-              <!-- door lines -->
-              <path d="M 145 89 L 145 126" opacity=".4" />
-              <path d="M 180 89 L 180 126" opacity=".4" />
-            </g>
-            <!-- CAB (front, smaller) -->
-            <g class="sf-art-cab">
-              <!-- top -->
-              <path d="M 45 95 L 95 95 L 110 110 L 60 110 Z" opacity=".9" />
-              <!-- front face -->
-              <path d="M 45 95 L 45 130 L 60 145 L 60 110 Z" opacity=".9" />
-              <!-- right face (connecting to cargo) -->
-              <path d="M 95 95 L 110 110 L 110 130 L 95 130" opacity=".9" />
-              <!-- windshield (slanted) -->
-              <path d="M 50 110 L 90 110 L 90 122 L 50 122 Z" opacity=".35" />
-            </g>
-            <!-- WHEELS -->
-            <ellipse cx="55" cy="143" rx="6" ry="3" />
-            <ellipse cx="80" cy="143" rx="6" ry="3" />
-            <ellipse cx="155" cy="143" rx="6" ry="3" />
-            <ellipse cx="195" cy="143" rx="6" ry="3" />
-            <!-- ROUTE / motion dashes (teal, behind truck) — animated draw -->
-            <g class="sf-art-pulse-line" stroke="#3ECFBE">
-              <path d="M 218 95 L 232 92" stroke-width="1.4" />
-              <path d="M 220 108 L 234 105" stroke-width="1.4" opacity=".6" />
-            </g>
-            <circle class="sf-art-pulse" cx="232" cy="92" r="2.2" fill="#3ECFBE" stroke="none" />
-          </svg>
-        </div>
-        <h3 class="sf-title">לוגיסטיקה ותחבורה</h3>
-        <p class="sf-desc">חיבור אמיתי לעובדי שטח — מובייל-first, בזמן אמת.</p>
+    <div class="st-sec-grid">
+      <article class="st-sec-card" style="--sc:#4F46E5">
+        <div class="st-sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <h3 class="st-sec-name">פיננסים וביטוח</h3>
+        <p class="st-sec-desc">ציות, הכשרות רגולטוריות ותקשורת פנימית מאובטחת.</p>
       </article>
-
-      <!-- FIG 0.2 — Finance: Stacked coins + rising chart -->
-      <article class="sf-card">
-        <div class="sf-visual" data-fig="finance">
-          <span class="sf-fig-label">FIG 0.2</span>
-          <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <!-- STACKED COINS — 4 isometric ellipses -->
-            <g class="sf-art-coins">
-              <!-- coin 4 (bottom) -->
-              <ellipse cx="90" cy="140" rx="55" ry="14" />
-              <path d="M 35 140 L 35 132" />
-              <path d="M 145 140 L 145 132" />
-              <path d="M 35 132 Q 90 117 145 132" opacity=".4" />
-              <!-- coin 3 -->
-              <ellipse cx="90" cy="120" rx="55" ry="14" opacity=".85" />
-              <path d="M 35 120 L 35 112" opacity=".85" />
-              <path d="M 145 120 L 145 112" opacity=".85" />
-              <path d="M 35 112 Q 90 97 145 112" opacity=".35" />
-              <!-- coin 2 -->
-              <ellipse cx="90" cy="100" rx="55" ry="14" opacity=".7" />
-              <path d="M 35 100 L 35 92" opacity=".7" />
-              <path d="M 145 100 L 145 92" opacity=".7" />
-              <path d="M 35 92 Q 90 77 145 92" opacity=".3" />
-              <!-- coin 1 (top) -->
-              <ellipse cx="90" cy="80" rx="55" ry="14" opacity=".55" />
-              <!-- shekel symbol hint on top coin -->
-              <path d="M 84 76 L 84 84 M 84 76 Q 88 76 90 80 M 96 84 L 96 76 M 96 84 Q 92 84 90 80" stroke-width="1.1" opacity=".45" />
-            </g>
-            <!-- RISING CHART (teal) -->
-            <g class="sf-art-chart">
-              <!-- animated rising line + arrowhead — same draw rhythm as healthcare ECG -->
-              <g class="sf-art-pulse-line">
-                <path d="M 170 142 L 188 122 L 205 100 L 222 72" stroke="#3ECFBE" stroke-width="1.5" />
-                <path d="M 215 72 L 222 72 L 222 79" stroke="#3ECFBE" stroke-width="1.5" />
-              </g>
-              <!-- baseline tick marks (static) -->
-              <path d="M 170 145 L 170 148 M 185 145 L 185 148 M 200 145 L 200 148" stroke-width="1" opacity=".4" />
-            </g>
-            <!-- Live dot at the chart peak -->
-            <circle class="sf-art-pulse" cx="222" cy="72" r="2.5" fill="#3ECFBE" stroke="none" />
-          </svg>
-        </div>
-        <h3 class="sf-title">פיננסים</h3>
-        <p class="sf-desc">תקשורת ולמידה בסביבה רגולטורית — שליטה מלאה בהרשאות.</p>
+      <article class="st-sec-card" style="--sc:#0D9488">
+        <div class="st-sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <h3 class="st-sec-name">לוגיסטיקה ותחבורה</h3>
+        <p class="st-sec-desc">חיבור אמיתי לעובדי שטח — מובייל-first, בזמן אמת.</p>
       </article>
-
-      <!-- FIG 0.3 — Healthcare: 3D medical cross + pulse line -->
-      <article class="sf-card">
-        <div class="sf-visual" data-fig="healthcare">
-          <span class="sf-fig-label">FIG 0.3</span>
-          <svg class="sf-art" viewBox="0 0 240 180" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <!-- 3D EXTRUDED MEDICAL PLUS -->
-            <g class="sf-art-plus">
-              <!-- Front face of plus (large, prominent) -->
-              <path d="M 85 50 L 115 50 L 115 75 L 140 75 L 140 105 L 115 105 L 115 130 L 85 130 L 85 105 L 60 105 L 60 75 L 85 75 Z" />
-              <!-- Depth lines (top-right diagonal offset to simulate 3D extrusion) -->
-              <!-- top edge -->
-              <path d="M 85 50 L 95 42 L 125 42 L 115 50" opacity=".55" />
-              <!-- right arm top edge -->
-              <path d="M 115 75 L 125 67 L 150 67 L 140 75" opacity=".55" />
-              <!-- right edge -->
-              <path d="M 140 75 L 150 67 L 150 97 L 140 105" opacity=".55" />
-              <!-- right arm bottom edge -->
-              <path d="M 115 105 L 125 97 L 150 97" opacity=".55" />
-              <!-- right vertical bottom -->
-              <path d="M 125 42 L 125 67" opacity=".45" />
-              <!-- right top arm right vertical -->
-              <path d="M 115 105 L 125 97 M 115 130 L 125 122 L 125 97" opacity=".45" />
-            </g>
-            <!-- PULSE LINE (teal, animated) -->
-            <g class="sf-art-pulse-line">
-              <path d="M 165 95 L 178 95 L 184 80 L 192 115 L 200 95 L 232 95" stroke="#3ECFBE" stroke-width="1.5" />
-            </g>
-            <!-- Live dot -->
-            <circle class="sf-art-pulse" cx="232" cy="95" r="2.5" fill="#3ECFBE" stroke="none" />
-          </svg>
-        </div>
-        <h3 class="sf-title">שירותי בריאות</h3>
-        <p class="sf-desc">ידע, תקשורת והדרכה 24/7 בסביבה רפואית תובענית.</p>
+      <article class="st-sec-card" style="--sc:#2563EB">
+        <div class="st-sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <h3 class="st-sec-name">מוסדות ציבוריים</h3>
+        <p class="st-sec-desc">עמידה בדרישות רגולציה ציבורית עם נגישות מלאה.</p>
       </article>
-
+      <article class="st-sec-card" style="--sc:#059669">
+        <div class="st-sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3 class="st-sec-name">שירותי בריאות</h3>
+        <p class="st-sec-desc">תקשורת בין משמרות, עדכוני נהלים וטפסים קליניים.</p>
+      </article>
+      <article class="st-sec-card" style="--sc:#D97706">
+        <div class="st-sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+        <h3 class="st-sec-name">תעשייה ומסחר</h3>
+        <p class="st-sec-desc">ניהול עובדי ייצור, בטיחות ושרשרת אספקה.</p>
+      </article>
+      <article class="st-sec-card" style="--sc:#E11D48">
+        <div class="st-sec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M14 15a2 2 0 0 1-4 0"/><path d="M9 9h.01M15 9h.01"/></svg></div>
+        <h3 class="st-sec-name">תיירות ואירוח</h3>
+        <p class="st-sec-desc">שיבוץ משמרות, הכשרות שירות ועדכוני נהלים בזמן אמת.</p>
+      </article>
     </div>
-
-    <div class="sf-cta-row">
-      <a href="pitronot.html" class="sf-cta">
-        <span>לכל המגזרים</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 5l-7 7 7 7"/></svg>
-      </a>
-    </div>
-
   </div>
 </section>
 
@@ -6543,6 +6241,88 @@
 function applyTheme(t){var light=t!=='dark';var s=document.getElementById('wendi-light');if(s)s.media=light?'all':'not all';document.documentElement.setAttribute('data-theme',light?'light':'dark');}
 function toggleTheme(){var cur='light';try{cur=localStorage.getItem('wendiTheme')||'light';}catch(e){}var next=cur==='dark'?'light':'dark';try{localStorage.setItem('wendiTheme',next);}catch(e){}applyTheme(next);}
 (function(){var t='light';try{t=localStorage.getItem('wendiTheme')||'light';}catch(e){}applyTheme(t);})();
+</script>
+<script>
+/* ===== SCROLLYTELLING — PINNED FEATURE TOUR ===== */
+(function(){
+  var outer = document.querySelector('.st-tour-outer');
+  if (!outer) return;
+  var panels   = [].slice.call(document.querySelectorAll('.st-tp'));
+  var visuals  = [].slice.call(document.querySelectorAll('.st-vis'));
+  var railDots = [].slice.call(document.querySelectorAll('.st-tp-dot'));
+  var lbls     = [].slice.call(document.querySelectorAll('.st-tp-lbl'));
+  var visDots  = [].slice.call(document.querySelectorAll('.st-vis-dot'));
+  var fill     = document.getElementById('stTpFill');
+  var visBg    = document.getElementById('stVisBg');
+  var bgColors = [
+    'rgba(13,148,136,.09)',
+    'rgba(79,70,229,.09)',
+    'rgba(5,150,105,.09)',
+    'rgba(217,119,6,.09)'
+  ];
+  var cur = -1;
+
+  function setChapter(ch) {
+    if (ch === cur) return;
+    cur = ch;
+    panels.forEach(function(p,i){ p.classList.toggle('active', i===ch); });
+    visuals.forEach(function(v,i){ v.classList.toggle('active', i===ch); });
+    railDots.forEach(function(d,i){ d.classList.toggle('active', i===ch); });
+    lbls.forEach(function(l,i){ l.classList.toggle('active', i===ch); });
+    visDots.forEach(function(d,i){ d.classList.toggle('active', i===ch); });
+    if (fill) fill.style.height = ((ch*25)+12.5) + '%';
+    if (visBg) visBg.style.background = bgColors[ch] || bgColors[0];
+  }
+
+  function onScroll() {
+    var rect        = outer.getBoundingClientRect();
+    var totalScroll = outer.offsetHeight - window.innerHeight;
+    var scrolled    = Math.max(0, -rect.top);
+    var progress    = Math.min(1, scrolled / totalScroll);
+    var ch          = Math.min(3, Math.floor(progress * 4));
+    setChapter(ch);
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  setChapter(0);
+})();
+
+/* ===== STATS COUNTER ===== */
+(function(){
+  var done = [];
+  var cntObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var stat = entry.target;
+      if (done.indexOf(stat) > -1) return;
+      done.push(stat);
+      var el = stat.querySelector('.st-count');
+      if (!el) return;
+      var target   = parseInt(el.getAttribute('data-to'), 10);
+      var duration = 1800;
+      var start    = performance.now();
+      function tick(now) {
+        var t = Math.min(1, (now - start) / duration);
+        var e = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.floor(e * target);
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.st-stat').forEach(function(s){ cntObs.observe(s); });
+})();
+
+/* ===== SCROLL-IN VISIBILITY (logos, stats, sector cards) ===== */
+(function(){
+  var visObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) e.target.classList.add('st-visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.st-trust-logo, .st-stat, .st-sec-card').forEach(function(el){
+    visObs.observe(el);
+  });
+})();
 </script>
 </body>
 </html>
