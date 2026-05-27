@@ -1563,11 +1563,12 @@
       background:linear-gradient(135deg, var(--qc,#3ECFBE), color-mix(in srgb, var(--qc,#3ECFBE) 50%, #ffffff)) !important;
       border:none !important; color:#fff !important;
       box-shadow:0 10px 22px -6px color-mix(in srgb, var(--qc,#3ECFBE) 60%, transparent) !important;
+      transform:translateZ(38px) !important;
       transition:transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease !important;
     }
     body .sq-card .sq-icon svg{ color:#fff !important; width:30px !important; height:30px !important; }
     body .sq-card:hover .sq-icon{
-      transform:translateY(-3px) scale(1.08) rotate(-5deg) !important;
+      transform:translateZ(46px) scale(1.12) rotate(-5deg) !important;
       box-shadow:0 16px 32px -6px color-mix(in srgb, var(--qc,#3ECFBE) 70%, transparent) !important;
     }
     body .sq-card .sq-idx{
@@ -1576,7 +1577,7 @@
       transition:color .3s ease !important;
     }
     body .sq-card:hover .sq-idx{ color:color-mix(in srgb, var(--qc,#3ECFBE) 42%, transparent) !important; }
-    body .sq-card:hover{ transform:translateY(-8px) !important; }
+    body .sq-card:hover{ --sc:1.05 !important; }
     /* recolor hover spotlight + rotating border-beam to each card's own color */
     body .sq-card::after{ background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--qc,#3ECFBE) 16%, transparent), transparent 60%) !important; }
     body .sq-card::before{ background:conic-gradient(from var(--beam-angle), transparent 0%, transparent 62%, var(--qc,#3ECFBE) 82%, color-mix(in srgb, var(--qc,#3ECFBE) 55%, #fff) 90%, transparent 96%) !important; }
@@ -1587,6 +1588,33 @@
       opacity:0; transform:translateX(8px); transition:opacity .3s ease, transform .3s ease;
     }
     body .sq-card:hover .sq-name::after{ opacity:1; transform:translateX(0); }
+    /* ── monday-style living cards: idle float + 3D mouse-tilt + parallax depth ── */
+    @property --rx { syntax:'<angle>';  initial-value:0deg; inherits:false; }
+    @property --ry { syntax:'<angle>';  initial-value:0deg; inherits:false; }
+    @property --sc { syntax:'<number>'; initial-value:1;     inherits:false; }
+    @property --fy { syntax:'<length>'; initial-value:0px;   inherits:false; }
+    body .sector-cards{ perspective:1100px; overflow:visible; }
+    body .sq-card{
+      overflow:visible !important;
+      transform-style:preserve-3d !important;
+      transform: rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--fy)) scale(var(--sc)) !important;
+      transition: --rx .18s ease, --ry .18s ease, --sc .3s ease, box-shadow .35s ease !important;
+      animation: sqFloat 6s ease-in-out infinite !important;
+    }
+    @keyframes sqFloat{ 0%,100%{ --fy:0px } 50%{ --fy:-7px } }
+    body .sector-cards .sq-card:nth-child(1){ animation-delay:0s !important; }
+    body .sector-cards .sq-card:nth-child(2){ animation-delay:-1.2s !important; }
+    body .sector-cards .sq-card:nth-child(3){ animation-delay:-2.4s !important; }
+    body .sector-cards .sq-card:nth-child(4){ animation-delay:-.6s !important; }
+    body .sector-cards .sq-card:nth-child(5){ animation-delay:-1.8s !important; }
+    body .sector-cards .sq-card:nth-child(6){ animation-delay:-3s !important; }
+    /* parallax depth — content floats above the card surface */
+    body .sq-card .sq-idx{ transform:translateZ(26px); }
+    body .sq-card .sq-name{ transform:translateZ(20px); }
+    body .sq-card .sq-teaser{ transform:translateZ(12px); }
+    @media (prefers-reduced-motion: reduce){
+      body .sq-card{ animation:none !important; transition:box-shadow .35s ease !important; }
+    }
     /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
   <style id="theme-toggle-css">
@@ -2039,6 +2067,26 @@ document.querySelectorAll('.fade-up,.stagger').forEach(el=>obs.observe(el));
 function applyTheme(t){var light=t!=='dark';var s=document.getElementById('wendi-light');if(s)s.media=light?'all':'not all';document.documentElement.setAttribute('data-theme',light?'light':'dark');}
 function toggleTheme(){var cur='light';try{cur=localStorage.getItem('wendiTheme')||'light';}catch(e){}var next=cur==='dark'?'light':'dark';try{localStorage.setItem('wendiTheme',next);}catch(e){}applyTheme(next);}
 (function(){var t='light';try{t=localStorage.getItem('wendiTheme')||'light';}catch(e){}applyTheme(t);})();
+</script>
+<script>
+/* monday-style 3D tilt on sector cards (light concept) */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  document.querySelectorAll('.sector-cards .sq-card').forEach(function(card){
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - .5;
+      var py = (e.clientY - r.top) / r.height - .5;
+      card.style.setProperty('--ry', (px * 8).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', (-py * 8).toFixed(2) + 'deg');
+    });
+    card.addEventListener('mouseleave', function(){
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+})();
 </script>
 </body>
 </html>
