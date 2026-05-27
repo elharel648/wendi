@@ -1556,6 +1556,37 @@
       box-shadow:52px 14px 0 #34D399, 112px -6px 0 #FBBF24, 26px 42px 0 #38BDF8, 142px 30px 0 #FB7185;
       opacity:.7; pointer-events:none; z-index:0;
     }
+    /* ── quick-card glow-up: bold gradient icon, watermark index, lively hover ── */
+    body .sq-card{ justify-content:center; padding:30px 24px !important; }
+    body .sq-card .sq-icon{
+      width:66px !important; height:66px !important; border-radius:18px !important;
+      background:linear-gradient(135deg, var(--qc,#3ECFBE), color-mix(in srgb, var(--qc,#3ECFBE) 50%, #ffffff)) !important;
+      border:none !important; color:#fff !important;
+      box-shadow:0 10px 22px -6px color-mix(in srgb, var(--qc,#3ECFBE) 60%, transparent) !important;
+      transition:transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s ease !important;
+    }
+    body .sq-card .sq-icon svg{ color:#fff !important; width:30px !important; height:30px !important; }
+    body .sq-card:hover .sq-icon{
+      transform:translateY(-3px) scale(1.08) rotate(-5deg) !important;
+      box-shadow:0 16px 32px -6px color-mix(in srgb, var(--qc,#3ECFBE) 70%, transparent) !important;
+    }
+    body .sq-card .sq-idx{
+      font-size:2.3rem !important; font-weight:900 !important; letter-spacing:-1px !important;
+      color:color-mix(in srgb, var(--qc,#3ECFBE) 20%, transparent) !important;
+      transition:color .3s ease !important;
+    }
+    body .sq-card:hover .sq-idx{ color:color-mix(in srgb, var(--qc,#3ECFBE) 42%, transparent) !important; }
+    body .sq-card:hover{ transform:translateY(-8px) !important; }
+    /* recolor hover spotlight + rotating border-beam to each card's own color */
+    body .sq-card::after{ background:radial-gradient(240px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--qc,#3ECFBE) 16%, transparent), transparent 60%) !important; }
+    body .sq-card::before{ background:conic-gradient(from var(--beam-angle), transparent 0%, transparent 62%, var(--qc,#3ECFBE) 82%, color-mix(in srgb, var(--qc,#3ECFBE) 55%, #fff) 90%, transparent 96%) !important; }
+    /* reveal arrow on the title */
+    body .sq-card .sq-name{ display:inline-flex; align-items:center; justify-content:center; gap:7px; }
+    body .sq-card .sq-name::after{
+      content:'\2190'; color:var(--qc,#3ECFBE); font-weight:900; font-size:1.05em;
+      opacity:0; transform:translateX(8px); transition:opacity .3s ease, transform .3s ease;
+    }
+    body .sq-card:hover .sq-name::after{ opacity:1; transform:translateX(0); }
     /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
   <style id="theme-toggle-css">
