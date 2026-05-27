@@ -1505,16 +1505,20 @@
     /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
   <style id="theme-toggle-css">
-    .theme-toggle{position:relative;display:inline-flex;direction:ltr;width:60px;height:30px;border-radius:999px;border:1px solid rgba(13,148,136,.4);background:rgba(13,148,136,.18);cursor:pointer;padding:0;margin:0 6px;flex-shrink:0;transition:background .3s,border-color .3s;-webkit-tap-highlight-color:transparent;}
-    .theme-toggle .tt-thumb{position:absolute;top:50%;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.28);transition:left .32s cubic-bezier(.4,0,.2,1),background .3s;}
-    .theme-toggle .tt-ico{position:absolute;width:14px;height:14px;transition:opacity .25s;}
-    .theme-toggle .tt-sun{color:#F59E0B;opacity:1;}
-    .theme-toggle .tt-moon{color:#cbd5e1;opacity:0;}
-    .theme-toggle:hover{filter:brightness(1.06);}
-    html[data-theme="dark"] .theme-toggle{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);}
-    html[data-theme="dark"] .theme-toggle .tt-thumb{left:33px;background:#0f172a;}
-    html[data-theme="dark"] .theme-toggle .tt-sun{opacity:0;}
-    html[data-theme="dark"] .theme-toggle .tt-moon{opacity:1;}
+    /* Ark-UI dual-icon switch, adapted to vanilla (moon · track · sun) */
+    .theme-toggle{display:inline-flex;align-items:center;gap:8px;direction:ltr;background:none;border:none;cursor:pointer;padding:4px;margin:0 6px;flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+    .theme-toggle .tt-ico{width:16px;height:16px;flex-shrink:0;transition:color .25s ease;}
+    .theme-toggle .tt-track{position:relative;display:inline-flex;align-items:center;width:44px;height:24px;border-radius:999px;padding:2px;background:#2BADA0;transition:background .25s ease;}
+    .theme-toggle .tt-thumb{width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transform:translateX(20px);transition:transform .25s cubic-bezier(.4,0,.2,1);}
+    /* default = LIGHT → thumb on the sun side, sun lit, moon dimmed */
+    .theme-toggle .tt-sun{color:#F59E0B;}
+    .theme-toggle .tt-moon{color:#94A3B8;}
+    .theme-toggle:hover .tt-track{filter:brightness(1.05);}
+    /* DARK → thumb on the moon side, moon lit, sun dimmed, neutral track */
+    html[data-theme="dark"] .theme-toggle .tt-track{background:rgba(255,255,255,.22);}
+    html[data-theme="dark"] .theme-toggle .tt-thumb{transform:translateX(0);}
+    html[data-theme="dark"] .theme-toggle .tt-moon{color:#E2E8F0;}
+    html[data-theme="dark"] .theme-toggle .tt-sun{color:#64748B;}
   </style>
   <script>(function(){try{var t=localStorage.getItem('wendiTheme');if(t==='dark'){var s=document.getElementById('wendi-light');if(s)s.media='not all';document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();</script>
 </head>
@@ -1566,7 +1570,7 @@
       </li>
     </ul>
     <a href="#contact" class="nav-cta">דברו איתנו</a>
-    <button class="theme-toggle" id="themeToggle" type="button" onclick="toggleTheme()" role="switch" aria-label="מצב כהה / בהיר" title="מצב כהה / בהיר"><span class="tt-thumb"><svg class="tt-ico tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="tt-ico tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span></button>
+    <button class="theme-toggle" id="themeToggle" type="button" onclick="toggleTheme()" role="switch" aria-label="מצב כהה / בהיר" title="מצב כהה / בהיר"><svg class="tt-ico tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span class="tt-track"><span class="tt-thumb"></span></span><svg class="tt-ico tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg></button>
     <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="תפריט">
       <span></span><span></span><span></span>
     </button>
