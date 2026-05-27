@@ -1615,6 +1615,44 @@
     @media (prefers-reduced-motion: reduce){
       body .sq-card{ animation:none !important; transition:box-shadow .35s ease !important; }
     }
+    /* ── COMPLETE REDESIGN: filled premium jewel-gradient sector cards ── */
+    body .sq-card{
+      background: linear-gradient(145deg, var(--qc,#4F46E5), color-mix(in srgb, var(--qc,#4F46E5) 58%, #0A0E27)) !important;
+      border: none !important;
+      border-radius: 24px !important;
+      padding: 24px !important;
+      min-height: 210px !important;
+      display: flex !important; flex-direction: column !important;
+      align-items: flex-start !important; justify-content: flex-start !important;
+      text-align: right !important;
+      color: #fff !important; overflow: visible !important;
+      box-shadow: 0 16px 38px -12px color-mix(in srgb, var(--qc,#4F46E5) 50%, transparent) !important;
+    }
+    body .sq-card:hover{ box-shadow: 0 26px 56px -14px color-mix(in srgb, var(--qc,#4F46E5) 62%, transparent) !important; }
+    /* glass icon chip, pinned top */
+    body .sq-card .sq-icon{
+      width: 52px !important; height: 52px !important; border-radius: 14px !important;
+      background: rgba(255,255,255,.18) !important;
+      -webkit-backdrop-filter: blur(6px) !important; backdrop-filter: blur(6px) !important;
+      border: 1px solid rgba(255,255,255,.30) !important;
+      color: #fff !important; box-shadow: none !important;
+      margin: 0 0 auto 0 !important; align-self: flex-start !important;
+    }
+    body .sq-card .sq-icon svg{ color:#fff !important; }
+    body .sq-card:hover .sq-icon{ background: rgba(255,255,255,.28) !important; box-shadow:none !important; }
+    /* index → big faint white watermark, opposite corner */
+    body .sq-card .sq-idx{
+      position:absolute !important; top:16px !important; inset-inline-end:22px !important; inset-inline-start:auto !important;
+      font-size:2.7rem !important; font-weight:900 !important; letter-spacing:-1.5px !important;
+      color: rgba(255,255,255,.22) !important;
+    }
+    body .sq-card:hover .sq-idx{ color: rgba(255,255,255,.36) !important; }
+    body .sq-card .sq-name{ color:#fff !important; font-size:1.2rem !important; font-weight:800 !important; margin-top:18px !important; justify-content:flex-start !important; }
+    body .sq-card .sq-name::after{ color:#fff !important; }
+    body .sq-card .sq-teaser{ color: rgba(255,255,255,.85) !important; margin-top:6px !important; line-height:1.5 !important; }
+    /* drop the old border-beam; turn the spotlight into a soft white sheen */
+    body .sq-card::before{ background:none !important; }
+    body .sq-card::after{ background: radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.20), transparent 60%) !important; }
     /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
   <style id="theme-toggle-css">
