@@ -1185,6 +1185,85 @@
       filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
     }
 
+    /* ===== MONDAY-INSPIRED (modules, light only): per-module color — the whole panel re-themes ===== */
+    /* assign each module a signature color (detail + list item + tab share it) */
+    #detail-portal,      body .mod-list .mitem[data-mod="portal"],      body .mod-tabs .mod-tab:nth-child(1){ --mc:#14B8A6; }
+    #detail-workflow,    body .mod-list .mitem[data-mod="workflow"],    body .mod-tabs .mod-tab:nth-child(2){ --mc:#8B5CF6; }
+    #detail-lms,         body .mod-list .mitem[data-mod="lms"],         body .mod-tabs .mod-tab:nth-child(3){ --mc:#3B82F6; }
+    #detail-performance, body .mod-list .mitem[data-mod="performance"], body .mod-tabs .mod-tab:nth-child(4){ --mc:#F59E0B; }
+
+    /* ── module list ── */
+    body .mod-list .mitem{ border-radius:14px !important; transition:background .3s ease, box-shadow .3s ease !important; }
+    body .mod-list .mitem .mitem-icon{ background:color-mix(in srgb,var(--mc,#14B8A6) 12%,transparent) !important; color:var(--mc,#14B8A6) !important; transition:all .3s cubic-bezier(.34,1.56,.64,1) !important; }
+    body .mod-list .mitem .mitem-icon svg{ color:var(--mc,#14B8A6) !important; }
+    body .mod-list .mitem:hover .mitem-icon{ transform:scale(1.06) rotate(-4deg) !important; }
+    body .mod-list .mitem.active{ background:color-mix(in srgb,var(--mc,#14B8A6) 8%, #ffffff) !important; box-shadow:0 10px 26px -10px color-mix(in srgb,var(--mc) 50%,transparent) !important; }
+    body .mod-list .mitem.active::before{ background:var(--mc,#14B8A6) !important; }
+    body .mod-list .mitem.active .mitem-icon{ background:linear-gradient(135deg,var(--mc,#14B8A6),color-mix(in srgb,var(--mc) 55%,#fff)) !important; color:#fff !important; box-shadow:0 8px 18px -6px color-mix(in srgb,var(--mc) 55%,transparent) !important; }
+    body .mod-list .mitem.active .mitem-icon svg{ color:#fff !important; }
+    body .mod-list .mitem.active h4{ color:#0F172A !important; }
+    body .mod-list .mitem.active .mitem-arrow{ color:var(--mc,#14B8A6) !important; }
+
+    /* ── top tabs ── */
+    body .mod-tab.active{ background:color-mix(in srgb,var(--mc,#14B8A6) 12%,transparent) !important; border-color:color-mix(in srgb,var(--mc,#14B8A6) 45%,transparent) !important; color:var(--mc,#14B8A6) !important; }
+    body .mod-tab.active svg{ color:var(--mc,#14B8A6) !important; }
+
+    /* ── detail header icon (per module) ── */
+    body .mod-detail-icon{
+      background:linear-gradient(135deg,var(--mc,#14B8A6),color-mix(in srgb,var(--mc,#14B8A6) 50%,#fff)) !important;
+      color:#fff !important;
+      box-shadow:0 10px 24px -6px color-mix(in srgb,var(--mc,#14B8A6) 55%,transparent) !important;
+    }
+    body .mod-detail-icon svg{ color:#fff !important; }
+    body .mod-desc{ border-inline-start:3px solid var(--mc,#14B8A6) !important; }
+    body .mod-note{ background:color-mix(in srgb,var(--mc,#14B8A6) 8%,transparent) !important; }
+
+    /* ── bento feature chips: soft, colored icon, springy hover ── */
+    body .feat-chip{
+      border-radius:16px !important;
+      box-shadow:0 2px 4px rgba(15,23,42,.04), 0 10px 24px -8px rgba(15,23,42,.10) !important;
+      transition:transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease, border-color .3s ease !important;
+    }
+    body .feat-chip .fc-icon{
+      background:color-mix(in srgb,var(--mc,#14B8A6) 12%,transparent) !important;
+      color:var(--mc,#14B8A6) !important; border-radius:12px !important;
+      transition:transform .35s cubic-bezier(.34,1.56,.64,1), background .3s ease !important;
+    }
+    body .feat-chip .fc-icon svg{ color:var(--mc,#14B8A6) !important; }
+    body .feat-chip:hover{
+      transform:translateY(-4px) !important;
+      border-color:color-mix(in srgb,var(--mc,#14B8A6) 35%,transparent) !important;
+      box-shadow:0 10px 20px -6px rgba(15,23,42,.08), 0 24px 44px -12px color-mix(in srgb,var(--mc,#14B8A6) 28%, rgba(15,23,42,.14)) !important;
+    }
+    body .feat-chip:hover .fc-icon{
+      transform:scale(1.1) rotate(-5deg) !important;
+      background:linear-gradient(135deg,var(--mc,#14B8A6),color-mix(in srgb,var(--mc) 55%,#fff)) !important;
+      color:#fff !important;
+    }
+    body .feat-chip:hover .fc-icon svg{ color:#fff !important; }
+    /* the full-width hero chip gets a colored wash + filled icon */
+    body .feat-grid > .feat-chip:first-child{
+      background:linear-gradient(135deg, color-mix(in srgb,var(--mc,#14B8A6) 14%, #fff), #ffffff) !important;
+      border-color:color-mix(in srgb,var(--mc,#14B8A6) 30%,transparent) !important;
+    }
+    body .feat-grid > .feat-chip:first-child .fc-icon{
+      background:linear-gradient(135deg,var(--mc,#14B8A6),color-mix(in srgb,var(--mc) 55%,#fff)) !important;
+      color:#fff !important;
+    }
+    body .feat-grid > .feat-chip:first-child .fc-icon svg{ color:#fff !important; }
+
+    /* playful scattered colored dots by the module tabs */
+    body .mod-tabs{ position:relative; }
+    body .mod-tabs::before{
+      content:''; position:absolute; top:-2px; left:8px;
+      width:9px; height:9px; border-radius:50%; background:#8B5CF6;
+      box-shadow:46px 12px 0 #F59E0B, 100px -4px 0 #14B8A6, 22px 32px 0 #3B82F6;
+      opacity:.7; pointer-events:none; z-index:0;
+    }
+    @media (prefers-reduced-motion: reduce){
+      body .feat-chip, body .feat-chip .fc-icon, body .mod-list .mitem .mitem-icon { transition:none !important; }
+    }
+
   </style>
   <style id="theme-toggle-css">
     /* Ark-UI dual-icon switch, adapted to vanilla (moon · track · sun) */
