@@ -1507,6 +1507,55 @@
     body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
       filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
     }
+    /* ===== MONDAY-INSPIRED (sectors, light only): color bonanza ===== */
+    /* per-sector palette on the hero quick cards (matches each section accent) */
+    body .sector-cards .sq-card:nth-child(1){ --qc:#3ECFBE; }
+    body .sector-cards .sq-card:nth-child(2){ --qc:#38BDF8; }
+    body .sector-cards .sq-card:nth-child(3){ --qc:#818CF8; }
+    body .sector-cards .sq-card:nth-child(4){ --qc:#34D399; }
+    body .sector-cards .sq-card:nth-child(5){ --qc:#A78BFA; }
+    body .sector-cards .sq-card:nth-child(6){ --qc:#22D3EE; }
+    body .sq-card{
+      border-radius:22px !important;
+      border-top:4px solid var(--qc,#3ECFBE) !important;
+      box-shadow:0 2px 4px rgba(15,23,42,.04), 0 14px 30px -8px rgba(15,23,42,.12) !important;
+      transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease !important;
+    }
+    body .sq-card:hover{
+      transform:translateY(-6px) !important;
+      box-shadow:0 10px 20px rgba(15,23,42,.07), 0 30px 54px -10px color-mix(in srgb, var(--qc,#3ECFBE) 28%, rgba(15,23,42,.16)) !important;
+    }
+    body .sq-card .sq-icon{
+      background:color-mix(in srgb, var(--qc,#3ECFBE) 12%, transparent) !important;
+      border-color:color-mix(in srgb, var(--qc,#3ECFBE) 30%, transparent) !important;
+      color:var(--qc,#3ECFBE) !important;
+    }
+    body .sq-card .sq-icon svg{ color:var(--qc,#3ECFBE) !important; }
+    body .sq-card .sq-idx{ color:var(--qc,#3ECFBE) !important; }
+    /* each sector section gets a faint colored wash → gentle rainbow down the page */
+    body .sector-section{ background:color-mix(in srgb, var(--accent,#3ECFBE) 6%, transparent) !important; }
+    /* story cards: soft round + colored start-edge + monday shadow */
+    body .sector-story{
+      border-radius:20px !important;
+      border-inline-start:4px solid var(--accent,#3ECFBE) !important;
+      box-shadow:0 2px 4px rgba(15,23,42,.04), 0 14px 30px -8px rgba(15,23,42,.10) !important;
+    }
+    /* chips tinted by each sector's accent */
+    body .sector-section .sch{
+      background:color-mix(in srgb, var(--accent,#3ECFBE) 9%, transparent) !important;
+      border-color:color-mix(in srgb, var(--accent,#3ECFBE) 24%, transparent) !important;
+      color:#334155 !important;
+    }
+    /* rainbow scroll-spy progress beam */
+    body .sector-nav .sn-progress{ background:linear-gradient(180deg,#3ECFBE,#818CF8,#FB7185) !important; }
+    /* playful scattered colored dots in the hero */
+    body .page-hero .container{ position:relative; }
+    body .page-hero .container::before{
+      content:''; position:absolute; top:46px; left:30px;
+      width:10px; height:10px; border-radius:50%; background:#818CF8;
+      box-shadow:52px 14px 0 #34D399, 112px -6px 0 #FBBF24, 26px 42px 0 #38BDF8, 142px 30px 0 #FB7185;
+      opacity:.7; pointer-events:none; z-index:0;
+    }
     /* ===== END LIGHT MODE OVERHAUL ===== */
   </style>
   <style id="theme-toggle-css">
