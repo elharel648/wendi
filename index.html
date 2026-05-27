@@ -4730,26 +4730,32 @@
   body .st-stat-bar{width:40px;height:3px;background:linear-gradient(90deg,#2BADA0,#4F46E5);border-radius:2px;margin:14px auto 0;}
 
   /* ── SECTORS MINI ── */
-  body .st-sectors{padding:96px 64px;background:#F4F4F5;}
-  body .st-sectors-inner{max-width:1440px;margin:0 auto;}
-  body .st-sectors-hd{text-align:center;margin-bottom:56px;}
-  body .st-sectors-hd h2{font-size:clamp(2rem,3.5vw,3rem);font-weight:900;color:#0F172A;letter-spacing:-.03em;margin-bottom:12px;}
-  body .st-sectors-hd p{color:#64748B;font-size:1rem;}
-  body .st-sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-  body .st-sec-card{background:#fff;border-radius:20px;padding:28px;border:1px solid rgba(15,23,42,.07);transition:transform .3s ease,box-shadow .3s ease;position:relative;overflow:hidden;opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease,box-shadow .3s ease;}
-  body .st-sec-card.st-visible{opacity:1;transform:translateY(0);}
-  body .st-sec-card:hover{transform:translateY(-6px)!important;box-shadow:0 20px 60px -10px rgba(15,23,42,.12);}
-  body .st-sec-card::before{content:'';position:absolute;top:0;inset-inline-start:0;width:3px;height:100%;background:var(--sc,#0D9488);border-radius:0 2px 2px 0;}
-  body .st-sec-card:nth-child(1){transition-delay:.05s;}
-  body .st-sec-card:nth-child(2){transition-delay:.12s;}
-  body .st-sec-card:nth-child(3){transition-delay:.19s;}
-  body .st-sec-card:nth-child(4){transition-delay:.26s;}
-  body .st-sec-card:nth-child(5){transition-delay:.33s;}
-  body .st-sec-card:nth-child(6){transition-delay:.40s;}
-  body .st-sec-icon{width:44px;height:44px;border-radius:12px;background:color-mix(in srgb,var(--sc,#0D9488) 12%,transparent);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
-  body .st-sec-icon svg{width:22px;height:22px;color:var(--sc,#0D9488);}
-  body .st-sec-name{font-size:1.05rem;font-weight:700;color:#0F172A;margin-bottom:6px;}
-  body .st-sec-desc{font-size:.88rem;color:#64748B;line-height:1.6;}
+  body .st-sectors{padding:100px 64px;background:#0A0A0A;position:relative;overflow:hidden;}
+  body .st-sectors::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(43,173,160,.07),transparent);pointer-events:none;}
+  body .st-sectors-inner{max-width:1440px;margin:0 auto;position:relative;z-index:1;}
+  body .st-sectors-hd{text-align:center;margin-bottom:72px;}
+  body .st-sectors-hd h2{font-size:clamp(2.4rem,4vw,3.6rem);font-weight:900;color:#fff;letter-spacing:-.04em;margin-bottom:14px;}
+  body .st-sectors-hd h2 span{color:#2BADA0;}
+  body .st-sectors-hd p{color:rgba(255,255,255,.36);font-size:1rem;letter-spacing:.2px;}
+  body .st-sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  body .st-sec-card{background:rgba(255,255,255,.05);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:34px 30px;position:relative;overflow:hidden;opacity:0;transform:translateY(22px) scale(.98);transition:opacity .55s ease,transform .55s ease,border-color .3s,box-shadow .3s,translate .28s ease;translate:0 0;}
+  body .st-sec-card.st-visible{opacity:1;transform:translateY(0) scale(1);}
+  body .st-sec-card:hover{translate:0 -7px;border-color:color-mix(in srgb,var(--sc,#0D9488) 45%,transparent);box-shadow:0 20px 60px -10px color-mix(in srgb,var(--sc,#0D9488) 22%,transparent),0 0 0 1px color-mix(in srgb,var(--sc,#0D9488) 12%,transparent);}
+  /* top accent gradient line */
+  body .st-sec-card::before{content:'';position:absolute;top:0;inset-inline:0;height:1px;background:linear-gradient(90deg,transparent,var(--sc,#0D9488),transparent);opacity:.5;}
+  /* corner glow bloom */
+  body .st-sec-card::after{content:'';position:absolute;top:-70px;inset-inline-end:-70px;width:220px;height:220px;border-radius:50%;background:var(--sc,#0D9488);opacity:.07;filter:blur(65px);pointer-events:none;}
+  body .st-sec-card:nth-child(1){transition-delay:.06s;}
+  body .st-sec-card:nth-child(2){transition-delay:.14s;}
+  body .st-sec-card:nth-child(3){transition-delay:.22s;}
+  body .st-sec-card:nth-child(4){transition-delay:.30s;}
+  body .st-sec-card:nth-child(5){transition-delay:.38s;}
+  body .st-sec-card:nth-child(6){transition-delay:.46s;}
+  body .st-sec-icon{width:50px;height:50px;border-radius:14px;background:color-mix(in srgb,var(--sc,#0D9488) 14%,transparent);border:1px solid color-mix(in srgb,var(--sc,#0D9488) 25%,transparent);display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:transform .25s;}
+  body .st-sec-card:hover .st-sec-icon{transform:scale(1.1);}
+  body .st-sec-icon svg{width:23px;height:23px;color:var(--sc,#0D9488);}
+  body .st-sec-name{font-size:1.08rem;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3;}
+  body .st-sec-desc{font-size:.84rem;color:rgba(255,255,255,.42);line-height:1.7;}
 
   /* ── DARK OVERRIDES ── */
   html[data-theme="dark"] body .st-hero{background:var(--dark,#030014)!important;}
@@ -4764,10 +4770,8 @@
   html[data-theme="dark"] body .st-tp-feats li{color:rgba(255,255,255,.5)!important;}
   html[data-theme="dark"] body .st-tp-lbl{color:rgba(255,255,255,.18)!important;}
   html[data-theme="dark"] body .st-stats{background:#020817!important;}
-  html[data-theme="dark"] body .st-sectors{background:var(--surface,#0A0721)!important;}
-  html[data-theme="dark"] body .st-sec-card{background:var(--surface-2,#161236)!important;border-color:rgba(255,255,255,.06)!important;}
-  html[data-theme="dark"] body .st-sec-name{color:#fff!important;}
-  html[data-theme="dark"] body .st-sec-desc{color:rgba(255,255,255,.5)!important;}
+  html[data-theme="dark"] body .st-sectors{background:#020817!important;}
+  html[data-theme="dark"] body .st-sec-card{background:rgba(255,255,255,.04)!important;border-color:rgba(255,255,255,.07)!important;}
   html[data-theme="dark"] body .st-apps{background:var(--surface,#0A0721)!important;border-color:rgba(255,255,255,.04)!important;}
   html[data-theme="dark"] body .st-tp-rail{background:rgba(255,255,255,.07)!important;}
   html[data-theme="dark"] body .st-tp-dot{border-color:var(--surface,#0A0721)!important;}
@@ -4831,10 +4835,7 @@
   /* Bold horizontal rule after tag */
   body .st-hero-tag{border-color:rgba(13,148,136,.25)!important;}
 
-  /* Sector cards — B&W base, color on hover */
-  body .st-sec-card{transition:transform .3s,box-shadow .3s,background .3s!important;}
-  body .st-sec-icon svg{filter:grayscale(1);transition:filter .3s;}
-  body .st-sec-card:hover .st-sec-icon svg{filter:grayscale(0);}
+  /* Sector cards — always dark glass, no B&W override */
 
   /* Trust logos — stronger contrast on white */
   body .st-trust{background:#0A0A0A!important;border:none!important;}
@@ -4852,8 +4853,9 @@
   body .st-apps{background:#F4F4F5!important;}
   body .st-apps-label{color:#0A0A0A!important;opacity:.3;}
 
-  /* Sectors bg — light grey */
-  body .st-sectors-hd h2{color:#0A0A0A!important;}
+  /* Sectors — always dark */
+  body .st-sectors-hd h2{color:#fff!important;}
+  body .st-sectors-hd p{color:rgba(255,255,255,.36)!important;}
 
   /* dark overrides for tour */
   html[data-theme="dark"] body .st-tour-sticky{background:var(--surface,#0A0721)!important;}
@@ -5239,7 +5241,7 @@
 <section class="st-sectors">
   <div class="st-sectors-inner">
     <div class="st-sectors-hd fade-up">
-      <h2>פתרון לכל מגזר.</h2>
+      <h2>פתרון <span>לכל</span> מגזר.</h2>
       <p>מותאם לקצב, לרגולציה ולעובדים שלכם — בלי פשרות.</p>
     </div>
     <div class="st-sec-grid">
