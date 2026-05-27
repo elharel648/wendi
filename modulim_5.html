@@ -1187,10 +1187,10 @@
 
     /* ===== MONDAY-INSPIRED (modules, light only): per-module color — the whole panel re-themes ===== */
     /* assign each module a signature color (detail + list item + tab share it) */
-    #detail-portal,      body .mod-list .mitem[data-mod="portal"],      body .mod-tabs .mod-tab:nth-child(1){ --mc:#14B8A6; }
-    #detail-workflow,    body .mod-list .mitem[data-mod="workflow"],    body .mod-tabs .mod-tab:nth-child(2){ --mc:#8B5CF6; }
-    #detail-lms,         body .mod-list .mitem[data-mod="lms"],         body .mod-tabs .mod-tab:nth-child(3){ --mc:#3B82F6; }
-    #detail-performance, body .mod-list .mitem[data-mod="performance"], body .mod-tabs .mod-tab:nth-child(4){ --mc:#F59E0B; }
+    #detail-portal,      body .mod-list .mitem[data-mod="portal"],      body .mod-tabs .mod-tab:nth-child(1){ --mc:#4285F4; }
+    #detail-workflow,    body .mod-list .mitem[data-mod="workflow"],    body .mod-tabs .mod-tab:nth-child(2){ --mc:#34A853; }
+    #detail-lms,         body .mod-list .mitem[data-mod="lms"],         body .mod-tabs .mod-tab:nth-child(3){ --mc:#E8710A; }
+    #detail-performance, body .mod-list .mitem[data-mod="performance"], body .mod-tabs .mod-tab:nth-child(4){ --mc:#EA4335; }
 
     /* ── module list ── */
     body .mod-list .mitem{ border-radius:14px !important; transition:background .3s ease, box-shadow .3s ease !important; }
@@ -1256,8 +1256,8 @@
     body .mod-tabs{ position:relative; }
     body .mod-tabs::before{
       content:''; position:absolute; top:-2px; left:8px;
-      width:9px; height:9px; border-radius:50%; background:#8B5CF6;
-      box-shadow:46px 12px 0 #F59E0B, 100px -4px 0 #14B8A6, 22px 32px 0 #3B82F6;
+      width:9px; height:9px; border-radius:50%; background:#4285F4;
+      box-shadow:46px 12px 0 #EA4335, 100px -4px 0 #34A853, 22px 32px 0 #E8710A;
       opacity:.7; pointer-events:none; z-index:0;
     }
     @media (prefers-reduced-motion: reduce){
