@@ -1701,6 +1701,186 @@
     html[data-theme="dark"] .theme-toggle .tt-moon{color:#E2E8F0;}
     html[data-theme="dark"] .theme-toggle .tt-sun{color:#64748B;}
   </style>
+  <style id="about-cinematic">
+    /* ══════════ CINEMATIC ABOUT HERO ══════════ */
+    .page-hero.ah-full{min-height:74vh;padding:clamp(72px,11vh,120px) 0 36px!important;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
+    .ah-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:clamp(110px,20vw,240px);font-weight:900;letter-spacing:-0.04em;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(62,207,190,0.07);user-select:none;pointer-events:none;white-space:nowrap;z-index:0;}
+    .ah-h1{display:flex;flex-direction:column;font-size:clamp(3rem,7.5vw,6.5rem);font-weight:900;color:#fff;line-height:1.05;letter-spacing:-2px;margin:0 0 24px;}
+    .ah-line{display:block;opacity:0;transform:translateY(50px);animation:ahLineIn .85s cubic-bezier(.16,1,.3,1) forwards;animation-delay:calc(.3s + var(--i,0) * .18s);}
+    .ah-line.ah-accent{color:var(--teal);}
+    @keyframes ahLineIn{to{opacity:1;transform:translateY(0);}}
+    .ah-sub{font-size:1.1rem;color:var(--muted);max-width:560px;line-height:1.85;margin-bottom:36px;opacity:0;animation:ahLineIn .85s .55s cubic-bezier(.16,1,.3,1) forwards;}
+    .ah-stats-bar{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin-bottom:40px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px 28px;backdrop-filter:blur(12px);max-width:580px;opacity:0;animation:ahLineIn .85s .7s cubic-bezier(.16,1,.3,1) forwards;}
+    .ah-stat{flex:1;text-align:center;min-width:80px;}
+    .ah-stat-num{font-size:1.75rem;font-weight:800;color:var(--teal);line-height:1;font-variant-numeric:tabular-nums;}
+    .ah-stat-lbl{font-size:.68rem;color:var(--muted);margin-top:3px;letter-spacing:.08em;}
+    .ah-stat-div{width:1px;height:32px;background:rgba(255,255,255,.1);flex-shrink:0;}
+
+    /* ══════════ EDITORIAL PARTNER SECTION ══════════ */
+    .about-partner{padding:48px 0 72px;}
+    .ap-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+    .ap-big-quote{font-size:clamp(1.9rem,3.2vw,2.75rem);font-weight:900;line-height:1.2;color:var(--text);letter-spacing:-1px;position:sticky;top:96px;}
+    .ap-big-quote .ap-accent{color:var(--teal);}
+    .ap-ctas{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap;}
+    .ap-intro-text p{font-size:1.02rem;color:var(--muted);line-height:1.9;margin-bottom:18px;}
+    .ap-intro-text p:last-child{margin-bottom:0;}
+    .ap-timeline{margin-top:44px;}
+    .tl-item{display:flex;gap:16px;padding:20px 0;align-items:flex-start;position:relative;}
+    .tl-item+.tl-item{border-top:1px solid var(--border);}
+    /* connecting segments between dots — draw progressively on scroll-in */
+    .tl-item:not(:last-child)::after{content:'';position:absolute;right:3px;top:29px;height:100%;width:2px;border-radius:2px;background:linear-gradient(to bottom,var(--teal),rgba(62,207,190,.35));transform:scaleY(0);transform-origin:top;transition:transform .85s cubic-bezier(.16,1,.3,1);z-index:0;}
+    .ap-timeline.visible .tl-item:nth-child(1)::after{transform:scaleY(1);transition-delay:.25s;}
+    .ap-timeline.visible .tl-item:nth-child(2)::after{transform:scaleY(1);transition-delay:.5s;}
+    .ap-timeline.visible .tl-item:nth-child(3)::after{transform:scaleY(1);transition-delay:.75s;}
+    .tl-dot{flex-shrink:0;width:8px;height:8px;border-radius:50%;background:var(--teal);margin-top:5px;position:relative;z-index:1;box-shadow:0 0 8px rgba(62,207,190,.5);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s ease;animation:tlPulse 2.8s ease-in-out infinite;}
+    .tl-item:nth-child(2) .tl-dot{animation-delay:.6s;}
+    .tl-item:nth-child(3) .tl-dot{animation-delay:1.2s;}
+    .tl-item:nth-child(4) .tl-dot{animation-delay:1.8s;}
+    @keyframes tlPulse{0%,100%{box-shadow:0 0 6px 0 rgba(62,207,190,.4);}50%{box-shadow:0 0 11px 2px rgba(62,207,190,.7);}}
+    .tl-item:hover .tl-dot{transform:scale(1.6);box-shadow:0 0 16px 2px rgba(62,207,190,.9);animation:none;}
+    .tl-item>div:last-child{transition:transform .35s cubic-bezier(.16,1,.3,1);}
+    .tl-item:hover>div:last-child{transform:translateX(-5px);}
+    .tl-year{flex:0 0 46px;font-size:.78rem;font-weight:700;color:var(--teal);letter-spacing:.06em;padding-top:2px;font-variant-numeric:tabular-nums;transition:transform .35s cubic-bezier(.16,1,.3,1);}
+    .tl-item:hover .tl-year{transform:translateX(-3px);}
+    .tl-title{font-size:.95rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+    .tl-desc{font-size:.85rem;color:var(--muted);line-height:1.65;}
+    @media(prefers-reduced-motion:reduce){.tl-dot{animation:none!important;}.tl-item::after{transition:none!important;transform:scaleY(1)!important;}}
+
+    /* ══════════ MISSION STRIP ══════════ */
+    .mission-strip{padding:80px 0;text-align:center;position:relative;overflow:hidden;}
+    .mission-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(62,207,190,.07) 0%,transparent 65%);pointer-events:none;}
+    .ms-inner{max-width:740px;margin:0 auto;padding:0 24px;position:relative;}
+    .ms-top-line{width:40px;height:2px;background:var(--teal);margin:0 auto 28px;border-radius:2px;opacity:.7;}
+    .ms-quote{font-size:clamp(1.4rem,2.8vw,2.1rem);font-weight:800;line-height:1.55;color:var(--text);letter-spacing:-.5px;margin-bottom:20px;}
+    .ms-attr{font-size:.85rem;color:var(--muted);letter-spacing:.04em;}
+    .ms-attr span{color:var(--teal);}
+
+    @media(max-width:900px){
+      .ap-grid{grid-template-columns:1fr;gap:48px;}
+      .ap-big-quote{position:static;font-size:clamp(1.7rem,5vw,2.4rem);}
+    }
+    @media(max-width:640px){
+      .ah-h1{letter-spacing:-1px;}
+      .ah-stats-bar{padding:14px 16px;}
+      .ah-stat-num{font-size:1.4rem;}
+    }
+
+    /* ══ LIGHT MODE OVERRIDES for new cinematic sections ══ */
+    html[data-theme="light"] .ah-bg-text{-webkit-text-stroke:1px rgba(13,148,136,.05)!important;}
+    html[data-theme="light"] .ah-h1{color:#0F172A!important;}
+    html[data-theme="light"] .ah-line.ah-accent{color:#0D9488!important;}
+    html[data-theme="light"] .ah-sub{color:#0F172A!important;}
+    html[data-theme="light"] .ah-stats-bar{background:rgba(255,255,255,.85)!important;border-color:rgba(0,0,0,.07)!important;box-shadow:0 4px 20px rgba(0,0,0,.06)!important;}
+    html[data-theme="light"] .ah-stat-num{color:#0D9488!important;}
+    html[data-theme="light"] .ah-stat-lbl{color:#0F172A!important;}
+    html[data-theme="light"] .ah-stat-div{background:rgba(0,0,0,.08)!important;}
+    html[data-theme="light"] .ap-big-quote{color:#0F172A!important;}
+    html[data-theme="light"] .ap-big-quote .ap-accent{color:#0D9488!important;}
+    html[data-theme="light"] .ap-intro-text p{color:#0F172A!important;}
+    html[data-theme="light"] .tl-item+.tl-item{border-color:rgba(0,0,0,.07)!important;}
+    html[data-theme="light"] .tl-year{color:#0D9488!important;}
+    html[data-theme="light"] .tl-dot{background:#0D9488!important;box-shadow:0 0 8px rgba(13,148,136,.4)!important;}
+    html[data-theme="light"] .tl-title{color:#0F172A!important;}
+    html[data-theme="light"] .tl-desc{color:#0F172A!important;}
+    html[data-theme="light"] .mission-strip::before{background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(13,148,136,.05) 0%,transparent 65%)!important;}
+    html[data-theme="light"] .ms-top-line{background:#0D9488!important;}
+    html[data-theme="light"] .ms-quote{color:#0F172A!important;}
+    html[data-theme="light"] .ms-attr{color:#64748B!important;}
+    html[data-theme="light"] .ms-attr span{color:#0D9488!important;}
+
+    /* ══════════ VALUES — premium monochrome editorial grid ══════════ */
+    .values-section .sec-title{margin-bottom:6px;}
+    .values-grid{grid-template-columns:repeat(3,1fr)!important;gap:22px!important;margin-top:46px;}
+    .values-grid .vcard{grid-column:auto!important;padding:32px 28px!important;border-radius:20px!important;overflow:hidden;position:relative!important;transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .4s ease,box-shadow .4s ease,opacity .5s ease!important;}
+    .values-grid.stagger>.vcard{transition-delay:0s!important;}
+    .values-grid .vcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,rgba(255,255,255,.5),transparent);transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.16,1,.3,1);z-index:4;}
+    .values-grid .vcard:hover::before{transform:scaleX(1);}
+    .values-grid .vcard:hover{transform:translateY(-6px)!important;border-color:rgba(255,255,255,.18)!important;box-shadow:0 22px 50px rgba(0,0,0,.5)!important;}
+    .vc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+    .values-grid .vcard-icon{width:54px!important;height:54px!important;border-radius:14px!important;background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.1)!important;display:flex;align-items:center;justify-content:center;margin-bottom:0!important;transition:background .4s ease,transform .4s ease;}
+    .values-grid .vcard:hover .vcard-icon{background:#fff!important;transform:scale(1.06) rotate(-3deg);}
+    .values-grid .vcard-icon svg{width:26px!important;height:26px!important;color:rgba(255,255,255,.92)!important;transition:color .4s ease;}
+    .values-grid .vcard:hover .vcard-icon svg{color:#0B1220!important;}
+    .vc-num{font-size:2.5rem;font-weight:900;line-height:1;letter-spacing:-1px;color:transparent;-webkit-text-stroke:1.4px rgba(255,255,255,.13);font-variant-numeric:tabular-nums;transition:-webkit-text-stroke-color .4s ease;}
+    .values-grid .vcard:hover .vc-num{-webkit-text-stroke-color:rgba(255,255,255,.5);}
+    .values-grid .vcard h3{font-size:1.14rem!important;font-weight:800!important;color:#fff!important;margin-bottom:10px!important;letter-spacing:-.3px;}
+    .values-grid .vcard p{font-size:.9rem!important;color:rgba(255,255,255,.55)!important;line-height:1.75!important;}
+    @media(max-width:900px){.values-grid{grid-template-columns:1fr 1fr!important;}}
+    @media(max-width:560px){.values-grid{grid-template-columns:1fr!important;}}
+    /* values — light mode: premium black icons, gray text */
+    html[data-theme="light"] .values-grid .vcard{background:#fff!important;border-color:rgba(15,23,42,.07)!important;box-shadow:0 1px 3px rgba(15,23,42,.05)!important;}
+    html[data-theme="light"] .values-grid .vcard:hover{border-color:rgba(15,23,42,.16)!important;box-shadow:0 20px 44px rgba(15,23,42,.1),0 4px 14px rgba(15,23,42,.06)!important;}
+    html[data-theme="light"] .values-grid .vcard::before{background:linear-gradient(90deg,#0F172A,transparent)!important;}
+    html[data-theme="light"] .values-grid .vcard-icon{background:#F1F5F9!important;border-color:rgba(15,23,42,.08)!important;}
+    html[data-theme="light"] .values-grid .vcard-icon svg{color:#0F172A!important;}
+    html[data-theme="light"] .values-grid .vcard:hover .vcard-icon{background:#0F172A!important;}
+    html[data-theme="light"] .values-grid .vcard:hover .vcard-icon svg{color:#fff!important;}
+    html[data-theme="light"] .vc-num{-webkit-text-stroke:1.4px rgba(15,23,42,.14)!important;}
+    html[data-theme="light"] .values-grid .vcard:hover .vc-num{-webkit-text-stroke-color:#0F172A!important;}
+    html[data-theme="light"] .values-grid .vcard h3{color:#0F172A!important;}
+    html[data-theme="light"] .values-grid .vcard p{color:#0F172A!important;}
+
+    /* ══════════ PAGE TABS — 21st.dev-style monochrome pills ══════════ */
+    .page-tabs{gap:8px!important;}
+    .page-tabs .ptab{background:transparent!important;border:1px solid rgba(255,255,255,.16)!important;color:rgba(255,255,255,.7)!important;font-weight:600!important;font-size:.9rem!important;padding:10px 24px!important;border-radius:999px!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;transition:background .25s ease,border-color .25s ease,color .25s ease!important;}
+    .page-tabs .ptab:hover{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important;}
+    .page-tabs .ptab.active{background:#fff!important;border-color:#fff!important;color:#0B0B0B!important;box-shadow:none!important;}
+    .page-tabs .ptab.active:hover{background:#fff!important;color:#0B0B0B!important;}
+    html[data-theme="light"] .page-tabs .ptab{background:transparent!important;border:1px solid rgba(15,23,42,.14)!important;color:#475569!important;}
+    html[data-theme="light"] .page-tabs .ptab:hover{background:#F8FAFC!important;border-color:rgba(15,23,42,.3)!important;color:#0F172A!important;}
+    html[data-theme="light"] .page-tabs .ptab.active{background:#0F172A!important;border-color:#0F172A!important;color:#fff!important;}
+    html[data-theme="light"] .page-tabs .ptab.active:hover{background:#0F172A!important;color:#fff!important;}
+
+    /* ══════════ GALLERY — interactive image accordion ══════════ */
+    .img-accordion{display:flex;gap:10px;height:440px;width:100%;}
+    .iacc-item{position:relative;flex:1;min-width:46px;border-radius:18px;overflow:hidden;cursor:pointer;transition:flex .7s cubic-bezier(.22,1,.36,1);}
+    .iacc-item.active{flex:5;}
+    .iacc-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+    .iacc-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.65),rgba(0,0,0,.12) 55%,rgba(0,0,0,.35));transition:background .5s ease;}
+    .iacc-item.active::after{background:linear-gradient(to top,rgba(0,0,0,.6),transparent 62%);}
+    .iacc-cap{position:absolute;z-index:2;color:#fff;font-weight:700;font-size:1.05rem;white-space:nowrap;letter-spacing:-.2px;transition:all .5s cubic-bezier(.22,1,.36,1);text-shadow:0 2px 12px rgba(0,0,0,.5);}
+    .iacc-item .iacc-cap{bottom:80px;left:50%;transform:translateX(-50%) rotate(-90deg);transform-origin:center;}
+    .iacc-item.active .iacc-cap{bottom:24px;left:50%;transform:translateX(-50%) rotate(0);font-size:1.25rem;}
+    @media(max-width:760px){.img-accordion{height:340px;gap:6px;}.iacc-item.active{flex:4;}.iacc-cap{font-size:.9rem;}.iacc-item.active .iacc-cap{font-size:1.05rem;}}
+
+    /* ══════════ GALLERY — video grid (real channel videos) ══════════ */
+    .vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:34px;}
+    .vid-card{cursor:pointer;border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .35s ease,box-shadow .35s ease;}
+    .vid-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.2);box-shadow:0 18px 42px rgba(0,0,0,.45);}
+    .vid-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#0B1220;}
+    .vid-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+    .vid-card:hover .vid-thumb img{transform:scale(1.06);}
+    .vid-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45),transparent 55%);transition:background .35s ease;}
+    .vid-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .35s cubic-bezier(.16,1,.3,1),background .3s ease;}
+    .vid-card:hover .vid-play{transform:translate(-50%,-50%) scale(1.12);background:#fff;}
+    .vid-play svg{width:22px;height:22px;color:#0B1220;margin-right:-2px;}
+    .vid-title{padding:15px 18px;font-size:.92rem;font-weight:600;color:#fff;line-height:1.55;}
+    @media(max-width:900px){.vid-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:560px){.vid-grid{grid-template-columns:1fr;}}
+    html[data-theme="light"] .vid-card{background:#fff!important;border-color:rgba(15,23,42,.08)!important;box-shadow:0 1px 3px rgba(15,23,42,.05)!important;}
+    html[data-theme="light"] .vid-card:hover{border-color:rgba(15,23,42,.16)!important;box-shadow:0 18px 42px rgba(15,23,42,.12)!important;}
+    html[data-theme="light"] .vid-title{color:#0F172A!important;}
+
+    /* ══════════ VIDEO LIGHTBOX ══════════ */
+    .vid-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(3,8,18,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;}
+    .vid-modal.open{opacity:1;visibility:visible;}
+    .vid-modal-inner{position:relative;width:min(960px,100%);}
+    .vid-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.6);transform:scale(.96);transition:transform .3s ease;}
+    .vid-modal.open .vid-frame{transform:scale(1);}
+    .vid-frame iframe{width:100%;height:100%;border:0;}
+    .vid-close{position:absolute;top:-48px;right:0;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:1.5rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .25s ease;}
+    .vid-close:hover{background:rgba(255,255,255,.25);}
+
+    /* ══════════ FAQ FILTERS — monochrome pills (match the tabs) ══════════ */
+    .faq-filter{background:transparent!important;border:1px solid rgba(255,255,255,.16)!important;color:rgba(255,255,255,.7)!important;font-weight:600!important;font-size:.88rem!important;padding:9px 22px!important;border-radius:999px!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:none!important;transition:background .25s ease,border-color .25s ease,color .25s ease!important;}
+    .faq-filter:hover{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.32)!important;color:#fff!important;}
+    .faq-filter.active{background:#fff!important;border-color:#fff!important;color:#0B0B0B!important;box-shadow:none!important;}
+    .faq-filter.active:hover{background:#fff!important;color:#0B0B0B!important;}
+    html[data-theme="light"] .faq-filter{background:transparent!important;border:1px solid rgba(15,23,42,.14)!important;color:#475569!important;}
+    html[data-theme="light"] .faq-filter:hover{background:#F8FAFC!important;border-color:rgba(15,23,42,.3)!important;color:#0F172A!important;}
+    html[data-theme="light"] .faq-filter.active{background:#0F172A!important;border-color:#0F172A!important;color:#fff!important;}
+    html[data-theme="light"] .faq-filter.active:hover{background:#0F172A!important;color:#fff!important;}
+  </style>
   <script>(function(){try{var t=localStorage.getItem('wendiTheme');if(t==='dark'){var s=document.getElementById('wendi-light');if(s)s.media='not all';document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();</script>
 </head>
 <body>
@@ -1732,7 +1912,6 @@
         </div>
       </li>
       <li><a href="modulim_5.html">מודולים</a></li>
-      <li><a href="sipurim.html">סיפורי לקוחות</a></li>
       <li>
         <a href="mamashkim.html">ממשקים <span class="arr">▾</span></a>
         <div class="dropdown">
@@ -1754,17 +1933,24 @@
 
 <!-- ══ WHO WE ARE ══ -->
 <div class="sub-page active" id="page-who">
-  <section class="page-hero">
+  <section class="page-hero ah-full">
     <div class="pg"></div><div class="pg2"></div>
-    <div class="container">
-      <div class="eyebrow">אודותינו</div>
-      <h1 style="font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px">
-        בונים את הדיגיטל<br/>של העובד הישראלי
+    <div class="ah-bg-text" aria-hidden="true">WENDI</div>
+    <div class="container" style="position:relative;z-index:2">
+      <h1 class="ah-h1">
+        <span class="ah-line" style="--i:0">בונים את הדיגיטל</span>
+        <span class="ah-line ah-accent" style="--i:1">של העובד הישראלי</span>
       </h1>
-      <p style="font-size:1.1rem;color:var(--muted);max-width:580px;line-height:1.8;margin-bottom:32px">
-        Wendi היא חברת מוצר ישראלית המתמחה בפלטפורמות דיגיטליות לעובדים. אנחנו מאמינים שמה שעובד טוב לעובדים — עובד טוב לארגון.
-      </p>
-      <!-- Pill tabs -->
+      <p class="ah-sub">חברת מוצר ישראלית המתמחה בפלטפורמות דיגיטליות לעובדים. מאמינים שמה שעובד טוב לעובדים — עובד טוב לארגון.</p>
+      <div class="ah-stats-bar">
+        <div class="ah-stat"><div class="ah-stat-num">50+</div><div class="ah-stat-lbl">ארגונים פעילים</div></div>
+        <div class="ah-stat-div"></div>
+        <div class="ah-stat"><div class="ah-stat-num">6</div><div class="ah-stat-lbl">מגזרי פעילות</div></div>
+        <div class="ah-stat-div"></div>
+        <div class="ah-stat"><div class="ah-stat-num">10+</div><div class="ah-stat-lbl">שנות ניסיון</div></div>
+        <div class="ah-stat-div"></div>
+        <div class="ah-stat"><div class="ah-stat-num">24/7</div><div class="ah-stat-lbl">זמינות</div></div>
+      </div>
       <div class="page-tabs">
         <button class="ptab active" onclick="switchTab('who')">מי אנחנו</button>
         <button class="ptab" onclick="switchTab('faq')">שאלות ותשובות</button>
@@ -1773,89 +1959,146 @@
     </div>
   </section>
 
-  <section style="padding:0 0 80px">
+  <section class="about-partner">
     <div class="container">
-      <div class="who-intro">
-        <div class="who-text fade-up">
-          <p class="big">וונדי היא הרבה יותר ממערכת.<br/><span class="tc">היא שותפה.</span></p>
-          <p>אנחנו הולכים יד ביד עם עשרות ארגונים בישראל. וביחד איתם בנינו את המוצר שמשרת את העובדים שלהם ביום-יום, בכל מקום ובכל רגע.</p>
-          <p>אנחנו מאמינים שמה שעובד טוב לעובדים — עובד טוב לארגון. וזה לא קורה לבד — אלא ביחד. לכן כל ממשק, כל מודול וכל פיצ'ר נולד מתוך שיתוף פעולה אמיתי עם לקוחותינו.</p>
-          <p>הצוות שלנו משלב אנשי מוצר, פיתוח ותמיכה תחת קורת גג אחת — כך שהלקוח תמיד מדבר עם אנשים שמכירים אותו לעומק.</p>
-          <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+      <div class="ap-grid">
+        <div class="ap-left fade-up">
+          <div class="ap-big-quote">וונדי היא הרבה יותר ממערכת.<br/><span class="ap-accent">היא שותפה.</span></div>
+          <div class="ap-ctas">
             <a href="#contact" class="btn-p">בואו נדבר</a>
             <a href="sipurim.html" class="btn-o">סיפורי לקוחות</a>
           </div>
         </div>
-        <div class="who-stats stagger fade-up">
-          <div class="wstat"><div class="wstat-num">50+</div><div class="wstat-lbl">ארגונים פעילים בישראל</div></div>
-          <div class="wstat"><div class="wstat-num">6</div><div class="wstat-lbl">מגזרי פעילות</div></div>
-          <div class="wstat"><div class="wstat-num">10+</div><div class="wstat-lbl">שנות ניסיון בתחום</div></div>
-          <div class="wstat"><div class="wstat-num">24/7</div><div class="wstat-lbl">זמינות לעובדים</div></div>
+        <div class="ap-right fade-up">
+          <div class="ap-intro-text">
+            <p>אנחנו הולכים יד ביד עם עשרות ארגונים בישראל. ביחד איתם בנינו את המוצר שמשרת את העובדים שלהם ביום-יום, בכל מקום ובכל רגע.</p>
+            <p>כל ממשק, כל מודול וכל פיצ'ר נולד מתוך שיתוף פעולה אמיתי עם לקוחותינו — כי אנחנו מאמינים שמה שעובד טוב לעובדים, עובד טוב לארגון.</p>
+            <p>הצוות שלנו משלב אנשי מוצר, פיתוח ותמיכה תחת קורת גג אחת — כך שהלקוח תמיד מדבר עם אנשים שמכירים אותו לעומק.</p>
+          </div>
+          <div class="ap-timeline stagger">
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-year">2013</div>
+              <div>
+                <div class="tl-title">הקמת החברה</div>
+                <div class="tl-desc">נוסדה בתל אביב עם חזון ברור: לתת לעובד הישראלי כלי דיגיטל ראוי.</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-year">2016</div>
+              <div>
+                <div class="tl-title">20 לקוחות ראשונים</div>
+                <div class="tl-desc">עברנו את ה-20 ארגון פעיל — מהפיננסים ועד לשירות הציבורי.</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-year">2019</div>
+              <div>
+                <div class="tl-title">אפליקציה נייטיב</div>
+                <div class="tl-desc">השקנו אפליקציה iOS ו-Android תחת המותג של כל לקוח — בפעם הראשונה בשוק.</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-year">2023</div>
+              <div>
+                <div class="tl-title">Wendi AI</div>
+                <div class="tl-desc">שילוב בינה מלאכותית לפלטפורמה — עוזר חכם לכל עובד בכל שאלה.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <section class="mission-strip">
+    <div class="ms-inner">
+      <div class="ms-top-line fade-up"></div>
+      <div class="ms-quote fade-up">"המשימה שלנו לא נגמרת אחרי ה-Go-Live.<br/>אנחנו שם כל יום — עם כל עובד, בכל ארגון."</div>
+      <div class="ms-attr fade-up"><span>שרית הכמון</span> — מנכ"לית ומייסדת Wendi</div>
+    </div>
+  </section>
+
   <section class="values-section section-white">
     <div class="container">
-      <div class="eyebrow">הערכים שלנו</div>
       <h2 class="sec-title fade-up">מה מניע אותנו</h2>
       <div class="values-grid stagger">
-        <div class="vcard">
+        <div class="vcard" style="--vc:#2BADA0;--vc-soft:rgba(43,173,160,.12);--vc-bd:rgba(43,173,160,.34)">
           <canvas class="pixel-canvas" aria-hidden="true"></canvas>
           <div class="vcard-content">
-            <div class="vcard-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
+            <div class="vc-top">
+              <div class="vcard-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg>
+              </div>
+              <span class="vc-num">01</span>
             </div>
             <h3>שותפות אמיתית</h3>
             <p>אנחנו לא מוכרים מוצר — אנחנו בונים יחד עם הלקוח. כל פרויקט מתחיל בהקשבה ומסתיים בהצלחה משותפת.</p>
           </div>
         </div>
-        <div class="vcard">
+        <div class="vcard" style="--vc:#06B6D4;--vc-soft:rgba(6,182,212,.12);--vc-bd:rgba(6,182,212,.34)">
           <canvas class="pixel-canvas" aria-hidden="true"></canvas>
           <div class="vcard-content">
-            <div class="vcard-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 3h15"/><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"/><path d="M6 14h12"/></svg>
+            <div class="vc-top">
+              <div class="vcard-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 3h15"/><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"/><path d="M6 14h12"/></svg>
+              </div>
+              <span class="vc-num">02</span>
             </div>
             <h3>חדשנות מתמדת</h3>
             <p>הפלטפורמה שלנו מתפתחת כל הזמן. אנחנו מקשיבים לשטח ומשחררים עדכונים שמשפרים את חיי העובד.</p>
           </div>
         </div>
-        <div class="vcard">
+        <div class="vcard" style="--vc:#3B82F6;--vc-soft:rgba(59,130,246,.12);--vc-bd:rgba(59,130,246,.34)">
           <canvas class="pixel-canvas" aria-hidden="true"></canvas>
           <div class="vcard-content">
-            <div class="vcard-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            <div class="vc-top">
+              <div class="vcard-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              </div>
+              <span class="vc-num">03</span>
             </div>
             <h3>פשטות בשירות המורכבות</h3>
             <p>ארגונים גדולים מורכבים — הפתרון שלנו חייב להיות פשוט לשימוש. אנחנו לוקחים את הקושי על עצמנו.</p>
           </div>
         </div>
-        <div class="vcard">
+        <div class="vcard" style="--vc:#8B5CF6;--vc-soft:rgba(139,92,246,.12);--vc-bd:rgba(139,92,246,.34)">
           <canvas class="pixel-canvas" aria-hidden="true"></canvas>
           <div class="vcard-content">
-            <div class="vcard-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <div class="vc-top">
+              <div class="vcard-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </div>
+              <span class="vc-num">04</span>
             </div>
             <h3>אבטחה ואמינות</h3>
             <p>נתוני עובדים הם רגישים. אנחנו עומדים בתקני אבטחה מחמירים ומבטיחים זמינות של 99.9%.</p>
           </div>
         </div>
-        <div class="vcard">
+        <div class="vcard" style="--vc:#6366F1;--vc-soft:rgba(99,102,241,.12);--vc-bd:rgba(99,102,241,.34)">
           <canvas class="pixel-canvas" aria-hidden="true"></canvas>
           <div class="vcard-content">
-            <div class="vcard-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 17v-5"/><path d="M12 17V8"/><path d="M17 17v-9"/></svg>
+            <div class="vc-top">
+              <div class="vcard-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 17v-5"/><path d="M12 17V8"/><path d="M17 17v-9"/></svg>
+              </div>
+              <span class="vc-num">05</span>
             </div>
             <h3>נתונים מניעים החלטות</h3>
             <p>כל פעולה בפלטפורמה מייצרת תובנה. אנחנו עוזרים לארגון לקבל החלטות מבוססות נתוני אמת.</p>
           </div>
         </div>
-        <div class="vcard">
+        <div class="vcard" style="--vc:#10B981;--vc-soft:rgba(16,185,129,.12);--vc-bd:rgba(16,185,129,.34)">
           <canvas class="pixel-canvas" aria-hidden="true"></canvas>
           <div class="vcard-content">
-            <div class="vcard-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+            <div class="vc-top">
+              <div class="vcard-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+              </div>
+              <span class="vc-num">06</span>
             </div>
             <h3>גדילה יחד</h3>
             <p>המוצר גדל עם הלקוח. ממאה עובדים לעשרת אלפים — הפלטפורמה מתאימה את עצמה בלי כאבים.</p>
@@ -1867,7 +2110,6 @@
 
   <section class="team-section section-white">
     <div class="container">
-      <div class="eyebrow">הצוות</div>
       <h2 class="sec-title fade-up">האנשים מאחורי Wendi</h2>
       <p class="sec-sub fade-up">צוות מנוסה של אנשי מוצר, טכנולוגיה ועולם HR — שמבינים גם את הארגון וגם את העובד.</p>
       <div class="team-grid stagger">
@@ -1984,7 +2226,6 @@
   <section class="page-hero">
     <div class="pg"></div>
     <div class="container">
-      <div class="eyebrow">גלריה</div>
       <h1 style="font-size:clamp(2rem,4vw,3.5rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:16px">תמונות וסרטונים</h1>
       <p style="font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:28px">הצצה לעבודה שלנו, האירועים, הצוות והלקוחות.</p>
       <div class="page-tabs"><button class="ptab" onclick="switchTab('who')">מי אנחנו</button><button class="ptab" onclick="switchTab('faq')">שאלות ותשובות</button><button class="ptab active" onclick="switchTab('gallery')">גלריה וסרטונים</button></div>
@@ -1993,76 +2234,73 @@
 
   <section class="gallery-section">
     <div class="container">
-      <div class="gallery-filters">
-        <div class="gfilter active" onclick="filterGallery(this,'all')">הכל</div>
-        <div class="gfilter" onclick="filterGallery(this,'events')">אירועים</div>
-        <div class="gfilter" onclick="filterGallery(this,'team')">צוות</div>
-        <div class="gfilter" onclick="filterGallery(this,'clients')">לקוחות</div>
-        <div class="gfilter" onclick="filterGallery(this,'product')">מוצר</div>
-      </div>
-      <div class="gallery-grid stagger">
-        <div class="gallery-item wide" data-cat="events">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></div><div class="gp-lbl">כנס לקוחות 2024</div></div>
+      <div class="img-accordion">
+        <div class="iacc-item active">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1400&auto=format&fit=crop" alt="כנסים והשקות" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/900x600/0f172a/3ECFBE?text=Wendi'"/>
+          <span class="iacc-cap">כנסים והשקות</span>
         </div>
-        <div class="gallery-item" data-cat="team">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="gp-lbl">צוות Wendi</div></div>
+        <div class="iacc-item">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop" alt="הצוות שלנו" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/900x600/0f172a/3ECFBE?text=Wendi'"/>
+          <span class="iacc-cap">הצוות שלנו</span>
         </div>
-        <div class="gallery-item" data-cat="clients">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v4"/><path d="M14 14h-4"/><path d="M14 18h-4"/><path d="M14 8h-4"/><path d="M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/><path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18"/></svg></div><div class="gp-lbl">השקה באיכילוב</div></div>
+        <div class="iacc-item">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1400&auto=format&fit=crop" alt="ימי עיון והדרכות" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/900x600/0f172a/3ECFBE?text=Wendi'"/>
+          <span class="iacc-cap">ימי עיון והדרכות</span>
         </div>
-        <div class="gallery-item" data-cat="product">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg></div><div class="gp-lbl">אפליקציה בפעולה</div></div>
+        <div class="iacc-item">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1400&auto=format&fit=crop" alt="מפגשי לקוחות" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/900x600/0f172a/3ECFBE?text=Wendi'"/>
+          <span class="iacc-cap">מפגשי לקוחות</span>
         </div>
-        <div class="gallery-item" data-cat="events">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></div><div class="gp-lbl">הרצאה בכנס HR</div></div>
-        </div>
-        <div class="gallery-item" data-cat="clients">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></div><div class="gp-lbl">השקה ארגון תחבורה</div></div>
-        </div>
-        <div class="gallery-item wide" data-cat="events">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5.8 11.3 2 22l10.7-3.79"/><path d="M4 3h.01"/><path d="M22 8h.01"/><path d="M15 2h.01"/><path d="M22 20h.01"/><path d="m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"/><path d="m22 13-1.32-.32a2.5 2.5 0 0 0-2.4.96l-.95 1.27c-.42.56-1.21.71-1.81.35l-1.39-.85a1.92 1.92 0 0 0-2.4.38L9.5 17"/><path d="M11 2c-1 1-1.5 2-1.5 3 0 1.5 1.5 3 1.5 4.5"/></svg></div><div class="gp-lbl">יום גיבוש צוות</div></div>
-        </div>
-        <div class="gallery-item" data-cat="product">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div><div class="gp-lbl">דשבורד HR</div></div>
-        </div>
-        <div class="gallery-item" data-cat="team">
-          <div class="gallery-placeholder"><div class="gp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></svg></div><div class="gp-lbl">המשרד שלנו</div></div>
+        <div class="iacc-item">
+          <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=1400&auto=format&fit=crop" alt="מאחורי הקלעים" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/900x600/0f172a/3ECFBE?text=Wendi'"/>
+          <span class="iacc-cap">מאחורי הקלעים</span>
         </div>
       </div>
 
       <!-- VIDEOS -->
       <div style="margin-top:64px">
-        <div class="eyebrow">סרטונים</div>
         <h2 class="sec-title fade-up" style="margin-bottom:8px">Wendi בפעולה</h2>
-        <p class="sec-sub fade-up">סרטוני הסבר, סיפורי לקוח וטיפים לשימוש.</p>
-        <div class="video-grid stagger">
-          <div class="video-card">
-            <div class="video-thumb"><div class="video-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
-            <div class="video-info">
-              <div class="video-title">Wendi — סקירת המוצר המלאה</div>
-              <div class="video-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 8:24 דקות</div>
-            </div>
+        <p class="sec-sub fade-up">סרטוני השקה, מפגשי לקוחות וסיפורי הצלחה — הישר מהערוץ שלנו.</p>
+        <div class="vid-grid">
+          <div class="vid-card" onclick="openVideo('EjlyH-o1EYI')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/EjlyH-o1EYI/hqdefault.jpg" alt="השקת אפליקציית וונדי לעובדי MAX" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">השקת אפליקציית וונדי לעובדי MAX</div>
           </div>
-          <div class="video-card">
-            <div class="video-thumb"><div class="video-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
-            <div class="video-info">
-              <div class="video-title">איכילוב — סיפור הצלחה</div>
-              <div class="video-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 4:15 דקות</div>
-            </div>
+          <div class="vid-card" onclick="openVideo('EZPMi76r48E')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/EZPMi76r48E/hqdefault.jpg" alt="השקת אפליקציית וונדי לעובדי הפניקס בית השקעות" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">השקת אפליקציית וונדי לעובדי הפניקס בית השקעות</div>
           </div>
-          <div class="video-card">
-            <div class="video-thumb"><div class="video-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
-            <div class="video-info">
-              <div class="video-title">כך עובד מודול ה-Workflow</div>
-              <div class="video-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 3:40 דקות</div>
-            </div>
+          <div class="vid-card" onclick="openVideo('a1PWboIE2uc')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/a1PWboIE2uc/hqdefault.jpg" alt="מפגש לקוחות ייחודי עם חברת וונדי" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">מפגש לקוחות ייחודי עם חברת וונדי — שיתוף, השראה וצמיחה משותפת</div>
           </div>
-          <div class="video-card">
-            <div class="video-thumb"><div class="video-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
-            <div class="video-info">
-              <div class="video-title">Wendi AI — הדגמה חיה</div>
-              <div class="video-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 5:10 דקות</div>
-            </div>
+          <div class="vid-card" onclick="openVideo('HBtAus6YLsw')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/HBtAus6YLsw/hqdefault.jpg" alt="השקת אפליקציית וונדי לעובדי חברת דלק" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">השקת אפליקציית וונדי לעובדי חברת דלק</div>
+          </div>
+          <div class="vid-card" onclick="openVideo('LKF6vl2eQDs')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/LKF6vl2eQDs/hqdefault.jpg" alt="השקת אפליקציית וונדי לעובדי עיריית ירושלים" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">השקת אפליקציית וונדי לעובדי עיריית ירושלים</div>
+          </div>
+          <div class="vid-card" onclick="openVideo('VSK6TCU-Sb4')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/VSK6TCU-Sb4/hqdefault.jpg" alt="אפליקציית וונדי באיקאה — כנס משאבי אנוש" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">אפליקציית וונדי באיקאה — סרטון מכנס משאבי אנוש</div>
+          </div>
+          <div class="vid-card" onclick="openVideo('78MSBpSSQfU')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/78MSBpSSQfU/hqdefault.jpg" alt="בזק — השקת אפליקציית וונדי" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">בזק — השקת אפליקציית וונדי לתקשורת פנים ושירות עצמי</div>
+          </div>
+          <div class="vid-card" onclick="openVideo('KcK8gmhCd9k')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/KcK8gmhCd9k/hqdefault.jpg" alt="Wendi — סרטון לקוחות" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">Wendi — סרטון לקוחות</div>
+          </div>
+          <div class="vid-card" onclick="openVideo('ANMtGVu7j4s')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/ANMtGVu7j4s/hqdefault.jpg" alt="פלטפורמה דיגיטלית פנים ארגונית — אפליקציה ופורטל וונדי" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">פלטפורמה דיגיטלית פנים ארגונית — אפליקציה ופורטל וונדי לחווית העובד</div>
+          </div>
+          <div class="vid-card" onclick="openVideo('KiJ8spx3ccs')">
+            <div class="vid-thumb"><img src="https://img.youtube.com/vi/KiJ8spx3ccs/hqdefault.jpg" alt="Wendi LMS by Ewave — ניהול הדרכה והסמכה" loading="lazy"/><div class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg></div></div>
+            <div class="vid-title">Wendi LMS by Ewave — מערכת לניהול הדרכה והסמכה בארגון</div>
           </div>
         </div>
       </div>
@@ -2070,10 +2308,17 @@
   </section>
 </div>
 
+<!-- VIDEO LIGHTBOX -->
+<div class="vid-modal" id="vidModal" onclick="closeVideo()">
+  <div class="vid-modal-inner" onclick="event.stopPropagation()">
+    <button class="vid-close" onclick="closeVideo()" aria-label="סגור">&times;</button>
+    <div class="vid-frame" id="vidFrame"></div>
+  </div>
+</div>
+
 <!-- CTA -->
 <section class="cta-band" id="contact">
   <div class="cta-content">
-    <div class="eyebrow" style="margin-bottom:16px">צרו קשר</div>
     <h2 style="margin-bottom:8px">לקבלת מידע נוסף על המוצר שלנו</h2>
     <p style="margin-bottom:8px">התקשרו <strong style="color:var(--teal)">077-7743044</strong> או מלאו את הפרטים</p>
     <div class="contact-form">
@@ -2118,7 +2363,7 @@
     <div class="fcol"><h5>אודותינו</h5><ul><li><a href="#" onclick="switchTab('who')">מי אנחנו</a></li><li><a href="#" onclick="switchTab('faq')">שאלות ותשובות</a></li><li><a href="#" onclick="switchTab('gallery')">גלריה</a></li></ul></div>
     <div class="fcol"><h5>פתרונות</h5><ul><li><a href="pitronot.html#finantsim">פיננסים</a></li><li><a href="pitronot.html#briut">שירותי בריאות</a></li><li><a href="pitronot.html#logistika">לוגיסטיקה</a></li><li><a href="pitronot.html#tsiburi">מוסדות ציבוריים</a></li></ul></div>
     <div class="fcol"><h5>מוצר</h5><ul><li><a href="modulim_5.html">מודולים</a></li>
-<li><a href="mamashkim.html">ממשקים</a></li><li><a href="sipurim.html">סיפורי לקוחות</a></li>
+<li><a href="mamashkim.html">ממשקים</a></li>
     <li><a href="modulim_5.html">מודולים</a></li><li><a href="#contact">צרו קשר</a></li></ul></div>
   </div>
   <div class="fbot"><span>© 2024 Wendi. כל הזכויות שמורות.</span><div><a href="#">פרטיות</a><a href="#">תנאי שימוש</a><a href="#">נגישות</a></div></div>
@@ -2312,7 +2557,7 @@ if(location.hash==='#gallery')switchTab('gallery');
     const pc = new PixelCanvas(canvas, {
       gap: 8,
       speed: 28,
-      colors: ['#3ECFBE', '#06B6D4', '#CBD5E1']
+      colors: ['#94A3B8', '#CBD5E1', '#64748B']
     });
     card.addEventListener('mouseenter', () => pc.animate('appear'));
     card.addEventListener('mouseleave', () => pc.animate('disappear'));
@@ -2374,6 +2619,28 @@ if(location.hash==='#gallery')switchTab('gallery');
       card.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
   });
+
+  /* ═══ INTERACTIVE IMAGE ACCORDION (gallery) ═══ */
+  document.querySelectorAll('.img-accordion .iacc-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      item.parentElement.querySelectorAll('.iacc-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+
+  /* ═══ VIDEO LIGHTBOX (YouTube embeds) ═══ */
+  function openVideo(id) {
+    document.getElementById('vidFrame').innerHTML =
+      '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0" title="Wendi" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+    document.getElementById('vidModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVideo() {
+    document.getElementById('vidModal').classList.remove('open');
+    document.getElementById('vidFrame').innerHTML = '';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeVideo(); });
 
 </script>
 <script>

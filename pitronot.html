@@ -1671,6 +1671,77 @@
     html[data-theme="dark"] .theme-toggle .tt-moon{color:#E2E8F0;}
     html[data-theme="dark"] .theme-toggle .tt-sun{color:#64748B;}
   </style>
+  <style id="pitronot-minimal">
+    /* ══════════ SECTORS — minimalist index (replaces colorful cubes) ══════════ */
+    .sec-index{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;border-bottom:1px solid rgba(255,255,255,.1);}
+    .sx-item{position:relative;display:flex;align-items:flex-start;gap:15px;padding:30px 22px;border-top:1px solid rgba(255,255,255,.1);text-decoration:none;transition:background .35s ease;}
+    .sx-item:hover{background:rgba(255,255,255,.03);}
+    .sx-num{flex:0 0 auto;font-size:.92rem;font-weight:800;line-height:1;padding-top:5px;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.22);font-variant-numeric:tabular-nums;transition:-webkit-text-stroke-color .35s ease;}
+    .sx-item:hover .sx-num{-webkit-text-stroke-color:rgba(255,255,255,.75);}
+    .sx-ico{flex:0 0 auto;width:38px;height:38px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.92);transition:transform .35s cubic-bezier(.16,1,.3,1);}
+    .sx-ico svg{width:26px;height:26px;}
+    .sx-item:hover .sx-ico{transform:translateY(-3px);}
+    .sx-body{flex:1;min-width:0;}
+    .sx-name{display:block;font-size:1.12rem;font-weight:800;color:#fff;letter-spacing:-.3px;margin-bottom:5px;}
+    .sx-teaser{display:block;font-size:.87rem;color:rgba(255,255,255,.5);line-height:1.5;}
+    .sx-arrow{flex:0 0 auto;align-self:center;color:#fff;opacity:0;transform:translateX(7px);transition:opacity .35s ease,transform .35s ease;}
+    .sx-arrow svg{width:20px;height:20px;display:block;}
+    .sx-item:hover .sx-arrow{opacity:1;transform:translateX(0);}
+    @media(max-width:860px){.sec-index{grid-template-columns:1fr 1fr;}}
+    @media(max-width:560px){.sec-index{grid-template-columns:1fr;}}
+    /* light mode */
+    html[data-theme="light"] .sec-index{border-bottom-color:rgba(15,23,42,.12);}
+    html[data-theme="light"] .sx-item{border-top-color:rgba(15,23,42,.12);}
+    html[data-theme="light"] .sx-item:hover{background:rgba(15,23,42,.02);}
+    html[data-theme="light"] .sx-num{-webkit-text-stroke-color:rgba(15,23,42,.25);}
+    html[data-theme="light"] .sx-item:hover .sx-num{-webkit-text-stroke-color:#0F172A;}
+    html[data-theme="light"] .sx-ico{color:#0F172A;}
+    html[data-theme="light"] .sx-name{color:#0F172A;}
+    html[data-theme="light"] .sx-teaser{color:#64748B;}
+    html[data-theme="light"] .sx-arrow{color:#0F172A;}
+    /* neutralize leftover colorful light-mode bits → unified teal/minimal */
+    html[data-theme="light"] .sector-nav .sn-progress{background:#0D9488!important;}
+    html[data-theme="light"] .page-hero .container::before{display:none!important;}
+    /* ══ this page only: all readable text → solid black (light mode) ══ */
+    html[data-theme="light"] .page-hero .container h1,
+    html[data-theme="light"] .page-hero .container p,
+    html[data-theme="light"] .sx-teaser,
+    html[data-theme="light"] .sector-section .sector-badge,
+    html[data-theme="light"] .sector-section .sector-title,
+    html[data-theme="light"] .sector-section .sector-desc,
+    html[data-theme="light"] .sector-section .sf-item,
+    html[data-theme="light"] .sector-section .sch,
+    html[data-theme="light"] .sector-section .story-label,
+    html[data-theme="light"] .sector-section .story-quote,
+    html[data-theme="light"] .sector-section .story-name,
+    html[data-theme="light"] .sector-section .story-role,
+    html[data-theme="light"] .sector-section .sector-cta p,
+    html[data-theme="light"] .cta-band h2,
+    html[data-theme="light"] .cta-band p,
+    html[data-theme="light"] .cta-band strong,
+    html[data-theme="light"] footer .ftagline,
+    html[data-theme="light"] footer h5,
+    html[data-theme="light"] footer li,
+    html[data-theme="light"] footer a,
+    html[data-theme="light"] footer .fbot{
+      color:#0F172A !important;
+    }
+    /* ══════════ STATS BAND (relocated from the customer-stories page) ══════════ */
+    .metrics-band{padding:62px 0;border-top:1px solid rgba(255,255,255,.1);}
+    .metrics-head{text-align:center;font-size:clamp(1.4rem,2.6vw,2rem);font-weight:900;letter-spacing:-.5px;color:#fff;margin-bottom:40px;}
+    .metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+    .metric-item{text-align:center;padding:6px 18px;border-inline-start:1px solid rgba(255,255,255,.1);}
+    .metric-item:first-child{border-inline-start:none;}
+    .metric-num{font-size:clamp(2.2rem,4vw,3rem);font-weight:900;color:var(--teal);line-height:1;letter-spacing:-1px;font-variant-numeric:tabular-nums;margin-bottom:10px;}
+    .metric-lbl{font-size:.9rem;color:rgba(255,255,255,.55);line-height:1.4;}
+    @media(max-width:820px){.metrics-grid{grid-template-columns:1fr 1fr!important;gap:34px 0;}.metric-item{border-inline-start:none!important;}}
+    @media(max-width:480px){.metrics-grid{grid-template-columns:1fr!important;}}
+    html[data-theme="light"] .metrics-band{border-top-color:rgba(15,23,42,.1);}
+    html[data-theme="light"] .metrics-head{color:#0F172A;}
+    html[data-theme="light"] .metric-item{border-inline-start-color:rgba(15,23,42,.1);}
+    html[data-theme="light"] .metric-num{color:#0D9488;}
+    html[data-theme="light"] .metric-lbl{color:#0F172A;}
+  </style>
   <script>(function(){try{var t=localStorage.getItem('wendiTheme');if(t==='dark'){var s=document.getElementById('wendi-light');if(s)s.media='not all';document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();</script>
 </head>
 <body>
@@ -1708,7 +1779,6 @@
         </div>
       </li>
       <li><a href="modulim_5.html">מודולים</a></li>
-      <li><a href="sipurim.html">סיפורי לקוחות</a></li>
       <li>
         <a href="mamashkim.html">ממשקים <span class="arr">▾</span></a>
         <div class="dropdown">
@@ -1743,26 +1813,55 @@
 <section class="page-hero">
   <div class="pg"></div>
   <div class="container">
-    <div class="eyebrow">פתרונות</div>
     <h1 style="font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:20px">
       וונדי מותאמת לארגון שלכם —<br/>לא משנה באיזה מגזר
     </h1>
     <p style="font-size:1.1rem;color:var(--muted);max-width:620px;line-height:1.8;margin-bottom:40px">
       כל מגזר מתמודד עם אתגרים שונים — רגולציה, פריסה, עומסים ואוכלוסיות מגוונות. פלטפורמה אחת עם התאמות, ממשקים ופתרונות ייעודיים לכל מגזר.
     </p>
-    <div class="sector-cards stagger fade-up" style="overflow:visible">
-      <a href="#finantsim" class="sq-card"><span class="sq-idx" aria-hidden="true">01</span><div class="sq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></div><div class="sq-name">פיננסים</div><div class="sq-teaser">תקשורת ולמידה בסביבה רגולטורית</div></a>
-      <a href="#logistika" class="sq-card"><span class="sq-idx" aria-hidden="true">02</span><div class="sq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></div><div class="sq-name">לוגיסטיקה ותחבורה</div><div class="sq-teaser">חיבור אמיתי לעובדי שטח</div></a>
-      <a href="#tsiburi" class="sq-card"><span class="sq-idx" aria-hidden="true">03</span><div class="sq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg></div><div class="sq-name">מוסדות ציבוריים</div><div class="sq-teaser">סדר, שקיפות וחיבור ארגוני</div></a>
-      <a href="#briut" class="sq-card"><span class="sq-idx" aria-hidden="true">04</span><div class="sq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v4"/><path d="M14 14h-4"/><path d="M14 18h-4"/><path d="M14 8h-4"/><path d="M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/><path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18"/></svg></div><div class="sq-name">שירותי בריאות</div><div class="sq-teaser">ידע, תקשורת והדרכה 24/7</div></a>
-      <a href="#taasia" class="sq-card"><span class="sq-idx" aria-hidden="true">05</span><div class="sq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg></div><div class="sq-name">תעשייה ומסחר</div><div class="sq-teaser">אחידות ובקרה בארגון רב-אתרי</div></a>
-      <a href="#tayarut" class="sq-card"><span class="sq-idx" aria-hidden="true">06</span><div class="sq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></div><div class="sq-name">תיירות</div><div class="sq-teaser">הכשרה ותקשורת בקצב גבוה</div></a>
+    <div class="sec-index fade-up">
+      <a href="#finantsim" class="sx-item">
+        <span class="sx-num">01</span>
+        <span class="sx-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg></span>
+        <span class="sx-body"><span class="sx-name">פיננסים</span><span class="sx-teaser">תקשורת ולמידה בסביבה רגולטורית</span></span>
+        <span class="sx-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+      </a>
+      <a href="#logistika" class="sx-item">
+        <span class="sx-num">02</span>
+        <span class="sx-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></span>
+        <span class="sx-body"><span class="sx-name">לוגיסטיקה ותחבורה</span><span class="sx-teaser">חיבור אמיתי לעובדי שטח</span></span>
+        <span class="sx-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+      </a>
+      <a href="#tsiburi" class="sx-item">
+        <span class="sx-num">03</span>
+        <span class="sx-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg></span>
+        <span class="sx-body"><span class="sx-name">מוסדות ציבוריים</span><span class="sx-teaser">סדר, שקיפות וחיבור ארגוני</span></span>
+        <span class="sx-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+      </a>
+      <a href="#briut" class="sx-item">
+        <span class="sx-num">04</span>
+        <span class="sx-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v4"/><path d="M14 14h-4"/><path d="M14 18h-4"/><path d="M14 8h-4"/><path d="M18 12h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h2"/><path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18"/></svg></span>
+        <span class="sx-body"><span class="sx-name">שירותי בריאות</span><span class="sx-teaser">ידע, תקשורת והדרכה 24/7</span></span>
+        <span class="sx-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+      </a>
+      <a href="#taasia" class="sx-item">
+        <span class="sx-num">05</span>
+        <span class="sx-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg></span>
+        <span class="sx-body"><span class="sx-name">תעשייה ומסחר</span><span class="sx-teaser">אחידות ובקרה בארגון רב-אתרי</span></span>
+        <span class="sx-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+      </a>
+      <a href="#tayarut" class="sx-item">
+        <span class="sx-num">06</span>
+        <span class="sx-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg></span>
+        <span class="sx-body"><span class="sx-name">תיירות</span><span class="sx-teaser">הכשרה ותקשורת בקצב גבוה</span></span>
+        <span class="sx-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></span>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- FINANTSIM -->
-<section class="sector-section" id="finantsim" style="--accent:#4F46E5">
+<section class="sector-section" id="finantsim">
   <span class="sector-ghost" aria-hidden="true">01</span>
   <div class="container">
     <div class="sector-inner">
@@ -1797,7 +1896,7 @@
 
 <!-- LOGISTIKA -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="sector-section section-white" id="logistika" style="--accent:#0D9488">
+<section class="sector-section section-white" id="logistika">
   <span class="sector-ghost" aria-hidden="true">02</span>
   <div class="container">
     <div class="sector-inner">
@@ -1829,7 +1928,7 @@
 
 <!-- TSIBURI -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="sector-section" id="tsiburi" style="--accent:#2563EB">
+<section class="sector-section" id="tsiburi">
   <span class="sector-ghost" aria-hidden="true">03</span>
   <div class="container">
     <div class="sector-inner">
@@ -1861,7 +1960,7 @@
 
 <!-- BRIUT -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="sector-section section-white" id="briut" style="--accent:#059669">
+<section class="sector-section section-white" id="briut">
   <span class="sector-ghost" aria-hidden="true">04</span>
   <div class="container">
     <div class="sector-inner">
@@ -1893,7 +1992,7 @@
 
 <!-- TAASIA -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="sector-section" id="taasia" style="--accent:#D97706">
+<section class="sector-section" id="taasia">
   <span class="sector-ghost" aria-hidden="true">05</span>
   <div class="container">
     <div class="sector-inner">
@@ -1926,7 +2025,7 @@
 
 <!-- TAYARUT -->
 <div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
-<section class="sector-section section-white" id="tayarut" style="--accent:#E11D48">
+<section class="sector-section section-white" id="tayarut">
   <span class="sector-ghost" aria-hidden="true">06</span>
   <div class="container">
     <div class="sector-inner">
@@ -1957,10 +2056,23 @@
   </div>
 </section>
 
+<!-- STATS -->
+<div class="tri-divider"><div class="td-tri md"></div><div class="td-tri lg"></div><div class="td-tri sm"></div></div>
+<div class="metrics-band">
+  <div class="container">
+    <h2 class="metrics-head">וונדי במספרים</h2>
+    <div class="metrics-grid">
+      <div class="metric-item fade-up"><div class="metric-num">50+</div><div class="metric-lbl">ארגונים פעילים</div></div>
+      <div class="metric-item fade-up"><div class="metric-num">98%</div><div class="metric-lbl">שביעות רצון לקוחות</div></div>
+      <div class="metric-item fade-up"><div class="metric-num">60%</div><div class="metric-lbl">חיסכון בזמן ניהולי</div></div>
+      <div class="metric-item fade-up"><div class="metric-num">3M+</div><div class="metric-lbl">אינטראקציות עובדים בחודש</div></div>
+    </div>
+  </div>
+</div>
+
 <!-- CTA -->
 <section class="cta-band" id="contact">
   <div class="cta-content">
-    <div class="eyebrow" style="margin-bottom:16px">צרו קשר</div>
     <h2 style="margin-bottom:8px">לקבלת מידע נוסף על המוצר שלנו</h2>
     <p style="margin-bottom:8px">התקשרו <strong style="color:var(--teal)">077-7743044</strong> או מלאו את הפרטים</p>
     <div class="contact-form">
@@ -2001,7 +2113,7 @@
     <div><div class="fbrand"><a href="index.html"><img src="wendi-logo.png" alt="Wendi"/></a></div><p class="ftagline">פלטפורמת העובד המובילה בישראל.</p></div>
     <div class="fcol"><h5>פתרונות</h5><ul><li><a href="#finantsim">פיננסים</a></li><li><a href="#logistika">לוגיסטיקה</a></li><li><a href="#tsiburi">מוסדות ציבוריים</a></li><li><a href="#briut">שירותי בריאות</a></li><li><a href="#taasia">תעשייה</a></li><li><a href="#tayarut">תיירות</a></li></ul></div>
     <div class="fcol"><h5>מוצר</h5><ul><li><a href="modulim_5.html">מודולים</a></li>
-<li><a href="mamashkim.html">ממשקים</a></li><li><a href="sipurim.html">סיפורי לקוחות</a></li>
+<li><a href="mamashkim.html">ממשקים</a></li>
     <li><a href="modulim_5.html">מודולים</a></li><li><a href="index.html#modules">מודולים</a></li></ul></div>
     <div class="fcol"><h5>חברה</h5><ul><li><a href="about.html">מי אנחנו</a></li><li><a href="about.html#faq">שאלות ותשובות</a></li><li><a href="#contact">צרו קשר</a></li></ul></div>
   </div>

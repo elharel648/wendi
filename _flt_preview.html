@@ -1,0 +1,113 @@
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#050A13;font-family:'Heebo',sans-serif;}
+
+  /* ===== EXACT COPY of the new .flt-* rules from index.html ===== */
+  body .flt-outer{position:relative;overflow:hidden;padding:clamp(76px,9vw,140px) clamp(20px,5vw,64px);background:#050A13;}
+  body .flt-bg{position:absolute;inset:0;z-index:0;pointer-events:none;background:linear-gradient(to bottom,#020609 0%,rgba(2,6,9,0) 24%),linear-gradient(to top,#020609 0%,rgba(2,6,9,0) 24%),radial-gradient(ellipse 100% 72% at 50% 46%,#0D1A2B 0%,#070F1C 52%,#020609 100%);}
+  body .flt-tex{position:absolute;inset:0;z-index:1;pointer-events:none;background-image:radial-gradient(rgba(62,207,190,.05) 1px,transparent 1px);background-size:46px 46px;-webkit-mask-image:radial-gradient(ellipse 72% 62% at 50% 46%,#000 0%,transparent 82%);mask-image:radial-gradient(ellipse 72% 62% at 50% 46%,#000 0%,transparent 82%);}
+  body .flt-stage{position:relative;z-index:2;max-width:1320px;margin:0 auto;}
+  body .flt-headline{text-align:center;margin-bottom:clamp(48px,6vw,86px);}
+  body .flt-headline h2{font-size:clamp(2rem,3.6vw,3.1rem);font-weight:900;color:#fff;letter-spacing:-.03em;line-height:1.12;margin-bottom:14px;}
+  body .flt-headline p{font-size:clamp(.95rem,1.3vw,1.1rem);color:rgba(255,255,255,.55);font-weight:500;letter-spacing:.2px;}
+  body .flt-grid{display:grid;grid-template-columns:1fr minmax(340px,440px) 1fr;align-items:center;column-gap:clamp(32px,5vw,88px);row-gap:64px;}
+  body .flt-col{position:relative;z-index:4;min-width:0;display:flex;flex-direction:column;gap:clamp(38px,4.4vw,64px);}
+  body .flt-feat{min-width:0;display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.2,.7,.2,1);}
+  body .flt-col-r .flt-feat{text-align:right;}
+  body .flt-col-l .flt-feat{text-align:left;}
+  body .flt-feat-ico{width:50px;height:50px;display:flex;align-items:center;justify-content:center;border-radius:13px;margin-bottom:18px;background:rgba(62,207,190,.09);border:1px solid rgba(62,207,190,.20);transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease,border-color .35s ease,background .35s ease;}
+  body .flt-col-r .flt-feat-ico{margin-left:auto;margin-right:0;}
+  body .flt-col-l .flt-feat-ico{margin-right:auto;margin-left:0;}
+  body .flt-feat-ico svg{width:25px;height:25px;color:#3ECFBE;}
+  body .flt-feat-title{font-size:clamp(1.25rem,1.7vw,1.5rem);font-weight:800;color:#fff;letter-spacing:-.01em;line-height:1.25;margin-bottom:12px;}
+  body .flt-feat-sub{font-size:clamp(.92rem,1.1vw,1rem);color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:20px;max-width:340px;}
+  body .flt-col-r .flt-feat-sub{margin-left:auto;}
+  body .flt-col-l .flt-feat-sub{margin-right:auto;}
+  body .flt-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;}
+  body .flt-pt{font-size:.92rem;color:rgba(255,255,255,.72);line-height:1.5;position:relative;}
+  body .flt-col-r .flt-pt{padding-right:18px;}
+  body .flt-col-l .flt-pt{padding-left:18px;}
+  body .flt-pt::before{content:'';position:absolute;top:.5em;width:6px;height:6px;border-radius:50%;background:#3ECFBE;box-shadow:0 0 8px rgba(62,207,190,.55);}
+  body .flt-col-r .flt-pt::before{right:0;}
+  body .flt-col-l .flt-pt::before{left:0;}
+  body .flt-feat:hover{transform:translateY(-5px);}
+  body .flt-feat:hover .flt-feat-ico{background:rgba(62,207,190,.16);border-color:rgba(62,207,190,.45);box-shadow:0 8px 26px rgba(62,207,190,.22);transform:translateY(-2px);}
+  body .flt-center{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:22px;}
+  body .flt-glow{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:min(600px,90vw);aspect-ratio:1;border-radius:50%;z-index:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(62,207,190,.30) 0%,rgba(62,207,190,.12) 34%,rgba(62,207,190,.04) 55%,transparent 70%);transition:opacity .55s ease,transform .55s ease;}
+  body .flt-ring{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:min(400px,72vw);aspect-ratio:1;border-radius:50%;border:1px solid rgba(62,207,190,.12);z-index:0;pointer-events:none;}
+  body .flt-char-wrap{position:relative;z-index:2;animation:fltFloat 7s ease-in-out infinite;}
+  body .flt-char-wrap::after{content:'';position:absolute;left:50%;bottom:-2%;transform:translateX(-50%);width:62%;height:34px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.55) 0%,transparent 72%);filter:blur(7px);z-index:-1;}
+  body .flt-char{display:block;height:clamp(300px,40vw,460px);width:auto;max-width:100%;}
+  body .flt-badge{position:relative;z-index:2;background:rgba(62,207,190,.12);border:1px solid rgba(62,207,190,.30);color:#5fe0d2;font-size:.66rem;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;padding:6px 16px;border-radius:99px;}
+  body .flt-center:hover .flt-glow{transform:translate(-50%,-50%) scale(1.07);opacity:.94;}
+  @keyframes fltFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  body .flt-reveal{opacity:1;transform:none;} /* preview: reveal already applied */
+  @media(max-width:1023px){
+    body .flt-grid{grid-template-columns:1fr;row-gap:clamp(46px,7vw,72px);}
+    body .flt-center{order:-1;}
+    body .flt-col{flex-direction:row;gap:clamp(28px,5vw,48px);width:100%;max-width:820px;margin-inline:auto;}
+    body .flt-col .flt-feat{flex:1;min-width:0;}
+    body .flt-feat-sub{max-width:none;}
+    body .flt-col-l .flt-feat{text-align:right;}
+    body .flt-col-l .flt-feat-ico{margin-left:auto;margin-right:0;}
+    body .flt-col-l .flt-feat-sub{margin-left:auto;margin-right:0;}
+    body .flt-col-l .flt-pt{padding-left:0;padding-right:18px;}
+    body .flt-col-l .flt-pt::before{left:auto;right:0;}
+  }
+  @media(max-width:600px){
+    body .flt-col{flex-direction:column;gap:clamp(34px,8vw,48px);width:100%;max-width:420px;}
+    body .flt-char{height:clamp(240px,68vw,330px);}
+  }
+</style></head><body>
+
+<section class="flt-outer" id="flt-section" dir="rtl">
+  <div class="flt-bg" aria-hidden="true"></div>
+  <div class="flt-tex" aria-hidden="true"></div>
+  <div class="flt-stage">
+    <div class="flt-headline flt-reveal">
+      <h2>הכל בפלטפורמה אחת</h2>
+      <p>16 אפליקציות &middot; 300,000+ עובדים &middot; חוויה אחת</p>
+    </div>
+    <div class="flt-grid">
+      <div class="flt-col flt-col-r">
+        <article class="flt-feat flt-reveal">
+          <div class="flt-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3 class="flt-feat-title">תקשורת פנים-ארגונית</h3>
+          <p class="flt-feat-sub">ערוץ תקשורת ארגוני חכם, אחיד ובזמן אמת</p>
+          <ul class="flt-list"><li class="flt-pt">הודעות לפי תפקיד ומחלקה</li><li class="flt-pt">Push notifications חכמות</li><li class="flt-pt">ניהול תוכן מרכזי</li></ul>
+        </article>
+        <article class="flt-feat flt-reveal">
+          <div class="flt-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-4a2 2 0 0 0-2 2v2h8V5a2 2 0 0 0-2-2z"/><circle cx="17" cy="14" r="1" fill="currentColor"/></svg></div>
+          <h3 class="flt-feat-title">הארנק שלי</h3>
+          <p class="flt-feat-sub">הטבות, תגמולים וקופת חיסכון בקצות האצבעות</p>
+          <ul class="flt-list"><li class="flt-pt">מטבעות חברה ומסלולי תגמול</li><li class="flt-pt">הטבות מותאמות אישית</li><li class="flt-pt">היסטוריית פרסים ומימוש</li></ul>
+        </article>
+      </div>
+      <div class="flt-center flt-reveal">
+        <div class="flt-glow" aria-hidden="true"></div>
+        <div class="flt-ring" aria-hidden="true"></div>
+        <div class="flt-char-wrap"><img src="wendi-char2.png" alt="Wendi" class="flt-char"/></div>
+        <div class="flt-badge">הפלטפורמה שלך</div>
+      </div>
+      <div class="flt-col flt-col-l">
+        <article class="flt-feat flt-reveal">
+          <div class="flt-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+          <h3 class="flt-feat-title">למידה והכשרה</h3>
+          <p class="flt-feat-sub">12,000+ תכנים, קורסים ו-SCORM בפלטפורמה אחת</p>
+          <ul class="flt-list"><li class="flt-pt">נתיבי לימוד לפי תפקיד</li><li class="flt-pt">הסמכות ותעודות דיגיטליות</li><li class="flt-pt">דוחות ציות בזמן אמת</li></ul>
+        </article>
+        <article class="flt-feat flt-reveal">
+          <div class="flt-feat-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <h3 class="flt-feat-title">הערכת ביצועים</h3>
+          <p class="flt-feat-sub">סקרי 360&deg;, KPIs ומשוב מתמשך לכל הארגון</p>
+          <ul class="flt-list"><li class="flt-pt">הערכת 360&deg; עמיתים ומנהלים</li><li class="flt-pt">לוח KPIs אינטראקטיבי</li><li class="flt-pt">תובנות AI ודוחות מעורבות</li></ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+</body></html>

@@ -1,0 +1,101 @@
+/* Tailwind layer — base utilities and the @theme tokens below. */
+@import "tailwindcss";
+
+/* Original Wendi stylesheet, copied verbatim from index.html so legacy
+   sections still render 1:1. As each section gets refactored to Tailwind
+   utilities, we'll drop its rules from here.
+   See memory/feedback_pixel_perfect_port.md. */
+@import "./legacy.css";
+
+/* ─────────────────────────────────────────────────────────────
+   Wendi design tokens — exposed as Tailwind utilities through
+   `@theme inline`. Token names are domain-specific (brand, ink,
+   muted-fg, line) so they never collide with default Tailwind
+   color names. Add a token here once, use it everywhere as a
+   utility (e.g. `bg-brand`, `text-ink`, `border-line`).
+   ───────────────────────────────────────────────────────────── */
+@theme inline {
+  /* Brand */
+  --color-brand:         #0D9488;                   /* Light-theme teal accent */
+  --color-brand-dark:    #2BADA0;                   /* Hover / pressed */
+  --color-brand-bright:  #3ECFBE;                   /* Dark-theme accent (later) */
+  --color-brand-glow:    rgba(13, 148, 136, 0.14);  /* Soft radial halo */
+
+  /* Ink — near-black for hero title + dark CTAs */
+  --color-ink:           #0A0A0A;
+  --color-ink-2:         #0F172A;                   /* slate-900-ish, used for body */
+
+  /* Text scale */
+  --color-muted-fg:      #475569;                   /* slate-600 — secondary body */
+  --color-paper:         #ffffff;                   /* Light-theme page background */
+
+  /* Hairlines / glass — alpha tints of the ink */
+  --color-line:          rgba(15, 23, 42, 0.07);
+  --color-line-2:        rgba(15, 23, 42, 0.04);
+  --color-line-strong:   rgba(15, 23, 42, 0.22);
+  --color-line-glow:     rgba(15, 23, 42, 0.05);    /* Mascot floor glow */
+
+  /* Font (fed by next/font Heebo) */
+  --font-sans: var(--font-heebo), 'Heebo', sans-serif;
+
+  /* Easings */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Body font — comes after legacy.css so we win the cascade and use
+   the next/font-optimized Heebo instead of the legacy 'Heebo' string. */
+body {
+  font-family: var(--font-heebo), 'Heebo', sans-serif;
+}
+
+/* ─── Modulim page: 21st.dev cursor-glow on feature cards ──────────── */
+@property --glow-angle {
+  syntax: '<angle>';
+  initial-value: 90deg;
+  inherits: false;
+}
+.mod-card-conic {
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--glow-angle, 90deg) at center,
+    transparent 0deg,
+    var(--mc-strong, rgba(13,148,136,0.8)) 55deg,
+    var(--mc, #0D9488) 90deg,
+    var(--mc-strong, rgba(13,148,136,0.8)) 125deg,
+    transparent 180deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+}
+.mod-card-spot {
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    var(--mc-soft, rgba(13,148,136,0.18)),
+    transparent 60%
+  );
+}
+
+@keyframes mod-card-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* IntegrationsOrbit — colorful "snake" arc that travels around the outer ring.
+   Circumference is set via pathLength="301.6" on the <circle>; offsetting by
+   that amount = one full loop around the ring. */
+@keyframes orbit-snake-spin {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -301.6; }
+}
+.orbit-snake-path {
+  animation: orbit-snake-spin 9s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-snake-path { animation: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mod-feat-card { animation: none !important; }
+}
+
