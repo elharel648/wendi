@@ -72,7 +72,7 @@ export function LogoMarquee({
   const loopLogos = [...logos, ...logos];
 
   return (
-    <section className="w-full bg-white py-20 md:py-28" dir="rtl">
+    <section className="w-full bg-white pt-2 pb-20 md:pt-4 md:pb-28" dir="rtl">
       {/* React 19 managed style — `precedence` + `href` = hoisted to <head>
           and NEVER stripped mid-render. This is the fix for the "logos
           disappear after a few seconds" bug from before. */}
@@ -84,7 +84,7 @@ export function LogoMarquee({
       `}</style>
 
       {/* Heading */}
-      <div className="mx-auto mb-12 max-w-3xl px-6 text-center">
+      <div className="mx-auto mb-6 max-w-3xl px-6 text-center">
         <h2 className="text-balance font-medium text-base text-slate-500 md:text-lg">
           {heading}
         </h2>
@@ -112,9 +112,13 @@ export function LogoMarquee({
                 alt={logo.alt}
                 draggable={false}
                 className={cn(
-                  "max-h-12 max-w-[130px] w-auto select-none object-contain transition-transform duration-500 hover:scale-110 md:max-h-14 md:max-w-[150px]",
+                  "max-h-12 max-w-[130px] w-auto select-none object-contain transition-all duration-500 hover:scale-110 hover:[filter:none] md:max-h-14 md:max-w-[150px]",
                   logo.className,
                 )}
+                style={{
+                  filter:
+                    "grayscale(100%) brightness(0.35) contrast(1.4) opacity(0.85)",
+                }}
               />
             </div>
           ))}

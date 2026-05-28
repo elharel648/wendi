@@ -57,7 +57,7 @@ export function ModulesSideNav() {
           initial={{ opacity: 0, x: 12 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 12 }}
-          transition={{ duration: 0.5, ease: expo }}
+          transition={{ duration: 0.8, ease: expo }}
           className="pointer-events-none fixed start-4 top-1/2 z-40 hidden -translate-y-1/2 xl:block"
         >
           <ul className="pointer-events-auto relative flex flex-col gap-2.5">
@@ -97,7 +97,7 @@ export function ModulesSideNav() {
                             : "0 2px 10px rgba(15,23,42,0.07), 0 0 0 1px rgba(15,23,42,0.04)",
                         scale: isHovered && !isActive ? 1.06 : 1,
                       }}
-                      transition={{ duration: 0.3, ease: expo }}
+                      transition={{ duration: 0.5, ease: expo }}
                     >
                       {String(i + 1).padStart(2, "0")}
 
@@ -116,7 +116,7 @@ export function ModulesSideNav() {
                             ],
                           }}
                           transition={{
-                            duration: 1.9,
+                            duration: 2.8,
                             repeat: Infinity,
                             ease: "easeOut",
                           }}
@@ -139,7 +139,7 @@ export function ModulesSideNav() {
                             width: 0,
                             marginInlineStart: 0,
                           }}
-                          transition={{ duration: 0.35, ease: expo }}
+                          transition={{ duration: 0.55, ease: expo }}
                           className="overflow-hidden whitespace-nowrap rounded-full px-4 py-2 text-[0.82rem] font-bold leading-tight"
                           style={{
                             background: "#ffffff",

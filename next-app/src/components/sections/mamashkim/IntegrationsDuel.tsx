@@ -79,6 +79,35 @@ export function IntegrationsDuel() {
         <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-2">
           {/* Wendi side */}
           <div className="flex flex-col bg-paper p-6 sm:p-8 lg:p-10">
+            {/* Top identity chip — clear marker that this column is Wendi */}
+            <div className="mb-5 flex items-center">
+              <span
+                className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-[0.78rem] font-extrabold tracking-[0.10em] text-white"
+                style={{
+                  boxShadow:
+                    "0 6px 16px -4px rgba(15,23,42,0.35), 0 0 0 1px rgba(15,23,42,0.20)",
+                }}
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                וונדי
+              </span>
+              <span className="ms-3 text-[0.75rem] font-bold tracking-wider text-muted-fg">
+                הדרך שלנו
+              </span>
+            </div>
+
             <div className="relative w-full flex-1">
               <div className="pointer-events-none absolute inset-x-0 -bottom-2 z-10 h-16 bg-gradient-to-t from-paper to-transparent sm:h-20" />
               <CardStack items={WENDI_CARDS} />
@@ -98,6 +127,32 @@ export function IntegrationsDuel() {
 
           {/* Others side */}
           <div className="flex flex-col bg-paper p-6 sm:p-8 lg:p-10">
+            {/* Top identity chip — clear marker that this column is competitors */}
+            <div className="mb-5 flex items-center">
+              <span
+                className="inline-flex items-center gap-2 rounded-full border border-line bg-line-2/50 px-4 py-2 text-[0.78rem] font-extrabold tracking-[0.10em] text-muted-fg"
+              >
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+                אחרים
+              </span>
+              <span className="ms-3 text-[0.75rem] font-bold tracking-wider text-muted-fg">
+                החיבור הגנרי
+              </span>
+            </div>
+
             <div className="flex flex-1 flex-col justify-center">
               <div className="space-y-3 rounded-2xl border border-line bg-paper p-3 sm:p-4">
                 {OTHERS_ITEMS.map((item) => (

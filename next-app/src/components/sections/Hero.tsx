@@ -22,20 +22,7 @@ export function Hero({ content }: HeroProps) {
   const { titleLines, subtitle, ctas, mascot } = content;
 
   return (
-    <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-paper px-6 pt-24 md:px-16 md:pt-[100px]">
-      {/* Decorative teal blob — drifts on a long loop */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute -end-[100px] -top-[200px] h-[800px] w-[800px] rounded-full"
-        style={{ background: "radial-gradient(circle, var(--color-brand-glow) 0%, transparent 70%)" }}
-        animate={{
-          x:     [0, -30, 20, 0],
-          y:     [0, 20, -15, 0],
-          scale: [1, 1.05, 0.96, 1],
-        }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-      />
-
+    <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-paper px-6 pt-0 -mt-4 md:px-16 md:-mt-8">
       {/* Subtle film grain */}
       <div
         aria-hidden
@@ -51,8 +38,8 @@ export function Hero({ content }: HeroProps) {
         {/* Text column — inline-start (RIGHT in RTL).
             `translate-x-4` shifts the text block ~16px to the right
             without affecting layout of the mascot column. */}
-        <div className="md:w-[480px] md:translate-x-4">
-          <h1 className="mb-7 text-[clamp(2.4rem,5.5vw,5.5rem)] font-black leading-[1.06] tracking-[-0.04em] text-ink">
+        <div className="md:w-[560px] md:translate-x-4">
+          <h1 className="mb-7 text-[clamp(2.8rem,6.5vw,6.5rem)] font-black leading-[1.06] tracking-[-0.04em] text-ink">
             {titleLines.map((line, i) => (
               <motion.span
                 key={i}
@@ -68,7 +55,7 @@ export function Hero({ content }: HeroProps) {
           </h1>
 
           <motion.p
-            className="mb-10 max-w-[480px] text-[1.08rem] leading-[1.78] text-muted-fg [&_strong]:font-bold [&_strong]:text-ink-2"
+            className="mb-10 max-w-[560px] text-[1.2rem] leading-[1.78] text-muted-fg [&_strong]:font-bold [&_strong]:text-ink-2"
             variants={wInVariants}
             initial="hidden"
             animate="visible"
@@ -98,7 +85,7 @@ export function Hero({ content }: HeroProps) {
 
         {/* Mascot column — inline-end (LEFT in RTL) */}
         <motion.div
-          className="relative flex h-[420px] items-end justify-center md:h-[540px]"
+          className="relative flex h-[480px] items-center justify-center md:h-[620px]"
           variants={wInVariants}
           initial="hidden"
           animate="visible"
@@ -107,25 +94,25 @@ export function Hero({ content }: HeroProps) {
           {/* Pulsing ring 1 */}
           <motion.div
             aria-hidden
-            className="absolute left-1/2 bottom-5 h-[360px] w-[360px] rounded-full border border-line"
-            style={{ x: "-50%" }}
+            className="absolute left-1/2 top-1/2 h-[360px] w-[360px] rounded-full border border-line"
+            style={{ x: "-50%", y: "-50%" }}
             animate={{ scale: [1, 1.04, 1], opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
           />
-          {/* Pulsing ring 2 (larger, slightly offset) */}
+          {/* Pulsing ring 2 (larger) */}
           <motion.div
             aria-hidden
-            className="absolute left-1/2 -bottom-[50px] h-[520px] w-[520px] rounded-full border border-line-2"
-            style={{ x: "-50%" }}
+            className="absolute left-1/2 top-1/2 h-[520px] w-[520px] rounded-full border border-line-2"
+            style={{ x: "-50%", y: "-50%" }}
             animate={{ scale: [1, 1.04, 1], opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.9 }}
           />
-          {/* Soft elliptical floor glow */}
+          {/* Soft elliptical glow — centred behind mascot */}
           <div
             aria-hidden
-            className="absolute bottom-0 left-1/2 h-[200px] w-[340px] rounded-full"
+            className="absolute left-1/2 top-1/2 h-[200px] w-[340px] rounded-full"
             style={{
-              transform: "translateX(-50%)",
+              transform: "translate(-50%, -50%)",
               background:
                 "radial-gradient(ellipse, var(--color-line-glow) 0%, transparent 70%)",
             }}
@@ -136,7 +123,7 @@ export function Hero({ content }: HeroProps) {
             src={mascot.src}
             alt={mascot.alt}
             className="relative z-10 object-contain will-change-transform"
-            style={{ height: "min(80vw, 500px)", width: "auto" }}
+            style={{ height: "min(85vw, 580px)", width: "auto" }}
             animate={{
               y: [0, -14, 0],
               scale: [1, 1.018, 1],

@@ -7,6 +7,40 @@
    See memory/feedback_pixel_perfect_port.md. */
 @import "./legacy.css";
 
+/* Neutralize the legacy bare-`nav` rule for our new shadcn-based header.
+   legacy.css line 46 targets `nav { position: fixed; height: 82px; ... }`
+   which would otherwise capture the inner <nav> Radix NavigationMenu renders.
+   Scoped to .wendi-nav so legacy pages (if any reintroduced) stay unaffected. */
+.wendi-nav nav {
+  position: static;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+  border: 0;
+  transition: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Force-remove any border-bottom on the navbar itself (top-level <header>)
+   to eliminate the stray hairline appearing between the header and the
+   Hero section. Scoped to the .wendi-nav element only — children
+   (e.g. the CTA shadow) are not affected. */
+header.wendi-nav {
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+}
+/* Also kill any border on the NavigationMenu primitive containers and
+   the always-mounted Viewport wrapper, which can render a hairline even
+   when no dropdown is open. */
+.wendi-nav [data-radix-navigation-menu-viewport],
+.wendi-nav [data-orientation] {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
 /* ─────────────────────────────────────────────────────────────
    Wendi design tokens — exposed as Tailwind utilities through
    `@theme inline`. Token names are domain-specific (brand, ink,
@@ -35,6 +69,23 @@
   --color-line-strong:   rgba(15, 23, 42, 0.22);
   --color-line-glow:     rgba(15, 23, 42, 0.05);    /* Mascot floor glow */
 
+  /* shadcn token layer — required by shadcn/ui primitives (NavigationMenu,
+     Sheet, Accordion, Button, etc.). Mapped to the Wendi palette above so
+     shadcn blocks blend with the site instead of looking generic. */
+  --color-background:           #ffffff;
+  --color-foreground:           #0A0A0A;
+  --color-muted:                #F1F5F9;
+  --color-muted-foreground:     #475569;
+  --color-popover:              #ffffff;
+  --color-popover-foreground:   #0A0A0A;
+  --color-accent:               #F1F5F9;
+  --color-accent-foreground:    #0A0A0A;
+  --color-primary:              #0D9488;
+  --color-primary-foreground:   #ffffff;
+  --color-border:               rgba(15, 23, 42, 0.12);
+  --color-input:                rgba(15, 23, 42, 0.12);
+  --color-ring:                 #0D9488;
+
   /* Font (fed by next/font Heebo) */
   --font-sans: var(--font-heebo), 'Heebo', sans-serif;
 
@@ -42,10 +93,22 @@
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+@keyframes accordion-down {
+  from { height: 0; }
+  to   { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to   { height: 0; }
+}
+
 /* Body font — comes after legacy.css so we win the cascade and use
-   the next/font-optimized Heebo instead of the legacy 'Heebo' string. */
+   the next/font-optimized Heebo instead of the legacy 'Heebo' string.
+   Forces white background to override legacy `body { background: var(--dark) }`
+   (light-only site, no dark mode). */
 body {
   font-family: var(--font-heebo), 'Heebo', sans-serif;
+  background: #ffffff;
 }
 
 /* ─── Modulim page: 21st.dev cursor-glow on feature cards ──────────── */

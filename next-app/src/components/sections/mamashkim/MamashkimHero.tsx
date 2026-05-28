@@ -1,167 +1,80 @@
 "use client";
 
+import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 
 const TEAL = "#0D9488";
 const TEAL_BRIGHT = "#3ECFBE";
-const INK = "#0A0A0A";
 
-// Brand-aligned: every icon chip is teal, only intensity varies for hierarchy.
-type ToneKey = "teal" | "teal-deep" | "ink";
-
-const TONES: Record<ToneKey, { bg: string; fg: string }> = {
-  "teal":      { bg: "rgba(13,148,136,0.10)", fg: TEAL },
-  "teal-deep": { bg: "rgba(13,148,136,0.14)", fg: "#0F766E" },
-  "ink":       { bg: "rgba(10,10,10,0.06)",   fg: INK },
-};
-
-type SysRow = {
-  tone: ToneKey;
+type LeftRow = {
   title: string;
   subtitle: string;
-  badge: "SYNC" | "LIVE";
-  icon: React.ReactNode;
+  logo?: string;
+  initial?: string;
 };
 
-const ICO = (path: React.ReactNode) => (
+type RightRow = {
+  title: string;
+  subtitle: string;
+  glyph: React.ReactNode;
+};
+
+// Solid glyph helper — filled silhouettes, no stick-figure strokes.
+const GLYPH = (path: React.ReactNode) => (
   <svg
     viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={1.8}
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    fill="currentColor"
     aria-hidden="true"
-    style={{ width: 16, height: 16 }}
+    style={{ width: 17, height: 17 }}
   >
     {path}
   </svg>
 );
 
-// Left column — backend systems (SYNC)
-const LEFT_ROWS: SysRow[] = [
-  {
-    tone: "teal",
-    title: "SAP HR",
-    subtitle: "נתוני עובדים",
-    badge: "SYNC",
-    icon: ICO(
-      <>
-        <rect width={20} height={14} x={2} y={3} rx={2} />
-        <line x1={8} x2={16} y1={21} y2={21} />
-        <line x1={12} x2={12} y1={17} y2={21} />
-      </>,
-    ),
-  },
-  {
-    tone: "teal-deep",
-    title: "Synerion",
-    subtitle: "נוכחות ומשמרות",
-    badge: "SYNC",
-    icon: ICO(
-      <>
-        <circle cx={12} cy={12} r={10} />
-        <polyline points="12 6 12 12 16 14" />
-      </>,
-    ),
-  },
-  {
-    tone: "teal",
-    title: "Power BI",
-    subtitle: "מדדים",
-    badge: "SYNC",
-    icon: ICO(
-      <>
-        <path d="M3 3v16a2 2 0 0 0 2 2h16" />
-        <path d="M7 16h2v3H7zM12 11h2v8h-2zM17 7h2v12h-2z" fill="currentColor" />
-      </>,
-    ),
-  },
-  {
-    tone: "teal-deep",
-    title: "Legacy API",
-    subtitle: "מותאם אישית",
-    badge: "SYNC",
-    icon: ICO(
-      <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />,
-    ),
-  },
-  {
-    tone: "teal",
-    title: "Comeet",
-    subtitle: "גיוס",
-    badge: "SYNC",
-    icon: ICO(
-      <>
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx={9} cy={7} r={4} />
-      </>,
-    ),
-  },
+// Left column — backend systems (SYNC). Real brand logos where available.
+const LEFT_ROWS: LeftRow[] = [
+  { title: "SAP HR",     subtitle: "נתוני עובדים",   logo: "/logos-systems/sap.svg" },
+  { title: "Synerion",   subtitle: "נוכחות ומשמרות", logo: "/logos-systems/synerion.svg" },
+  { title: "Power BI",   subtitle: "מדדים",          logo: "/logos-systems/powerbi.svg" },
+  { title: "Legacy API", subtitle: "מותאם אישית",    initial: "{ }" },
+  { title: "Comeet",     subtitle: "גיוס",           logo: "/logos-systems/comeet.svg" },
 ];
 
-// Right column — user touchpoints (LIVE)
-const RIGHT_ROWS: SysRow[] = [
+// Right column — user touchpoints (LIVE). Filled glyphs for warmth, not wire stick-figures.
+const RIGHT_ROWS: RightRow[] = [
   {
-    tone: "ink",
     title: "מנהל",
     subtitle: "דשבורד ניהולי",
-    badge: "LIVE",
-    icon: ICO(
-      <>
-        <rect width={20} height={14} x={2} y={7} rx={2} />
-        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-      </>,
+    glyph: GLYPH(
+      <path d="M3 4.5A1.5 1.5 0 0 1 4.5 3h15A1.5 1.5 0 0 1 21 4.5v11A1.5 1.5 0 0 1 19.5 17H13v2h3a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2h3v-2H4.5A1.5 1.5 0 0 1 3 15.5v-11Zm3 2.5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2v-7H6Zm4 0v7h2V9.5a1 1 0 0 1 2 0V14h2V7h-6Z" />,
     ),
   },
   {
-    tone: "ink",
     title: "עובד שטח",
     subtitle: "נייד",
-    badge: "LIVE",
-    icon: ICO(
-      <>
-        <path d="M2.5 12a9.5 9.5 0 0 1 19 0" />
-        <circle cx={12} cy={11} r={4} />
-        <path d="M18 21a8 8 0 0 0-12 0" />
-      </>,
+    glyph: GLYPH(
+      <path d="M12 2.25c-3.2 0-5.75 2.55-5.75 5.75 0 4.31 5.05 12.46 5.27 12.8a.57.57 0 0 0 .96 0c.22-.34 5.27-8.49 5.27-12.8 0-3.2-2.55-5.75-5.75-5.75Zm0 8a2.25 2.25 0 1 1 0-4.5 2.25 2.25 0 0 1 0 4.5Z" />,
     ),
   },
   {
-    tone: "ink",
     title: "קליני",
     subtitle: "עמדה נייחת",
-    badge: "LIVE",
-    icon: ICO(
-      <>
-        <path d="M18 22V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v18" />
-        <path d="M14 14h-4M14 18h-4M14 8h-4" />
-      </>,
+    glyph: GLYPH(
+      <path d="M5 3.5A1.5 1.5 0 0 1 6.5 2h11A1.5 1.5 0 0 1 19 3.5v17a1 1 0 0 1-1.5.87L12 18.21l-5.5 3.16A1 1 0 0 1 5 20.5v-17ZM9 8a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Zm0 4a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z" />,
     ),
   },
   {
-    tone: "ink",
     title: "מובייל",
     subtitle: "iOS · Android",
-    badge: "LIVE",
-    icon: ICO(
-      <>
-        <rect width={14} height={20} x={5} y={2} rx={2} />
-        <path d="M12 18h.01" />
-      </>,
+    glyph: GLYPH(
+      <path d="M7 2.5A1.5 1.5 0 0 1 8.5 1h7A1.5 1.5 0 0 1 17 2.5v19A1.5 1.5 0 0 1 15.5 23h-7A1.5 1.5 0 0 1 7 21.5v-19ZM12 19.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2ZM9 3.5v.25c0 .41.34.75.75.75h4.5a.75.75 0 0 0 .75-.75V3.5H9Z" />,
     ),
   },
   {
-    tone: "ink",
     title: "כל מכשיר",
     subtitle: "Web · Desktop",
-    badge: "LIVE",
-    icon: ICO(
-      <>
-        <circle cx={12} cy={12} r={10} />
-        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-        <path d="M2 12h20" />
-      </>,
+    glyph: GLYPH(
+      <path d="M4 4.5A1.5 1.5 0 0 1 5.5 3h13A1.5 1.5 0 0 1 20 4.5v10a1.5 1.5 0 0 1-1.5 1.5H13v2h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2H5.5A1.5 1.5 0 0 1 4 14.5v-10Zm2 .5v9h12V5H6Z" />,
     ),
   },
 ];
@@ -321,7 +234,7 @@ function IntegrationConsole() {
       >
         <div className="flex flex-col gap-[9px]">
           {LEFT_ROWS.map((row) => (
-            <SysrowItem key={row.title} row={row} />
+            <SystemRow key={row.title} row={row} />
           ))}
         </div>
 
@@ -329,7 +242,7 @@ function IntegrationConsole() {
 
         <div className="flex flex-col gap-[9px]">
           {RIGHT_ROWS.map((row) => (
-            <SysrowItem key={row.title} row={row} />
+            <TouchpointRow key={row.title} row={row} />
           ))}
         </div>
       </div>
@@ -351,22 +264,30 @@ const BEAM_PATHS = [
   "M 230 180 C 310 180, 310 330, 430 330",
 ];
 
-function SysrowItem({ row }: { row: SysRow }) {
-  const tone = TONES[row.tone];
-  const isTeal = row.tone !== "ink";
+// Shared row shell — keeps both columns visually consistent.
+function RowShell({
+  children,
+  variant,
+}: {
+  children: React.ReactNode;
+  variant: "system" | "touchpoint";
+}) {
   return (
     <div
       className="group relative flex items-center gap-2.5 overflow-hidden rounded-xl border px-3 py-[11px] text-[0.84rem] font-semibold text-ink-2 transition-all duration-300 hover:-translate-x-1"
       style={{
-        borderColor: isTeal ? "rgba(13,148,136,0.16)" : "rgba(10,10,10,0.10)",
-        background: isTeal
-          ? "linear-gradient(135deg, #FFFFFF 0%, #F4FBF9 100%)"
-          : "linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)",
+        borderColor:
+          variant === "system"
+            ? "rgba(13,148,136,0.16)"
+            : "rgba(10,10,10,0.10)",
+        background:
+          variant === "system"
+            ? "linear-gradient(135deg, #FFFFFF 0%, #F4FBF9 100%)"
+            : "linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)",
         boxShadow:
           "0 1px 0 rgba(255,255,255,0.9) inset, 0 1px 2px rgba(15,23,42,0.04)",
       }}
     >
-      {/* Hover-only teal sheen sliding across the row */}
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -375,19 +296,56 @@ function SysrowItem({ row }: { row: SysRow }) {
             "linear-gradient(110deg, transparent 30%, rgba(13,148,136,0.06) 50%, transparent 70%)",
         }}
       />
+      {children}
+    </div>
+  );
+}
+
+function Badge({ kind }: { kind: "SYNC" | "LIVE" }) {
+  return (
+    <span
+      className="relative ms-auto rounded-full px-2 py-0.5 text-[0.65rem] font-bold"
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(13,148,136,0.16), rgba(62,207,190,0.10))",
+        color: TEAL,
+        letterSpacing: "0.04em",
+        boxShadow: "0 0 0 1px rgba(13,148,136,0.18) inset",
+      }}
+    >
+      {kind}
+    </span>
+  );
+}
+
+// Left column row — real brand logo on a clean white chip so the colors read true.
+function SystemRow({ row }: { row: LeftRow }) {
+  return (
+    <RowShell variant="system">
       <span
-        className="relative inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-105"
+        className="relative inline-flex h-8 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white p-[3px] transition-transform duration-300 group-hover:scale-105"
         style={{
-          background: isTeal
-            ? "linear-gradient(135deg, rgba(13,148,136,0.14), rgba(62,207,190,0.10))"
-            : "linear-gradient(135deg, rgba(10,10,10,0.08), rgba(10,10,10,0.04))",
-          color: tone.fg,
-          boxShadow: isTeal
-            ? "0 4px 12px -4px rgba(13,148,136,0.30), 0 0 0 1px rgba(13,148,136,0.12) inset"
-            : "0 4px 12px -4px rgba(10,10,10,0.15), 0 0 0 1px rgba(10,10,10,0.06) inset",
+          boxShadow:
+            "0 1px 2px rgba(15,23,42,0.06), 0 0 0 1px rgba(15,23,42,0.06) inset",
         }}
       >
-        {row.icon}
+        {row.logo ? (
+          <Image
+            src={row.logo}
+            alt={`${row.title} logo`}
+            width={48}
+            height={20}
+            className="h-full w-full object-contain"
+            unoptimized
+          />
+        ) : (
+          <span
+            className="font-mono text-[0.72rem] font-bold"
+            style={{ color: TEAL }}
+          >
+            {row.initial}
+          </span>
+        )}
       </span>
       <span className="relative flex flex-col gap-0.5 leading-[1.2]">
         <span>{row.title}</span>
@@ -395,19 +353,35 @@ function SysrowItem({ row }: { row: SysRow }) {
           {row.subtitle}
         </small>
       </span>
+      <Badge kind="SYNC" />
+    </RowShell>
+  );
+}
+
+// Right column row — filled monochrome glyphs (touchpoints are abstract, no real logos exist).
+function TouchpointRow({ row }: { row: RightRow }) {
+  return (
+    <RowShell variant="touchpoint">
       <span
-        className="relative ms-auto rounded-full px-2 py-0.5 text-[0.65rem] font-bold"
+        className="relative inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-105"
         style={{
           background:
-            "linear-gradient(135deg, rgba(13,148,136,0.16), rgba(62,207,190,0.10))",
-          color: TEAL,
-          letterSpacing: "0.04em",
-          boxShadow: "0 0 0 1px rgba(13,148,136,0.18) inset",
+            "linear-gradient(135deg, rgba(10,10,10,0.92), rgba(30,30,30,0.78))",
+          color: "#FFFFFF",
+          boxShadow:
+            "0 4px 12px -4px rgba(10,10,10,0.30), 0 0 0 1px rgba(10,10,10,0.08) inset",
         }}
       >
-        {row.badge}
+        {row.glyph}
       </span>
-    </div>
+      <span className="relative flex flex-col gap-0.5 leading-[1.2]">
+        <span>{row.title}</span>
+        <small className="text-[0.68rem] font-medium text-muted-fg">
+          {row.subtitle}
+        </small>
+      </span>
+      <Badge kind="LIVE" />
+    </RowShell>
   );
 }
 

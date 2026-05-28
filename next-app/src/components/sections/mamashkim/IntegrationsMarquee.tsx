@@ -85,63 +85,22 @@ export function IntegrationsMarquee() {
           </p>
         </div>
 
-        {/* Row 1 — moves leftward */}
-        <LogoMarqueeRow items={ROW_1} reverse={false} />
-
-        {/* Row 2 — moves rightward (opposite direction) */}
-        <div className="mt-6">
-          <LogoMarqueeRow items={ROW_2} reverse />
+        {/* Two static rows of logos */}
+        <LogoRow items={ROW_1} />
+        <div className="mt-4">
+          <LogoRow items={ROW_2} />
         </div>
       </div>
-
-      {/*
-        GLOBAL animations — `<style jsx global>` is required because the keyframes
-        must be visible to <LogoMarqueeRow /> which is a separate component.
-      */}
-      <style jsx global>{`
-        @keyframes wendi-logos-ltr {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
-        }
-        @keyframes wendi-logos-rtl {
-          from { transform: translateX(-50%); }
-          to   { transform: translateX(0); }
-        }
-      `}</style>
     </section>
   );
 }
 
-function LogoMarqueeRow({
-  items,
-  reverse,
-}: {
-  items: string[];
-  reverse: boolean;
-}) {
-  // Duplicate once for seamless loop (matches the HTML which duplicates manually)
-  const doubled = [...items, ...items];
-
+function LogoRow({ items }: { items: string[] }) {
   return (
-    <div
-      className="relative overflow-hidden"
-      style={{
-        maskImage:
-          "linear-gradient(to right, transparent 0, #000 96px, #000 calc(100% - 96px), transparent 100%)",
-        WebkitMaskImage:
-          "linear-gradient(to right, transparent 0, #000 96px, #000 calc(100% - 96px), transparent 100%)",
-      }}
-    >
-      <div
-        className="flex w-max items-center gap-6 py-3"
-        style={{
-          animation: `${reverse ? "wendi-logos-rtl" : "wendi-logos-ltr"} 50s linear infinite`,
-        }}
-      >
-        {doubled.map((label, i) => (
-          <LogoChip key={`${label}-${i}`} label={label} />
-        ))}
-      </div>
+    <div className="flex flex-wrap items-center justify-center gap-3 py-2">
+      {items.map((label) => (
+        <LogoChip key={label} label={label} />
+      ))}
     </div>
   );
 }
