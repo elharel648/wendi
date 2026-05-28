@@ -191,11 +191,11 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
   ) => {
     const canvas = useRef<HTMLDivElement>(null);
     const engine = useRef(Engine.create());
-    const render = useRef<Render>();
-    const runner = useRef<Runner>();
+    const render = useRef<Render | undefined>(undefined);
+    const runner = useRef<Runner | undefined>(undefined);
     const bodiesMap = useRef(new Map<string, PhysicsBody>());
-    const frameId = useRef<number>();
-    const mouseConstraint = useRef<Matter.MouseConstraint>();
+    const frameId = useRef<number | undefined>(undefined);
+    const mouseConstraint = useRef<Matter.MouseConstraint | undefined>(undefined);
     const mouseDown = useRef(false);
     const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
 
@@ -224,7 +224,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
               strokeStyle: debug ? "#333333" : "#00000000",
               lineWidth: debug ? 3 : 0,
             },
-          });
+          } as Matter.IChamferableBodyDefinition);
         } else if (props.bodyType === "svg") {
           const paths = element.querySelectorAll("path");
           const vertexSets: Matter.Vector[][] = [];
@@ -243,7 +243,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
               strokeStyle: debug ? "#333333" : "#00000000",
               lineWidth: debug ? 3 : 0,
             },
-          });
+          } as Matter.IBodyDefinition);
         } else {
           body = Bodies.rectangle(x, y, width, height, {
             ...props.matterBodyOptions,
@@ -253,7 +253,7 @@ const Gravity = forwardRef<GravityRef, GravityProps>(
               strokeStyle: debug ? "#333333" : "#00000000",
               lineWidth: debug ? 3 : 0,
             },
-          });
+          } as Matter.IChamferableBodyDefinition);
         }
 
         if (body) {
