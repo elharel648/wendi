@@ -11,7 +11,7 @@ export function ModulimHero() {
     <section
       dir="rtl"
       aria-label="מודולים ופיצ׳רים"
-      className="relative isolate flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-paper px-6 pb-16 pt-28 md:pt-32"
+      className="relative isolate flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-paper px-4 pb-12 pt-24 sm:px-6 sm:pb-16 sm:pt-28 md:pt-32"
     >
       <SoftGlow />
 
@@ -21,7 +21,7 @@ export function ModulimHero() {
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.0, ease: expo, delay: 0.18 }}
-          className="mb-7 text-[clamp(2.6rem,6.4vw,5.6rem)] font-black leading-[1.1] tracking-[-0.045em] text-ink"
+          className="mb-6 text-[clamp(2rem,8vw,5.6rem)] font-black leading-[1.1] tracking-[-0.045em] text-ink md:mb-7"
         >
           כל כלי במקום הנכון
         </motion.h1>
@@ -31,7 +31,7 @@ export function ModulimHero() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.95, ease: expo, delay: 0.85 }}
-          className="mx-auto max-w-[620px] text-[1.08rem] leading-[1.8] text-muted-fg md:text-[1.15rem]"
+          className="mx-auto max-w-[620px] text-[1rem] leading-[1.75] text-muted-fg md:text-[1.15rem] md:leading-[1.8]"
         >
           וונדי מציעה{" "}
           <strong className="font-bold text-ink-2">4 מודולים מרכזיים</strong>{" "}
@@ -44,7 +44,7 @@ export function ModulimHero() {
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.0, ease: expo, delay: 1.05 }}
-        className="relative z-10 mt-14 w-full md:mt-20"
+        className="relative z-10 mt-10 w-full md:mt-20"
       >
         <FluxCardHero />
       </motion.div>

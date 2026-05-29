@@ -72,7 +72,7 @@ function ModuleBlock({
                 "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 40px -28px rgba(76,29,149,0.16)",
             }}
           >
-            <div className="mx-auto max-w-[900px] px-4 py-10 md:px-8 md:py-14">
+            <div className="mx-auto max-w-[900px] px-3 py-8 sm:px-4 sm:py-10 md:px-8 md:py-14">
               <ModuleBlockInner
                 m={m}
                 index={index}
@@ -126,7 +126,7 @@ function ModuleBlockInner({
         className="mx-auto mb-14 max-w-[860px] md:mb-20"
       >
         {/* Eyebrow */}
-        <div className="mb-6 flex items-center gap-3 text-[11px] font-bold tracking-[0.28em] text-slate-400">
+        <div className="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-slate-400 sm:gap-3 sm:text-[11px] sm:tracking-[0.28em]">
           <span className="tabular-nums">
             <span className="text-slate-900">
               {String(index + 1).padStart(2, "0")}
@@ -134,7 +134,7 @@ function ModuleBlockInner({
             <span className="mx-1 text-slate-300">/</span>
             <span>04</span>
           </span>
-          <span className="h-px w-12 bg-slate-300" />
+          <span className="hidden h-px w-12 bg-slate-300 sm:inline-block" />
           <span style={{ color: TEAL }}>מודול</span>
           <span
             className="ms-auto inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] tabular-nums shadow-[0_2px_8px_rgba(15,23,42,0.04)]"
@@ -149,7 +149,7 @@ function ModuleBlockInner({
         </div>
 
         {/* Massive title */}
-        <h2 className="text-balance text-[clamp(2.2rem,4.6vw,3.8rem)] font-black leading-[1.05] tracking-[-0.045em] text-slate-900">
+        <h2 className="text-balance text-[clamp(1.75rem,6vw,3.8rem)] font-black leading-[1.05] tracking-[-0.04em] text-slate-900 md:tracking-[-0.045em]">
           {m.title}
         </h2>
 

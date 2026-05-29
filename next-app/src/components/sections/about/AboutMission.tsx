@@ -39,7 +39,7 @@ export function AboutMission({ content }: Props) {
 
   return (
     <section className="relative bg-white">
-      <HeroHighlight containerClassName="h-[40rem]">
+      <HeroHighlight containerClassName="h-[32rem] md:h-[40rem]">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{

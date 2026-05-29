@@ -45,8 +45,8 @@ export function AboutHero({ content }: Props) {
 
       {/* Main content — single centered column. Outer wrapper is the full-width
            flex centerer; inner block holds the actual content at max 1100px. */}
-      <div className="relative z-10 flex min-h-screen w-full items-center justify-center px-6 pt-24 pb-12 md:px-16 md:pt-28">
-        <div className="flex w-full max-w-[1100px] flex-col items-center gap-10 text-center">
+      <div className="relative z-10 flex min-h-screen w-full items-center justify-center px-4 pt-20 pb-10 sm:px-6 md:px-16 md:pt-28 md:pb-12">
+        <div className="flex w-full max-w-[1100px] flex-col items-center gap-6 text-center md:gap-10">
         {/* Mascot (top) */}
         <Mascot />
 
@@ -99,12 +99,11 @@ export function AboutHero({ content }: Props) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, ease: expo, delay: 0.7 }}
-          className="mx-auto flex w-full flex-wrap items-center"
+          className="mx-auto flex w-full flex-wrap items-center px-4 py-4 md:px-7 md:py-5"
           style={{
             background: "rgba(255,255,255,0.7)",
             border: "1px solid rgba(15,23,42,0.08)",
             borderRadius: "18px",
-            padding: "20px 28px",
             maxWidth: "640px",
             backdropFilter: "blur(20px) saturate(160%)",
             WebkitBackdropFilter: "blur(20px) saturate(160%)",

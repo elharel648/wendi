@@ -18,16 +18,15 @@ export function AboutTabs() {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 -mx-1 px-1 overflow-x-auto md:overflow-visible">
       {tabs.map((tab) => {
         const active = pathname === tab.href;
         return (
           <Link
             key={tab.href}
             href={tab.href}
-            className="inline-flex items-center justify-center font-semibold"
+            className="inline-flex items-center justify-center font-semibold whitespace-nowrap min-h-[44px] px-5 py-3 md:min-h-0 md:px-6 md:py-2.5"
             style={{
-              padding: "10px 24px",
               borderRadius: "999px",
               fontSize: "0.9rem",
               border: active

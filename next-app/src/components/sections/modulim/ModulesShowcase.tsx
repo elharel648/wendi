@@ -27,13 +27,13 @@ export function ModulesShowcase() {
       <DotGrid />
 
       {/* HERO */}
-      <div className="relative z-10 mx-auto max-w-[1240px] px-6 pt-36 pb-10 md:px-12 md:pt-48 md:pb-14">
+      <div className="relative z-10 mx-auto max-w-[1240px] px-4 pt-24 pb-8 sm:px-6 sm:pt-36 sm:pb-10 md:px-12 md:pt-48 md:pb-14">
         <Intro />
         <ModuleTabs activeId={activeId} onChange={setActiveId} />
       </div>
 
       {/* STAGE */}
-      <div className="relative z-10 mx-auto max-w-[1240px] px-6 pb-24 md:px-12 md:pb-32">
+      <div className="relative z-10 mx-auto max-w-[1240px] px-4 pb-16 sm:px-6 sm:pb-24 md:px-12 md:pb-32">
         <AnimatePresence mode="wait">
           <motion.div
             key={active.id}
@@ -121,7 +121,7 @@ function Intro() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, ease: expo, delay: 0.05 }}
-        className="mb-7 text-[clamp(2.6rem,5.6vw,5rem)] font-black leading-[1.02] tracking-[-0.045em] text-ink"
+        className="mb-7 text-[clamp(2rem,7.5vw,5rem)] font-black leading-[1.02] tracking-[-0.04em] text-ink md:tracking-[-0.045em]"
       >
         <span className="block">כל כלי במקום הנכון</span>
         <span
@@ -137,7 +137,7 @@ function Intro() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6, ease: expo, delay: 0.12 }}
-        className="max-w-[640px] text-[1.1rem] leading-[1.78] text-muted-fg"
+        className="max-w-[640px] text-[1rem] leading-[1.75] text-muted-fg md:text-[1.1rem] md:leading-[1.78]"
       >
         וונדי מציעה{" "}
         <strong className="font-bold text-ink-2">4 מודולים מרכזיים</strong>{" "}
@@ -310,7 +310,7 @@ function FeatureCard({
         delay: 0.04 + (index % 8) * 0.05,
       }}
       whileHover={{ y: -6 }}
-      className="group relative isolate overflow-hidden rounded-2xl border border-line bg-white/85 p-6 backdrop-blur transition-shadow duration-300 hover:shadow-[0_24px_60px_-22px_rgba(11,20,55,0.22)]"
+      className="group relative isolate overflow-hidden rounded-2xl border border-line bg-white/85 p-5 backdrop-blur transition-shadow duration-300 hover:shadow-[0_24px_60px_-22px_rgba(11,20,55,0.22)] md:p-6"
     >
       {/* gradient border on hover */}
       <span

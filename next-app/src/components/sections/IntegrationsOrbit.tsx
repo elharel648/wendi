@@ -97,7 +97,7 @@ export function IntegrationsOrbit() {
               transition={{ duration: 1.2, ease: expo }}
               className="flex justify-center md:order-2 relative"
             >
-              <div dir="ltr" className="group relative aspect-square w-full max-w-[28rem] sm:max-w-md">
+              <div dir="ltr" className="group relative aspect-square w-full max-w-[22rem] sm:max-w-md">
                 {/* טבעת הילה רכה מאחורי כל העסק */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0D9488]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
 
@@ -347,7 +347,7 @@ const IntegrationCard = ({
   return (
     <motion.div
       className={cn(
-        "relative z-30 flex size-14 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-lg shadow-slate-300/50",
+        "relative z-30 flex size-11 items-center justify-center overflow-hidden rounded-full border border-slate-200 bg-white shadow-lg shadow-slate-300/50 md:size-14",
         className,
       )}
       animate={floating ? { y: [-5, 5, -5] } : {}}

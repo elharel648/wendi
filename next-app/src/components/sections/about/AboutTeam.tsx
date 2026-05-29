@@ -14,8 +14,7 @@ const expo = [0.16, 1, 0.3, 1] as const;
 export function AboutTeam({ content }: Props) {
   return (
     <section
-      className="relative overflow-hidden bg-white"
-      style={{ padding: "120px 0 160px" }}
+      className="relative overflow-hidden bg-white py-20 md:pt-[120px] md:pb-[160px]"
     >
       {/* Top hairline */}
       <div
@@ -27,14 +26,14 @@ export function AboutTeam({ content }: Props) {
         }}
       />
 
-      <div className="relative z-10 flex w-full justify-center px-6 md:px-16">
+      <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
         <div className="w-full max-w-[1440px]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: expo }}
-          className="mb-14 max-w-[680px]"
+          className="mb-10 max-w-[680px] md:mb-14"
         >
           <h2
             style={{

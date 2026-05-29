@@ -35,7 +35,7 @@ export function PitronotHero() {
           offsets, which break under RTL inheritance and push bubbles offscreen. */}
       <div
         dir="ltr"
-        className="relative mt-10 h-[520px] w-full sm:h-[560px] md:h-[600px]"
+        className="relative mt-8 h-[380px] w-full sm:mt-10 sm:h-[480px] md:h-[600px]"
       >
         <Gravity
           gravity={{ x: 0, y: 1 }}
@@ -60,7 +60,7 @@ export function PitronotHero() {
                 <a
                   href={`#${s.id}`}
                   dir="rtl"
-                  className="flex cursor-grab select-none items-center gap-3 rounded-full px-5 py-3 text-white shadow-lg transition-transform active:cursor-grabbing sm:gap-4 sm:px-7 sm:py-4"
+                  className="flex min-h-[44px] cursor-grab select-none items-center gap-3 rounded-full px-5 py-3 text-white shadow-lg transition-transform active:cursor-grabbing sm:gap-4 sm:px-7 sm:py-4"
                   style={{
                     background: s.color,
                     boxShadow: `0 12px 28px -10px ${s.color}80, 0 0 0 1px rgba(255,255,255,0.18) inset`,

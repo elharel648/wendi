@@ -23,8 +23,7 @@ const ICONS = [Handshake, Sparkles, Crosshair, Lock, BarChart3, Sprout] as const
 export function AboutValues({ content }: Props) {
   return (
     <section
-      className="relative overflow-hidden bg-white"
-      style={{ padding: "120px 0 140px" }}
+      className="relative overflow-hidden bg-white py-20 md:pt-[120px] md:pb-[140px]"
     >
       <div
         aria-hidden
@@ -43,7 +42,7 @@ export function AboutValues({ content }: Props) {
         }}
       />
 
-      <div className="relative z-10 flex w-full justify-center px-6 md:px-16">
+      <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
         <div className="w-full max-w-[1440px]">
         {/* Section header */}
         <motion.div
@@ -51,7 +50,7 @@ export function AboutValues({ content }: Props) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: expo }}
-          className="mb-16 max-w-[640px]"
+          className="mb-10 max-w-[640px] md:mb-16"
         >
           <h2
             style={{

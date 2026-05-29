@@ -75,7 +75,7 @@ export function IntegrationsHero() {
     <section
       dir="rtl"
       aria-labelledby="integrations-heading"
-      className="relative isolate overflow-hidden bg-paper py-28 md:py-36"
+      className="relative isolate overflow-hidden bg-paper py-20 sm:py-28 md:py-36"
     >
       {/* dot-grid background */}
       <div
@@ -102,7 +102,7 @@ export function IntegrationsHero() {
         }}
       />
 
-      <div className="relative z-10 mx-auto max-w-[1240px] px-6 text-center">
+      <div className="relative z-10 mx-auto max-w-[1240px] px-4 text-center sm:px-6">
         {/* tag */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -125,7 +125,7 @@ export function IntegrationsHero() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6, ease: expoOut, delay: 0.05 }}
-          className="mx-auto max-w-[920px] text-[clamp(2.4rem,5.4vw,5rem)] font-black leading-[1.05] tracking-[-0.045em] text-ink"
+          className="mx-auto max-w-[920px] text-[clamp(1.9rem,7.5vw,5rem)] font-black leading-[1.05] tracking-[-0.04em] text-ink md:tracking-[-0.045em]"
         >
           <span className="block">
             וונדי{" "}
@@ -160,7 +160,7 @@ export function IntegrationsHero() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.55, ease: expoOut, delay: 0.12 }}
-          className="mx-auto mt-7 max-w-[640px] text-[1.08rem] leading-[1.78] text-muted-fg"
+          className="mx-auto mt-6 max-w-[640px] text-[1rem] leading-[1.7] text-muted-fg sm:mt-7 md:text-[1.08rem] md:leading-[1.78]"
         >
           בניגוד לפלטפורמות מדף, וונדי היא חברת מוצר שמבצעת ממשקים ייעודיים לפי
           צורך ארגוני, כדי לספק לעובדים{" "}
@@ -203,9 +203,9 @@ export function IntegrationsHero() {
         </motion.div>
 
         {/* divider strip + label */}
-        <div className="mt-20 mb-7 flex items-center gap-4">
+        <div className="mt-14 mb-6 flex items-center gap-3 sm:mt-20 sm:mb-7 sm:gap-4">
           <span className="h-px flex-1 bg-line" />
-          <span className="text-[0.82rem] font-semibold uppercase tracking-[0.22em] text-muted-fg">
+          <span className="text-center text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-fg sm:text-[0.82rem] sm:tracking-[0.22em]">
             30+ מערכות שכבר התחברנו אליהן
           </span>
           <span className="h-px flex-1 bg-line" />

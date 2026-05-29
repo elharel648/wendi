@@ -17,8 +17,7 @@ const expo = [0.16, 1, 0.3, 1] as const;
 export function AboutSubHero({ eyebrow, title, sub }: Props) {
   return (
     <section
-      className="relative isolate overflow-hidden bg-white"
-      style={{ padding: "140px 0 80px" }}
+      className="relative isolate overflow-hidden bg-white pt-24 pb-12 md:pt-[140px] md:pb-20"
     >
       {/* Soft ambient glows */}
       <div
@@ -38,7 +37,7 @@ export function AboutSubHero({ eyebrow, title, sub }: Props) {
         }}
       />
 
-      <div className="relative z-10 flex w-full justify-center px-6 md:px-16">
+      <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
         <div className="w-full max-w-[1440px]">
         {eyebrow && (
           <motion.div

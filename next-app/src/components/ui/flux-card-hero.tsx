@@ -41,7 +41,7 @@ export function FluxCardHero() {
             style={{ transitionDelay: `${i * 200}ms` }}
           >
             <div
-              className={`h-72 w-full rounded-3xl shadow-2xl transition-all duration-1000 ${
+              className={`h-64 w-full rounded-3xl shadow-2xl transition-all duration-1000 sm:h-72 ${
                 isActive ? "scale-105" : ""
               }`}
               style={{
@@ -55,10 +55,10 @@ export function FluxCardHero() {
 
       {/* Foreground active card */}
       <div
-        className="relative z-10 flex h-72 w-full flex-col rounded-3xl p-6 shadow-2xl transition-all duration-1000 ease-in-out"
+        className="relative z-10 flex h-64 w-full flex-col rounded-3xl p-4 shadow-2xl transition-all duration-1000 ease-in-out sm:h-72 sm:p-6"
         style={{ background: current.color }}
       >
-        <div className="flex h-full flex-col rounded-2xl bg-white/25 p-5 backdrop-blur-sm transition-all duration-500">
+        <div className="flex h-full flex-col rounded-2xl bg-white/25 p-4 backdrop-blur-sm transition-all duration-500 sm:p-5">
           {/* Header row */}
           <div className="mb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -81,12 +81,12 @@ export function FluxCardHero() {
           </div>
 
           {/* Module title */}
-          <h3 className="mb-3 text-balance text-2xl font-black leading-tight tracking-tight text-white md:text-3xl">
+          <h3 className="mb-3 text-balance text-xl font-black leading-tight tracking-tight text-white sm:text-2xl md:text-3xl">
             {current.subtitle}
           </h3>
 
           {/* Teaser */}
-          <p className="text-[0.95rem] leading-[1.65] text-white opacity-95">
+          <p className="text-[0.88rem] leading-[1.55] text-white opacity-95 sm:text-[0.95rem] sm:leading-[1.65]">
             {TEASERS[current.id] ?? ""}
           </p>
 
@@ -99,7 +99,7 @@ export function FluxCardHero() {
       </div>
 
       {/* Indicator dots — each tinted by its module color */}
-      <div className="mt-8 flex justify-center gap-2">
+      <div className="mt-6 flex justify-center gap-2 sm:mt-8">
         {modules.map((m, index) => {
           const isActive = currentCard === index;
           return (
@@ -109,11 +109,15 @@ export function FluxCardHero() {
               onClick={() => setCurrentCard(index)}
               aria-label={`הצג ${m.shortLabel}`}
               aria-current={isActive ? "true" : undefined}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                isActive ? "w-6" : "w-2 bg-slate-300 hover:bg-slate-500"
-              }`}
-              style={isActive ? { background: m.color } : undefined}
-            />
+              className="grid h-11 place-items-center px-1.5"
+            >
+              <span
+                className={`block h-2 rounded-full transition-all duration-300 ${
+                  isActive ? "w-6" : "w-2 bg-slate-300 hover:bg-slate-500"
+                }`}
+                style={isActive ? { background: m.color } : undefined}
+              />
+            </button>
           );
         })}
       </div>

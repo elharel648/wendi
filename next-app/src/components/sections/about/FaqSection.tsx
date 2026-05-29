@@ -23,8 +23,7 @@ export function FaqSection({ content }: Props) {
 
   return (
     <section
-      className="relative overflow-hidden bg-white"
-      style={{ padding: "80px 0 140px" }}
+      className="relative overflow-hidden bg-white py-16 md:pt-20 md:pb-[140px]"
     >
       <div
         aria-hidden
@@ -35,7 +34,7 @@ export function FaqSection({ content }: Props) {
         }}
       />
 
-      <div className="relative z-10 flex w-full justify-center px-6 md:px-16">
+      <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
         <div className="w-full max-w-[1440px]">
         {/* Filters */}
         <motion.div
@@ -43,7 +42,7 @@ export function FaqSection({ content }: Props) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: expo }}
-          className="mb-12 flex flex-wrap gap-2"
+          className="mb-8 flex flex-wrap gap-2 md:mb-12"
         >
           {content.filters.map((f) => {
             const active = filter === f.id;
@@ -55,9 +54,8 @@ export function FaqSection({ content }: Props) {
                   setFilter(f.id);
                   setOpenIdx(null);
                 }}
-                className="font-semibold"
+                className="font-semibold whitespace-nowrap min-h-[44px] px-5 py-3 md:min-h-0 md:px-6 md:py-2.5"
                 style={{
-                  padding: "10px 24px",
                   borderRadius: "999px",
                   fontSize: "0.88rem",
                   border: active

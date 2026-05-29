@@ -55,7 +55,7 @@ export function Hero({ content }: HeroProps) {
           </h1>
 
           <motion.p
-            className="mb-10 max-w-[560px] text-[1.2rem] leading-[1.78] text-muted-fg [&_strong]:font-bold [&_strong]:text-ink-2"
+            className="mb-8 max-w-[560px] text-[1.05rem] leading-[1.7] text-muted-fg md:mb-10 md:text-[1.2rem] md:leading-[1.78] [&_strong]:font-bold [&_strong]:text-ink-2"
             variants={wInVariants}
             initial="hidden"
             animate="visible"
@@ -64,7 +64,7 @@ export function Hero({ content }: HeroProps) {
           />
 
           <motion.div
-            className="flex flex-wrap gap-6"
+            className="flex flex-wrap gap-4 md:gap-6"
             variants={wInVariants}
             initial="hidden"
             animate="visible"
@@ -94,7 +94,7 @@ export function Hero({ content }: HeroProps) {
           {/* Pulsing ring 1 */}
           <motion.div
             aria-hidden
-            className="absolute left-1/2 top-1/2 h-[360px] w-[360px] rounded-full border border-line"
+            className="absolute left-1/2 top-1/2 h-[260px] w-[260px] rounded-full border border-line md:h-[360px] md:w-[360px]"
             style={{ x: "-50%", y: "-50%" }}
             animate={{ scale: [1, 1.04, 1], opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
@@ -102,7 +102,7 @@ export function Hero({ content }: HeroProps) {
           {/* Pulsing ring 2 (larger) */}
           <motion.div
             aria-hidden
-            className="absolute left-1/2 top-1/2 h-[520px] w-[520px] rounded-full border border-line-2"
+            className="absolute left-1/2 top-1/2 h-[360px] w-[360px] rounded-full border border-line-2 md:h-[520px] md:w-[520px]"
             style={{ x: "-50%", y: "-50%" }}
             animate={{ scale: [1, 1.04, 1], opacity: [0.6, 1, 0.6] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.9 }}
@@ -110,7 +110,7 @@ export function Hero({ content }: HeroProps) {
           {/* Soft elliptical glow — centred behind mascot */}
           <div
             aria-hidden
-            className="absolute left-1/2 top-1/2 h-[200px] w-[340px] rounded-full"
+            className="absolute left-1/2 top-1/2 h-[140px] w-[240px] rounded-full md:h-[200px] md:w-[340px]"
             style={{
               transform: "translate(-50%, -50%)",
               background:

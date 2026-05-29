@@ -14,10 +14,9 @@ const expo = [0.16, 1, 0.3, 1] as const;
 export function AboutStory({ content }: Props) {
   return (
     <section
-      className="relative overflow-hidden bg-white"
-      style={{ padding: "40px 0 80px" }}
+      className="relative overflow-hidden bg-white pt-8 pb-12 md:pt-10 md:pb-20"
     >
-      <div className="relative z-10 flex w-full justify-center px-6 md:px-16">
+      <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
         <div className="w-full max-w-[1440px]">
         {/* Editorial intro — two columns */}
         <div className="grid grid-cols-1 items-start gap-12 md:grid-cols-[1fr_1.2fr] md:gap-20">
@@ -130,13 +129,13 @@ export function AboutStory({ content }: Props) {
         </div>
 
         {/* ZINE timeline */}
-        <div className="mt-28">
+        <div className="mt-16 md:mt-28">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: expo }}
-            className="mb-14 flex items-end justify-between gap-6 flex-wrap"
+            className="mb-10 flex items-end justify-between gap-4 flex-wrap md:mb-14 md:gap-6"
           >
             <div>
               <h2

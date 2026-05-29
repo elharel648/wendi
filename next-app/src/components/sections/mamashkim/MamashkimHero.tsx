@@ -121,8 +121,10 @@ export function MamashkimHero() {
           </p>
         </div>
 
-        {/* Living console mockup */}
-        <IntegrationConsole />
+        {/* Living console mockup — hidden on mobile (complex 3-col grid does not fit < md) */}
+        <div className="hidden md:block">
+          <IntegrationConsole />
+        </div>
       </div>
 
       {/* Scoped styles for the console (beam-flow + hub-ring + aura animations) */}

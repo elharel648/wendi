@@ -67,10 +67,10 @@ function SectorBlock({
         aria-hidden
         className="pointer-events-none absolute select-none font-black leading-none text-transparent"
         style={{
-          fontSize: "clamp(8rem, 16vw, 16rem)",
-          top: "-2.5rem",
-          insetInlineStart: alternate ? "auto" : "-2.5rem",
-          insetInlineEnd: alternate ? "-2.5rem" : "auto",
+          fontSize: "clamp(5rem, 16vw, 16rem)",
+          top: "-1.5rem",
+          insetInlineStart: alternate ? "auto" : "-1.5rem",
+          insetInlineEnd: alternate ? "-1.5rem" : "auto",
           WebkitTextStroke: `1.5px ${rgba(s.color, 0.14)}`,
           letterSpacing: "-0.05em",
         }}

@@ -33,13 +33,12 @@ export function GallerySection({ content }: Props) {
 
   return (
     <section
-      className="relative overflow-hidden bg-white"
-      style={{ padding: "80px 0 140px" }}
+      className="relative overflow-hidden bg-white py-16 md:pt-20 md:pb-[140px]"
     >
-      <div className="relative z-10 flex w-full justify-center px-6 md:px-16">
+      <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
         <div className="w-full max-w-[1440px]">
         {/* ── Image accordion ─────────────── */}
-        <div className="flex h-[340px] gap-[8px] md:h-[460px] md:gap-[12px]">
+        <div className="flex h-[260px] gap-[6px] sm:h-[340px] sm:gap-[8px] md:h-[460px] md:gap-[12px]">
           {content.images.map((img, i) => {
             const active = activeImg === i;
             return (
@@ -49,7 +48,7 @@ export function GallerySection({ content }: Props) {
                 onClick={() => setActiveImg(i)}
                 className={cn(
                   "group relative overflow-hidden transition-[flex] duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
-                  active ? "flex-[4] md:flex-[5]" : "min-w-[52px] flex-1",
+                  active ? "flex-[4] md:flex-[5]" : "min-w-[40px] flex-1 md:min-w-[52px]",
                 )}
                 style={{
                   borderRadius: "20px",
@@ -100,13 +99,13 @@ export function GallerySection({ content }: Props) {
         </div>
 
         {/* ── Videos ─────────────── */}
-        <div className="mt-20">
+        <div className="mt-12 md:mt-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: expo }}
-            className="mb-10"
+            className="mb-8 md:mb-10"
           >
             <div
               className="mb-3 text-xs font-bold uppercase"
