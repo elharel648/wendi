@@ -36,7 +36,7 @@ export function LottieIcon({
     const fr = data.fr ?? 30;
     const frames = (data.op ?? fr) - (data.ip ?? 0);
     const nativeDuration = frames / fr;
-    const speed = Math.min(1, nativeDuration / targetDuration);
+    const speed = nativeDuration / targetDuration;
     ref.current.setSpeed(speed);
   }, [data, targetDuration]);
 

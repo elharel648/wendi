@@ -69,7 +69,10 @@ export function Sectors() {
   return (
     <section className="ctg-show" dir="rtl">
       <div className="ctg-inner">
-        <div className="ctg-hd">
+        {/* Override legacy `.ctg-hd { margin-top: -160px }` on mobile —
+            it pulls the title off-screen on small viewports. Desktop
+            keeps the original negative offset (md: and up). */}
+        <div className="ctg-hd !mt-0 md:!-mt-40">
           <h2 className="ctg-title">
             פתרון
             <br />

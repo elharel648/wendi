@@ -222,7 +222,7 @@ function HeroFeatureCard({
     >
       {/* Icon */}
       {feature.iconLottie ? (
-        <LottieIcon src={feature.iconLottie} size={42} />
+        <LottieIcon src={feature.iconLottie} size={42} targetDuration={14} />
       ) : (
         <div
           className="grid h-9 w-9 place-items-center rounded-lg transition-transform duration-300 group-hover:scale-[1.06] [&_svg]:h-[17px] [&_svg]:w-[17px]"
@@ -274,7 +274,7 @@ function CompactRow({
       className="group flex items-start gap-4 rounded-xl bg-white px-5 py-4 transition-colors duration-200 hover:bg-[rgba(13,148,136,0.04)]"
     >
       {feature.iconLottie ? (
-        <LottieIcon src={feature.iconLottie} size={36} />
+        <LottieIcon src={feature.iconLottie} size={36} targetDuration={40} />
       ) : (
         <span
           className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-lg [&_svg]:h-[15px] [&_svg]:w-[15px]"
