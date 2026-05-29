@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { LottieIcon } from "@/components/ui/lottie-icon";
 
 const TEAL = "#0D9488";
 
@@ -11,6 +12,8 @@ type DuelCard = {
   label: string;
   title: string;
   body: string;
+  labelColor: string;
+  labelBg: string;
 };
 
 const WENDI_CARDS: DuelCard[] = [
@@ -20,6 +23,8 @@ const WENDI_CARDS: DuelCard[] = [
     title: "מתחילים בהבנת הצורך, לא בקוד גנרי",
     body:
       "אנחנו יושבים עם הלקוח לפני שורת קוד אחת — מבינים את התהליכים, ההרשאות והמטרה. רק אחר כך בונים.",
+    labelColor: "#B45309",
+    labelBg: "#FEF3C7",
   },
   {
     id: 1,
@@ -27,6 +32,8 @@ const WENDI_CARDS: DuelCard[] = [
     title: "כל ממשק נבנה לארגון שלכם",
     body:
       "לא Template אחיד. לא Plug & Pray. ממשק שמתאים בדיוק למבנה, להיררכיה ולשפה של הארגון.",
+    labelColor: "#C2410C",
+    labelBg: "#FFEDD5",
   },
   {
     id: 2,
@@ -34,19 +41,27 @@ const WENDI_CARDS: DuelCard[] = [
     title: "גורם אחד — מוצר, פיתוח, תמיכה",
     body:
       "אפיון, פיתוח, בדיקות, עלייה לאוויר, תחזוקה ושדרוגים — הכל באחריות אחת. אתם לא נעים בין ספקים.",
+    labelColor: "#BE185D",
+    labelBg: "#FCE7F3",
   },
 ];
 
-const OTHERS_ITEMS = [
+type OthersItem = {
+  name: string;
+  desc: string;
+  lottie: string;
+};
+
+const OTHERS_ITEMS: OthersItem[] = [
   {
     name: "חיבור מדף",
     desc: "Template אחיד לכל לקוח, ללא הבנת הצורך הארגוני",
-    icon: "📦",
+    lottie: "/icons-lottie/folder.json",
   },
   {
     name: "תלות ב־API קיים",
     desc: "אם אין API, אין פתרון. תחזוקה — באחריותכם.",
-    icon: "🔌",
+    lottie: "/icons-lottie/lock.json",
   },
 ];
 
@@ -160,8 +175,8 @@ export function IntegrationsDuel() {
                     key={item.name}
                     className="flex items-center gap-3 rounded-xl border border-line p-3 transition hover:bg-line-2/40"
                   >
-                    <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg bg-line-2 text-lg">
-                      {item.icon}
+                    <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center">
+                      <LottieIcon src={item.lottie} size={32} playOnHover />
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="text-sm font-bold text-ink">{item.name}</p>
@@ -299,8 +314,8 @@ function CardStack({ items }: { items: DuelCard[] }) {
             <span
               className="inline-block rounded-md px-2 py-0.5 text-[11px] font-extrabold tracking-wider"
               style={{
-                color: TEAL,
-                background: "rgba(13,148,136,0.10)",
+                color: card.labelColor,
+                background: card.labelBg,
               }}
             >
               {card.label}

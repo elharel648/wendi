@@ -89,11 +89,11 @@ export function ModulesSideNav() {
                       className="relative z-10 grid h-10 w-10 flex-shrink-0 place-items-center rounded-full text-[11px] font-black tabular-nums"
                       animate={{
                         background: isActive ? m.color : "#ffffff",
-                        color: isActive ? "#ffffff" : "#64748b",
+                        color: isActive ? "#0f172a" : "#64748b",
                         boxShadow: isActive
-                          ? `0 8px 24px ${m.color}55, 0 0 0 1px ${m.color}`
+                          ? `0 8px 24px ${m.color}66, 0 0 0 1.5px ${m.color}`
                           : isHovered
-                            ? `0 4px 14px rgba(15,23,42,0.10), 0 0 0 1px ${m.color}60`
+                            ? `0 4px 14px rgba(15,23,42,0.10), 0 0 0 1px ${m.color}80`
                             : "0 2px 10px rgba(15,23,42,0.07), 0 0 0 1px rgba(15,23,42,0.04)",
                         scale: isHovered && !isActive ? 1.06 : 1,
                       }}
@@ -143,8 +143,8 @@ export function ModulesSideNav() {
                           className="overflow-hidden whitespace-nowrap rounded-full px-4 py-2 text-[0.82rem] font-bold leading-tight"
                           style={{
                             background: "#ffffff",
-                            color: isActive ? m.color : "#475569",
-                            boxShadow: `0 6px 20px rgba(15,23,42,0.10), inset 0 0 0 1px ${isActive ? m.color + "40" : "rgba(15,23,42,0.06)"}`,
+                            color: isActive ? "#0f172a" : "#475569",
+                            boxShadow: `0 6px 20px rgba(15,23,42,0.10), inset 0 0 0 1.5px ${isActive ? m.color : "rgba(15,23,42,0.06)"}`,
                           }}
                         >
                           {m.shortLabel}

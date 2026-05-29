@@ -66,8 +66,8 @@ export function PitronotHero() {
                     boxShadow: `0 12px 28px -10px ${s.color}80, 0 0 0 1px rgba(255,255,255,0.18) inset`,
                   }}
                 >
-                  <span className="block h-5 w-5 sm:h-6 sm:w-6">{s.icon}</span>
-                  <span className="whitespace-nowrap text-base font-bold sm:text-lg">
+                  <span className="block h-5 w-5 sm:h-6 sm:w-6" style={{ color: "#fff" }}>{s.icon}</span>
+                  <span className="whitespace-nowrap text-base font-bold sm:text-lg" style={{ color: "#fff" }}>
                     {s.short}
                   </span>
                 </a>

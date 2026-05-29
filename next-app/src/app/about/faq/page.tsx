@@ -13,7 +13,6 @@ export default function AboutFaqPage() {
   return (
     <>
       <AboutSubHero
-        eyebrow={faq.eyebrow}
         title={faq.title}
         sub={faq.sub}
       />

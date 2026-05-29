@@ -11,6 +11,10 @@ type LeftRow = {
   subtitle: string;
   logo?: string;
   initial?: string;
+  // Monogram tile fallback — used when no real brand SVG is available.
+  // Renders a colored circle with a single character. Looks like a real
+  // partner-logo placeholder (Notion/Slack pattern).
+  mono?: { char: string; from: string; to: string };
 };
 
 type RightRow = {
@@ -25,7 +29,7 @@ const GLYPH = (path: React.ReactNode) => (
     viewBox="0 0 24 24"
     fill="currentColor"
     aria-hidden="true"
-    style={{ width: 17, height: 17 }}
+    style={{ width: 19, height: 19 }}
   >
     {path}
   </svg>
@@ -37,7 +41,7 @@ const LEFT_ROWS: LeftRow[] = [
   { title: "Synerion",   subtitle: "נוכחות ומשמרות", logo: "/logos-systems/synerion.svg" },
   { title: "Power BI",   subtitle: "מדדים",          logo: "/logos-systems/powerbi.svg" },
   { title: "Legacy API", subtitle: "מותאם אישית",    initial: "{ }" },
-  { title: "Comeet",     subtitle: "גיוס",           logo: "/logos-systems/comeet.svg" },
+  { title: "Comeet",     subtitle: "גיוס",           mono: { char: "C", from: "#FF6200", to: "#FF8C00" } },
 ];
 
 // Right column — user touchpoints (LIVE). Filled glyphs for warmth, not wire stick-figures.
@@ -232,7 +236,7 @@ function IntegrationConsole() {
       {/* 3-col grid: left systems | hub | right systems */}
       <div
         className="relative z-10 grid items-center gap-[14px]"
-        style={{ gridTemplateColumns: "1fr 110px 1fr", minHeight: 360 }}
+        style={{ gridTemplateColumns: "1fr 128px 1fr", minHeight: 360 }}
       >
         <div className="flex flex-col gap-[9px]">
           {LEFT_ROWS.map((row) => (
@@ -274,30 +278,13 @@ function RowShell({
   children: React.ReactNode;
   variant: "system" | "touchpoint";
 }) {
+  // Borderless row — the outer rectangle frame was visual noise that competed
+  // with the circular icon. We keep the layout (padding + gap) but drop the
+  // border, background fill, and box-shadow so the icon and text breathe
+  // directly on the console's white surface.
+  void variant;
   return (
-    <div
-      className="group relative flex items-center gap-2.5 overflow-hidden rounded-xl border px-3 py-[11px] text-[0.84rem] font-semibold text-ink-2 transition-all duration-300 hover:-translate-x-1"
-      style={{
-        borderColor:
-          variant === "system"
-            ? "rgba(13,148,136,0.16)"
-            : "rgba(10,10,10,0.10)",
-        background:
-          variant === "system"
-            ? "linear-gradient(135deg, #FFFFFF 0%, #F4FBF9 100%)"
-            : "linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%)",
-        boxShadow:
-          "0 1px 0 rgba(255,255,255,0.9) inset, 0 1px 2px rgba(15,23,42,0.04)",
-      }}
-    >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          background:
-            "linear-gradient(110deg, transparent 30%, rgba(13,148,136,0.06) 50%, transparent 70%)",
-        }}
-      />
+    <div className="group relative flex items-center gap-2.5 px-3 py-[11px] text-[0.84rem] font-semibold text-ink-2 transition-transform duration-300 hover:-translate-x-1">
       {children}
     </div>
   );
@@ -320,29 +307,45 @@ function Badge({ kind }: { kind: "SYNC" | "LIVE" }) {
   );
 }
 
-// Left column row — real brand logo on a clean white chip so the colors read true.
+// Left column row — real brand logo, monogram tile, or initial-only token.
 function SystemRow({ row }: { row: LeftRow }) {
+  const isMono = !!row.mono;
   return (
     <RowShell variant="system">
       <span
-        className="relative inline-flex h-8 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white p-[3px] transition-transform duration-300 group-hover:scale-105"
-        style={{
-          boxShadow:
-            "0 1px 2px rgba(15,23,42,0.06), 0 0 0 1px rgba(15,23,42,0.06) inset",
-        }}
+        className="relative inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-105"
+        style={
+          isMono
+            ? {
+                background: `linear-gradient(135deg, ${row.mono!.from} 0%, ${row.mono!.to} 100%)`,
+                color: "#FFFFFF",
+                boxShadow:
+                  "0 2px 6px -2px rgba(15,23,42,0.18), 0 0 0 1px rgba(255,255,255,0.6) inset",
+              }
+            : {
+                background: "#FFFFFF",
+                padding: "2px",
+                boxShadow:
+                  "0 1px 2px rgba(15,23,42,0.04), 0 0 0 1px rgba(15,23,42,0.08) inset",
+              }
+        }
       >
         {row.logo ? (
           <Image
             src={row.logo}
             alt={`${row.title} logo`}
-            width={48}
-            height={20}
+            width={40}
+            height={40}
             className="h-full w-full object-contain"
             unoptimized
           />
+        ) : row.mono ? (
+          <span className="text-[1.05rem] font-extrabold leading-none">
+            {row.mono.char}
+          </span>
         ) : (
           <span
-            className="font-mono text-[0.72rem] font-bold"
+            className="font-mono text-[0.75rem] font-bold"
             style={{ color: TEAL }}
           >
             {row.initial}
@@ -355,23 +358,20 @@ function SystemRow({ row }: { row: LeftRow }) {
           {row.subtitle}
         </small>
       </span>
-      <Badge kind="SYNC" />
     </RowShell>
   );
 }
 
-// Right column row — filled monochrome glyphs (touchpoints are abstract, no real logos exist).
+// Right column row — filled monochrome glyphs in same circular white treatment as left column.
 function TouchpointRow({ row }: { row: RightRow }) {
   return (
     <RowShell variant="touchpoint">
       <span
-        className="relative inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg transition-transform duration-300 group-hover:scale-105"
+        className="relative inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white transition-transform duration-300 group-hover:scale-105"
         style={{
-          background:
-            "linear-gradient(135deg, rgba(10,10,10,0.92), rgba(30,30,30,0.78))",
-          color: "#FFFFFF",
+          color: "#0F766E",
           boxShadow:
-            "0 4px 12px -4px rgba(10,10,10,0.30), 0 0 0 1px rgba(10,10,10,0.08) inset",
+            "0 1px 2px rgba(15,23,42,0.04), 0 0 0 1px rgba(13,148,136,0.18) inset",
         }}
       >
         {row.glyph}
@@ -382,7 +382,6 @@ function TouchpointRow({ row }: { row: RightRow }) {
           {row.subtitle}
         </small>
       </span>
-      <Badge kind="LIVE" />
     </RowShell>
   );
 }
@@ -394,20 +393,32 @@ function Hub() {
 
   return (
     <div className="relative mx-auto">
+      {/* Ambient teal glow — gives the hub real presence as the system's center. */}
       <div
-        className="relative flex h-[110px] w-[110px] items-center justify-center overflow-hidden rounded-[30px] bg-white"
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
         style={{
-          border: "1px solid rgba(15,23,42,0.10)",
+          background:
+            "radial-gradient(circle, rgba(13,148,136,0.22) 0%, rgba(62,207,190,0.12) 35%, transparent 65%)",
+          transform: "scale(1.85)",
+          filter: "blur(8px)",
+        }}
+      />
+
+      <div
+        className="relative flex h-[128px] w-[128px] items-center justify-center overflow-hidden rounded-[34px] bg-white"
+        style={{
+          border: "1px solid rgba(13,148,136,0.18)",
           boxShadow:
-            "0 12px 30px -10px rgba(15,23,42,0.18), 0 2px 6px -2px rgba(15,23,42,0.08), 0 1px 0 rgba(255,255,255,0.9) inset",
+            "0 18px 40px -12px rgba(13,148,136,0.32), 0 4px 10px -2px rgba(15,23,42,0.10), 0 1px 0 rgba(255,255,255,0.9) inset",
         }}
       >
-        {/* Pulsing rings — neutral, subtle */}
+        {/* Pulsing rings — brand teal, signals the hub as 'live'. */}
         <span
           aria-hidden
           className="absolute inset-[-2px] rounded-[inherit] border-2"
           style={{
-            borderColor: "rgba(15,23,42,0.10)",
+            borderColor: "rgba(13,148,136,0.30)",
             animation: "wendi-hub-ring 2.4s ease-out infinite",
           }}
         />
@@ -415,7 +426,7 @@ function Hub() {
           aria-hidden
           className="absolute inset-[-2px] rounded-[inherit] border-2"
           style={{
-            borderColor: "rgba(15,23,42,0.10)",
+            borderColor: "rgba(13,148,136,0.30)",
             animation: "wendi-hub-ring 2.4s ease-out infinite",
             animationDelay: "1.2s",
           }}
