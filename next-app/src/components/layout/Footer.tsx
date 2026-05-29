@@ -1,11 +1,19 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export function Footer() {
   return (
-    <footer>
+    <footer aria-label="כותרת תחתונה">
       <div className="footer-grid">
         <div>
           <div className="fbrand">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/wendi-logo.png" alt="Wendi" style={{ height: "36px", width: "auto" }} />
+            <Image
+              src="/wendi-logo.png"
+              alt="Wendi"
+              width={153}
+              height={36}
+              style={{ height: "36px", width: "auto" }}
+            />
           </div>
           <p className="ftagline">
             פלטפורמת העובד המובילה בישראל — תקשורת, למידה וממשקים ביחד.
@@ -14,39 +22,39 @@ export function Footer() {
         <div className="fcol">
           <h5>ממשקים</h5>
           <ul>
-            <li><a href="#">סוגי ממשקים</a></li>
-            <li><a href="#">תהליך העבודה</a></li>
-            <li><a href="#">ממשקים שבוצעו</a></li>
+            <li><Link href="/mamashkim#different">סוגי ממשקים</Link></li>
+            <li><Link href="/mamashkim#process">תהליך העבודה</Link></li>
+            <li><Link href="/mamashkim#systems">ממשקים שבוצעו</Link></li>
           </ul>
         </div>
         <div className="fcol">
           <h5>מגזרים</h5>
           <ul>
-            <li><a href="#">פיננסים</a></li>
-            <li><a href="#">לוגיסטיקה</a></li>
-            <li><a href="#">מוסדות ציבוריים</a></li>
-            <li><a href="#">שירותי בריאות</a></li>
-            <li><a href="#">תעשייה</a></li>
-            <li><a href="#">תיירות</a></li>
+            <li><Link href="/pitronot#finantsim">פיננסים</Link></li>
+            <li><Link href="/pitronot#logistika">לוגיסטיקה</Link></li>
+            <li><Link href="/pitronot#tsiburi">מוסדות ציבוריים</Link></li>
+            <li><Link href="/pitronot#briut">שירותי בריאות</Link></li>
+            <li><Link href="/pitronot#taasia">תעשייה</Link></li>
+            <li><Link href="/pitronot#tayarut">תיירות</Link></li>
           </ul>
         </div>
         <div className="fcol">
           <h5>אודותינו</h5>
           <ul>
-            <li><a href="#">מי אנחנו</a></li>
-            <li><a href="#">סיפורי לקוחות</a></li>
-            <li><a href="#">שאלות ותשובות</a></li>
-            <li><a href="#">גלריה</a></li>
-            <li><a href="#">צרו קשר</a></li>
+            <li><Link href="/about">מי אנחנו</Link></li>
+            <li><Link href="/about/gallery">סיפורי לקוחות</Link></li>
+            <li><Link href="/about/faq">שאלות ותשובות</Link></li>
+            <li><Link href="/about/gallery">גלריה</Link></li>
+            <li><a href="#contact">צרו קשר</a></li>
           </ul>
         </div>
       </div>
       <div className="fbot">
         <span>© 2026 Wendi. כל הזכויות שמורות.</span>
         <div>
-          <a href="#">פרטיות</a>
-          <a href="#">תנאי שימוש</a>
-          <a href="#">נגישות</a>
+          <Link href="/privacy">פרטיות</Link>
+          <Link href="/terms">תנאי שימוש</Link>
+          <Link href="/accessibility">נגישות</Link>
         </div>
       </div>
     </footer>

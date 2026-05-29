@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 export function CtaBand() {
   const [submitted, setSubmitted] = useState(false);
@@ -30,8 +31,15 @@ export function CtaBand() {
 
   return (
     <section className="cta-band" id="contact">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/wendi-char1.png" className="cta-char" alt="" />
+      <Image
+        src="/wendi-char1.png"
+        className="cta-char"
+        alt=""
+        width={480}
+        height={960}
+        sizes="440px"
+        style={{ width: "auto", height: "440px" }}
+      />
       <div className="cta-content">
         <div className="eyebrow" style={{ marginBottom: 16 }}>צרו קשר</div>
         <h2 style={{ marginBottom: 8 }}>לקבלת מידע נוסף על המוצר שלנו</h2>

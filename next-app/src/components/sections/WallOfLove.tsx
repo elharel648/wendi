@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Testimonial = {
   name: string;
   role: string;
@@ -129,8 +131,14 @@ function Avatar({ t }: { t: Testimonial }) {
   if (t.avatar) {
     return (
       <span className="wol-avatar">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={t.avatar} alt="" loading="lazy" />
+        <Image
+          src={t.avatar}
+          alt=""
+          width={84}
+          height={84}
+          loading="lazy"
+          sizes="42px"
+        />
       </span>
     );
   }

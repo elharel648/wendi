@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import Image from "next/image";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 
 /**
  * Scroll-zoom on Wendi: anchored on her face (not the bottom), so the
@@ -135,11 +136,15 @@ export function FloatingFeatures() {
               <div className="flt-ring" aria-hidden="true" />
               <motion.div className="flt-char-wrap" style={wrapStyle}>
                 <motion.div className="flt-char-zoom" style={charStyle}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src="/05.png"
                     alt="Wendi"
+                    width={376}
+                    height={600}
+                    priority
+                    sizes="(max-width: 768px) 52vw, 600px"
                     className="flt-char object-contain object-bottom"
+                    style={{ width: "auto" }}
                   />
                 </motion.div>
               </motion.div>

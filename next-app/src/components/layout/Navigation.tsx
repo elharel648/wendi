@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -60,19 +61,19 @@ const menu: MenuItem[] = [
       {
         title: "מי אנחנו",
         description: "הסיפור של Wendi, הצוות והערכים",
-        icon: <Users className="size-5 shrink-0" />,
+        icon: <Users className="size-5 shrink-0" aria-hidden="true" />,
         url: "/about",
       },
       {
         title: "שאלות ותשובות",
         description: "תשובות לשאלות הנפוצות ביותר על הפלטפורמה",
-        icon: <MessageCircleQuestion className="size-5 shrink-0" />,
+        icon: <MessageCircleQuestion className="size-5 shrink-0" aria-hidden="true" />,
         url: "/about#faq",
       },
       {
         title: "גלריה",
         description: "מבט מבפנים — צילומי מסך וסרטוני מערכת",
-        icon: <Images className="size-5 shrink-0" />,
+        icon: <Images className="size-5 shrink-0" aria-hidden="true" />,
         url: "/about#gallery",
       },
     ],
@@ -84,37 +85,37 @@ const menu: MenuItem[] = [
       {
         title: "פיננסים",
         description: "פתרונות לבנקים, ביטוח ומוסדות פיננסיים",
-        icon: <Landmark className="size-5 shrink-0" />,
+        icon: <Landmark className="size-5 shrink-0" aria-hidden="true" />,
         url: "/pitronot#finantsim",
       },
       {
         title: "לוגיסטיקה ותחבורה",
         description: "ניהול עובדי שטח, נהגים וצוותי מחסן",
-        icon: <Truck className="size-5 shrink-0" />,
+        icon: <Truck className="size-5 shrink-0" aria-hidden="true" />,
         url: "/pitronot#logistika",
       },
       {
         title: "מוסדות ציבוריים",
         description: "רשויות, ארגונים ממשלתיים וגופי שירות",
-        icon: <Building2 className="size-5 shrink-0" />,
+        icon: <Building2 className="size-5 shrink-0" aria-hidden="true" />,
         url: "/pitronot#tsiburi",
       },
       {
         title: "שירותי בריאות",
         description: "בתי חולים, קופות חולים וצוותי רפואה",
-        icon: <HeartPulse className="size-5 shrink-0" />,
+        icon: <HeartPulse className="size-5 shrink-0" aria-hidden="true" />,
         url: "/pitronot#briut",
       },
       {
         title: "תעשייה ומסחר",
         description: "מפעלים, רשתות וצוותים תפעוליים",
-        icon: <Factory className="size-5 shrink-0" />,
+        icon: <Factory className="size-5 shrink-0" aria-hidden="true" />,
         url: "/pitronot#taasia",
       },
       {
         title: "תיירות",
         description: "מלונאות, חברות תעופה ושירותי תיירות",
-        icon: <Plane className="size-5 shrink-0" />,
+        icon: <Plane className="size-5 shrink-0" aria-hidden="true" />,
         url: "/pitronot#tayarut",
       },
     ],
@@ -130,31 +131,31 @@ const menu: MenuItem[] = [
       {
         title: "למה ממשקים",
         description: "מדוע אינטגרציה היא לב הפלטפורמה",
-        icon: <Plug className="size-5 shrink-0" />,
+        icon: <Plug className="size-5 shrink-0" aria-hidden="true" />,
         url: "/mamashkim#why",
       },
       {
         title: "מה מייחד אותנו",
         description: "היתרון התחרותי של Wendi באינטגרציה",
-        icon: <Award className="size-5 shrink-0" />,
+        icon: <Award className="size-5 shrink-0" aria-hidden="true" />,
         url: "/mamashkim#different",
       },
       {
         title: "סוגי ממשקים",
         description: "API, Webhooks, SFTP ו-Direct DB",
-        icon: <Cable className="size-5 shrink-0" />,
+        icon: <Cable className="size-5 shrink-0" aria-hidden="true" />,
         url: "/mamashkim#types",
       },
       {
         title: "מערכות שחיברנו",
         description: "Priority, SAP, Oracle, Salesforce ועוד",
-        icon: <Network className="size-5 shrink-0" />,
+        icon: <Network className="size-5 shrink-0" aria-hidden="true" />,
         url: "/mamashkim#systems",
       },
       {
         title: "תהליך העבודה",
         description: "כיצד פרויקט אינטגרציה רץ מהיום הראשון",
-        icon: <Workflow className="size-5 shrink-0" />,
+        icon: <Workflow className="size-5 shrink-0" aria-hidden="true" />,
         url: "/mamashkim#process",
       },
     ],
@@ -188,46 +189,59 @@ export function Navigation() {
 
   return (
     <header
-      role="navigation"
+      role="banner"
       aria-label="ראשי"
       className="wendi-nav sticky top-0 z-40 w-full bg-white pt-4 pb-2"
     >
-      {/* Desktop nav — NavigationMenu wraps the full-width header so its
-          viewport can span the entire screen (monday-style mega-dropdown). */}
-      <NavigationMenu className="hidden h-16 w-full lg:flex">
-        <div className="mx-auto flex h-full w-full max-w-7xl items-center justify-center gap-8 px-4 sm:px-6 lg:px-8">
-          <a href={ctaHref} className={ctaButtonClass}>
-            {ctaText}
-          </a>
-          <NavigationMenuList>
-            {menu.map((item) => renderDesktopItem(item, router))}
-          </NavigationMenuList>
-          <Link href="/" className="flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/wendi-logo.png" alt="Wendi" className="h-9 w-auto" />
-          </Link>
-        </div>
-      </NavigationMenu>
+      {/* Desktop nav — wrapped in a plain div whose `hidden lg:block`
+          visibility we fully control. shadcn's NavigationMenu primitive
+          hardcodes `flex` on its root, so applying `hidden lg:flex` to
+          the primitive directly does not reliably hide it on mobile. */}
+      <div className="hidden lg:block">
+        <NavigationMenu className="h-16 w-full">
+          <div className="mx-auto flex h-full w-full max-w-7xl items-center justify-center gap-8 px-4 sm:px-6 lg:px-8">
+            <a href={ctaHref} className={ctaButtonClass}>
+              {ctaText}
+            </a>
+            <NavigationMenuList>
+              {menu.map((item) => renderDesktopItem(item, router))}
+            </NavigationMenuList>
+            <Link href="/" className="flex items-center gap-2">
+              <Image
+                src="/wendi-logo.png"
+                alt="Wendi"
+                width={153}
+                height={36}
+                priority
+                className="h-9 w-auto"
+              />
+            </Link>
+          </div>
+        </NavigationMenu>
+      </div>
 
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:hidden lg:px-8">
-        {/* Mobile nav */}
+        {/* Mobile nav — JSX order: hamburger first (visual right in RTL),
+            logo second (visual left). */}
         <div className="flex w-full items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/wendi-logo.png" alt="Wendi" className="h-8 w-auto" />
-          </Link>
           <div className="flex items-center gap-2">
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
               <SheetTrigger asChild>
                 <button
                   type="button"
-                  aria-label="פתח תפריט"
+                  aria-label={mobileOpen ? "סגור תפריט" : "פתח תפריט"}
+                  aria-expanded={mobileOpen}
+                  aria-controls="wendi-mobile-menu"
                   className={iconButtonClass}
                 >
-                  <Menu className="size-4" />
+                  <Menu className="size-4" aria-hidden="true" />
                 </button>
               </SheetTrigger>
-              <SheetContent side="right" className="overflow-y-auto">
+              <SheetContent
+                side="right"
+                id="wendi-mobile-menu"
+                className="overflow-y-auto"
+              >
                 <SheetHeader>
                   <SheetTitle>
                     <Link
@@ -235,10 +249,11 @@ export function Navigation() {
                       className="flex items-center gap-2"
                       onClick={() => setMobileOpen(false)}
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         src="/wendi-logo.png"
                         alt="Wendi"
+                        width={136}
+                        height={32}
                         className="h-8 w-auto"
                       />
                     </Link>
@@ -265,6 +280,16 @@ export function Navigation() {
               </SheetContent>
             </Sheet>
           </div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/wendi-logo.png"
+              alt="Wendi"
+              width={136}
+              height={32}
+              priority
+              className="h-8 w-auto"
+            />
+          </Link>
         </div>
       </div>
     </header>

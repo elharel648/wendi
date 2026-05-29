@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { debounce } from "lodash";
+import { debounce } from "lodash-es";
 import Matter, {
   Bodies,
   Common,

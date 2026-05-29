@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Category = {
   cat: string;
   title: string;
@@ -119,8 +121,15 @@ export function MobileShowcase() {
                 {cards.map((card, i) => (
                   <div key={i} className="mob-card" data-cat={card.cat}>
                     <span className="mob-card-badge-top">אפליקציה מותאמת</span>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={card.img} className="mob-sc-img" alt={card.alt} />
+                    <Image
+                      src={card.img}
+                      className="mob-sc-img"
+                      alt={card.alt}
+                      width={320}
+                      height={640}
+                      sizes="(max-width: 768px) 50vw, 280px"
+                      style={{ width: "100%", height: "auto" }}
+                    />
                     <div className="mob-sc-foot">
                       <button type="button" className="mob-sc-cta">
                         צפו בדמו
