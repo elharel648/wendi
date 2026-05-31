@@ -7,7 +7,10 @@ import { LottieIcon } from "@/components/ui/lottie-icon";
 const expo = [0.22, 1, 0.36, 1] as const;
 const TEAL = "#0D9488";
 
-export function ModulesBento() {
+export function ModulesBento({ selectedId }: { selectedId?: Module["id"] } = {}) {
+  const visible = selectedId
+    ? modules.filter((m) => m.id === selectedId)
+    : modules;
   return (
     <section
       id="modules"
@@ -15,15 +18,18 @@ export function ModulesBento() {
       aria-label="המודולים והפיצ׳רים שלנו"
       className="relative isolate"
     >
-      {modules.map((m, i) => (
-        <ModuleBlock
-          key={m.id}
-          module={m}
-          index={i}
-          alternate={i % 2 === 1}
-          framed
-        />
-      ))}
+      {visible.map((m) => {
+        const i = modules.findIndex((x) => x.id === m.id);
+        return (
+          <ModuleBlock
+            key={m.id}
+            module={m}
+            index={i}
+            alternate={i % 2 === 1}
+            framed
+          />
+        );
+      })}
     </section>
   );
 }
