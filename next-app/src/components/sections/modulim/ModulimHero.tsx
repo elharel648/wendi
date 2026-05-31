@@ -11,7 +11,7 @@ export function ModulimHero() {
     <section
       dir="rtl"
       aria-label="מודולים ופיצ׳רים"
-      className="relative isolate flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-paper px-4 pb-12 pt-24 sm:px-6 sm:pb-16 sm:pt-28 md:pt-32"
+      className="relative isolate flex w-full flex-col items-center justify-center overflow-hidden bg-paper px-4 pb-12 pt-24 sm:px-6 sm:pb-16 sm:pt-28 md:pt-32"
     >
       <SoftGlow />
 
