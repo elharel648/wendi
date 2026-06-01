@@ -1,6 +1,7 @@
 "use client";
 
 import { LottieIcon } from "@/components/ui/lottie-icon";
+import { mamashkimContent as mamashkimDefault } from "@/content/mamashkim";
 
 const TEAL = "#0D9488";
 
@@ -75,7 +76,11 @@ const OTHERS_ITEMS: OthersItem[] = [
   },
 ];
 
-export function IntegrationsDuel() {
+export function IntegrationsDuel({ content }: { content?: import("@/content/mamashkim").DuelContent }) {
+  const c = content ?? mamashkimDefault.duel;
+  // merge editable text onto visual defs by index (lottie icons stay in code)
+  const wendiPoints = WENDI_POINTS.map((p, i) => ({ ...p, ...c.wendiPoints[i] }));
+  const othersItems = OTHERS_ITEMS.map((o, i) => ({ ...o, name: c.othersItems[i]?.name ?? o.name, desc: c.othersItems[i]?.desc ?? o.desc }));
   return (
     <section
       id="different"
@@ -89,14 +94,13 @@ export function IntegrationsDuel() {
         {/* Section head */}
         <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
           <h2 className="text-3xl font-black leading-tight tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            לא רק API.{" "}
+            {c.headingPlain}{" "}
             <span className="relative inline-block">
-              <span style={{ color: TEAL }}>פתרון מלא.</span>
+              <span style={{ color: TEAL }}>{c.headingAccent}</span>
             </span>
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-fg sm:text-lg">
-            רוב הפלטפורמות מציעות חיבור טכני בלבד ומשאירות לכם את כל ההתאמה
-            והאחריות. וונדי עושה הרבה יותר מזה.
+            {c.sub}
           </p>
         </div>
 
@@ -133,7 +137,7 @@ export function IntegrationsDuel() {
                 >
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
-                וונדי
+                {c.wendiChip}
               </span>
             </div>
 
@@ -141,12 +145,12 @@ export function IntegrationsDuel() {
               className="mb-6 border-b border-line pb-5 text-center text-sm font-bold sm:text-base"
               style={{ color: TEAL }}
             >
-              פתרון חי, מותאם, ובאחריות אחת
+              {c.wendiSubtitle}
             </p>
 
             {/* static point list */}
             <div className="flex-1 space-y-3">
-              {WENDI_POINTS.map((point) => (
+              {wendiPoints.map((point) => (
                 <div
                   key={point.title}
                   className="flex items-center gap-3 rounded-2xl border bg-paper p-3.5 sm:p-4"
@@ -180,7 +184,7 @@ export function IntegrationsDuel() {
                     className="flex-shrink-0 rounded-full px-2 py-1 text-[10px] font-bold tracking-wider text-white"
                     style={{ background: TEAL }}
                   >
-                    עם וונדי
+                    {c.wendiBadge}
                   </span>
                 </div>
               ))}
@@ -206,16 +210,16 @@ export function IntegrationsDuel() {
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />
                 </svg>
-                פלטפורמות אחרות
+                {c.othersChip}
               </span>
             </div>
 
             <p className="mb-6 border-b border-line pb-5 text-center text-sm font-bold text-muted-fg sm:text-base">
-              חיבור גנרי, וכאב ראש מתמשך
+              {c.othersSubtitle}
             </p>
 
             <div className="flex-1 space-y-3">
-              {OTHERS_ITEMS.map((item) => (
+              {othersItems.map((item) => (
                 <div
                   key={item.name}
                   className="flex items-center gap-3 rounded-2xl border border-line bg-paper p-3.5 sm:p-4"
@@ -230,7 +234,7 @@ export function IntegrationsDuel() {
                     </p>
                   </div>
                   <span className="flex-shrink-0 rounded-full border border-line px-2 py-1 text-[10px] font-bold tracking-wider text-muted-fg">
-                    ללא וונדי
+                    {c.othersBadge}
                   </span>
                 </div>
               ))}

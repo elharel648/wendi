@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { modules, type Feature, type Module } from "@/content/modulim";
+import { type Feature, type Module } from "@/content/modulim";
 import { LottieIcon } from "@/components/ui/lottie-icon";
 
 const expo = [0.22, 1, 0.36, 1] as const;
 const TEAL = "#0D9488";
 
-export function ModulesBento({ activeId }: { activeId?: string }) {
+export function ModulesBento({ modules, activeId }: { modules: Module[]; activeId?: string }) {
   const visible = activeId
     ? modules.filter((m) => m.id === activeId)
     : modules;

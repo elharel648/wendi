@@ -8,22 +8,23 @@ import { Sectors } from "@/components/sections/Sectors";
 import { WallOfLove } from "@/components/sections/WallOfLove";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { ClientBehaviors } from "@/components/layout/ClientBehaviors";
-import { homeContent } from "@/content/home";
+import { getHomeContent, getHomeSections } from "@/content/cms";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [homeContent, sections] = await Promise.all([getHomeContent(), getHomeSections()]);
   return (
     <>
       <Hero content={homeContent.hero} />
       <LogoMarquee />
-      <MobileShowcase />
-      <CinematicStatement />
-      <FloatingFeatures />
+      <MobileShowcase content={sections.mobile} />
+      <CinematicStatement content={sections.cinematic} />
+      <FloatingFeatures content={sections.floating} />
       <div className="h-[15vh] w-full" aria-hidden="true" />
       <IntegrationsOrbit />
       <div className="h-16 md:h-24 w-full" aria-hidden="true" />
-      <Sectors />
-      <WallOfLove />
-      <CtaBand />
+      <Sectors content={sections.sectors} />
+      <WallOfLove content={sections.wallOfLove} />
+      <CtaBand content={sections.cta} />
       <ClientBehaviors />
     </>
   );

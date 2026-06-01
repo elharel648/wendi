@@ -1,0 +1,6 @@
+# Build artifacts
+.next/
+next-app/.next/
+
+# Claude Code harness (local only)
+.claude/scheduled_tasks.lock

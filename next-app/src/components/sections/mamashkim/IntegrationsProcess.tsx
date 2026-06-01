@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { ProcessContent } from "@/content/mamashkim";
+import { mamashkimContent } from "@/content/mamashkim";
 
 const TEAL = "#0D9488";
 
@@ -42,7 +44,14 @@ const STATIONS = [
 
 const expo = [0.16, 1, 0.3, 1] as const;
 
-export function IntegrationsProcess() {
+export function IntegrationsProcess({ content }: { content?: ProcessContent }) {
+  const c = content ?? mamashkimContent.process;
+  // merge editable title/desc onto the visual station defs by index
+  const stations = STATIONS.map((st, i) => ({
+    ...st,
+    title: c.steps[i]?.title ?? st.title,
+    desc: c.steps[i]?.desc ?? st.desc,
+  }));
   return (
     <section
       id="process"
@@ -50,10 +59,10 @@ export function IntegrationsProcess() {
       className="relative isolate overflow-hidden bg-paper py-16 sm:py-20 lg:py-28"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section head — exact copy from mamashkim.html */}
+        {/* Section head */}
         <div className="mx-auto mb-16 max-w-2xl text-center sm:mb-20">
           <h2 className="text-3xl font-black leading-tight tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            כך נראה <span style={{ color: TEAL }}>חיבור לוונדי</span>
+            {c.headingPlain} <span style={{ color: TEAL }}>{c.headingAccent}</span>
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted-fg sm:text-lg">
             ארבע תחנות מסודרות — מהאפיון ועד לתחזוקה שוטפת. ככה זה אצלנו: בלי
@@ -109,7 +118,7 @@ export function IntegrationsProcess() {
           />
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            {STATIONS.map((station, i) => (
+            {stations.map((station, i) => (
               <Station key={station.num} station={station} index={i} />
             ))}
           </div>

@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { sectors } from "@/content/pitronot";
+import { mergeSectorsText, type SectorText } from "@/content/pitronot";
 
 const expo = [0.22, 1, 0.36, 1] as const;
 
-export function PitronotSideNav() {
+export function PitronotSideNav({ cmsText }: { cmsText?: SectorText[] }) {
+  const sectors = mergeSectorsText(cmsText);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 

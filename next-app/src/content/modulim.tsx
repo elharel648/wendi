@@ -27,6 +27,44 @@ const ico = (path: ReactNode) => (
   </svg>
 );
 
+/**
+ * CMS-editable text for the modules, keyed by module id. This is the
+ * serializable slice that travels from the Umbraco fetch (server) into the
+ * client components — icons/colors/gradients stay in `modules` below and are
+ * merged back in by id. Editing text in Umbraco never touches the visuals.
+ */
+export type ModuleText = {
+  id: Module["id"];
+  shortLabel: string;
+  title: string;
+  subtitle: string;
+  blurb?: string;
+  note?: string;
+  features: { title: string; desc: string }[];
+};
+
+/** Merge CMS text onto the bundled modules (preserving icon/color/gradient). */
+export function mergeModulesText(cms: ModuleText[] | null | undefined): Module[] {
+  if (!cms?.length) return modules;
+  return modules.map((m) => {
+    const t = cms.find((c) => c.id === m.id);
+    if (!t) return m;
+    return {
+      ...m,
+      shortLabel: t.shortLabel || m.shortLabel,
+      title: t.title || m.title,
+      subtitle: t.subtitle || m.subtitle,
+      blurb: t.blurb ?? m.blurb,
+      note: t.note ?? m.note,
+      features: m.features.map((f, i) => ({
+        ...f,
+        title: t.features[i]?.title || f.title,
+        desc: t.features[i]?.desc || f.desc,
+      })),
+    };
+  });
+}
+
 export const modules: Module[] = [
   {
     id: "portal",

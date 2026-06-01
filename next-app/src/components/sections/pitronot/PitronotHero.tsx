@@ -2,7 +2,14 @@
 
 const TEAL = "#0D9488";
 
-export function PitronotHero() {
+const DEFAULT_TITLE1 = "וונדי מותאמת לארגון שלכם —";
+const DEFAULT_TITLE2 = "לא משנה באיזה מגזר";
+const DEFAULT_SUB =
+  "כל מגזר מתמודד עם אתגרים שונים — רגולציה, פריסה, עומסים ואוכלוסיות מגוונות. פלטפורמה אחת עם התאמות, ממשקים ופתרונות ייעודיים לכל מגזר.";
+
+type PitronotHeroProps = { title1?: string; title2?: string; sub?: string };
+
+export function PitronotHero({ title1, title2, sub }: PitronotHeroProps = {}) {
   return (
     <section
       dir="rtl"
@@ -12,27 +19,20 @@ export function PitronotHero() {
       <SoftGlow />
 
       <div className="relative z-10 mx-auto max-w-7xl">
-        <HeroHeadline />
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="text-[clamp(2.4rem,5.4vw,4.6rem)] font-black leading-[1.08] tracking-[-0.035em] text-ink">
+            <span className="block">{title1 || DEFAULT_TITLE1}</span>
+            <span className="block" style={{ color: TEAL }}>
+              {title2 || DEFAULT_TITLE2}
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-[1.8] text-muted-fg sm:text-lg">
+            {sub || DEFAULT_SUB}
+          </p>
+        </div>
       </div>
     </section>
-  );
-}
-
-function HeroHeadline() {
-  return (
-    <div className="mx-auto max-w-3xl text-center">
-      <h1 className="text-[clamp(2.4rem,5.4vw,4.6rem)] font-black leading-[1.08] tracking-[-0.035em] text-ink">
-        <span className="block">וונדי מותאמת לארגון שלכם —</span>
-        <span className="block" style={{ color: TEAL }}>
-          לא משנה באיזה מגזר
-        </span>
-      </h1>
-
-      <p className="mx-auto mt-6 max-w-2xl text-base leading-[1.8] text-muted-fg sm:text-lg">
-        כל מגזר מתמודד עם אתגרים שונים — רגולציה, פריסה, עומסים ואוכלוסיות
-        מגוונות. פלטפורמה אחת עם התאמות, ממשקים ופתרונות ייעודיים לכל מגזר.
-      </p>
-    </div>
   );
 }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { sectors, type Sector } from "@/content/pitronot";
+import { mergeSectorsText, type Sector, type SectorText } from "@/content/pitronot";
 
 const expo = [0.22, 1, 0.36, 1] as const;
 
@@ -15,7 +15,8 @@ function rgba(hex: string, a: number) {
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
-export function PitronotSectors() {
+export function PitronotSectors({ cmsText }: { cmsText?: SectorText[] }) {
+  const sectors = mergeSectorsText(cmsText);
   return (
     <section
       dir="rtl"

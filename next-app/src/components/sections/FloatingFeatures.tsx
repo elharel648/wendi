@@ -3,6 +3,8 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import type { FloatingFeaturesContent } from "@/content/homeSections";
+import { homeSections } from "@/content/homeSections";
 
 /**
  * Scroll-zoom on Wendi: anchored on her face (not the bottom), so the
@@ -13,7 +15,8 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
  * ClientBehaviors.tsx — only the character + headline/columns fade are
  * managed by framer-motion here.
  */
-export function FloatingFeatures() {
+export function FloatingFeatures({ content }: { content?: FloatingFeaturesContent }) {
+  const feats = (content ?? homeSections.floating).features;
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
 
@@ -91,12 +94,10 @@ export function FloatingFeatures() {
                     <circle cx="52" cy="46" r="2" fill="#5b9eff" />
                   </svg>
                 </div>
-                <h3 className="flt-feat-title">תקשורת פנים-ארגונית</h3>
-                <p className="flt-feat-sub">ערוץ תקשורת ארגוני חכם, אחיד ובזמן אמת</p>
+                <h3 className="flt-feat-title">{feats[0]?.title}</h3>
+                <p className="flt-feat-sub">{feats[0]?.sub}</p>
                 <ul className="flt-list">
-                  <li className="flt-pt">הודעות לפי תפקיד ומחלקה</li>
-                  <li className="flt-pt">Push notifications חכמות</li>
-                  <li className="flt-pt">ניהול תוכן מרכזי</li>
+                  {feats[0]?.points.map((pt) => <li key={pt} className="flt-pt">{pt}</li>)}
                 </ul>
               </article>
               <article className="flt-feat" data-flt-idx="1">
@@ -120,12 +121,10 @@ export function FloatingFeatures() {
                     <text x="48" y="40" textAnchor="middle" fontSize="11" fontWeight="800" fill="#0a0a0a" opacity="0.7">W</text>
                   </svg>
                 </div>
-                <h3 className="flt-feat-title">הארנק שלי</h3>
-                <p className="flt-feat-sub">הטבות, תגמולים וקופת חיסכון בקצות האצבעות</p>
+                <h3 className="flt-feat-title">{feats[1]?.title}</h3>
+                <p className="flt-feat-sub">{feats[1]?.sub}</p>
                 <ul className="flt-list">
-                  <li className="flt-pt">מטבעות חברה ומסלולי תגמול</li>
-                  <li className="flt-pt">הטבות מותאמות אישית</li>
-                  <li className="flt-pt">היסטוריית פרסים ומימוש</li>
+                  {feats[1]?.points.map((pt) => <li key={pt} className="flt-pt">{pt}</li>)}
                 </ul>
               </article>
             </motion.div>
@@ -173,12 +172,10 @@ export function FloatingFeatures() {
                     <circle cx="61" cy="12" r="6" fill="none" stroke="#3ECFBE" strokeWidth="1" opacity="0.4" />
                   </svg>
                 </div>
-                <h3 className="flt-feat-title">למידה והכשרה</h3>
-                <p className="flt-feat-sub">12,000+ תכנים, קורסים ו-SCORM בפלטפורמה אחת</p>
+                <h3 className="flt-feat-title">{feats[2]?.title}</h3>
+                <p className="flt-feat-sub">{feats[2]?.sub}</p>
                 <ul className="flt-list">
-                  <li className="flt-pt">נתיבי לימוד לפי תפקיד</li>
-                  <li className="flt-pt">הסמכות ותעודות דיגיטליות</li>
-                  <li className="flt-pt">דוחות ציות בזמן אמת</li>
+                  {feats[2]?.points.map((pt) => <li key={pt} className="flt-pt">{pt}</li>)}
                 </ul>
               </article>
               <article className="flt-feat" data-flt-idx="3">
@@ -199,12 +196,10 @@ export function FloatingFeatures() {
                     <line x1="40" y1="56" x2="56" y2="40" stroke="rgba(255,255,255,0.45)" strokeWidth="1.2" strokeLinecap="round" />
                   </svg>
                 </div>
-                <h3 className="flt-feat-title">הערכת ביצועים</h3>
-                <p className="flt-feat-sub">סקרי 360°, KPIs ומשוב מתמשך לכל הארגון</p>
+                <h3 className="flt-feat-title">{feats[3]?.title}</h3>
+                <p className="flt-feat-sub">{feats[3]?.sub}</p>
                 <ul className="flt-list">
-                  <li className="flt-pt">הערכת 360° עמיתים ומנהלים</li>
-                  <li className="flt-pt">לוח KPIs אינטראקטיבי</li>
-                  <li className="flt-pt">תובנות AI ודוחות מעורבות</li>
+                  {feats[3]?.points.map((pt) => <li key={pt} className="flt-pt">{pt}</li>)}
                 </ul>
               </article>
             </motion.div>

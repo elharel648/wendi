@@ -1,4 +1,6 @@
 import Image from "next/image";
+import type { MobileShowcaseContent } from "@/content/homeSections";
+import { homeSections } from "@/content/homeSections";
 
 type Category = {
   cat: string;
@@ -6,33 +8,9 @@ type Category = {
   desc: string;
 };
 
-const categories: Category[] = [
-  {
-    cat: "comm",
-    title: "תקשורת פנים-ארגונית",
-    desc: "פורטלי עובדים חכמים עם עדכוני חברה, צ'אט מובנה ודחיפות מותאמות אישית — הכל תחת מותג הארגון שלכם.",
-  },
-  {
-    cat: "health",
-    title: "בריאות ורפואה",
-    desc: "אפליקציות לקופות חולים ומרפאות — תורים, הפניות, בדיקות ומידע רפואי בנגישות מלאה מהנייד.",
-  },
-  {
-    cat: "wallet",
-    title: "ארנק והטבות",
-    desc: "ניהול תקציב עובד, הטבות ותגמולים, תוכניות נאמנות וארנק דיגיטלי — הכל בממשק אחד נקי.",
-  },
-  {
-    cat: "learn",
-    title: "למידה ופיתוח",
-    desc: "פלטפורמות e-learning עם קורסי חובה, מבחני ציות ומסלולי הכשרה מותאמים לכל תפקיד בארגון.",
-  },
-  {
-    cat: "tools",
-    title: "כלים וניהול",
-    desc: "כלי ניהול פנימי לממשקי Back-Office, לוחות בקרה, אדמין ועוד — מותאמים לתפעול יומיומי.",
-  },
-];
+// Category keys (cat) stay in code — they map cards to filters. Title/desc are
+// editable and merged from content by index.
+const CATEGORY_KEYS = ["comm", "health", "wallet", "learn", "tools"];
 
 type Card = {
   cat: string;
@@ -90,11 +68,17 @@ const DemoArrow = () => (
   </svg>
 );
 
-export function MobileShowcase() {
+export function MobileShowcase({ content }: { content?: MobileShowcaseContent }) {
+  const m = content ?? homeSections.mobile;
+  const categories: Category[] = CATEGORY_KEYS.map((cat, i) => ({
+    cat,
+    title: m.categories[i]?.title ?? "",
+    desc: m.categories[i]?.desc ?? "",
+  }));
   return (
     <section className="mob-show" dir="rtl" id="mobShowcase">
-      <span className="mob-eyebrow">אפליקציות מובייל בהתאמה אישית</span>
-      <h2 className="mob-title">אפליקציה לכל צורך</h2>
+      <span className="mob-eyebrow">{m.eyebrow}</span>
+      <h2 className="mob-title">{m.title}</h2>
       <div className="mob-inner">
         <div className="mob-layout">
 

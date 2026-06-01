@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import type { MamashkimHeroContent } from "@/content/mamashkim";
+import { mamashkimContent } from "@/content/mamashkim";
 
 const TEAL = "#0D9488";
 const TEAL_BRIGHT = "#3ECFBE";
@@ -83,7 +85,9 @@ const RIGHT_ROWS: RightRow[] = [
   },
 ];
 
-export function MamashkimHero() {
+export function MamashkimHero({ content }: { content?: MamashkimHeroContent }) {
+  const c = content ?? mamashkimContent.hero;
+  const t = c.titleLines;
   return (
     <section
       dir="rtl"
@@ -96,35 +100,32 @@ export function MamashkimHero() {
         {/* Copy */}
         <div className="text-right">
           <h1 className="text-[clamp(2.4rem,5.2vw,4.4rem)] font-black leading-[1.04] tracking-[-0.035em] text-ink">
-            וונדי מתחברת
+            {t[0]}
             <br />
-            לארגון שלכם —
+            {t[1]}
             <br />
-            <span style={{ color: TEAL }}>באמת.</span>
+            <span style={{ color: TEAL }}>{t[2]}</span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-fg sm:text-lg">
-            בניגוד לפלטפורמות מדף, וונדי היא חברת מוצר שמבצעת ממשקים ייעודיים
-            לפי צורך ארגוני, כדי לספק לעובדים{" "}
-            <strong className="font-bold text-ink">One Stop Shop</strong>{" "}
-            אמיתי.
-          </p>
+          <p
+            className="mt-6 max-w-xl text-base leading-relaxed text-muted-fg sm:text-lg"
+            dangerouslySetInnerHTML={{ __html: c.sub }}
+          />
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button variant="primary" href="#contact" withArrow>
-              דברו איתנו על אינטגרציה
+              {c.ctaLabel}
             </Button>
           </div>
 
           <p className="mt-10 text-sm text-muted-fg">
-            +30 מערכות שכבר התחברנו אליהן · HR, שכר, נוכחות, BI, גיוס, למידה,
-            תפעול.
+            {c.footnote}
           </p>
         </div>
 
         {/* Living console mockup — hidden on mobile (complex 3-col grid does not fit < md) */}
         <div className="hidden md:block">
-          <IntegrationConsole />
+          <IntegrationConsole hero={c} />
         </div>
       </div>
 
@@ -149,7 +150,10 @@ export function MamashkimHero() {
   );
 }
 
-function IntegrationConsole() {
+function IntegrationConsole({ hero }: { hero: MamashkimHeroContent }) {
+  // merge editable title/subtitle onto visual row defs by index (logo/glyph in code)
+  const leftRows = LEFT_ROWS.map((r, i) => ({ ...r, title: hero.leftRows[i]?.title ?? r.title, subtitle: hero.leftRows[i]?.subtitle ?? r.subtitle }));
+  const rightRows = RIGHT_ROWS.map((r, i) => ({ ...r, title: hero.rightRows[i]?.title ?? r.title, subtitle: hero.rightRows[i]?.subtitle ?? r.subtitle }));
   return (
     <div
       aria-label="Wendi integration console"
@@ -236,7 +240,7 @@ function IntegrationConsole() {
         style={{ gridTemplateColumns: "1fr 128px 1fr", minHeight: 360 }}
       >
         <div className="flex flex-col gap-[9px]">
-          {LEFT_ROWS.map((row) => (
+          {leftRows.map((row) => (
             <SystemRow key={row.title} row={row} />
           ))}
         </div>
@@ -244,7 +248,7 @@ function IntegrationConsole() {
         <Hub />
 
         <div className="flex flex-col gap-[9px]">
-          {RIGHT_ROWS.map((row) => (
+          {rightRows.map((row) => (
             <TouchpointRow key={row.title} row={row} />
           ))}
         </div>

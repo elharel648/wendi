@@ -1,131 +1,6 @@
 import Image from "next/image";
-
-type Testimonial = {
-  name: string;
-  role: string;
-  quoteHtml: string;        // contains <span class="hl">…</span>
-  avatar?: string;          // image src
-  initial?: string;         // fallback letter avatar
-  gradientA?: string;       // --av-a
-  gradientB?: string;       // --av-b
-};
-
-const row1: Testimonial[] = [
-  {
-    name: "אורית לוי",
-    role: "אחראית למידה · צבר רפואה",
-    avatar: "/Orit Levi.jpg",
-    quoteHtml:
-      'אפליקציית הסברס שלנו <span class="hl">שינתה סדרי עולם</span> בצבר רפואה. כשאיש צוות מגיע למטופלים בביתם, הכל מחכה לו במקום אחד בנייד — נהלים, ייעוץ, מסמכים והכשרות. עולם ומלואו באפליקציה אחת.',
-  },
-  {
-    name: "שירה לוי",
-    role: "מנהלת משאבי אנוש · הפניקס בית השקעות",
-    avatar: "/shira.jpg",
-    quoteHtml:
-      'אפליקציית העובדים אפשרה לנו לקדם את התקשורת הפנים-ארגונית ולהפוך אותה ל<span class="hl">חוויה חדשנית, נגישה ומחברת</span>. הצלחנו לייצר מעורבות גבוהה ולקבל פתרונות מדויקים.',
-  },
-  {
-    name: "ריוי שהרבני",
-    role: "פתרונות דיגיטל · משאבי אנוש בזק",
-    avatar: "/rivi.jpg",
-    quoteHtml:
-      'האפליקציה מהווה <span class="hl">כלי משמעותי</span> להעברת מסרים לעובדים — ולא פחות חשוב, מלווה את התהליכים הפנים-ארגוניים ומאפשרת לעובדים Self Service במגוון נושאים.',
-  },
-  {
-    name: "ליהי מטיחין",
-    role: "מרכז שירות לעובד · איכילוב",
-    initial: "ל",
-    gradientA: "#4cd964",
-    gradientB: "#1ea84a",
-    quoteHtml:
-      'האפליקציה היא <span class="hl">ערוץ מרכזי</span> — בזכות הנוחות, הבולטות והיכולת לחשוף תכנים מותאמים לפי קבוצות. זמין בכל מקום ובכל זמן.',
-  },
-  {
-    name: "שרית הכמון",
-    role: "CHRO · ארגון תעשייתי מוביל",
-    initial: "ש",
-    gradientA: "#FFB23E",
-    gradientB: "#D8841E",
-    quoteHtml:
-      'המדדים לא משקרים: <span class="hl">91% מעורבות עובדים</span>, <span class="hl">78% השלמת הכשרות</span> — כל זה ב-6 חודשים מהעלייה לאוויר. מערכת שעובדת.',
-  },
-  {
-    name: "אמיר חסן",
-    role: 'מנכ"ל · רשת קמעונאות',
-    initial: "א",
-    gradientA: "#4A90C4",
-    gradientB: "#1A5A8C",
-    quoteHtml:
-      'אחרי שני ניסיונות עם מערכות אחרות — וונדי הייתה הפתרון ש<span class="hl">באמת הבין את המורכבות שלנו</span>. תהליך הטמעה חלק, צוות מקצועי.',
-  },
-];
-
-const row2: Testimonial[] = [
-  {
-    name: "דנה ברק",
-    role: "VP משאבי אנוש · רשת שירותי מזון",
-    initial: "ד",
-    gradientA: "#FF6B9D",
-    gradientB: "#C44569",
-    quoteHtml:
-      'תוך 4 חודשים <span class="hl">חיברנו 3,200 עובדי שטח</span> לאפליקציה. מעולם לא הייתה לנו תקשורת כל כך מהירה ואפקטיבית עם הצוותים בסניפים.',
-  },
-  {
-    name: "יוסי גולן",
-    role: "מנהל הכשרות · בית חולים",
-    initial: "י",
-    gradientA: "#8e44ad",
-    gradientB: "#5a2d82",
-    quoteHtml:
-      'מודול ההכשרות <span class="hl">החזיר את ההשקעה ב-7 חודשים</span>. הצוותים שלנו לומדים בתוך זרימת העבודה — לא מחוצה לה.',
-  },
-  {
-    name: "מיכל אדלר",
-    role: "ראש תחום למידה · חברת אנרגיה",
-    initial: "מ",
-    gradientA: "#16a085",
-    gradientB: "#0e7060",
-    quoteHtml:
-      'Wendi הוא הכלי הראשון שעובדי השטח שלנו <span class="hl">באמת אוהבים</span> להשתמש בו. זה נשמע בנאלי — אבל זה לא קורה כל יום.',
-  },
-  {
-    name: "טל רוזנברג",
-    role: "L&D Manager · רשת תחבורה",
-    initial: "ט",
-    gradientA: "#e67e22",
-    gradientB: "#a55307",
-    quoteHtml:
-      'ראינו <span class="hl">עלייה של 73%</span> בהשתתפות בהכשרות תוך 60 יום מההשקה. הנתונים מדברים בעד עצמם — וההנהלה שלי מודה לי כל יום.',
-  },
-  {
-    name: "גלי שמש",
-    role: "דירקטורית תקשורת פנים · קמעונאות",
-    initial: "ג",
-    gradientA: "#3498db",
-    gradientB: "#1a5f8c",
-    quoteHtml:
-      'סוף סוף יש לנו <span class="hl">ערוץ אחד שכולם פותחים</span>. הודעות חשובות לא הולכות לאיבוד יותר במייל ובוואטסאפ קבוצתי.',
-  },
-  {
-    name: "רון יעקובי",
-    role: "CIO · ארגון פיננסי",
-    initial: "ר",
-    gradientA: "#9b59b6",
-    gradientB: "#6c3483",
-    quoteHtml:
-      'האינטגרציה עם SAP ו-Active Directory שלנו <span class="hl">עברה חלק תוך שבועיים</span>. צוות Wendi הוא מקצועי ברמה שלא ראיתי אצל ספקים אחרים.',
-  },
-  {
-    name: "נטע פרידמן",
-    role: "תקשורת ארגונית · יצרן עולמי",
-    initial: "נ",
-    gradientA: "#27ae60",
-    gradientB: "#196f3d",
-    quoteHtml:
-      'חשבתי שזה לא יעבוד לעובדי קו ייצור. טעיתי. <span class="hl">89% מהעובדים מתחברים מדי שבוע</span> — בלי מחשב, בלי הדרכה מורכבת.',
-  },
-];
+import type { WallOfLoveContent, WolTestimonial as Testimonial } from "@/content/homeSections";
+import { homeSections } from "@/content/homeSections";
 
 function Avatar({ t }: { t: Testimonial }) {
   if (t.avatar) {
@@ -167,7 +42,10 @@ function Card({ t, ariaHidden = false }: { t: Testimonial; ariaHidden?: boolean 
   );
 }
 
-export function WallOfLove() {
+export function WallOfLove({ content }: { content?: WallOfLoveContent }) {
+  const c = content ?? homeSections.wallOfLove;
+  const row1 = c.row1;
+  const row2 = c.row2;
   return (
     <section className="wol-section" id="testimonials">
       {/* Glassmorphic heart bg */}
@@ -243,8 +121,8 @@ export function WallOfLove() {
       </div>
 
       <div className="wol-header">
-        <h2>אהובים על ידי <span className="accent">המובילים בישראל</span></h2>
-        <p>מה אומרים מנהלי משאבי אנוש ולמידה בארגונים הגדולים בישראל על Wendi.</p>
+        <h2>{c.headingPlain} <span className="accent">{c.headingAccent}</span></h2>
+        <p>{c.sub}</p>
       </div>
 
       <div className="wol-rows">

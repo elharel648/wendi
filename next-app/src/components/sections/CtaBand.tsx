@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import type { CtaBandContent } from "@/content/homeSections";
+import { homeSections } from "@/content/homeSections";
 
-export function CtaBand() {
+export function CtaBand({ content }: { content?: CtaBandContent }) {
+  const c = content ?? homeSections.cta;
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,8 +44,8 @@ export function CtaBand() {
         style={{ width: "auto", height: "440px" }}
       />
       <div className="cta-content">
-        <div className="eyebrow" style={{ marginBottom: 16 }}>צרו קשר</div>
-        <h2 style={{ marginBottom: 8 }}>לקבלת מידע נוסף על המוצר שלנו</h2>
+        <div className="eyebrow" style={{ marginBottom: 16 }}>{c.eyebrow}</div>
+        <h2 style={{ marginBottom: 8 }}>{c.heading}</h2>
         <p style={{ marginBottom: 8 }}>
           התקשרו <strong style={{ color: "var(--teal)" }}>077-7743044</strong> או מלאו את הפרטים
         </p>
@@ -83,7 +86,7 @@ export function CtaBand() {
                   : undefined
               }
             >
-              {submitted ? "✓ נשלח בהצלחה!" : "שליחה »"}
+              {submitted ? c.submittedLabel : c.submitLabel}
             </button>
           </div>
         </form>

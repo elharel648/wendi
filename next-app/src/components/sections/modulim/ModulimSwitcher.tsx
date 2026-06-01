@@ -1,17 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { modules } from "@/content/modulim";
+import { modules, mergeModulesText, type ModuleText } from "@/content/modulim";
 import { ModulesQuickJump } from "@/components/sections/modulim/ModulesQuickJump";
 import { ModulesBento } from "@/components/sections/modulim/ModulesBento";
 
-export function ModulimSwitcher() {
-  const [activeId, setActiveId] = useState<string>(modules[0].id);
+/**
+ * Client switcher. Receives CMS text (serializable) from the server page and
+ * merges it onto the bundled modules locally — icons/colors stay in code,
+ * only the text comes from Umbraco. Falls back to bundled text if none given.
+ */
+export function ModulimSwitcher({ cmsText }: { cmsText?: ModuleText[] }) {
+  const merged = mergeModulesText(cmsText);
+  const [activeId, setActiveId] = useState<string>(merged[0]?.id ?? modules[0].id);
 
   return (
     <>
-      <ModulesQuickJump activeId={activeId} onSelect={setActiveId} />
-      <ModulesBento activeId={activeId} />
+      <ModulesQuickJump modules={merged} activeId={activeId} onSelect={setActiveId} />
+      <ModulesBento modules={merged} activeId={activeId} />
     </>
   );
 }

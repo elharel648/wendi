@@ -34,6 +34,50 @@ const ico = (path: ReactNode) => (
   </svg>
 );
 
+/**
+ * CMS-editable text for a sector, keyed by id. Serializable slice that travels
+ * from the Umbraco fetch into the client components — icon/color stay in code
+ * and are merged back by id (mergeSectorsText).
+ */
+export type SectorText = {
+  id: string;
+  num: string;
+  short: string;
+  teaser: string;
+  badge: string;
+  title: string;
+  desc: string;
+  features: string[];
+  story: { label: string; quote: string; avatar: string; name: string; role: string };
+};
+
+/** Merge CMS text onto the bundled sectors (preserving icon/color). */
+export function mergeSectorsText(cms: SectorText[] | null | undefined): Sector[] {
+  if (!cms?.length) return sectors;
+  return sectors.map((s) => {
+    const t = cms.find((c) => c.id === s.id);
+    if (!t) return s;
+    return {
+      ...s,
+      num: t.num || s.num,
+      short: t.short || s.short,
+      teaser: t.teaser || s.teaser,
+      badge: t.badge || s.badge,
+      title: t.title || s.title,
+      desc: t.desc || s.desc,
+      features: t.features.length ? t.features : s.features,
+      story: {
+        ...s.story,
+        label: t.story.label || s.story.label,
+        quote: t.story.quote || s.story.quote,
+        avatar: t.story.avatar || s.story.avatar,
+        name: t.story.name || s.story.name,
+        role: t.story.role || s.story.role,
+      },
+    };
+  });
+}
+
 export const sectors: Sector[] = [
   {
     id: "finantsim",

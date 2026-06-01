@@ -1,14 +1,14 @@
 import { AboutSubHero } from "@/components/sections/about/AboutSubHero";
 import { FaqSection } from "@/components/sections/about/FaqSection";
-import { aboutContent } from "@/content/about";
+import { getAboutContent } from "@/content/cms";
 
 export const metadata = {
   title: "Wendi — שאלות ותשובות",
   description: "כל מה שרציתם לדעת על Wendi — שאלות שעולות תמיד, עם תשובות ישרות.",
 };
 
-export default function AboutFaqPage() {
-  const { faq } = aboutContent;
+export default async function AboutFaqPage() {
+  const { faq } = await getAboutContent();
 
   return (
     <>

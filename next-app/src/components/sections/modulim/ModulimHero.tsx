@@ -6,7 +6,13 @@ import { FluxCardHero } from "@/components/ui/flux-card-hero";
 const expo = [0.22, 1, 0.36, 1] as const;
 const TEAL = "#0D9488";
 
-export function ModulimHero() {
+type ModulimHeroProps = { title?: string; subtitleHtml?: string };
+
+const DEFAULT_TITLE = "כל כלי במקום הנכון";
+const DEFAULT_SUBTITLE =
+  'וונדי מציעה <strong class="font-bold text-ink-2">4 מודולים מרכזיים</strong> שעובדים יחד כמערכת אחת. לחצו על כל מודול לגלות את הפיצ׳רים המלאים.';
+
+export function ModulimHero({ title, subtitleHtml }: ModulimHeroProps = {}) {
   return (
     <section
       dir="rtl"
@@ -23,7 +29,7 @@ export function ModulimHero() {
           transition={{ duration: 1.0, ease: expo, delay: 0.18 }}
           className="mb-6 text-[clamp(2rem,8vw,5.6rem)] font-black leading-[1.1] tracking-[-0.045em] text-ink md:mb-7"
         >
-          כל כלי במקום הנכון
+          {title || DEFAULT_TITLE}
         </motion.h1>
 
         {/* SUBTITLE */}
@@ -32,11 +38,8 @@ export function ModulimHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.95, ease: expo, delay: 0.85 }}
           className="mx-auto max-w-[620px] text-[1rem] leading-[1.75] text-muted-fg md:text-[1.15rem] md:leading-[1.8]"
-        >
-          וונדי מציעה{" "}
-          <strong className="font-bold text-ink-2">4 מודולים מרכזיים</strong>{" "}
-          שעובדים יחד כמערכת אחת. לחצו על כל מודול לגלות את הפיצ׳רים המלאים.
-        </motion.p>
+          dangerouslySetInnerHTML={{ __html: subtitleHtml || DEFAULT_SUBTITLE }}
+        />
       </div>
 
       {/* Animated layered cards — module previews */}

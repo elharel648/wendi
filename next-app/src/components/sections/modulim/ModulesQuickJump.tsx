@@ -1,13 +1,14 @@
 "use client";
 
-import { modules } from "@/content/modulim";
+import type { Module } from "@/content/modulim";
 
 type Props = {
+  modules: Module[];
   activeId: string;
   onSelect: (id: string) => void;
 };
 
-export function ModulesQuickJump({ activeId, onSelect }: Props) {
+export function ModulesQuickJump({ modules, activeId, onSelect }: Props) {
   return (
     <div
       dir="rtl"
