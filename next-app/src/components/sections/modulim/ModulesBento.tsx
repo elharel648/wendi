@@ -7,9 +7,9 @@ import { LottieIcon } from "@/components/ui/lottie-icon";
 const expo = [0.22, 1, 0.36, 1] as const;
 const TEAL = "#0D9488";
 
-export function ModulesBento({ selectedId }: { selectedId?: Module["id"] } = {}) {
-  const visible = selectedId
-    ? modules.filter((m) => m.id === selectedId)
+export function ModulesBento({ activeId }: { activeId?: string }) {
+  const visible = activeId
+    ? modules.filter((m) => m.id === activeId)
     : modules;
   return (
     <section
@@ -24,7 +24,6 @@ export function ModulesBento({ selectedId }: { selectedId?: Module["id"] } = {})
           <ModuleBlock
             key={m.id}
             module={m}
-            index={i}
             alternate={i % 2 === 1}
             framed
           />
@@ -37,20 +36,13 @@ export function ModulesBento({ selectedId }: { selectedId?: Module["id"] } = {})
 /* ─── One module block (Monday.com pattern: headline → 3 hero cards → compact list) ─ */
 function ModuleBlock({
   module: m,
-  index,
   alternate,
   framed = false,
 }: {
   module: Module;
-  index: number;
   alternate: boolean;
   framed?: boolean;
 }) {
-  const [heroFeatures, restFeatures] = [
-    m.features.slice(0, 3),
-    m.features.slice(3),
-  ];
-
   if (framed) {
     return (
       <div
@@ -79,12 +71,7 @@ function ModuleBlock({
             }}
           >
             <div className="mx-auto max-w-[900px] px-3 py-8 sm:px-4 sm:py-10 md:px-8 md:py-14">
-              <ModuleBlockInner
-                m={m}
-                index={index}
-                heroFeatures={heroFeatures}
-                restFeatures={restFeatures}
-              />
+              <ModuleBlockInner m={m} />
             </div>
           </div>
         </div>
@@ -98,29 +85,14 @@ function ModuleBlock({
       className={`relative scroll-mt-20 ${alternate ? "bg-slate-50/60" : "bg-paper"}`}
     >
       <div className="mx-auto max-w-[1240px] px-6 py-24 md:px-10 md:py-32">
-        <ModuleBlockInner
-          m={m}
-          index={index}
-          heroFeatures={heroFeatures}
-          restFeatures={restFeatures}
-        />
+        <ModuleBlockInner m={m} />
       </div>
     </div>
   );
 }
 
 /* ─── Inner content of a module block (shared between framed and unframed) ─── */
-function ModuleBlockInner({
-  m,
-  index,
-  heroFeatures,
-  restFeatures,
-}: {
-  m: Module;
-  index: number;
-  heroFeatures: Feature[];
-  restFeatures: Feature[];
-}) {
+function ModuleBlockInner({ m }: { m: Module }) {
   return (
     <>
       {/* ── Section header ── */}
@@ -131,29 +103,6 @@ function ModuleBlockInner({
         transition={{ duration: 1.0, ease: expo }}
         className="mx-auto mb-14 max-w-[860px] md:mb-20"
       >
-        {/* Eyebrow */}
-        <div className="mb-6 flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-slate-400 sm:gap-3 sm:text-[11px] sm:tracking-[0.28em]">
-          <span className="tabular-nums">
-            <span className="text-slate-900">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <span className="mx-1 text-slate-300">/</span>
-            <span>04</span>
-          </span>
-          <span className="hidden h-px w-12 bg-slate-300 sm:inline-block" />
-          <span style={{ color: TEAL }}>מודול</span>
-          <span
-            className="ms-auto inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] tabular-nums shadow-[0_2px_8px_rgba(15,23,42,0.04)]"
-            style={{ color: TEAL }}
-          >
-            <span
-              className="h-1.5 w-1.5 rounded-full"
-              style={{ background: TEAL }}
-            />
-            {m.features.length} פיצ׳רים
-          </span>
-        </div>
-
         {/* Massive title */}
         <h2 className="text-balance text-[clamp(1.75rem,6vw,3.8rem)] font-black leading-[1.05] tracking-[-0.04em] text-slate-900 md:tracking-[-0.045em]">
           {m.title}
@@ -172,32 +121,13 @@ function ModuleBlockInner({
         )}
       </motion.div>
 
-      {/* ── 3 Hero feature cards ── */}
-      <div className="mb-10 grid grid-cols-1 gap-5 md:mb-14 md:grid-cols-3 md:gap-6">
-        {heroFeatures.map((f, i) => (
-          <HeroFeatureCard key={`hero-${i}`} feature={f} index={i} />
+      {/* ── All features as a uniform compact list (2 columns on desktop) ── */}
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        {m.features.map((f, i) => (
+          <CompactRow key={`feat-${i}`} feature={f} index={i} />
         ))}
       </div>
 
-      {/* ── Compact remaining features list ── */}
-      {restFeatures.length > 0 && (
-        <div className="mt-10">
-          <div className="mb-5 flex items-center gap-3 text-[11px] font-bold tracking-[0.22em] text-slate-400 md:mb-6">
-            <span className="h-px flex-1 bg-slate-200" />
-            <span>עוד {restFeatures.length} פיצ׳רים</span>
-            <span className="h-px flex-1 bg-slate-200" />
-          </div>
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            {restFeatures.map((f, i) => (
-              <CompactRow
-                key={`rest-${i}`}
-                feature={f}
-                index={i + 3}
-              />
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Optional note — plain text, no pill */}
       {m.note && (

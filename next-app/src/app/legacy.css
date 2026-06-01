@@ -3287,6 +3287,12 @@
       /* Solid midnight bg â€” isolates this section from the global aurora.
          The ONLY light source allowed is the heart's halo. */
       background: #030014;
+      /* Skip rendering this section's heavy effects (backdrop-filter, blurred
+         glow, 18 animated particles) while it's off-screen, so scrolling past
+         it stays smooth. intrinsic-size reserves layout height to avoid a jump.
+         Visual result on-screen is identical. */
+      content-visibility: auto;
+      contain-intrinsic-size: auto 1040px;
     }
 
     .wol-header {
@@ -3372,6 +3378,10 @@
       filter: blur(60px);
       pointer-events: none;
       animation: wolGlowBreathe 9s ease-in-out infinite;
+      /* Promote the blurred glow to its own layer so the 60px blur is
+         rasterized once, not recomputed against page content on scroll. */
+      transform: translateZ(0);
+      will-change: transform, opacity;
     }
     @keyframes wolGlowBreathe {
       0%, 100% { opacity: .85; transform: scale(1); }
@@ -3394,6 +3404,10 @@
       inset: 0;
       pointer-events: none;
       overflow: hidden;
+      /* Confine particle paint/layout to this box so their drift animations
+         don't dirty the surrounding section during scroll. */
+      contain: strict;
+      transform: translateZ(0);
     }
     .wol-particle {
       position: absolute;
@@ -3453,6 +3467,12 @@
       background: transparent;
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
+      /* Isolate the expensive backdrop-filter onto its own compositor layer so
+         it isn't re-rasterized on every scroll frame (the cause of the scroll
+         jank in this section). Visual result is unchanged. */
+      contain: strict;
+      transform: translateZ(0);
+      will-change: transform;
       -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 460' preserveAspectRatio='xMidYMid meet'%3E%3Cpath d='M300 420 C 270 395 175 320 110 250 C 55 192 35 130 75 78 C 115 26 205 30 245 80 C 270 110 290 145 300 175 C 310 145 330 110 355 80 C 395 30 485 26 525 78 C 565 130 545 192 490 250 C 425 320 330 395 300 420 Z' fill='black'/%3E%3C/svg%3E");
               mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 460' preserveAspectRatio='xMidYMid meet'%3E%3Cpath d='M300 420 C 270 395 175 320 110 250 C 55 192 35 130 75 78 C 115 26 205 30 245 80 C 270 110 290 145 300 175 C 310 145 330 110 355 80 C 395 30 485 26 525 78 C 565 130 545 192 490 250 C 425 320 330 395 300 420 Z' fill='black'/%3E%3C/svg%3E");
       -webkit-mask-size: 100% 100%;

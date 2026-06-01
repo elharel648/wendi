@@ -71,7 +71,6 @@ export const homeContent: HomeContent = {
       "וונדי היא הפלטפורמה שמנהלי HR בחרו.<br/>תקשורת למידה, תהליכים דיגיטליים וממשקים- ב<strong>מקום אחד</strong>! בלי ריצה בין&nbsp;מערכות.",
     ctas: [
       { label: "קבלו הדגמה חינמית", href: "#contact", variant: "primary", withArrow: true },
-      { label: "ראו איך זה עובד", href: "#feature-tour", variant: "secondary" },
     ],
     mascot: { src: "/wendi-char2.png", alt: "Wendi" },
   },

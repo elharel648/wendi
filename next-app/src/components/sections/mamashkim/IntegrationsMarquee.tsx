@@ -86,22 +86,59 @@ export function IntegrationsMarquee() {
           </p>
         </div>
 
-        {/* Two static rows of logos */}
-        <LogoRow items={ROW_1} />
+      </div>
+
+      {/* Two sliding rows of logos — full-bleed, opposite directions.
+          CSS-only marquee (transform on the compositor) so scrolling stays smooth. */}
+      <div className="relative" dir="ltr">
+        <MarqueeRow items={ROW_1} duration="55s" />
         <div className="mt-4">
-          <LogoRow items={ROW_2} />
+          <MarqueeRow items={ROW_2} duration="65s" reverse />
         </div>
+
+        {/* fade overlays so chips melt into the background at the edges */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 left-0 w-20 sm:w-40"
+          style={{
+            background:
+              "linear-gradient(90deg, var(--color-paper) 0%, transparent 100%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-40"
+          style={{
+            background:
+              "linear-gradient(-90deg, var(--color-paper) 0%, transparent 100%)",
+          }}
+        />
       </div>
     </section>
   );
 }
 
-function LogoRow({ items }: { items: string[] }) {
+function MarqueeRow({
+  items,
+  duration,
+  reverse = false,
+}: {
+  items: string[];
+  duration: string;
+  reverse?: boolean;
+}) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3 py-2">
-      {items.map((label) => (
-        <LogoChip key={label} label={label} />
-      ))}
+    <div className="marquee-row overflow-hidden py-2">
+      <div
+        className="marquee-track gap-3"
+        data-reverse={reverse}
+        style={{ ["--marquee-duration" as string]: duration }}
+      >
+        {/* rendered twice so translateX(-50%) loops seamlessly */}
+        {[...items, ...items].map((label, i) => (
+          <LogoChip key={`${label}-${i}`} label={label} />
+        ))}
+      </div>
     </div>
   );
 }

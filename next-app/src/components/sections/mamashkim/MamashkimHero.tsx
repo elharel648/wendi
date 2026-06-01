@@ -114,9 +114,6 @@ export function MamashkimHero() {
             <Button variant="primary" href="#contact" withArrow>
               דברו איתנו על אינטגרציה
             </Button>
-            <Button variant="secondary" href="#different">
-              ראו את ההבדל
-            </Button>
           </div>
 
           <p className="mt-10 text-sm text-muted-fg">

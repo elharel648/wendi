@@ -1,5 +1,5 @@
 import { ModulimHero } from "@/components/sections/modulim/ModulimHero";
-import { ModulesTabs } from "@/components/sections/modulim/ModulesTabs";
+import { ModulimSwitcher } from "@/components/sections/modulim/ModulimSwitcher";
 
 export const metadata = {
   title: "Wendi — מודולים ופיצ׳רים",
@@ -11,7 +11,7 @@ export default function ModulimPage() {
   return (
     <>
       <ModulimHero />
-      <ModulesTabs />
+      <ModulimSwitcher />
     </>
   );
 }

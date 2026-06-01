@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, type PanInfo } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { modules } from "@/content/modulim";
 
@@ -16,17 +17,34 @@ const TEASERS: Record<string, string> = {
 
 export function FluxCardHero() {
   const [currentCard, setCurrentCard] = useState(0);
+  // Once the user drags or taps a dot, stop the auto-rotation for good.
+  const [userControlled, setUserControlled] = useState(false);
 
   useEffect(() => {
+    if (userControlled) return;
     const interval = setInterval(() => {
       setCurrentCard((prev) => (prev + 1) % modules.length);
     }, 3400);
     return () => clearInterval(interval);
-  }, []);
+  }, [userControlled]);
+
+  const goTo = (index: number) => {
+    setUserControlled(true);
+    setCurrentCard((index + modules.length) % modules.length);
+  };
+
+  // RTL: dragging the card to the left advances to the NEXT module.
+  const handleDragEnd = (_e: unknown, info: PanInfo) => {
+    const threshold = 60;
+    const { offset, velocity } = info;
+    if (offset.x < -threshold || velocity.x < -400) {
+      goTo(currentCard + 1);
+    } else if (offset.x > threshold || velocity.x > 400) {
+      goTo(currentCard - 1);
+    }
+  };
 
   const current = modules[currentCard];
-  const moduleNumber = String(currentCard + 1).padStart(2, "0");
-  const total = String(modules.length).padStart(2, "0");
 
   return (
     <div className="relative mx-auto w-full max-w-3xl" dir="rtl">
@@ -53,28 +71,17 @@ export function FluxCardHero() {
         );
       })}
 
-      {/* Foreground active card */}
-      <div
-        className="relative z-10 flex h-64 w-full flex-col rounded-3xl p-4 shadow-2xl transition-all duration-1000 ease-in-out sm:h-72 sm:p-6"
+      {/* Foreground active card — draggable left/right to switch modules */}
+      <motion.div
+        className="relative z-10 flex h-64 w-full cursor-grab flex-col rounded-3xl p-4 shadow-2xl transition-colors duration-1000 ease-in-out active:cursor-grabbing sm:h-72 sm:p-6"
         style={{ background: current.color }}
+        drag="x"
+        dragSnapToOrigin
+        dragElastic={0.18}
+        dragConstraints={{ left: 0, right: 0 }}
+        onDragEnd={handleDragEnd}
       >
-        <div className="flex h-full flex-col rounded-2xl bg-white/25 p-4 backdrop-blur-sm transition-all duration-500 sm:p-5">
-          {/* Header row */}
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-full bg-red-400/90 transition-transform duration-300 hover:scale-110" />
-              <span className="h-3 w-3 rounded-full bg-yellow-400/90 transition-transform duration-300 hover:scale-110" />
-              <span className="h-3 w-3 rounded-full bg-green-500/90 transition-transform duration-300 hover:scale-110" />
-            </div>
-            <span className="rounded-full bg-white/35 px-3 py-1 text-[11px] font-bold tabular-nums text-white">
-              <span className="opacity-80">מודול</span>{" "}
-              <span>
-                {moduleNumber}
-                <span className="opacity-50">/{total}</span>
-              </span>
-            </span>
-          </div>
-
+        <div className="pointer-events-none flex h-full flex-col rounded-2xl bg-white/25 p-4 backdrop-blur-sm transition-all duration-500 sm:p-5">
           {/* Module short label as eyebrow */}
           <div className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-white opacity-85">
             {current.shortLabel}
@@ -96,7 +103,7 @@ export function FluxCardHero() {
             <ArrowLeft className="h-4 w-4" aria-hidden />
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Indicator dots — each tinted by its module color */}
       <div className="mt-6 flex justify-center gap-2 sm:mt-8">
@@ -106,7 +113,7 @@ export function FluxCardHero() {
             <button
               key={m.id}
               type="button"
-              onClick={() => setCurrentCard(index)}
+              onClick={() => goTo(index)}
               aria-label={`הצג ${m.shortLabel}`}
               aria-current={isActive ? "true" : undefined}
               className="grid h-11 place-items-center px-1.5"

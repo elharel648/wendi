@@ -162,3 +162,30 @@ body {
   .mod-feat-card { animation: none !important; }
 }
 
+/* IntegrationsMarquee — GPU-only logo marquee.
+   The track holds its children twice; translating by -50% loops seamlessly.
+   Runs on the compositor (transform only) so it never blocks scroll. */
+@keyframes marquee-ltr {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-rtl {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee-ltr var(--marquee-duration, 55s) linear infinite;
+}
+.marquee-track[data-reverse="true"] {
+  animation-name: marquee-rtl;
+}
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+

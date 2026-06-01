@@ -1,82 +1,19 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { sectors } from "@/content/pitronot";
-import { Gravity, MatterBody } from "@/components/ui/gravity";
-
-const expo = [0.22, 1, 0.36, 1] as const;
 const TEAL = "#0D9488";
-
-// Drop positions distributed across the top — bubbles fall and settle with friction.
-const DROP_SPOTS: Array<{ x: string; y: string; angle: number }> = [
-  { x: "20%", y: "8%", angle: -8 },
-  { x: "38%", y: "0%", angle: 6 },
-  { x: "55%", y: "10%", angle: -4 },
-  { x: "70%", y: "2%", angle: 10 },
-  { x: "82%", y: "14%", angle: -12 },
-  { x: "10%", y: "18%", angle: 14 },
-];
 
 export function PitronotHero() {
   return (
     <section
       dir="rtl"
       aria-label="פתרונות לפי מגזר — הירו"
-      className="relative isolate overflow-hidden bg-paper px-4 pt-28 sm:px-6 sm:pt-32 lg:px-8 lg:pt-36"
+      className="relative isolate overflow-hidden bg-paper px-4 pt-28 pb-16 sm:px-6 sm:pt-32 sm:pb-20 lg:px-8 lg:pt-36"
     >
       <SoftGlow />
 
       <div className="relative z-10 mx-auto max-w-7xl">
         <HeroHeadline />
       </div>
-
-      {/* Gravity playground — bubbles drop, collide, settle, draggable.
-          dir="ltr" is mandatory: Matter.js positions bodies via absolute left
-          offsets, which break under RTL inheritance and push bubbles offscreen. */}
-      <div
-        dir="ltr"
-        className="relative mt-8 h-[380px] w-full sm:mt-10 sm:h-[480px] md:h-[600px]"
-      >
-        <Gravity
-          gravity={{ x: 0, y: 1 }}
-          grabCursor
-          addTopWall={false}
-          className="absolute inset-0"
-        >
-          {sectors.map((s, i) => {
-            const spot = DROP_SPOTS[i] ?? DROP_SPOTS[0];
-            return (
-              <MatterBody
-                key={s.id}
-                matterBodyOptions={{
-                  friction: 0.35,
-                  restitution: 0.45,
-                  density: 0.0018,
-                }}
-                x={spot.x}
-                y={spot.y}
-                angle={spot.angle}
-              >
-                <a
-                  href={`#${s.id}`}
-                  dir="rtl"
-                  className="flex min-h-[44px] cursor-grab select-none items-center gap-3 rounded-full px-5 py-3 text-white shadow-lg transition-transform active:cursor-grabbing sm:gap-4 sm:px-7 sm:py-4"
-                  style={{
-                    background: s.color,
-                    boxShadow: `0 12px 28px -10px ${s.color}80, 0 0 0 1px rgba(255,255,255,0.18) inset`,
-                  }}
-                >
-                  <span className="block h-5 w-5 sm:h-6 sm:w-6" style={{ color: "#fff" }}>{s.icon}</span>
-                  <span className="whitespace-nowrap text-base font-bold sm:text-lg" style={{ color: "#fff" }}>
-                    {s.short}
-                  </span>
-                </a>
-              </MatterBody>
-            );
-          })}
-        </Gravity>
-      </div>
-
     </section>
   );
 }

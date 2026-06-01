@@ -54,7 +54,28 @@ export function ClientBehaviors() {
     return () => io.disconnect();
   }, []);
 
-  /* ===== Floating-features: scroll-driven fly-out + fly-back-in ===== */
+  /* ===== Floating-features: arrive (scroll) → hold (wheel-lock) → collapse-to-wendi (time) ===
+   *
+   * Three phases, controlled by a small state machine:
+   *
+   *  1. "arriving" — scroll-driven. As the sticky stage starts to pin and the
+   *     user scrolls through the section, --flt-fp on each card animates 0→1
+   *     and the cards fly out from Wendi to their resting positions. Same
+   *     behavior as the original site.
+   *
+   *  2. "locked"   — when all 4 cards have fully arrived (fp ≈ 1) and the
+   *     section is fully pinned (rect.top <= 0), we hijack the wheel: scroll
+   *     can't advance until the user has flicked the wheel HOLD_TICKS times.
+   *     This forces them to actually see the cards before moving on. Each
+   *     wheel notch counts as one tick regardless of momentum.
+   *
+   *  3. "collapsing" — once HOLD_TICKS is reached, we release the lock and
+   *     run a TIME-driven collapse-back-to-Wendi animation: --flt-exit
+   *     animates 0→1 over EXIT_MS, which (via the existing CSS) translates
+   *     cards back to center, shrinks them, fades them out — as if Wendi is
+   *     pulling them back into herself. When done, normal scrolling resumes.
+   *
+   *  Scrolling back up at any point cleanly reverses to the previous phase. */
   useEffect(() => {
     const sec = document.getElementById("flt-section");
     if (!sec) return;
@@ -63,50 +84,228 @@ export function ClientBehaviors() {
     );
     if (!feats.length) return;
 
-    // Phase 1: fly-OUT from character (cards arrive into place).
-    // Phase 2: linear/stripe-style EXIT — cards drift further outward with
-    // increasing blur + fade as scroll progresses, never collapsing back.
-    const OUT_WINDOW = 0.32;
-    const OUT_STEP = 0.08;
-    const HOLD_END = 0.60;   // arrival settles by here
-    const EXIT_START = 0.62; // exit drift begins
-    const EXIT_WINDOW = 0.22; // total exit duration
-    const EXIT_STEP = 0.04;  // per-card stagger on exit (further cards leave later)
+    const isDesktop = !window.matchMedia("(max-width: 1023px)").matches;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Phase-1 (arrival) windows — gentle, industry-standard pacing.
+    // OUT_WINDOW = how spread out each card's arrival is (in normalized progress).
+    // OUT_STEP = stagger between cards.
+    // ARRIVAL_END = what fraction of the section's scroll the arrival fills.
+    // 0.75 means the cards finish landing only when the user has scrolled
+    // through 75% of the pinned section — comfortable to follow, not jumpy.
+    const OUT_WINDOW = 0.42;
+    const OUT_STEP = 0.10;
+    const ARRIVAL_END = 0.75;
+
+    // Phase-2 (hold) — how many wheel ticks the user must flick before unlock.
+    const HOLD_TICKS = 3;
+    // Debounce so trackpad inertia or one fast wheel-flick doesn't burn all
+    // 3 ticks instantly. A tick is only counted after this gap.
+    const TICK_DEBOUNCE_MS = 220;
+
+    // Phase-3 (collapse-to-Wendi) duration.
+    const EXIT_MS = 900;
 
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
     const easeOutSlow = (t: number) => 1 - Math.pow(1 - t, 4);
-    // smooth ease-in-out for a graceful exit drift
     const easeInOut = (t: number) =>
       t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 
-    const tick = () => {
-      const rect = sec.getBoundingClientRect();
-      const total = sec.offsetHeight - window.innerHeight;
-      const scrolled = Math.max(0, -rect.top);
-      const p = total > 0 ? clamp(scrolled / total) : 0;
+    type Phase = "arriving" | "locked" | "collapsing" | "done";
+    let phase: Phase = "arriving";
+    let lockTicks = 0;
+    let lastTickAt = 0;
+    let exitStart = 0;
+    let exitProgress = 0; // current --flt-exit value during collapse
+    let rafId = 0;
 
+    const setArrival = (p: number) => {
       feats.forEach((el) => {
         const idx = parseInt(el.dataset.fltIdx || "0", 10);
-
-        // arrival progress (0 → 1 as the card flies into view)
         const outStart = idx * OUT_STEP;
         const fp = easeOutSlow(clamp((p - outStart) / OUT_WINDOW));
         el.style.setProperty("--flt-fp", fp.toFixed(4));
-
-        // exit progress (0 → 1 as the card drifts away outward + blurs)
-        const exitStart = EXIT_START + idx * EXIT_STEP;
-        const exitRaw = clamp((p - exitStart) / EXIT_WINDOW);
-        const exit = easeInOut(exitRaw);
-        el.style.setProperty("--flt-exit", exit.toFixed(4));
       });
     };
+    const setExit = (e: number) => {
+      exitProgress = e;
+      feats.forEach((el) => {
+        el.style.setProperty("--flt-exit", e.toFixed(4));
+      });
+    };
+    // Initial state
+    setArrival(0);
+    setExit(0);
 
-    window.addEventListener("scroll", tick, { passive: true });
-    window.addEventListener("resize", tick);
-    tick();
+    const computeArrivalProgress = () => {
+      const rect = sec.getBoundingClientRect();
+      const total = sec.offsetHeight - window.innerHeight;
+      const scrolled = Math.max(0, -rect.top);
+      const raw = total > 0 ? clamp(scrolled / total) : 0;
+      // Compress: arrival completes by ARRIVAL_END of section scroll
+      return clamp(raw / ARRIVAL_END);
+    };
+
+    const onScroll = () => {
+      if (phase === "arriving") {
+        const p = computeArrivalProgress();
+        setArrival(p);
+        // Once cards are settled AND the section is fully pinned, enter lock.
+        if (p >= 1 && isDesktop && !reduce) {
+          const rect = sec.getBoundingClientRect();
+          if (rect.top <= 0) {
+            phase = "locked";
+            lockTicks = 0;
+            lastTickAt = 0;
+          }
+        }
+      } else if (phase === "done") {
+        // Scrolled back into the section from below or above — reset.
+        const rect = sec.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) {
+          phase = "arriving";
+          setExit(0);
+        }
+      }
+    };
+
+    const startCollapse = () => {
+      phase = "collapsing";
+      exitStart = performance.now();
+      const step = (now: number) => {
+        const t = clamp((now - exitStart) / EXIT_MS);
+        setExit(easeInOut(t));
+        if (t < 1) {
+          rafId = requestAnimationFrame(step);
+        } else {
+          phase = "done";
+        }
+      };
+      rafId = requestAnimationFrame(step);
+    };
+
+    const reverseCollapse = () => {
+      // The user scrolled back during collapse — unwind exit to 0 and go
+      // back to "locked" so they can re-do the tick gesture.
+      cancelAnimationFrame(rafId);
+      const fromValue = exitProgress;
+      const start = performance.now();
+      const DURATION = 280;
+      const step = (now: number) => {
+        const t = clamp((now - start) / DURATION);
+        setExit(fromValue * (1 - t));
+        if (t < 1) {
+          rafId = requestAnimationFrame(step);
+        } else {
+          phase = "locked";
+          lockTicks = 0;
+          lastTickAt = 0;
+        }
+      };
+      rafId = requestAnimationFrame(step);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (phase === "locked") {
+        // Hijack scroll while locked.
+        e.preventDefault();
+        const dir = Math.sign(e.deltaY);
+        if (dir > 0) {
+          // count a tick — but only one per debounce window
+          const now = performance.now();
+          if (now - lastTickAt < TICK_DEBOUNCE_MS) return;
+          lastTickAt = now;
+          lockTicks += 1;
+          if (lockTicks >= HOLD_TICKS) {
+            startCollapse();
+          }
+        } else if (dir < 0) {
+          // backing out — reverse arrival a bit and exit lock immediately
+          phase = "arriving";
+          // Nudge scroll up so the user feels their gesture worked
+          window.scrollBy({ top: -80, behavior: "smooth" });
+        }
+      } else if (phase === "collapsing") {
+        // Allow user to abort the collapse by scrolling back up.
+        if (e.deltaY < 0) {
+          e.preventDefault();
+          reverseCollapse();
+        }
+        // scrolling down during collapse is fine — let the page move on
+      }
+    };
+
+    let touchY: number | null = null;
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) touchY = e.touches[0].clientY;
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (touchY === null) return;
+      const dy = touchY - e.touches[0].clientY;
+      if (phase === "locked") {
+        if (Math.abs(dy) < 30) {
+          e.preventDefault();
+          return;
+        }
+        e.preventDefault();
+        const now = performance.now();
+        if (now - lastTickAt < TICK_DEBOUNCE_MS) {
+          touchY = e.touches[0].clientY;
+          return;
+        }
+        lastTickAt = now;
+        if (dy > 0) {
+          lockTicks += 1;
+          if (lockTicks >= HOLD_TICKS) startCollapse();
+        } else {
+          phase = "arriving";
+          window.scrollBy({ top: -80, behavior: "smooth" });
+        }
+        touchY = e.touches[0].clientY;
+      } else if (phase === "collapsing" && dy < 0) {
+        e.preventDefault();
+        reverseCollapse();
+      }
+    };
+    const onTouchEnd = () => {
+      touchY = null;
+    };
+
+    const onKey = (e: KeyboardEvent) => {
+      if (phase === "locked") {
+        if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
+          e.preventDefault();
+          const now = performance.now();
+          if (now - lastTickAt < TICK_DEBOUNCE_MS) return;
+          lastTickAt = now;
+          lockTicks += 1;
+          if (lockTicks >= HOLD_TICKS) startCollapse();
+        } else if (e.key === "ArrowUp" || e.key === "PageUp") {
+          e.preventDefault();
+          phase = "arriving";
+          window.scrollBy({ top: -80, behavior: "smooth" });
+        }
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
+    window.addEventListener("keydown", onKey);
+    onScroll();
+
     return () => {
-      window.removeEventListener("scroll", tick);
-      window.removeEventListener("resize", tick);
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("keydown", onKey);
     };
   }, []);
 

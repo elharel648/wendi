@@ -81,7 +81,7 @@ function SectorBlock({
       <div
         className="relative mx-auto grid max-w-6xl items-start gap-10 lg:grid-cols-2 lg:gap-16"
       >
-        {/* LEFT — copy + features + chips */}
+        {/* LEFT — copy + features */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -135,22 +135,6 @@ function SectorBlock({
               </li>
             ))}
           </ul>
-
-          {/* Chips */}
-          <div className="mt-7 flex flex-wrap gap-2">
-            {s.chips.map((c) => (
-              <span
-                key={c}
-                className="rounded-lg px-3 py-1.5 text-[0.78rem] font-semibold text-white"
-                style={{
-                  background: s.color,
-                  boxShadow: `0 4px 12px -4px ${rgba(s.color, 0.45)}`,
-                }}
-              >
-                {c}
-              </span>
-            ))}
-          </div>
         </motion.div>
 
         {/* RIGHT — story card */}

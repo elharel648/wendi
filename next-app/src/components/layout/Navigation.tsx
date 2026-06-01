@@ -3,7 +3,7 @@
 import { useState, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
   Users,
@@ -54,30 +54,6 @@ type MenuItem = {
 };
 
 const menu: MenuItem[] = [
-  {
-    title: "אודותינו",
-    url: "/about",
-    items: [
-      {
-        title: "מי אנחנו",
-        description: "הסיפור של Wendi, הצוות והערכים",
-        icon: <Users className="size-5 shrink-0" aria-hidden="true" />,
-        url: "/about",
-      },
-      {
-        title: "שאלות ותשובות",
-        description: "תשובות לשאלות הנפוצות ביותר על הפלטפורמה",
-        icon: <MessageCircleQuestion className="size-5 shrink-0" aria-hidden="true" />,
-        url: "/about#faq",
-      },
-      {
-        title: "גלריה",
-        description: "מבט מבפנים — צילומי מסך וסרטוני מערכת",
-        icon: <Images className="size-5 shrink-0" aria-hidden="true" />,
-        url: "/about#gallery",
-      },
-    ],
-  },
   {
     title: "מגזרים",
     url: "/pitronot",
@@ -160,6 +136,30 @@ const menu: MenuItem[] = [
       },
     ],
   },
+  {
+    title: "אודותינו",
+    url: "/about",
+    items: [
+      {
+        title: "מי אנחנו",
+        description: "הסיפור של Wendi, הצוות והערכים",
+        icon: <Users className="size-5 shrink-0" aria-hidden="true" />,
+        url: "/about",
+      },
+      {
+        title: "שאלות ותשובות",
+        description: "תשובות לשאלות הנפוצות ביותר על הפלטפורמה",
+        icon: <MessageCircleQuestion className="size-5 shrink-0" aria-hidden="true" />,
+        url: "/about#faq",
+      },
+      {
+        title: "גלריה",
+        description: "מבט מבפנים — צילומי מסך וסרטוני מערכת",
+        icon: <Images className="size-5 shrink-0" aria-hidden="true" />,
+        url: "/about#gallery",
+      },
+    ],
+  },
 ];
 
 const ctaText = "דברו איתנו";
@@ -169,6 +169,14 @@ const navLinkClass = cn(
   "inline-flex items-center px-2 py-1",
   "text-[15px] font-medium text-foreground/80 transition-colors",
   "hover:text-foreground",
+);
+
+// Green "you are here" underline: a centered bar that grows in on the active item.
+// Applied alongside `relative`; toggle visibility with `after:scale-x-100`.
+const activeUnderlineClass = cn(
+  "after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-5",
+  "after:-translate-x-1/2 after:rounded-full after:bg-[#5EC2B7]",
+  "after:scale-x-0 after:transition-transform after:duration-300 after:content-['']",
 );
 
 const ctaButtonClass = cn(
@@ -183,9 +191,18 @@ const iconButtonClass = cn(
   "transition-colors hover:bg-muted",
 );
 
+/** A nav item is active when the current path matches its base route
+ *  (e.g. `/modulim` highlights on `/modulim` and `/modulim/...`). */
+function isItemActive(itemUrl: string, pathname: string) {
+  const base = itemUrl.split("#")[0];
+  if (base === "/") return pathname === "/";
+  return pathname === base || pathname.startsWith(`${base}/`);
+}
+
 export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <header
@@ -204,7 +221,7 @@ export function Navigation() {
               {ctaText}
             </a>
             <NavigationMenuList>
-              {menu.map((item) => renderDesktopItem(item, router))}
+              {menu.map((item) => renderDesktopItem(item, router, pathname))}
             </NavigationMenuList>
             <Link href="/" className="flex items-center gap-2">
               <Image
@@ -266,7 +283,11 @@ export function Navigation() {
                     className="flex w-full flex-col gap-4"
                   >
                     {menu.map((item) =>
-                      renderMobileItem(item, () => setMobileOpen(false)),
+                      renderMobileItem(
+                        item,
+                        () => setMobileOpen(false),
+                        pathname,
+                      ),
                     )}
                   </Accordion>
                   <a
@@ -299,7 +320,10 @@ export function Navigation() {
 function renderDesktopItem(
   item: MenuItem,
   router: ReturnType<typeof useRouter>,
+  pathname: string,
 ) {
+  const active = isItemActive(item.url, pathname);
+
   if (item.items) {
     return (
       <NavigationMenuItem key={item.title}>
@@ -314,9 +338,11 @@ function renderDesktopItem(
             e.preventDefault();
           }}
           className={cn(
-            "h-auto flex-row-reverse bg-transparent px-2 py-1 text-[15px] font-medium text-foreground/80",
+            "relative h-auto flex-row-reverse bg-transparent px-2 py-1 text-[15px] font-medium text-foreground/80",
             "hover:bg-transparent hover:text-foreground",
             "focus:bg-transparent data-[active]:bg-transparent data-[state=open]:bg-transparent",
+            activeUnderlineClass,
+            active && "text-foreground after:scale-x-100",
           )}
         >
           {item.title}
@@ -358,7 +384,15 @@ function renderDesktopItem(
   return (
     <NavigationMenuItem key={item.title}>
       <NavigationMenuLink asChild>
-        <Link href={item.url} className={navLinkClass}>
+        <Link
+          href={item.url}
+          className={cn(
+            navLinkClass,
+            "relative",
+            activeUnderlineClass,
+            active && "text-foreground after:scale-x-100",
+          )}
+        >
           {item.title}
         </Link>
       </NavigationMenuLink>
@@ -366,7 +400,13 @@ function renderDesktopItem(
   );
 }
 
-function renderMobileItem(item: MenuItem, onNavigate: () => void) {
+function renderMobileItem(
+  item: MenuItem,
+  onNavigate: () => void,
+  pathname: string,
+) {
+  const active = isItemActive(item.url, pathname);
+
   if (item.items) {
     return (
       <AccordionItem
@@ -374,7 +414,13 @@ function renderMobileItem(item: MenuItem, onNavigate: () => void) {
         value={item.title}
         className="border-b-0"
       >
-        <AccordionTrigger className="py-2 font-semibold hover:no-underline">
+        <AccordionTrigger
+          className={cn(
+            "py-2 font-semibold hover:no-underline",
+            active &&
+              "border-r-2 border-[#5EC2B7] pr-3 text-[#5EC2B7]",
+          )}
+        >
           {item.title}
         </AccordionTrigger>
         <AccordionContent className="mt-2">
@@ -408,7 +454,10 @@ function renderMobileItem(item: MenuItem, onNavigate: () => void) {
       key={item.title}
       href={item.url}
       onClick={onNavigate}
-      className="py-2 font-semibold text-foreground"
+      className={cn(
+        "py-2 font-semibold text-foreground",
+        active && "border-r-2 border-[#5EC2B7] pr-3 text-[#5EC2B7]",
+      )}
     >
       {item.title}
     </Link>
