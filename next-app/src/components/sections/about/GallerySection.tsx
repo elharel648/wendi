@@ -15,8 +15,11 @@ const expo = [0.16, 1, 0.3, 1] as const;
  * for video viewing context).
  */
 export function GallerySection({ content }: Props) {
-  const [activeImg, setActiveImg] = useState(0);
+  const [activeCat, setActiveCat] = useState(0);
   const [openVideo, setOpenVideo] = useState<string | null>(null);
+
+  const categories = content.categories;
+  const activeVideos = categories[activeCat]?.videos ?? [];
 
   useEffect(() => {
     if (!openVideo) return;
@@ -37,15 +40,16 @@ export function GallerySection({ content }: Props) {
     >
       <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
         <div className="w-full max-w-[1440px]">
-        {/* ── Image accordion ─────────────── */}
+        {/* ── Category strips (also filter the video grid) ─────────────── */}
         <div className="flex h-[260px] gap-[6px] sm:h-[340px] sm:gap-[8px] md:h-[460px] md:gap-[12px]">
-          {content.images.map((img, i) => {
-            const active = activeImg === i;
+          {categories.map((cat, i) => {
+            const active = activeCat === i;
             return (
               <button
-                key={img.src}
+                key={cat.id}
                 type="button"
-                onClick={() => setActiveImg(i)}
+                onClick={() => setActiveCat(i)}
+                aria-pressed={active}
                 className={cn(
                   "group relative overflow-hidden transition-[flex] duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)]",
                   active ? "flex-[4] md:flex-[5]" : "min-w-[40px] flex-1 md:min-w-[52px]",
@@ -61,12 +65,12 @@ export function GallerySection({ content }: Props) {
                   transition:
                     "flex 0.7s cubic-bezier(0.22,1,0.36,1), border-color 0.5s, box-shadow 0.5s",
                 }}
-                aria-label={img.caption}
+                aria-label={cat.caption}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={img.src}
-                  alt={img.alt}
+                  src={cat.src}
+                  alt={cat.alt}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
@@ -91,7 +95,7 @@ export function GallerySection({ content }: Props) {
                   )}
                   style={{ textShadow: "0 2px 16px rgba(0,0,0,0.7)" }}
                 >
-                  {img.caption}
+                  {cat.caption}
                 </span>
               </button>
             );
@@ -137,17 +141,24 @@ export function GallerySection({ content }: Props) {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {content.videos.items.map((video, i) => (
+          <AnimatePresence mode="wait">
+          <motion.div
+            key={categories[activeCat]?.id ?? activeCat}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: expo }}
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {activeVideos.map((video, i) => (
               <motion.button
                 key={video.youtubeId}
                 type="button"
                 onClick={() => setOpenVideo(video.youtubeId)}
                 initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  duration: 0.55,
+                  duration: 0.45,
                   ease: expo,
                   delay: 0.04 + (i % 3) * 0.06,
                 }}
@@ -217,7 +228,8 @@ export function GallerySection({ content }: Props) {
                 </div>
               </motion.button>
             ))}
-          </div>
+          </motion.div>
+          </AnimatePresence>
         </div>
         </div>
       </div>

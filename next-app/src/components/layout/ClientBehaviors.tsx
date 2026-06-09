@@ -54,28 +54,16 @@ export function ClientBehaviors() {
     return () => io.disconnect();
   }, []);
 
-  /* ===== Floating-features: arrive (scroll) → hold (wheel-lock) → collapse-to-wendi (time) ===
+  /* ===== Floating-features: scroll-driven card arrival (no scroll-jacking) ===
    *
-   * Three phases, controlled by a small state machine:
+   * As the sticky stage pins and the user scrolls through the section's extra
+   * height, each card's --flt-fp animates 0→1 (a quiet rise + fade, staggered
+   * per card). That's the whole interaction — the page scrolls naturally the
+   * entire time. The character zoom is handled separately by framer-motion in
+   * FloatingFeatures.tsx, also purely scroll-driven.
    *
-   *  1. "arriving" — scroll-driven. As the sticky stage starts to pin and the
-   *     user scrolls through the section, --flt-fp on each card animates 0→1
-   *     and the cards fly out from Wendi to their resting positions. Same
-   *     behavior as the original site.
-   *
-   *  2. "locked"   — when all 4 cards have fully arrived (fp ≈ 1) and the
-   *     section is fully pinned (rect.top <= 0), we hijack the wheel: scroll
-   *     can't advance until the user has flicked the wheel HOLD_TICKS times.
-   *     This forces them to actually see the cards before moving on. Each
-   *     wheel notch counts as one tick regardless of momentum.
-   *
-   *  3. "collapsing" — once HOLD_TICKS is reached, we release the lock and
-   *     run a TIME-driven collapse-back-to-Wendi animation: --flt-exit
-   *     animates 0→1 over EXIT_MS, which (via the existing CSS) translates
-   *     cards back to center, shrinks them, fades them out — as if Wendi is
-   *     pulling them back into herself. When done, normal scrolling resumes.
-   *
-   *  Scrolling back up at any point cleanly reverses to the previous phase. */
+   * No wheel/touch hijacking, no lock, no forced collapse — scrolling is never
+   * intercepted, so the section feels like the rest of the page. */
   useEffect(() => {
     const sec = document.getElementById("flt-section");
     if (!sec) return;
@@ -84,40 +72,15 @@ export function ClientBehaviors() {
     );
     if (!feats.length) return;
 
-    const isDesktop = !window.matchMedia("(max-width: 1023px)").matches;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // Phase-1 (arrival) windows — gentle, industry-standard pacing.
-    // OUT_WINDOW = how spread out each card's arrival is (in normalized progress).
-    // OUT_STEP = stagger between cards.
-    // ARRIVAL_END = what fraction of the section's scroll the arrival fills.
-    // 0.75 means the cards finish landing only when the user has scrolled
-    // through 75% of the pinned section — comfortable to follow, not jumpy.
+    // How spread out each card's arrival is, the stagger between cards, and
+    // what fraction of the section's scroll the arrival fills (cards finish
+    // landing at ~75% so they're settled well before the section ends).
     const OUT_WINDOW = 0.42;
-    const OUT_STEP = 0.10;
+    const OUT_STEP = 0.08;
     const ARRIVAL_END = 0.75;
-
-    // Phase-2 (hold) — how many wheel ticks the user must flick before unlock.
-    const HOLD_TICKS = 3;
-    // Debounce so trackpad inertia or one fast wheel-flick doesn't burn all
-    // 3 ticks instantly. A tick is only counted after this gap.
-    const TICK_DEBOUNCE_MS = 220;
-
-    // Phase-3 (collapse-to-Wendi) duration.
-    const EXIT_MS = 900;
 
     const clamp = (v: number) => Math.max(0, Math.min(1, v));
     const easeOutSlow = (t: number) => 1 - Math.pow(1 - t, 4);
-    const easeInOut = (t: number) =>
-      t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
-    type Phase = "arriving" | "locked" | "collapsing" | "done";
-    let phase: Phase = "arriving";
-    let lockTicks = 0;
-    let lastTickAt = 0;
-    let exitStart = 0;
-    let exitProgress = 0; // current --flt-exit value during collapse
-    let rafId = 0;
 
     const setArrival = (p: number) => {
       feats.forEach((el) => {
@@ -127,185 +90,23 @@ export function ClientBehaviors() {
         el.style.setProperty("--flt-fp", fp.toFixed(4));
       });
     };
-    const setExit = (e: number) => {
-      exitProgress = e;
-      feats.forEach((el) => {
-        el.style.setProperty("--flt-exit", e.toFixed(4));
-      });
-    };
-    // Initial state
     setArrival(0);
-    setExit(0);
 
-    const computeArrivalProgress = () => {
+    const onScroll = () => {
       const rect = sec.getBoundingClientRect();
       const total = sec.offsetHeight - window.innerHeight;
       const scrolled = Math.max(0, -rect.top);
       const raw = total > 0 ? clamp(scrolled / total) : 0;
-      // Compress: arrival completes by ARRIVAL_END of section scroll
-      return clamp(raw / ARRIVAL_END);
-    };
-
-    const onScroll = () => {
-      if (phase === "arriving") {
-        const p = computeArrivalProgress();
-        setArrival(p);
-        // Once cards are settled AND the section is fully pinned, enter lock.
-        if (p >= 1 && isDesktop && !reduce) {
-          const rect = sec.getBoundingClientRect();
-          if (rect.top <= 0) {
-            phase = "locked";
-            lockTicks = 0;
-            lastTickAt = 0;
-          }
-        }
-      } else if (phase === "done") {
-        // Scrolled back into the section from below or above — reset.
-        const rect = sec.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) {
-          phase = "arriving";
-          setExit(0);
-        }
-      }
-    };
-
-    const startCollapse = () => {
-      phase = "collapsing";
-      exitStart = performance.now();
-      const step = (now: number) => {
-        const t = clamp((now - exitStart) / EXIT_MS);
-        setExit(easeInOut(t));
-        if (t < 1) {
-          rafId = requestAnimationFrame(step);
-        } else {
-          phase = "done";
-        }
-      };
-      rafId = requestAnimationFrame(step);
-    };
-
-    const reverseCollapse = () => {
-      // The user scrolled back during collapse — unwind exit to 0 and go
-      // back to "locked" so they can re-do the tick gesture.
-      cancelAnimationFrame(rafId);
-      const fromValue = exitProgress;
-      const start = performance.now();
-      const DURATION = 280;
-      const step = (now: number) => {
-        const t = clamp((now - start) / DURATION);
-        setExit(fromValue * (1 - t));
-        if (t < 1) {
-          rafId = requestAnimationFrame(step);
-        } else {
-          phase = "locked";
-          lockTicks = 0;
-          lastTickAt = 0;
-        }
-      };
-      rafId = requestAnimationFrame(step);
-    };
-
-    const onWheel = (e: WheelEvent) => {
-      if (phase === "locked") {
-        // Hijack scroll while locked.
-        e.preventDefault();
-        const dir = Math.sign(e.deltaY);
-        if (dir > 0) {
-          // count a tick — but only one per debounce window
-          const now = performance.now();
-          if (now - lastTickAt < TICK_DEBOUNCE_MS) return;
-          lastTickAt = now;
-          lockTicks += 1;
-          if (lockTicks >= HOLD_TICKS) {
-            startCollapse();
-          }
-        } else if (dir < 0) {
-          // backing out — reverse arrival a bit and exit lock immediately
-          phase = "arriving";
-          // Nudge scroll up so the user feels their gesture worked
-          window.scrollBy({ top: -80, behavior: "smooth" });
-        }
-      } else if (phase === "collapsing") {
-        // Allow user to abort the collapse by scrolling back up.
-        if (e.deltaY < 0) {
-          e.preventDefault();
-          reverseCollapse();
-        }
-        // scrolling down during collapse is fine — let the page move on
-      }
-    };
-
-    let touchY: number | null = null;
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 1) touchY = e.touches[0].clientY;
-    };
-    const onTouchMove = (e: TouchEvent) => {
-      if (touchY === null) return;
-      const dy = touchY - e.touches[0].clientY;
-      if (phase === "locked") {
-        if (Math.abs(dy) < 30) {
-          e.preventDefault();
-          return;
-        }
-        e.preventDefault();
-        const now = performance.now();
-        if (now - lastTickAt < TICK_DEBOUNCE_MS) {
-          touchY = e.touches[0].clientY;
-          return;
-        }
-        lastTickAt = now;
-        if (dy > 0) {
-          lockTicks += 1;
-          if (lockTicks >= HOLD_TICKS) startCollapse();
-        } else {
-          phase = "arriving";
-          window.scrollBy({ top: -80, behavior: "smooth" });
-        }
-        touchY = e.touches[0].clientY;
-      } else if (phase === "collapsing" && dy < 0) {
-        e.preventDefault();
-        reverseCollapse();
-      }
-    };
-    const onTouchEnd = () => {
-      touchY = null;
-    };
-
-    const onKey = (e: KeyboardEvent) => {
-      if (phase === "locked") {
-        if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
-          e.preventDefault();
-          const now = performance.now();
-          if (now - lastTickAt < TICK_DEBOUNCE_MS) return;
-          lastTickAt = now;
-          lockTicks += 1;
-          if (lockTicks >= HOLD_TICKS) startCollapse();
-        } else if (e.key === "ArrowUp" || e.key === "PageUp") {
-          e.preventDefault();
-          phase = "arriving";
-          window.scrollBy({ top: -80, behavior: "smooth" });
-        }
-      }
+      setArrival(clamp(raw / ARRIVAL_END));
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
-    window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: false });
-    window.addEventListener("touchend", onTouchEnd);
-    window.addEventListener("keydown", onKey);
     onScroll();
 
     return () => {
-      if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-      window.removeEventListener("touchend", onTouchEnd);
-      window.removeEventListener("keydown", onKey);
     };
   }, []);
 
@@ -354,7 +155,7 @@ export function ClientBehaviors() {
     return () => obs.disconnect();
   }, []);
 
-  /* ===== Cinematic platform statement — scroll-driven CSS vars ===== */
+  /* ===== Cinematic platform statement — one scroll triggers a slow self-running reveal ===== */
   useEffect(() => {
     const outer = document.getElementById("cin-statement");
     if (!outer) return;
@@ -363,18 +164,28 @@ export function ClientBehaviors() {
     const vigBot = outer.querySelector<HTMLElement>(".cin-vignette-bot");
     if (!sticky) return;
 
+    let fired = false;
+
     const tick = () => {
       const rect = outer.getBoundingClientRect();
       const total = outer.offsetHeight - window.innerHeight;
       const scrolled = Math.max(0, -rect.top);
       const p = total > 0 ? Math.min(1, scrolled / total) : 0;
-      const pa = Math.min(1, p / 0.4);
-      const pr = Math.min(1, Math.max(0, (p - 0.28) / 0.26));
-      const pb = Math.min(1, Math.max(0, (p - 0.57) / 0.28));
-      sticky.style.setProperty("--cin-p", p.toFixed(4));
-      sticky.style.setProperty("--cin-pa", pa.toFixed(4));
-      sticky.style.setProperty("--cin-pr", pr.toFixed(4));
-      sticky.style.setProperty("--cin-pb", pb.toFixed(4));
+
+      // The reveal is a CSS transition, not a scrub: once the section has been
+      // scrolled into even slightly (one notch of the wheel), add .cin-go and the
+      // headline opens slowly on its own (~1.2s) — it keeps playing even if you stop.
+      if (!fired && p > 0.01) {
+        fired = true;
+        sticky.classList.add("cin-go");
+      }
+      // Re-arm when you scroll back up past the section so it can replay on re-entry.
+      if (fired && rect.top > 0) {
+        fired = false;
+        sticky.classList.remove("cin-go");
+      }
+
+      // Edge vignettes still track scroll position so the section blends in/out.
       if (vigTop) vigTop.style.opacity = Math.max(0, 1 - p / 0.22).toFixed(3);
       if (vigBot) vigBot.style.opacity = Math.max(0, (p - 0.78) / 0.22).toFixed(3);
     };
@@ -403,7 +214,14 @@ export function ClientBehaviors() {
     let currentIdx = 0;
     let visibleCards: HTMLElement[] = allCards.slice();
 
-    const getCardW = () => 300;
+    // Read the rendered card width from CSS so responsive breakpoints (the card
+    // shrinks on tablet/phone) stay in sync with the track math. Falls back to
+    // 300 if it can't be measured yet.
+    const getCardW = () => {
+      const first = allCards[0];
+      const w = first ? Math.round(first.getBoundingClientRect().width) : 0;
+      return w >= 20 ? w : 300;
+    };
 
     const buildDots = () => {
       dotsEl.innerHTML = "";
@@ -460,7 +278,7 @@ export function ClientBehaviors() {
     const handlers: Array<() => void> = [];
 
     accItems.forEach((item) => {
-      const onClick = () => {
+      const select = () => {
         accItems.forEach((it) => {
           it.classList.remove("mob-acc-item-on");
           it.querySelector(".mob-acc-body")?.classList.remove("mob-acc-body-on");
@@ -469,8 +287,11 @@ export function ClientBehaviors() {
         item.querySelector(".mob-acc-body")?.classList.add("mob-acc-body-on");
         filterCat(item.dataset.cat || "all");
       };
-      item.addEventListener("click", onClick);
-      handlers.push(() => item.removeEventListener("click", onClick));
+      // Hover selects on pointer devices; click still works for touch.
+      item.addEventListener("mouseenter", select);
+      item.addEventListener("click", select);
+      handlers.push(() => item.removeEventListener("mouseenter", select));
+      handlers.push(() => item.removeEventListener("click", select));
     });
 
     const onPrev = () => goTo(currentIdx - 1);

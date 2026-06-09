@@ -16,7 +16,11 @@ export type CtaLink = {
 };
 
 export type HeroContent = {
+  /** Static lines of the title. The last line is the typewriter slot —
+   *  its initial text doubles as `typedPhrases[0]` for SSR. */
   titleLines: string[];
+  /** Phrases the last title line cycles through (typewriter effect). */
+  typedPhrases: string[];
   subtitle: string;
   ctas: CtaLink[];
   mascot: { src: string; alt: string };
@@ -67,6 +71,7 @@ export type HomeContent = {
 export const homeContent: HomeContent = {
   hero: {
     titleLines: ["חוויית", "העובד", "חכמה יותר."],
+    typedPhrases: ["חכמה יותר.", "מהירה יותר.", "פשוטה יותר."],
     subtitle:
       "וונדי היא הפלטפורמה שמנהלי HR בחרו.<br/>תקשורת למידה, תהליכים דיגיטליים וממשקים- ב<strong>מקום אחד</strong>! בלי ריצה בין&nbsp;מערכות.",
     ctas: [

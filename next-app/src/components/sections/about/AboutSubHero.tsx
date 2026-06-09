@@ -38,7 +38,7 @@ export function AboutSubHero({ eyebrow, title, sub }: Props) {
       />
 
       <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
-        <div className="w-full max-w-[1440px]">
+        <div className="flex w-full max-w-[1100px] flex-col items-center text-center">
         {eyebrow && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}

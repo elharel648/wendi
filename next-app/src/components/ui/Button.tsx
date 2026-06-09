@@ -19,7 +19,7 @@ export function Button({
 }: ButtonProps) {
   const base = cn(
     "group inline-flex h-[60px] min-w-[200px] shrink-0 select-none items-center justify-center gap-3 whitespace-nowrap",
-    "rounded-[14px] px-12 text-[15px] font-semibold tracking-tight",
+    "rounded-full px-12 text-[15px] font-semibold tracking-tight",
     "transition-all duration-200 ease-out",
   );
 

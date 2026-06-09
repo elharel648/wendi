@@ -133,8 +133,6 @@ export async function getAboutContent(): Promise<AboutContent> {
   const values = blocks(p, "valuesItems");
   const members = blocks(p, "teamMembers");
   const faq = blocks(p, "faqItems");
-  const galleryImgs = blocks(p, "galleryImages");
-  const videos = blocks(p, "videoItems");
   const intro = str(p, "storyIntro");
 
   return {
@@ -196,16 +194,12 @@ export async function getAboutContent(): Promise<AboutContent> {
     gallery: {
       title: str(p, "galleryTitle") ?? aboutContent.gallery.title,
       sub: str(p, "gallerySub") ?? aboutContent.gallery.sub,
-      images: galleryImgs.length
-        ? galleryImgs.map((r) => ({ src: rowStr(r, "src"), alt: rowStr(r, "alt"), caption: rowStr(r, "caption") }))
-        : aboutContent.gallery.images,
       videos: {
         title: str(p, "videosTitle") ?? aboutContent.gallery.videos.title,
         sub: str(p, "videosSub") ?? aboutContent.gallery.videos.sub,
-        items: videos.length
-          ? videos.map((r) => ({ youtubeId: rowStr(r, "youtubeId"), title: rowStr(r, "title") }))
-          : aboutContent.gallery.videos.items,
       },
+      // Categories + their videos are nested; keep the code-defined defaults.
+      categories: aboutContent.gallery.categories,
     },
   };
 }
@@ -332,13 +326,18 @@ export async function getHomeSections(): Promise<HomeSectionsContent> {
     floating: {
       features: (() => {
         const f = blocks(p, "floatingFeatures");
-        return f.length
-          ? f.map((r) => ({
-              title: rowStr(r, "title"),
-              sub: rowStr(r, "sub"),
-              points: rowStr(r, "points").split("\n").map((l) => l.trim()).filter(Boolean),
-            }))
-          : d.floating.features;
+        if (!f.length) return d.floating.features;
+        const fromCms = f.map((r) => ({
+          title: rowStr(r, "title"),
+          sub: rowStr(r, "sub"),
+          points: rowStr(r, "points").split("\n").map((l) => l.trim()).filter(Boolean),
+        }));
+        // The CMS may carry fewer rows than we render (e.g. the Wendi AI card
+        // was added in code after the CMS was set up). Backfill any trailing
+        // defaults so every card stays populated until the CMS catches up.
+        return fromCms.length >= d.floating.features.length
+          ? fromCms
+          : [...fromCms, ...d.floating.features.slice(fromCms.length)];
       })(),
     },
     cta: {
@@ -353,7 +352,7 @@ export async function getHomeSections(): Promise<HomeSectionsContent> {
       categories: (() => {
         const c = blocks(p, "mobileCategories");
         return c.length
-          ? c.map((r) => ({ title: rowStr(r, "title"), desc: rowStr(r, "desc") }))
+          ? c.map((r) => ({ title: rowStr(r, "title"), desc: "" }))
           : d.mobile.categories;
       })(),
     },
@@ -389,11 +388,9 @@ export async function getMamashkimContent(): Promise<MamashkimContent> {
       wendiChip: str(p, "duelWendiChip") ?? d.duel.wendiChip,
       wendiTagline: d.duel.wendiTagline,
       wendiSubtitle: str(p, "duelWendiSubtitle") ?? d.duel.wendiSubtitle,
-      wendiBadge: str(p, "duelWendiBadge") ?? d.duel.wendiBadge,
       othersChip: str(p, "duelOthersChip") ?? d.duel.othersChip,
       othersTagline: d.duel.othersTagline,
       othersSubtitle: str(p, "duelOthersSubtitle") ?? d.duel.othersSubtitle,
-      othersBadge: str(p, "duelOthersBadge") ?? d.duel.othersBadge,
       quote: d.duel.quote,
       quoteCite: d.duel.quoteCite,
       quoteSub: d.duel.quoteSub,

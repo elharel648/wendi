@@ -4,6 +4,7 @@ import { MobileShowcase } from "@/components/sections/MobileShowcase";
 import { CinematicStatement } from "@/components/sections/CinematicStatement";
 import { FloatingFeatures } from "@/components/sections/FloatingFeatures";
 import { IntegrationsOrbit } from "@/components/sections/IntegrationsOrbit";
+import { SectionDivider } from "@/components/sections/SectionDivider";
 import { Sectors } from "@/components/sections/Sectors";
 import { WallOfLove } from "@/components/sections/WallOfLove";
 import { CtaBand } from "@/components/sections/CtaBand";
@@ -21,7 +22,7 @@ export default async function HomePage() {
       <FloatingFeatures content={sections.floating} />
       <div className="h-[15vh] w-full" aria-hidden="true" />
       <IntegrationsOrbit />
-      <div className="h-16 md:h-24 w-full" aria-hidden="true" />
+      <SectionDivider />
       <Sectors content={sections.sectors} />
       <WallOfLove content={sections.wallOfLove} />
       <CtaBand content={sections.cta} />

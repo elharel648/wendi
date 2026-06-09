@@ -25,11 +25,9 @@ export type DuelContent = {
   wendiChip: string;
   wendiTagline: string;
   wendiSubtitle: string;
-  wendiBadge: string;
   othersChip: string;
   othersTagline: string;
   othersSubtitle: string;
-  othersBadge: string;
   quote: string;
   quoteCite: string;
   quoteSub: string;
@@ -80,11 +78,9 @@ export const mamashkimContent: MamashkimContent = {
     wendiChip: "וונדי",
     wendiTagline: "הדרך שלנו",
     wendiSubtitle: "פתרון חי, מותאם, ובאחריות אחת",
-    wendiBadge: "עם וונדי",
     othersChip: "פלטפורמות אחרות",
     othersTagline: "החיבור הגנרי",
     othersSubtitle: "חיבור גנרי, וכאב ראש מתמשך",
-    othersBadge: "ללא וונדי",
     quote: "\"המטרה שלנו היא לא לחבר API. המטרה היא שהעובד שלכם יקבל את המידע הנכון בזמן הנכון — וזה דורש להבין את הארגון, לא רק את המערכת.\"",
     quoteCite: "צוות המוצר של Wendi",
     quoteSub: "מתוך אפיון משותף עם לקוחות וונדי",

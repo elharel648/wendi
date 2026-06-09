@@ -2,9 +2,89 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import type { FloatingFeaturesContent } from "@/content/homeSections";
 import { homeSections } from "@/content/homeSections";
+
+// Each feature card deep-links to its matching module tab on /modulim.
+// Order mirrors homeSections.floating.features (index 0..3).
+//   0 תקשורת פנים-ארגונית → portal   1 הארנק שלי → portal
+//   2 למידה והכשרה → lms              3 הערכת ביצועים → performance
+const FEAT_LINKS = [
+  "/modulim?module=portal",
+  "/modulim?module=portal",
+  "/modulim?module=lms",
+  "/modulim?module=performance",
+  "/pitronot", // 4 — Wendi AI (no dedicated module; lives in the solution page)
+];
+
+// Hand-drawn "chalk sketch" arrow that reads as a connecting line flowing from
+// the card toward Wendi. A long, loosely-wavy shaft fades in from nothing at the
+// tail (a gradient stroke) and resolves into a hand-flicked arrowhead at the
+// head — so it looks like a stroke being pulled toward the character rather than
+// a detached icon. Base points left; CSS rotates it per column to aim at Wendi.
+const TitleArrow = () => (
+  <svg className="flt-feat-arrow" viewBox="0 0 96 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {/* long, loosely-wavy shaft — a clean continuous stroke */}
+    <path className="flt-arrow-shaft" d="M93 7.4 C72 6, 50 9.6, 28 7.6 C20 6.9, 14 8.4, 9 8" />
+    {/* two hand-flicked strokes forming an open arrowhead at the head */}
+    <path className="flt-arrow-head" d="M16 1.8 C11 4, 7.4 6.5, 6.6 8 C7.4 9.8, 11 12, 15.8 14.4" />
+  </svg>
+);
+
+// Clean single-weight line icons (Lucide-style) — one stroke colour, no fills
+// or gradients. Replaces the old decorative blobs for a professional look.
+const ICONS = [
+  // 0 — תקשורת פנים-ארגונית (message / chat)
+  (
+    <>
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </>
+  ),
+  // 1 — הארנק שלי (wallet)
+  (
+    <>
+      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+      <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+      <path d="M18 12a2 2 0 0 0 0 4h4v-4z" />
+    </>
+  ),
+  // 2 — למידה והכשרה (graduation cap)
+  (
+    <>
+      <path d="M22 10 12 5 2 10l10 5 10-5z" />
+      <path d="M6 12v5c0 1 2.5 2.5 6 2.5s6-1.5 6-2.5v-5" />
+    </>
+  ),
+  // 3 — הערכת ביצועים (trending chart)
+  (
+    <>
+      <path d="M3 3v18h18" />
+      <path d="m19 9-5 5-4-4-3 3" />
+    </>
+  ),
+  // 4 — Wendi AI (bot)
+  (
+    <>
+      <rect x="4" y="8" width="16" height="12" rx="2" />
+      <path d="M12 8V5" />
+      <circle cx="12" cy="3.5" r="1.5" />
+      <path d="M8 2h.01M16 2h.01" />
+      <circle cx="9" cy="13" r="1" />
+      <circle cx="15" cy="13" r="1" />
+      <path d="M9 17h6" />
+    </>
+  ),
+];
+
+const FeatIcon = ({ idx }: { idx: number }) => (
+  <div className="flt-art" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      {ICONS[idx]}
+    </svg>
+  </div>
+);
 
 /**
  * Scroll-zoom on Wendi: anchored on her face (not the bottom), so the
@@ -73,60 +153,16 @@ export function FloatingFeatures({ content }: { content?: FloatingFeaturesConten
           <div className="flt-grid">
             {/* RIGHT column (RTL: first DOM child renders on the right) */}
             <motion.div className="flt-col flt-col-r" style={fadeStyle}>
-              <article className="flt-feat" data-flt-idx="0">
-                <div className="flt-art flt-art-msg" aria-hidden="true">
-                  <svg viewBox="0 0 80 80" fill="none">
-                    <defs>
-                      <radialGradient id="msg-g1" cx="50%" cy="50%">
-                        <stop offset="0%" stopColor="#3ECFBE" stopOpacity="0.55" />
-                        <stop offset="100%" stopColor="#3ECFBE" stopOpacity="0" />
-                      </radialGradient>
-                      <radialGradient id="msg-g2" cx="50%" cy="50%">
-                        <stop offset="0%" stopColor="#5b9eff" stopOpacity="0.45" />
-                        <stop offset="100%" stopColor="#5b9eff" stopOpacity="0" />
-                      </radialGradient>
-                    </defs>
-                    <circle cx="32" cy="34" r="22" fill="url(#msg-g1)" />
-                    <circle cx="52" cy="46" r="16" fill="url(#msg-g2)" />
-                    <circle cx="32" cy="34" r="9" fill="none" stroke="#3ECFBE" strokeWidth="1.2" opacity="0.7" />
-                    <circle cx="52" cy="46" r="7" fill="none" stroke="#5b9eff" strokeWidth="1.2" opacity="0.65" />
-                    <circle cx="32" cy="34" r="2.5" fill="#3ECFBE" />
-                    <circle cx="52" cy="46" r="2" fill="#5b9eff" />
-                  </svg>
-                </div>
-                <h3 className="flt-feat-title">{feats[0]?.title}</h3>
+              <Link href={FEAT_LINKS[0]} className="flt-feat" data-flt-idx="0">
+                <FeatIcon idx={0} />
+                <h3 className="flt-feat-title">{feats[0]?.title}<TitleArrow /></h3>
                 <p className="flt-feat-sub">{feats[0]?.sub}</p>
-                <ul className="flt-list">
-                  {feats[0]?.points.map((pt) => <li key={pt} className="flt-pt">{pt}</li>)}
-                </ul>
-              </article>
-              <article className="flt-feat" data-flt-idx="1">
-                <div className="flt-art flt-art-wallet" aria-hidden="true">
-                  <svg viewBox="0 0 80 80" fill="none">
-                    <defs>
-                      <linearGradient id="wal-g1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#3ECFBE" />
-                        <stop offset="100%" stopColor="#2aa094" />
-                      </linearGradient>
-                      <linearGradient id="wal-g2" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#f5c451" />
-                        <stop offset="100%" stopColor="#d99c2e" />
-                      </linearGradient>
-                    </defs>
-                    <ellipse cx="40" cy="58" rx="22" ry="4" fill="#3ECFBE" opacity="0.10" />
-                    <circle cx="30" cy="48" r="14" fill="url(#wal-g2)" opacity="0.92" />
-                    <circle cx="30" cy="48" r="9" fill="none" stroke="#0a0a0a" strokeWidth="1" opacity="0.45" />
-                    <circle cx="48" cy="36" r="16" fill="url(#wal-g1)" />
-                    <circle cx="48" cy="36" r="10" fill="none" stroke="#0a0a0a" strokeWidth="1" opacity="0.35" />
-                    <text x="48" y="40" textAnchor="middle" fontSize="11" fontWeight="800" fill="#0a0a0a" opacity="0.7">W</text>
-                  </svg>
-                </div>
-                <h3 className="flt-feat-title">{feats[1]?.title}</h3>
+              </Link>
+              <Link href={FEAT_LINKS[1]} className="flt-feat" data-flt-idx="1">
+                <FeatIcon idx={1} />
+                <h3 className="flt-feat-title">{feats[1]?.title}<TitleArrow /></h3>
                 <p className="flt-feat-sub">{feats[1]?.sub}</p>
-                <ul className="flt-list">
-                  {feats[1]?.points.map((pt) => <li key={pt} className="flt-pt">{pt}</li>)}
-                </ul>
-              </article>
+              </Link>
             </motion.div>
 
             {/* CENTER — the character */}
@@ -147,61 +183,29 @@ export function FloatingFeatures({ content }: { content?: FloatingFeaturesConten
                   />
                 </motion.div>
               </motion.div>
+
+              {/* Wendi AI — centred feature card beneath the character */}
+              <motion.div className="flt-ai-wrap" style={fadeStyle}>
+                <Link href={FEAT_LINKS[4]} className="flt-feat flt-feat-ai" data-flt-idx="4">
+                  <FeatIcon idx={4} />
+                  <h3 className="flt-feat-title">{feats[4]?.title}<TitleArrow /></h3>
+                  <p className="flt-feat-sub">{feats[4]?.sub}</p>
+                </Link>
+              </motion.div>
             </div>
 
             {/* LEFT column */}
             <motion.div className="flt-col flt-col-l" style={fadeStyle}>
-              <article className="flt-feat" data-flt-idx="2">
-                <div className="flt-art flt-art-learn" aria-hidden="true">
-                  <svg viewBox="0 0 80 80" fill="none">
-                    <defs>
-                      <linearGradient id="lrn-teal" x1="0%" y1="100%" x2="0%" y2="0%">
-                        <stop offset="0%" stopColor="#3ECFBE" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="#3ECFBE" />
-                      </linearGradient>
-                      <linearGradient id="lrn-blue" x1="0%" y1="100%" x2="0%" y2="0%">
-                        <stop offset="0%" stopColor="#5b9eff" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="#5b9eff" />
-                      </linearGradient>
-                    </defs>
-                    <rect x="14" y="46" width="10" height="22" rx="2" fill="url(#lrn-teal)" opacity="0.55" />
-                    <rect x="28" y="34" width="10" height="34" rx="2" fill="url(#lrn-teal)" opacity="0.75" />
-                    <rect x="42" y="22" width="10" height="46" rx="2" fill="url(#lrn-blue)" opacity="0.9" />
-                    <rect x="56" y="12" width="10" height="56" rx="2" fill="url(#lrn-teal)" />
-                    <circle cx="61" cy="12" r="3" fill="#3ECFBE" />
-                    <circle cx="61" cy="12" r="6" fill="none" stroke="#3ECFBE" strokeWidth="1" opacity="0.4" />
-                  </svg>
-                </div>
-                <h3 className="flt-feat-title">{feats[2]?.title}</h3>
+              <Link href={FEAT_LINKS[2]} className="flt-feat" data-flt-idx="2">
+                <FeatIcon idx={2} />
+                <h3 className="flt-feat-title">{feats[2]?.title}<TitleArrow /></h3>
                 <p className="flt-feat-sub">{feats[2]?.sub}</p>
-                <ul className="flt-list">
-                  {feats[2]?.points.map((pt) => <li key={pt} className="flt-pt">{pt}</li>)}
-                </ul>
-              </article>
-              <article className="flt-feat" data-flt-idx="3">
-                <div className="flt-art flt-art-perf" aria-hidden="true">
-                  <svg viewBox="0 0 80 80" fill="none">
-                    <defs>
-                      <linearGradient id="prf-arc" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#3ECFBE" />
-                        <stop offset="55%" stopColor="#5b9eff" />
-                        <stop offset="100%" stopColor="#f5c451" />
-                      </linearGradient>
-                    </defs>
-                    <path d="M 14 56 A 26 26 0 0 1 66 56" stroke="rgba(255,255,255,0.08)" strokeWidth="6" strokeLinecap="round" fill="none" />
-                    <path d="M 14 56 A 26 26 0 0 1 66 56" stroke="url(#prf-arc)" strokeWidth="6" strokeLinecap="round" fill="none" strokeDasharray="82" strokeDashoffset="14" />
-                    <circle cx="58" cy="38" r="4.5" fill="#f5c451" />
-                    <circle cx="58" cy="38" r="9" fill="none" stroke="#f5c451" strokeWidth="1" opacity="0.35" />
-                    <circle cx="40" cy="56" r="2" fill="rgba(255,255,255,0.65)" />
-                    <line x1="40" y1="56" x2="56" y2="40" stroke="rgba(255,255,255,0.45)" strokeWidth="1.2" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <h3 className="flt-feat-title">{feats[3]?.title}</h3>
+              </Link>
+              <Link href={FEAT_LINKS[3]} className="flt-feat" data-flt-idx="3">
+                <FeatIcon idx={3} />
+                <h3 className="flt-feat-title">{feats[3]?.title}<TitleArrow /></h3>
                 <p className="flt-feat-sub">{feats[3]?.sub}</p>
-                <ul className="flt-list">
-                  {feats[3]?.points.map((pt) => <li key={pt} className="flt-pt">{pt}</li>)}
-                </ul>
-              </article>
+              </Link>
             </motion.div>
           </div>
         </div>

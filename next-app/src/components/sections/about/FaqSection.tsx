@@ -35,14 +35,14 @@ export function FaqSection({ content }: Props) {
       />
 
       <div className="relative z-10 flex w-full justify-center px-4 sm:px-6 md:px-16">
-        <div className="w-full max-w-[1440px]">
+        <div className="flex w-full max-w-[1100px] flex-col items-center">
         {/* Filters */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: expo }}
-          className="mb-8 flex flex-wrap gap-2 md:mb-12"
+          className="mb-8 flex flex-wrap justify-center gap-2 md:mb-12"
         >
           {content.filters.map((f) => {
             const active = filter === f.id;
@@ -91,7 +91,7 @@ export function FaqSection({ content }: Props) {
         </motion.div>
 
         {/* List */}
-        <div className="max-w-[880px]">
+        <div className="w-full max-w-[880px]">
           {visible.map(({ item, idx }, displayIdx) => {
             const isOpen = openIdx === idx;
             return (
@@ -154,20 +154,7 @@ export function FaqSection({ content }: Props) {
                           color: "#475569",
                         }}
                       >
-                        <span
-                          className="mb-3 inline-block font-bold"
-                          style={{
-                            padding: "3px 10px",
-                            borderRadius: "6px",
-                            fontSize: "0.72rem",
-                            background: "rgba(13,148,136,0.08)",
-                            border: "1px solid rgba(13,148,136,0.28)",
-                            color: "#0D9488",
-                          }}
-                        >
-                          {item.catLabel}
-                        </span>
-                        <div className="mt-3">{item.answer}</div>
+                        {item.answer}
                       </div>
                     </motion.div>
                   )}

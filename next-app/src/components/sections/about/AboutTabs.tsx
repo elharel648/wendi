@@ -25,10 +25,10 @@ export function AboutTabs() {
           <Link
             key={tab.href}
             href={tab.href}
-            className="inline-flex items-center justify-center font-semibold whitespace-nowrap min-h-[44px] px-5 py-3 md:min-h-0 md:px-6 md:py-2.5"
+            className="inline-flex items-center justify-center font-semibold whitespace-nowrap min-h-[52px] px-7 py-3.5 md:min-h-0 md:px-9 md:py-4"
             style={{
               borderRadius: "999px",
-              fontSize: "0.9rem",
+              fontSize: "1.05rem",
               border: active
                 ? "1px solid #0A0A0A"
                 : "1px solid rgba(15,23,42,0.14)",

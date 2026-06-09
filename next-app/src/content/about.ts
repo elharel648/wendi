@@ -21,15 +21,21 @@ export type FaqItem = {
   answer: string;
 };
 
-export type GalleryImage = {
-  src: string;
-  alt: string;
-  caption: string;
-};
-
 export type VideoItem = {
   youtubeId: string;
   title: string;
+};
+
+/**
+ * A gallery category: the strip (image + caption) at the top doubles as a
+ * filter. Selecting it swaps the video grid below to this category's `videos`.
+ */
+export type GalleryCategory = {
+  id: string;
+  src: string;
+  alt: string;
+  caption: string;
+  videos: VideoItem[];
 };
 
 export type AboutContent = {
@@ -68,12 +74,11 @@ export type AboutContent = {
   gallery: {
     title: string;
     sub: string;
-    images: GalleryImage[];
     videos: {
       title: string;
       sub: string;
-      items: VideoItem[];
     };
+    categories: GalleryCategory[];
   };
 };
 
@@ -168,28 +173,53 @@ export const aboutContent: AboutContent = {
   gallery: {
     title: "תמונות וסרטונים",
     sub: "הצצה לעבודה שלנו, האירועים, הצוות והלקוחות.",
-    images: [
-      { src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1400&auto=format&fit=crop", alt: "כנסים והשקות", caption: "כנסים והשקות" },
-      { src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop", alt: "הצוות שלנו", caption: "הצוות שלנו" },
-      { src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1400&auto=format&fit=crop", alt: "ימי עיון והדרכות", caption: "ימי עיון והדרכות" },
-      { src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1400&auto=format&fit=crop", alt: "מפגשי לקוחות", caption: "מפגשי לקוחות" },
-      { src: "https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=1400&auto=format&fit=crop", alt: "מאחורי הקלעים", caption: "מאחורי הקלעים" },
-    ],
     videos: {
       title: "Wendi בפעולה",
       sub: "סרטוני השקה, מפגשי לקוחות וסיפורי הצלחה — הישר מהערוץ שלנו.",
-      items: [
-        { youtubeId: "EjlyH-o1EYI", title: "השקת אפליקציית וונדי לעובדי MAX" },
-        { youtubeId: "EZPMi76r48E", title: "השקת אפליקציית וונדי לעובדי הפניקס בית השקעות" },
-        { youtubeId: "a1PWboIE2uc", title: "מפגש לקוחות ייחודי עם חברת וונדי — שיתוף, השראה וצמיחה משותפת" },
-        { youtubeId: "HBtAus6YLsw", title: "השקת אפליקציית וונדי לעובדי חברת דלק" },
-        { youtubeId: "LKF6vl2eQDs", title: "השקת אפליקציית וונדי לעובדי עיריית ירושלים" },
-        { youtubeId: "VSK6TCU-Sb4", title: "אפליקציית וונדי באיקאה — סרטון מכנס משאבי אנוש" },
-        { youtubeId: "78MSBpSSQfU", title: "בזק — השקת אפליקציית וונדי לתקשורת פנים ושירות עצמי" },
-        { youtubeId: "KcK8gmhCd9k", title: "Wendi — סרטון לקוחות" },
-        { youtubeId: "ANMtGVu7j4s", title: "פלטפורמה דיגיטלית פנים ארגונית — אפליקציה ופורטל וונדי לחווית העובד" },
-        { youtubeId: "KiJ8spx3ccs", title: "Wendi LMS by Ewave — מערכת לניהול הדרכה והסמכה בארגון" },
-      ],
     },
+    categories: [
+      {
+        id: "launches",
+        src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1400&auto=format&fit=crop",
+        alt: "השקות אפליקציה",
+        caption: "השקות אפליקציה",
+        videos: [
+          { youtubeId: "EjlyH-o1EYI", title: "השקת אפליקציית וונדי לעובדי MAX" },
+          { youtubeId: "EZPMi76r48E", title: "השקת אפליקציית וונדי לעובדי הפניקס בית השקעות" },
+          { youtubeId: "HBtAus6YLsw", title: "השקת אפליקציית וונדי לעובדי חברת דלק" },
+          { youtubeId: "LKF6vl2eQDs", title: "השקת אפליקציית וונדי לעובדי עיריית ירושלים" },
+          { youtubeId: "78MSBpSSQfU", title: "בזק — השקת אפליקציית וונדי לתקשורת פנים ושירות עצמי" },
+        ],
+      },
+      {
+        id: "events",
+        src: "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1400&auto=format&fit=crop",
+        alt: "מפגשי לקוחות וכנסים",
+        caption: "מפגשי לקוחות וכנסים",
+        videos: [
+          { youtubeId: "a1PWboIE2uc", title: "מפגש לקוחות ייחודי עם חברת וונדי — שיתוף, השראה וצמיחה משותפת" },
+          { youtubeId: "VSK6TCU-Sb4", title: "אפליקציית וונדי באיקאה — סרטון מכנס משאבי אנוש" },
+        ],
+      },
+      {
+        id: "stories",
+        src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1400&auto=format&fit=crop",
+        alt: "סיפורי לקוחות",
+        caption: "סיפורי לקוחות",
+        videos: [
+          { youtubeId: "KcK8gmhCd9k", title: "Wendi — סרטון לקוחות" },
+          { youtubeId: "ANMtGVu7j4s", title: "פלטפורמה דיגיטלית פנים ארגונית — אפליקציה ופורטל וונדי לחווית העובד" },
+        ],
+      },
+      {
+        id: "learning",
+        src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1400&auto=format&fit=crop",
+        alt: "למידה והדרכה",
+        caption: "למידה והדרכה",
+        videos: [
+          { youtubeId: "KiJ8spx3ccs", title: "Wendi LMS by Ewave — מערכת לניהול הדרכה והסמכה בארגון" },
+        ],
+      },
+    ],
   },
 };

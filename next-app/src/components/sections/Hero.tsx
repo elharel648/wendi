@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -8,6 +9,53 @@ import type { HeroContent } from "@/content/home";
 type HeroProps = { content: HeroContent };
 
 const expo = [0.22, 1, 0.36, 1] as const;
+
+/**
+ * Typewriter that cycles through `phrases`, mirroring the legacy index.html
+ * hero: type at 90ms/char, pause 2200ms when full, delete at 55ms/char, then
+ * advance to the next phrase. SSR-renders `phrases[0]` so there's no flash.
+ */
+function useTypewriter(phrases: string[]) {
+  const [text, setText] = useState(phrases[0] ?? "");
+  // Refs so the recursive timeout always reads live values without re-arming.
+  const pi = useRef(0);
+  const ci = useRef(phrases[0]?.length ?? 0);
+  const deleting = useRef(false);
+
+  useEffect(() => {
+    if (phrases.length === 0) return;
+    let timer: ReturnType<typeof setTimeout>;
+
+    const tick = () => {
+      const phrase = phrases[pi.current];
+      if (!deleting.current) {
+        ci.current += 1;
+        setText(phrase.slice(0, ci.current));
+        if (ci.current === phrase.length) {
+          deleting.current = true;
+          timer = setTimeout(tick, 2200);
+          return;
+        }
+      } else {
+        ci.current -= 1;
+        setText(phrase.slice(0, ci.current));
+        if (ci.current === 0) {
+          deleting.current = false;
+          pi.current = (pi.current + 1) % phrases.length;
+        }
+      }
+      timer = setTimeout(tick, deleting.current ? 55 : 90);
+    };
+
+    // Start in the "full first phrase" state, pause, then begin deleting.
+    deleting.current = true;
+    timer = setTimeout(tick, 2200);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phrases.join("|")]);
+
+  return text;
+}
 
 /** Match the legacy `stWIn` keyframe: opacity 0→1, translateY 40→0, skewY 2°→0. */
 const wInVariants = {
@@ -19,7 +67,9 @@ const GRAIN_SVG =
   "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 export function Hero({ content }: HeroProps) {
-  const { titleLines, subtitle, ctas, mascot } = content;
+  const { titleLines, typedPhrases, subtitle, ctas, mascot } = content;
+  const typed = useTypewriter(typedPhrases);
+  const lastIndex = titleLines.length - 1;
 
   return (
     <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-paper px-6 pt-0 -mt-4 md:px-16 md:-mt-8">
@@ -43,13 +93,25 @@ export function Hero({ content }: HeroProps) {
             {titleLines.map((line, i) => (
               <motion.span
                 key={i}
-                className={cn("block", i === 2 && "text-brand")}
+                className={cn("block", i === lastIndex && "text-brand")}
                 variants={wInVariants}
                 initial="hidden"
                 animate="visible"
                 transition={{ duration: 0.8, ease: expo, delay: 0.15 + i * 0.13 }}
               >
-                {line}
+                {i === lastIndex ? (
+                  <>
+                    {typed}
+                    <span
+                      aria-hidden
+                      className="animate-blink font-normal text-brand"
+                    >
+                      |
+                    </span>
+                  </>
+                ) : (
+                  line
+                )}
               </motion.span>
             ))}
           </h1>
@@ -76,6 +138,7 @@ export function Hero({ content }: HeroProps) {
                 href={cta.href}
                 variant={cta.variant}
                 withArrow={cta.withArrow}
+                className="rounded-full"
               >
                 {cta.label}
               </Button>

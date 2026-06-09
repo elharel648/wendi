@@ -1,9 +1,9 @@
 "use client";
 
-import { LottieIcon } from "@/components/ui/lottie-icon";
 import { mamashkimContent as mamashkimDefault } from "@/content/mamashkim";
 
 const TEAL = "#0D9488";
+const ROSE = "#E11D48"; // soft rose for the ✗ side — muted enough for the light theme
 
 type WendiPoint = {
   title: string;
@@ -11,76 +11,65 @@ type WendiPoint = {
 };
 
 const WENDI_POINTS: WendiPoint[] = [
-  {
-    title: "אפיון משותף עם הלקוח",
-    body: "לפני שורה אחת של קוד",
-  },
-  {
-    title: "פיתוח ממשק ייעודי",
-    body: "מותאם לארגון שלכם",
-  },
-  {
-    title: "התאמה מלאה להרשאות",
-    body: "ולהיררכיה הארגונית",
-  },
-  {
-    title: "תחזוקה שוטפת ושדרוגים",
-    body: "כולל SLA מובטח",
-  },
-  {
-    title: "גורם אחד — מקצה לקצה",
-    body: "מוצר, פיתוח ותמיכה",
-  },
-  {
-    title: "התאמה לתרבות הארגון",
-    body: "ולשפה הפנים-ארגונית",
-  },
+  { title: "אפיון משותף עם הלקוח", body: "לפני שורה אחת של קוד" },
+  { title: "פיתוח ממשק ייעודי", body: "מותאם לארגון שלכם" },
+  { title: "התאמה מלאה להרשאות", body: "ולהיררכיה הארגונית" },
+  { title: "תחזוקה שוטפת ושדרוגים", body: "כולל SLA מובטח" },
+  { title: "גורם אחד — מקצה לקצה", body: "מוצר, פיתוח ותמיכה" },
+  { title: "התאמה לתרבות הארגון", body: "ולשפה הפנים-ארגונית" },
 ];
 
 type OthersItem = {
   name: string;
   desc: string;
-  lottie: string;
 };
 
 const OTHERS_ITEMS: OthersItem[] = [
-  {
-    name: "חיבור מדף בלבד",
-    desc: "ללא הבנת הצורך הארגוני",
-    lottie: "/icons-lottie/folder.json",
-  },
-  {
-    name: "תלות ב־API קיים",
-    desc: "אם אין API, אין פתרון",
-    lottie: "/icons-lottie/lock.json",
-  },
-  {
-    name: "גישה גנרית להרשאות",
-    desc: "אותו דבר לכל משתמש, ללא הבחנה",
-    lottie: "/icons-lottie/user-x.json",
-  },
-  {
-    name: "תחזוקה? באחריותכם",
-    desc: "אתם נשארים לבד עם התקלות",
-    lottie: "/icons-lottie/settings.json",
-  },
-  {
-    name: "ספקים מרובים, גלגול האשמה",
-    desc: "כל אחד מצביע על השני",
-    lottie: "/icons-lottie/share.json",
-  },
-  {
-    name: "Template אחיד לכל ארגון",
-    desc: "אותה תבנית, ללא התאמה אישית",
-    lottie: "/icons-lottie/copy.json",
-  },
+  { name: "חיבור מדף בלבד", desc: "ללא הבנת הצורך הארגוני" },
+  { name: "תלות ב־API קיים", desc: "אם אין API, אין פתרון" },
+  { name: "גישה גנרית להרשאות", desc: "אותו דבר לכל משתמש, ללא הבחנה" },
+  { name: "תחזוקה? באחריותכם", desc: "אתם נשארים לבד עם התקלות" },
+  { name: "ספקים מרובים, גלגול האשמה", desc: "כל אחד מצביע על השני" },
+  { name: "Template אחיד לכל ארגון", desc: "אותה תבנית, ללא התאמה אישית" },
 ];
+
+function CheckMark() {
+  return (
+    <span
+      className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-white"
+      style={{ background: TEAL }}
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <polyline points="20 6 9 17 4 12" />
+      </svg>
+    </span>
+  );
+}
+
+function CrossMark() {
+  return (
+    <span
+      className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full"
+      style={{ background: "rgba(225,29,72,0.10)", color: ROSE }}
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </span>
+  );
+}
 
 export function IntegrationsDuel({ content }: { content?: import("@/content/mamashkim").DuelContent }) {
   const c = content ?? mamashkimDefault.duel;
-  // merge editable text onto visual defs by index (lottie icons stay in code)
+  // merge editable text onto visual defs by index
   const wendiPoints = WENDI_POINTS.map((p, i) => ({ ...p, ...c.wendiPoints[i] }));
-  const othersItems = OTHERS_ITEMS.map((o, i) => ({ ...o, name: c.othersItems[i]?.name ?? o.name, desc: c.othersItems[i]?.desc ?? o.desc }));
+  const othersItems = OTHERS_ITEMS.map((o, i) => ({
+    name: c.othersItems[i]?.name ?? o.name,
+    desc: c.othersItems[i]?.desc ?? o.desc,
+  }));
+  const rows = wendiPoints.map((w, i) => ({ wendi: w, other: othersItems[i] }));
+
   return (
     <section
       id="different"
@@ -90,7 +79,7 @@ export function IntegrationsDuel({ content }: { content?: import("@/content/mama
     >
       <SoftGlow />
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section head */}
         <div className="mx-auto mb-12 max-w-2xl text-center sm:mb-16">
           <h2 className="text-3xl font-black leading-tight tracking-tight text-ink sm:text-4xl lg:text-5xl">
@@ -104,142 +93,53 @@ export function IntegrationsDuel({ content }: { content?: import("@/content/mama
           </p>
         </div>
 
-        {/* Two separate boxes — Wendi (highlighted) vs Others (muted) */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
-          {/* ── Wendi box ── */}
-          <div
-            className="flex flex-col rounded-3xl border-2 bg-paper p-6 sm:p-8 lg:p-10"
-            style={{
-              borderColor: "rgba(13,148,136,0.30)",
-              boxShadow:
-                "0 20px 50px -24px rgba(13,148,136,0.30), 0 4px 12px -6px rgba(15,23,42,0.08)",
-            }}
-          >
-            {/* identity chip */}
-            <div className="mb-6 flex items-center">
-              <span
-                className="inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-[0.78rem] font-extrabold tracking-[0.10em] text-white"
-                style={{
-                  boxShadow:
-                    "0 6px 16px -4px rgba(15,23,42,0.35), 0 0 0 1px rgba(15,23,42,0.20)",
-                }}
-              >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                {c.wendiChip}
-              </span>
-            </div>
-
-            <p
-              className="mb-6 border-b border-line pb-5 text-center text-sm font-bold sm:text-base"
-              style={{ color: TEAL }}
+        {/* Comparison table — Wendi (right) vs Others (left), row by row */}
+        <div
+          className="overflow-hidden rounded-3xl border border-line bg-paper"
+          style={{ boxShadow: "0 24px 60px -30px rgba(15,23,42,0.18), 0 4px 12px -6px rgba(15,23,42,0.06)" }}
+        >
+          {/* Column header */}
+          <div className="grid grid-cols-2">
+            {/* Wendi header */}
+            <div
+              className="flex items-center justify-center gap-2 px-4 py-4 text-sm font-extrabold sm:px-6 sm:py-5 sm:text-base"
+              style={{ background: "rgba(13,148,136,0.07)", color: TEAL }}
             >
-              {c.wendiSubtitle}
-            </p>
-
-            {/* static point list */}
-            <div className="flex-1 space-y-3">
-              {wendiPoints.map((point) => (
-                <div
-                  key={point.title}
-                  className="flex items-center gap-3 rounded-2xl border bg-paper p-3.5 sm:p-4"
-                  style={{ borderColor: "rgba(13,148,136,0.25)" }}
-                >
-                  <span
-                    className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-white"
-                    style={{ background: TEAL }}
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold text-ink">{point.title}</p>
-                    <p className="text-xs leading-relaxed text-muted-fg">
-                      {point.body}
-                    </p>
-                  </div>
-                  <span
-                    className="flex-shrink-0 rounded-full px-2 py-1 text-[10px] font-bold tracking-wider text-white"
-                    style={{ background: TEAL }}
-                  >
-                    {c.wendiBadge}
-                  </span>
-                </div>
-              ))}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2l2.4 6.9H22l-6 4.3 2.3 6.8L12 16.2 5.7 20l2.3-6.8-6-4.3h7.6z" />
+              </svg>
+              {c.wendiChip}
+            </div>
+            {/* Others header */}
+            <div className="flex items-center justify-center gap-2 border-r border-line px-4 py-4 text-sm font-extrabold text-muted-fg sm:px-6 sm:py-5 sm:text-base">
+              {c.othersChip}
             </div>
           </div>
 
-          {/* ── Others box ── */}
-          <div className="flex flex-col rounded-3xl border border-line bg-line-2/30 p-6 sm:p-8 lg:p-10">
-            {/* identity chip */}
-            <div className="mb-6 flex items-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-line bg-paper px-4 py-2 text-[0.78rem] font-extrabold tracking-[0.10em] text-muted-fg">
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-                {c.othersChip}
-              </span>
-            </div>
-
-            <p className="mb-6 border-b border-line pb-5 text-center text-sm font-bold text-muted-fg sm:text-base">
-              {c.othersSubtitle}
-            </p>
-
-            <div className="flex-1 space-y-3">
-              {othersItems.map((item) => (
-                <div
-                  key={item.name}
-                  className="flex items-center gap-3 rounded-2xl border border-line bg-paper p-3.5 sm:p-4"
-                >
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center">
-                    <LottieIcon src={item.lottie} size={32} playOnHover />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold text-ink">{item.name}</p>
-                    <p className="text-xs leading-relaxed text-muted-fg">
-                      {item.desc}
-                    </p>
-                  </div>
-                  <span className="flex-shrink-0 rounded-full border border-line px-2 py-1 text-[10px] font-bold tracking-wider text-muted-fg">
-                    {c.othersBadge}
-                  </span>
+          {/* Rows */}
+          {rows.map((row, i) => (
+            <div
+              key={row.wendi.title}
+              className={`grid grid-cols-2 border-t border-line ${i % 2 === 1 ? "bg-line-2/40" : ""}`}
+            >
+              {/* Wendi cell */}
+              <div className="flex items-center gap-3 px-4 py-4 sm:px-6 sm:py-5">
+                <CheckMark />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-bold text-ink sm:text-[0.95rem]">{row.wendi.title}</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-muted-fg">{row.wendi.body}</p>
                 </div>
-              ))}
+              </div>
+              {/* Others cell */}
+              <div className="flex items-center gap-3 border-r border-line px-4 py-4 sm:px-6 sm:py-5">
+                <CrossMark />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-bold text-ink/80 sm:text-[0.95rem]">{row.other.name}</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-muted-fg">{row.other.desc}</p>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

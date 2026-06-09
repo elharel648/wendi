@@ -113,7 +113,7 @@ export function MamashkimHero({ content }: { content?: MamashkimHeroContent }) {
           />
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button variant="primary" href="#contact" withArrow>
+            <Button variant="primary" href="#contact" withArrow className="rounded-full">
               {c.ctaLabel}
             </Button>
           </div>

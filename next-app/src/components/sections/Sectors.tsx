@@ -1,5 +1,27 @@
+import Link from "next/link";
 import type { SectorsContent } from "@/content/homeSections";
 import { homeSections } from "@/content/homeSections";
+
+// Home cards map 1:1 by index to the sector blocks on /pitronot.
+// Clicking a card deep-links to that sector's anchor (scroll-mt-24
+// there keeps it clear of the sticky header). Order must mirror
+// homeSections.sectors.cards and the `sectors` array in pitronot.tsx.
+const SECTOR_ANCHORS = [
+  "/pitronot#finantsim", // פיננסים וביטוח
+  "/pitronot#logistika", // לוגיסטיקה ותחבורה
+  "/pitronot#tsiburi",   // מוסדות ציבוריים
+  "/pitronot#briut",     // שירותי בריאות
+  "/pitronot#taasia",    // תעשייה ומסחר
+  "/pitronot#tayarut",   // תיירות ואירוח
+];
+
+// Small chevron beside the sector name, nudges on hover (mirrors the
+// FloatingFeatures card affordance).
+const SectorArrow = () => (
+  <svg className="ctg-feat-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+    <path d="M19 12H5M12 19l-7-7 7-7" />
+  </svg>
+);
 
 // Icons stay in code (visual), matched to cards by index. Editable text
 // (titleLines + card title/desc) comes from props / Umbraco.
@@ -66,11 +88,15 @@ export function Sectors({ content }: { content?: SectorsContent }) {
         </div>
         <div className="ctg-feats">
           {c.cards.map((s, i) => (
-            <div key={s.title} className="ctg-feat">
+            <Link
+              key={s.title}
+              href={SECTOR_ANCHORS[i] ?? "/pitronot"}
+              className="ctg-feat"
+            >
               <div className="ctg-feat-ico">{sectorIcons[i]}</div>
-              <h3 className="ctg-feat-name">{s.title}</h3>
+              <h3 className="ctg-feat-name">{s.title}<SectorArrow /></h3>
               <p className="ctg-feat-desc">{s.desc}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

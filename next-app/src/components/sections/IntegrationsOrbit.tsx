@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import * as React from "react";
 
@@ -68,6 +67,31 @@ const SlackLogo = () => (
   </svg>
 );
 
+const TeamsLogo = () => (
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
+    <circle cx="17.5" cy="6.2" r="2.6" fill="#5059C9" />
+    <rect x="12.5" y="9" width="10" height="8.2" rx="2" fill="#5059C9" />
+    <circle cx="10" cy="5.6" r="3.1" fill="#7B83EB" />
+    <rect x="3" y="9" width="12" height="9.4" rx="2.4" fill="#7B83EB" />
+    <text x="9" y="16.4" textAnchor="middle" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="8.5" fill="#fff">T</text>
+  </svg>
+);
+
+const GoogleLogo = () => (
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
+    <path d="M23 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.2a5.3 5.3 0 0 1-2.3 3.5v2.9h3.7c2.2-2 3.4-5 3.4-8.6Z" fill="#4285F4" />
+    <path d="M12 23.5c3.1 0 5.7-1 7.6-2.8l-3.7-2.9c-1 .7-2.3 1.1-3.9 1.1-3 0-5.5-2-6.4-4.7H1.8v3C3.7 20.9 7.6 23.5 12 23.5Z" fill="#34A853" />
+    <path d="M5.6 14.2a6.9 6.9 0 0 1 0-4.4v-3H1.8a11.5 11.5 0 0 0 0 10.4l3.8-3Z" fill="#FBBC05" />
+    <path d="M12 4.7c1.7 0 3.2.6 4.4 1.7l3.3-3.3C17.7 1.2 15.1.2 12 .2 7.6.2 3.7 2.8 1.8 6.8l3.8 3c.9-2.7 3.4-4.7 6.4-5.1Z" fill="#EA4335" />
+  </svg>
+);
+
+const HubspotLogo = () => (
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="h-full w-full">
+    <path d="M16.4 8.1V5.4a2 2 0 1 0-1.8 0v2.7a6 6 0 0 0-2.6 1l-7-5.4a2.3 2.3 0 1 0-1 1.4l6.9 5.3a5.6 5.6 0 0 0 .1 6.3l-2.1 2.1a1.8 1.8 0 1 0 1.1 1.2l2.1-2.1a5.7 5.7 0 1 0 4.3-9.9Zm-.9 8.6a2.9 2.9 0 1 1 0-5.8 2.9 2.9 0 0 1 0 5.8Z" fill="#FF7A59" />
+  </svg>
+);
+
 const WendiMark = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg" {...props}>
     {/* LEFT "V" — teal: outer-left stroke + inner-right stroke meeting at the bottom point */}
@@ -98,55 +122,42 @@ export function IntegrationsOrbit() {
               className="flex justify-center md:order-2 relative"
             >
               <div dir="ltr" className="group relative aspect-square w-full max-w-[22rem] sm:max-w-md">
-                {/* טבעת הילה רכה מאחורי כל העסק */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0D9488]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+                {/* טבעת הילה רכה מאחורי כל העסק — קומפקטית סביב המרכז כדי לא לבלוע את הקווים */}
+                <div className="absolute left-1/2 top-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-radial from-[#0D9488]/14 via-[#0D9488]/4 to-transparent blur-2xl pointer-events-none" />
 
-                {/* "נחש" צבעוני זוהר שמסתובב על הטבעת החיצונית */}
-                <OrbitSnake />
-
-                {/* קווי זרימה מינימליסטיים מ-W לכל לוגו — נקודה זורמת לאורך כל קו */}
+                {/* קווי זרימה — מהמרכז המדויק לכל לוגו */}
                 <OrbitFlowLines />
 
-                {/* טבעת סיבוב תמידית — תחושת זרימת נתונים */}
+                {/* טבעת חיצונית סטטית */}
+                <div className="absolute inset-0 rounded-full border-[1.5px] border-slate-200/80 shadow-[inset_0_0_24px_rgba(0,0,0,0.02)]" />
+                {/* טבעת אמצעית סטטית */}
+                <div className="absolute inset-[26%] rounded-full border-[1.5px] border-slate-200/70" />
+
+                {/* טבעות סיבוב עדינות — תחושת זרימת נתונים, נצמדות בדיוק לטבעות */}
                 <div
                   role="presentation"
-                  className="absolute inset-0 z-10 aspect-square animate-spin items-center justify-center rounded-full border-t-2 border-[#0D9488]/40 bg-gradient-to-b from-[#0D9488]/5 to-transparent to-25% [animation-duration:15s] group-hover:[animation-duration:5s] transition-all duration-700"
+                  className="absolute inset-0 z-[8] animate-spin rounded-full border-t-2 border-[#0D9488]/30 [animation-duration:20s] group-hover:[animation-duration:8s] transition-all duration-700"
                 />
-
-                {/* טבעת פנימית מסתובבת נגד הכיוון */}
                 <div
                   role="presentation"
-                  className="absolute inset-16 z-10 aspect-square scale-90 animate-spin-reverse items-center justify-center rounded-full border-l-2 border-[#3ECFBE]/40 bg-gradient-to-r from-[#3ECFBE]/5 to-transparent to-25% [animation-duration:20s] group-hover:[animation-duration:7s] transition-all duration-700 delay-100"
+                  className="absolute inset-[26%] z-[8] animate-spin-reverse rounded-full border-l-2 border-[#3ECFBE]/30 [animation-duration:26s] group-hover:[animation-duration:10s] transition-all duration-700"
                 />
 
-                {/* Static outer ring */}
-                <div className="absolute inset-0 flex aspect-square items-center justify-center rounded-full border-[1.5px] border-slate-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.02)]">
-                  <IntegrationCard className="absolute left-0 top-1/4 -translate-x-[16.666%] -translate-y-1/4" delay={0}>
-                    <SapLogo />
-                  </IntegrationCard>
-                  <IntegrationCard className="absolute top-0 -translate-y-1/2" delay={1.2}>
-                    <OracleLogo />
-                  </IntegrationCard>
-                  <IntegrationCard className="absolute right-0 top-1/4 translate-x-[16.666%] -translate-y-1/4" delay={0.5}>
-                    <WorkdayLogo />
-                  </IntegrationCard>
-                </div>
+                {/* לוגואים מפוזרים סביב המרכז */}
+                {ORBIT_NODES.map((node) => (
+                  <div
+                    key={node.id}
+                    className="absolute z-30 -translate-x-1/2 -translate-y-1/2"
+                    style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                  >
+                    <IntegrationCard delay={node.delay}>
+                      <node.Logo />
+                    </IntegrationCard>
+                  </div>
+                ))}
 
-                {/* Static inner ring */}
-                <div className="absolute inset-16 flex aspect-square scale-90 items-center justify-center rounded-full border-[1.5px] border-slate-300 shadow-[inset_0_0_20px_rgba(0,0,0,0.02)]">
-                  <IntegrationCard className="absolute top-0 -translate-y-1/2" delay={0.8}>
-                    <SalesforceLogo />
-                  </IntegrationCard>
-                  <IntegrationCard className="absolute left-0 top-1/4 -translate-x-1/4 -translate-y-1/4" delay={0.3}>
-                    <MicrosoftLogo />
-                  </IntegrationCard>
-                  <IntegrationCard className="absolute right-0 top-1/4 -translate-y-1/4 translate-x-1/4" delay={1.5}>
-                    <SlackLogo />
-                  </IntegrationCard>
-                </div>
-
-                {/* Center Wendi mark — הילות מהבהבות */}
-                <div className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 md:bottom-10">
+                {/* לוגו וונדי — בדיוק במרכז */}
+                <div className="absolute left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2">
                   <div className="relative flex items-center justify-center">
                     {/* גל הדף (Ping) שיוצא מוונדי */}
                     <div
@@ -161,7 +172,7 @@ export function IntegrationsOrbit() {
                       className="rounded-full border border-slate-200 bg-white p-1.5 relative z-10 shadow-xl"
                     >
                       <IntegrationCard
-                        className="size-20 border-none shadow-2xl shadow-[#0D9488]/30"
+                        className="size-16 border-none shadow-2xl shadow-[#0D9488]/30 md:size-20"
                         isCenter
                         delay={0}
                         floating={false}
@@ -193,13 +204,15 @@ export function IntegrationsOrbit() {
               </div>
 
               <div className="flex flex-wrap justify-center gap-4 pt-2 md:justify-start">
-                <Button
+                <a
                   href="#feature-tour"
-                  variant="primary"
-                  className="shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40 transition-shadow"
+                  className="group inline-flex h-[60px] min-w-[200px] shrink-0 select-none items-center justify-center gap-2.5 whitespace-nowrap rounded-full bg-black px-12 text-[15px] font-semibold tracking-tight !text-white shadow-[0_10px_24px_-12px_rgba(0,0,0,0.55)] transition-all duration-200 ease-out hover:-translate-y-[1px] hover:bg-black/90 hover:shadow-[0_14px_28px_-12px_rgba(0,0,0,0.6)]"
                 >
                   ראו איך זה עובד
-                </Button>
+                  <span className="text-[18px] transition-transform group-hover:-translate-x-1">
+                    ←
+                  </span>
+                </a>
               </div>
             </motion.div>
           </div>
@@ -220,18 +233,51 @@ export function IntegrationsOrbit() {
  * Each line carries a tiny dot animated from W → target via SMIL <animateMotion>,
  * giving a subtle "data flowing outward" feel. Pure SVG, no JS, GPU-friendly.
  */
-const FLOW_TARGETS = [
-  // Outer ring
-  { id: "oracle",     x: 50, y:  3 },
-  { id: "sap",        x:  8, y: 28 },
-  { id: "workday",    x: 92, y: 28 },
-  // Inner ring
-  { id: "salesforce", x: 50, y: 21 },
-  { id: "microsoft",  x: 29, y: 37 },
-  { id: "slack",      x: 71, y: 37 },
-] as const;
+/**
+ * Single source of truth for every orbiting logo.
+ *
+ * The orbit container is aspect-square, so we describe everything in a 0–100
+ * percentage grid where the Wendi mark sits at the exact center (50, 50).
+ * Each node is placed by polar coordinates: an angle (degrees, 0° = straight
+ * up, clockwise) and a radius (% of half-width). The same (x, y) computed here
+ * is used both to position the logo card AND to draw its flow line — so every
+ * line points precisely at the center of its logo, by construction.
+ */
+const CENTER = { x: 50, y: 50 } as const;
 
-const W_CENTER = { x: 50, y: 80 } as const;
+type OrbitNode = {
+  id: string;
+  angle: number; // degrees, 0 = up, clockwise
+  radius: number; // % of half-width from center
+  delay: number;
+  Logo: () => React.JSX.Element;
+};
+
+const RAW_NODES: OrbitNode[] = [
+  // Inner ring — 3 logos, evenly spaced 120° apart, sitting just outside the
+  // middle ring so they're not crammed against the Wendi mark.
+  { id: "salesforce", angle: 0,   radius: 30, delay: 0.8, Logo: SalesforceLogo },
+  { id: "microsoft",  angle: 240, radius: 30, delay: 0.3, Logo: MicrosoftLogo },
+  { id: "slack",      angle: 120, radius: 30, delay: 1.5, Logo: SlackLogo },
+  // Outer ring — 6 logos, evenly spaced 60° apart, offset 30° from the inner
+  // ring so the two rings interlock instead of stacking on the same spokes.
+  { id: "teams",      angle: 330, radius: 45, delay: 1.3, Logo: TeamsLogo },
+  { id: "oracle",     angle: 30,  radius: 45, delay: 0,   Logo: OracleLogo },
+  { id: "hubspot",    angle: 90,  radius: 45, delay: 0.4, Logo: HubspotLogo },
+  { id: "workday",    angle: 150, radius: 45, delay: 1.0, Logo: WorkdayLogo },
+  { id: "google",     angle: 210, radius: 45, delay: 0.6, Logo: GoogleLogo },
+  { id: "sap",        angle: 270, radius: 45, delay: 0.5, Logo: SapLogo },
+];
+
+const polar = (angle: number, radius: number) => {
+  const rad = ((angle - 90) * Math.PI) / 180;
+  return {
+    x: CENTER.x + radius * Math.cos(rad),
+    y: CENTER.y + radius * Math.sin(rad),
+  };
+};
+
+const ORBIT_NODES = RAW_NODES.map((n) => ({ ...n, ...polar(n.angle, n.radius) }));
 
 /** Pull each endpoint a few units inward so the line stops before the logo. */
 function trimEndpoints(
@@ -253,78 +299,29 @@ function trimEndpoints(
   };
 }
 
-/**
- * Colorful "snake" that travels around the outer orbit ring.
- *
- * How it works:
- * - A full SVG circle sits exactly on the outer ring (cx=50, cy=50, r=50, but
- *   inset slightly so the snake doesn't bleed past the ring stroke).
- * - The stroke is a linear gradient (teal → cyan → brand blue) — these are the
- *   brand DNA colors, so it never feels foreign.
- * - `strokeDasharray` defines ONE visible arc (~25% of the circumference) +
- *   one big gap. `strokeDashoffset` is animated linearly with CSS keyframes,
- *   which rotates that arc around the circle endlessly.
- * - A soft blur filter gives the glowing "snake" feel without being garish.
- * - Pointer-events-none + low base opacity so it complements the existing
- *   spin rings rather than fighting them.
- *
- * Circumference math (r=48): 2πr ≈ 301.6 → dash 75 + gap 226.6 ≈ a quarter-arc.
- */
-const OrbitSnake = () => (
-  <svg
-    viewBox="0 0 100 100"
-    aria-hidden="true"
-    className="pointer-events-none absolute inset-0 z-[6] h-full w-full"
-  >
-    <defs>
-      <linearGradient id="snake-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%"   stopColor="#3ECFBE" />
-        <stop offset="50%"  stopColor="#22D3EE" />
-        <stop offset="100%" stopColor="#0D9488" />
-      </linearGradient>
-      <filter id="snake-blur" x="-20%" y="-20%" width="140%" height="140%">
-        <feGaussianBlur stdDeviation="0.4" />
-      </filter>
-    </defs>
-
-    <circle
-      cx="50"
-      cy="50"
-      r="48"
-      fill="none"
-      stroke="url(#snake-grad)"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      strokeDasharray="75 226.6"
-      pathLength="301.6"
-      filter="url(#snake-blur)"
-      className="orbit-snake-path"
-      opacity="0.85"
-    />
-  </svg>
-);
-
 const OrbitFlowLines = () => (
   <svg
     viewBox="0 0 100 100"
-    preserveAspectRatio="none"
     aria-hidden="true"
     className="pointer-events-none absolute inset-0 z-[5] h-full w-full"
   >
-    {FLOW_TARGETS.map((t) => {
-      const { x1, y1, x2, y2 } = trimEndpoints(W_CENTER, t, 8, 8);
+    {ORBIT_NODES.map((node) => {
+      // All lines start on the same tight circle hugging the Wendi mark edge,
+      // so they visibly converge on one focal point, and stop just before each
+      // logo card — pointing dead-center at both ends by construction.
+      const { x1, y1, x2, y2 } = trimEndpoints(CENTER, node, 11, 7);
       return (
         <line
-          key={t.id}
+          key={node.id}
           x1={x1}
           y1={y1}
           x2={x2}
           y2={y2}
           stroke="#0D9488"
-          strokeOpacity="0.22"
-          strokeWidth="0.25"
+          strokeOpacity="0.32"
+          strokeWidth="0.35"
           strokeLinecap="round"
-          strokeDasharray="0.8 1.4"
+          strokeDasharray="0.9 1.5"
         />
       );
     })}

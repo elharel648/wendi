@@ -15,7 +15,7 @@ const expo = [0.16, 1, 0.3, 1] as const;
  */
 export function AboutHero({ content }: Props) {
   return (
-    <section className="relative isolate min-h-screen overflow-hidden bg-white">
+    <section className="relative isolate min-h-[78vh] overflow-hidden bg-white">
 
       {/* Soft teal blob — top-right drift */}
       <motion.div
@@ -43,12 +43,21 @@ export function AboutHero({ content }: Props) {
         }}
       />
 
+      {/* Mascot — anchored to the inline-start (LEFT in RTL), vertically
+           centered, so the text column stays centered and undisturbed.
+           On mobile it falls back into the column flow above the title. */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden items-center pl-6 md:flex md:pl-12 lg:pl-20">
+        <Mascot />
+      </div>
+
       {/* Main content — single centered column. Outer wrapper is the full-width
            flex centerer; inner block holds the actual content at max 1100px. */}
-      <div className="relative z-10 flex min-h-screen w-full items-center justify-center px-4 pt-20 pb-10 sm:px-6 md:px-16 md:pt-28 md:pb-12">
+      <div className="relative z-10 flex min-h-[78vh] w-full items-center justify-center px-4 py-12 sm:px-6 md:px-16 md:py-14">
         <div className="flex w-full max-w-[1100px] flex-col items-center gap-6 text-center md:gap-10">
-        {/* Mascot (top) */}
-        <Mascot />
+        {/* Mascot — mobile only (above title); desktop uses the absolute one above */}
+        <div className="md:hidden">
+          <Mascot />
+        </div>
 
         {/* Title — centered */}
         <h1
@@ -93,64 +102,6 @@ export function AboutHero({ content }: Props) {
         >
           {content.sub}
         </motion.p>
-
-        {/* Stats bar — centered */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease: expo, delay: 0.7 }}
-          className="mx-auto flex w-full flex-wrap items-center px-4 py-4 md:px-7 md:py-5"
-          style={{
-            background: "rgba(255,255,255,0.7)",
-            border: "1px solid rgba(15,23,42,0.08)",
-            borderRadius: "18px",
-            maxWidth: "640px",
-            backdropFilter: "blur(20px) saturate(160%)",
-            WebkitBackdropFilter: "blur(20px) saturate(160%)",
-            boxShadow:
-              "0 20px 50px -20px rgba(15,23,42,0.1), inset 0 1px 0 rgba(255,255,255,0.6)",
-          }}
-        >
-          {content.stats.map((stat, i) => (
-            <div key={stat.label} className="flex flex-1 items-center">
-              <div className="min-w-[80px] flex-1 text-center">
-                <div
-                  className="tabular-nums"
-                  style={{
-                    fontSize: "1.85rem",
-                    fontWeight: 800,
-                    lineHeight: 1,
-                    color: "#0A0A0A",
-                  }}
-                >
-                  {stat.num}
-                </div>
-                <div
-                  style={{
-                    fontSize: "0.7rem",
-                    letterSpacing: "0.08em",
-                    marginTop: "4px",
-                    color: "#64748B",
-                  }}
-                >
-                  {stat.label}
-                </div>
-              </div>
-              {i < content.stats.length - 1 && (
-                <div
-                  aria-hidden
-                  className="shrink-0"
-                  style={{
-                    width: "1px",
-                    height: "36px",
-                    background:
-                      "linear-gradient(to bottom, transparent, rgba(15,23,42,0.12), transparent)",
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </motion.div>
 
         {/* Tabs — centered */}
         <motion.div

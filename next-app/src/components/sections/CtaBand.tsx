@@ -80,11 +80,6 @@ export function CtaBand({ content }: { content?: CtaBandContent }) {
               className="cf-btn"
               type="submit"
               disabled={submitted}
-              style={
-                submitted
-                  ? { background: "var(--teal)", color: "#000" }
-                  : undefined
-              }
             >
               {submitted ? c.submittedLabel : c.submitLabel}
             </button>

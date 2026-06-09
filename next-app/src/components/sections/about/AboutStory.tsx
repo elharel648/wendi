@@ -49,68 +49,16 @@ export function AboutStory({ content }: Props) {
               <span style={{ color: "#0D9488" }}>{content.quote.accent}</span>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-3">
-              <a
-                href="#contact"
-                className="inline-flex items-center justify-center transition-all duration-200"
-                style={{
-                  padding: "14px 30px",
-                  borderRadius: "12px",
-                  fontSize: "0.95rem",
-                  fontWeight: 700,
-                  color: "#fff",
-                  background: "#0A0A0A",
-                  boxShadow: "0 8px 24px rgba(10,10,10,0.25)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow =
-                    "0 12px 32px rgba(10,10,10,0.35)";
-                  e.currentTarget.style.background = "#1A1A1A";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "";
-                  e.currentTarget.style.boxShadow =
-                    "0 8px 24px rgba(10,10,10,0.25)";
-                  e.currentTarget.style.background = "#0A0A0A";
-                }}
-              >
-                בואו נדבר
-              </a>
-              <a
-                href="/sipurim"
-                className="inline-flex items-center justify-center transition-all duration-200"
-                style={{
-                  padding: "14px 30px",
-                  borderRadius: "12px",
-                  fontSize: "0.95rem",
-                  fontWeight: 500,
-                  color: "#0A0A0A",
-                  background: "transparent",
-                  border: "1px solid rgba(10,10,10,0.18)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.background = "#F8FAFC";
-                  e.currentTarget.style.borderColor = "rgba(10,10,10,0.35)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "";
-                  e.currentTarget.style.background = "transparent";
-                  e.currentTarget.style.borderColor = "rgba(10,10,10,0.18)";
-                }}
-              >
-                סיפורי לקוחות
-              </a>
-            </div>
           </motion.div>
 
-          {/* LEFT: intro paragraphs */}
+          {/* LEFT: intro paragraphs — nudged down so its first line aligns with
+               the quote's first line (the quote sits below a 2px rule + 24px gap). */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: expo, delay: 0.15 }}
+            className="md:pt-[26px]"
           >
             {content.intro.map((para, i) => (
               <p

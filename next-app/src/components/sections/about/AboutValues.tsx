@@ -142,29 +142,20 @@ function ValueCard({
         }}
       />
 
-      {/* Header — icon + big stroked number */}
+      {/* Header — clean teal line icon (no box, matches the Sectors style) +
+          big stroked number */}
       <div className="mb-7 flex items-center justify-between">
-        {/* Icon box */}
-        <div
-          className="vc-icon-box flex items-center justify-center transition-[background,transform,box-shadow] duration-[400ms]"
+        <Icon
+          className="vc-icon-svg transition-colors duration-[400ms]"
           style={{
-            width: "56px",
-            height: "56px",
-            borderRadius: "16px",
-            background: "#F1F5F9",
-            border: "1px solid rgba(15,23,42,0.08)",
+            width: "30px",
+            height: "30px",
+            color: "#2BADA0",
           }}
-        >
-          <Icon
-            className="vc-icon-svg transition-colors duration-[400ms]"
-            style={{
-              width: "26px",
-              height: "26px",
-              color: "#0F172A",
-            }}
-            strokeWidth={1.6}
-          />
-        </div>
+          strokeWidth={1.8}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
 
         {/* Big stroked number */}
         <span
@@ -210,14 +201,9 @@ function ValueCard({
         article:hover :global(.vc-sweep) {
           transform: scaleX(1);
         }
-        article:hover :global(.vc-icon-box) {
-          background: linear-gradient(135deg, #2BADA0, #3ECFBE);
-          border-color: rgba(13, 148, 136, 0.6);
-          transform: scale(1.06) rotate(-3deg);
-          box-shadow: 0 0 24px rgba(13, 148, 136, 0.4);
-        }
         article:hover :global(.vc-icon-svg) {
-          color: #fff !important;
+          color: #0d9488 !important;
+          transform: scale(1.08);
         }
         article:hover :global(.vc-num) {
           -webkit-text-stroke-color: rgba(13, 148, 136, 0.7);

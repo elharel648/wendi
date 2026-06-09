@@ -194,10 +194,10 @@ export function IntegrationsHero() {
           transition={{ duration: 0.55, ease: expoOut, delay: 0.24 }}
           className="mt-10 flex flex-wrap justify-center gap-3"
         >
-          <Button variant="primary" href="#contact" withArrow>
+          <Button variant="primary" href="#contact" withArrow className="rounded-full">
             דברו איתנו על אינטגרציה
           </Button>
-          <Button variant="secondary" href="#process">
+          <Button variant="secondary" href="#process" className="rounded-full">
             ראו את התהליך
           </Button>
         </motion.div>

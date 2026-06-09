@@ -38,18 +38,6 @@ const cards: Card[] = [
   { cat: "tools",  img: "/apps/Screenshot_14.png", alt: "כלים וניהול",    lbl: "כלים וניהול" },
 ];
 
-const PlusIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M12 5v14M5 12h14" />
-  </svg>
-);
-
-const ArrowRightIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M5 12h14M12 5l7 7-7 7" />
-  </svg>
-);
-
 const ChevronLeftIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M15 18l-6-6 6-6" />
@@ -62,12 +50,6 @@ const ChevronRightIcon = () => (
   </svg>
 );
 
-const DemoArrow = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M19 12H5M12 19l-7-7 7-7" />
-  </svg>
-);
-
 export function MobileShowcase({ content }: { content?: MobileShowcaseContent }) {
   const m = content ?? homeSections.mobile;
   const categories: Category[] = CATEGORY_KEYS.map((cat, i) => ({
@@ -77,7 +59,6 @@ export function MobileShowcase({ content }: { content?: MobileShowcaseContent })
   }));
   return (
     <section className="mob-show" dir="rtl" id="mobShowcase">
-      <span className="mob-eyebrow">{m.eyebrow}</span>
       <h2 className="mob-title">{m.title}</h2>
       <div className="mob-inner">
         <div className="mob-layout">
@@ -88,11 +69,12 @@ export function MobileShowcase({ content }: { content?: MobileShowcaseContent })
               <div key={c.cat} className="mob-acc-item" data-cat={c.cat}>
                 <div className="mob-acc-hd">
                   <span className="mob-acc-hd-title">{c.title}</span>
-                  <span className="mob-acc-icon"><PlusIcon /></span>
                 </div>
-                <div className="mob-acc-body">
-                  <p className="mob-acc-desc">{c.desc}</p>
-                </div>
+                {c.desc && (
+                  <div className="mob-acc-body">
+                    <p className="mob-acc-desc">{c.desc}</p>
+                  </div>
+                )}
               </div>
             ))}
 
@@ -104,31 +86,24 @@ export function MobileShowcase({ content }: { content?: MobileShowcaseContent })
               <div className="mob-track" id="mobTrack">
                 {cards.map((card, i) => (
                   <div key={i} className="mob-card" data-cat={card.cat}>
-                    <span className="mob-card-badge-top">אפליקציה מותאמת</span>
-                    <Image
-                      src={card.img}
-                      className="mob-sc-img"
-                      alt={card.alt}
-                      width={320}
-                      height={640}
-                      sizes="(max-width: 768px) 50vw, 280px"
-                      style={{ width: "100%", height: "auto" }}
-                    />
-                    <div className="mob-sc-foot">
-                      <button type="button" className="mob-sc-cta">
-                        צפו בדמו
-                        <DemoArrow />
-                      </button>
+                    <div className="mob-sc-imgwrap">
+                      <Image
+                        src={card.img}
+                        className="mob-sc-img"
+                        alt={card.alt}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 280px"
+                      />
                     </div>
                   </div>
                 ))}
               </div>
             </div>
             <button className="mob-arrow mob-arrow-prev" id="mobPrev" aria-label="הקודם">
-              <ChevronLeftIcon />
+              <ChevronRightIcon />
             </button>
             <button className="mob-arrow mob-arrow-next" id="mobNext" aria-label="הבא">
-              <ChevronRightIcon />
+              <ChevronLeftIcon />
             </button>
             <div className="mob-dots" id="mobDots" />
           </div>
