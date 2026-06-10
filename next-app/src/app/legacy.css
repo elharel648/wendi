@@ -2138,6 +2138,36 @@
     .fbot a { color: var(--muted); transition: color .2s; text-decoration: none; }
     .fbot a:hover { color: var(--teal); }
 
+    /* Newsletter signup (idea borrowed from the shadcn footer demo, restyled
+       for the Wendi light theme + RTL). Email field with an inline send button. */
+    .fnews { margin-top: 18px; max-width: 300px; }
+    .fnews-form { position: relative; display: flex; align-items: center; }
+    .fnews-input {
+      width: 100%; height: 44px; border-radius: 999px; border: 1px solid var(--border);
+      background: #fff; padding: 0 18px 0 52px; font-size: .9rem; color: #0F172A;
+      font-family: inherit; transition: border-color .2s, box-shadow .2s;
+    }
+    .fnews-input::placeholder { color: #94A3B8; }
+    .fnews-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(94,194,183,.18); }
+    .fnews-btn {
+      position: absolute; left: 5px; top: 50%; transform: translateY(-50%);
+      width: 34px; height: 34px; border-radius: 999px; border: none; cursor: pointer;
+      background: var(--teal); color: #fff; display: inline-flex; align-items: center;
+      justify-content: center; transition: transform .2s, background .2s;
+    }
+    .fnews-btn:hover { transform: translateY(-50%) scale(1.06); }
+    .fnews-btn svg { width: 17px; height: 17px; }
+
+    /* Social icons row */
+    .fsocial { display: flex; gap: 12px; margin-top: 18px; }
+    .fsocial a {
+      width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--border);
+      display: inline-flex; align-items: center; justify-content: center; color: var(--muted);
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    .fsocial a:hover { color: var(--teal); border-color: var(--teal); background: rgba(94,194,183,.08); }
+    .fsocial svg { width: 18px; height: 18px; }
+
     /* â•â• DEVICE SHOWCASE â•â• */
     .device-showcase { padding: 96px 0; background: var(--surface); border-top: 1px solid var(--border); }
     .device-toggle-wrap { display: none; } /* hidden placeholder */
@@ -4605,7 +4635,7 @@
       body::after { animation: none; }
     }
     /* light-mode logo: keep the W on-brand, flip the white wordmark dark */
-    body .nav-logo img, body .fbrand img,
+    body .nav-logo img, body img.nav-logo, body .fbrand img,
     body nav img[src*="wendi-logo"], body footer img[src*="wendi-logo"] {
       filter: invert(1) hue-rotate(180deg) saturate(1.15) brightness(.95) !important;
     }

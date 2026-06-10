@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import type { ProcessContent } from "@/content/mamashkim";
 import { mamashkimContent } from "@/content/mamashkim";
+import { onColor } from "@/content/modulim";
 
 const TEAL = "#0D9488";
 
@@ -14,7 +15,7 @@ const STATIONS = [
     title: "הבנת הצורך העסקי",
     desc: "מתחילים בשיחה עמוקה: מה המידע שצריך לזרום, מי המשתמשים, ומה המטרה העסקית.",
     tags: ["גילוי צרכים", "מיפוי תהליכים", "הגדרת יעדים"],
-    color: "#A16207", // yellow-700 (deeper, muted)
+    color: "#55C3BD", // module palette — teal
   },
   {
     num: "02",
@@ -22,7 +23,7 @@ const STATIONS = [
     title: "אפיון טכנולוגי משותף",
     desc: "הארכיטקטורה הנכונה: API, Webhook, Batch או Real-time. מבנה נתונים, הרשאות ואבטחה.",
     tags: ["API", "אבטחה", "הרשאות"],
-    color: "#9A3412", // orange-800 (deeper, muted)
+    color: "#E4B322", // module palette — gold
   },
   {
     num: "03",
@@ -30,7 +31,7 @@ const STATIONS = [
     title: "פיתוח ובדיקות",
     desc: "פיתוח ב-Staging בשיתוף מלא איתכם. בדיקות קצה לקצה, UAT ובדיקות עומס לפני עלייה.",
     tags: ["Staging", "UAT", "QA"],
-    color: "#9D174D", // pink-800 (deeper, muted)
+    color: "#E43594", // module palette — pink
   },
   {
     num: "04",
@@ -38,7 +39,7 @@ const STATIONS = [
     title: "עלייה לאוויר וליווי שוטף",
     desc: "אחרי העלייה — ניטור 24/7, תחזוקה, התאמות לשינויים בארגון ושדרוגים עתידיים.",
     tags: ["ניטור 24/7", "SLA", "שדרוגים"],
-    color: "#6B21A8", // purple-800 (deeper, muted)
+    color: "#4F86C5", // module palette — blue
   },
 ];
 
@@ -88,7 +89,7 @@ export function IntegrationsProcess({ content }: { content?: ProcessContent }) {
             className="absolute top-[44px] right-[12.5%] hidden h-px rounded-full lg:block"
             style={{
               background:
-                "linear-gradient(to left, #A16207 0%, #9A3412 33%, #9D174D 66%, #6B21A8 100%)",
+                "linear-gradient(to left, #55C3BD 0%, #E4B322 33%, #E43594 66%, #4F86C5 100%)",
             }}
             initial={{ width: 0 }}
             whileInView={{ width: "75%" }}
@@ -156,7 +157,7 @@ function Station({
           className="flex h-[64px] w-[64px] items-center justify-center rounded-full text-lg font-black"
           style={{
             background: station.color,
-            color: "#fff",
+            color: onColor(station.color),
             letterSpacing: "-0.02em",
           }}
         >

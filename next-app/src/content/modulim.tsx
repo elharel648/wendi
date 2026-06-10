@@ -28,6 +28,20 @@ const ico = (path: ReactNode) => (
 );
 
 /**
+ * Readable foreground (white or near-black) for text/icons sitting on a solid
+ * module colour. The brochure gold (#E4B322) is light enough that white washes
+ * out, so we switch to dark ink on light backgrounds by luminance.
+ */
+export function onColor(hex: string): string {
+  const h = hex.replace("#", "");
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return lum > 0.62 ? "#1e293b" : "#ffffff";
+}
+
+/**
  * CMS-editable text for the modules, keyed by module id. This is the
  * serializable slice that travels from the Umbraco fetch (server) into the
  * client components — icons/colors/gradients stay in `modules` below and are
@@ -71,9 +85,9 @@ export const modules: Module[] = [
     shortLabel: "פורטל ואפליקציה",
     title: "פורטל ואפליקציה פנים-ארגונית",
     subtitle: "One Stop Shop לכל עובד — בכל מכשיר, בכל רגע",
-    color: "#6B8FD9",
-    colorSoft: "rgba(107, 143, 217, 0.16)",
-    gradient: "linear-gradient(135deg, #6B8FD9 0%, #9DB6E8 100%)",
+    color: "#55C3BD",
+    colorSoft: "rgba(85, 195, 189, 0.14)",
+    gradient: "#55C3BD",
     icon: ico(<><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></>),
     features: [
       { title: "אנשי קשר", desc: "חיפוש מהיר לפי עובד, תפקיד, מחלקה + Click to Call, מייל, וואטסאפ", icon: ico(<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>) },
@@ -97,9 +111,9 @@ export const modules: Module[] = [
     subtitle: "אוטומציה של תהליכים פנים-ארגוניים — חסכו זמן, שפרו חוויה",
     blurb: "מטרת המודול לאפשר לארגון לנהל תהליכים פנים-ארגוניים בצורה דיגיטלית וחווייתית — לשיפור הפרודוקטיביות ושביעות רצון העובדים.",
     note: "כל תהליך עסקי פנים-ארגוני שמשלב שלבים, משימות ואנשים — ניתן לבנות בוונדי.",
-    color: "#5FB87D",
-    colorSoft: "rgba(95, 184, 125, 0.16)",
-    gradient: "linear-gradient(135deg, #5FB87D 0%, #95D3A8 100%)",
+    color: "#E4B322",
+    colorSoft: "rgba(228, 179, 34, 0.14)",
+    gradient: "#E4B322",
     icon: ico(<><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></>),
     features: [
       { title: "Pre-Boarding", desc: "מילוי טפסים, העלאת קבצים ואישורים — לפני יום תחילת העבודה", icon: ico(<><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></>) },
@@ -117,9 +131,9 @@ export const modules: Module[] = [
     shortLabel: "LMS — למידה",
     title: "מודול LMS — למידה והכשרה",
     subtitle: "ניהול מלא של הכשרות, קורסים, הסמכות ולמידה שוטפת",
-    color: "#E8985A",
-    colorSoft: "rgba(232, 152, 90, 0.16)",
-    gradient: "linear-gradient(135deg, #E8985A 0%, #F2BC8E 100%)",
+    color: "#E43594",
+    colorSoft: "rgba(228, 53, 148, 0.12)",
+    gradient: "#E43594",
     icon: ico(<><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 4 3 6 3s6-1 6-3v-5"/></>),
     features: [
       { title: "למידה מתוקשבת", desc: "תמיכה במגוון סוגי קבצים וסטנדרט SCORM ללומדות", iconLottie: "/icons-lottie/video.json", icon: ico(<><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></>) },
@@ -139,9 +153,9 @@ export const modules: Module[] = [
     title: "מודול הערכת ביצועים",
     subtitle: "תהליך הערכה שנתי ממוחשב, גמיש ופרסונלי לכל עובד",
     blurb: "מודול הערכת ביצועים מתקדם לניהול ממוחשב ויעיל של תהליך ההערכה השנתי. ניתן לקיים תהליך אוטומטי מותאם לפי עיסוק.",
-    color: "#DC7A72",
-    colorSoft: "rgba(220, 122, 114, 0.16)",
-    gradient: "linear-gradient(135deg, #DC7A72 0%, #ECA8A2 100%)",
+    color: "#4F86C5",
+    colorSoft: "rgba(79, 134, 197, 0.13)",
+    gradient: "#4F86C5",
     icon: ico(<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>),
     features: [
       { title: "ממשק למערכת שכר", desc: "קליטת עובדים אוטומטית מממשק שכר", iconLottie: "/icons-lottie/share.json", icon: ico(<><path d="M9 17H7A5 5 0 0 1 7 7h2"/><path d="M15 7h2a5 5 0 1 1 0 10h-2"/><line x1="8" x2="16" y1="12" y2="12"/></>) },

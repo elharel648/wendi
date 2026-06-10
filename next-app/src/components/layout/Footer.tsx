@@ -1,5 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+// NOTE: this lucide-react version (v1) has removed all third-party brand
+// glyphs (Facebook/Instagram/LinkedIn/Twitter no longer exist). We use
+// generic, available icons for the social/contact row instead.
+import { Send, Globe, Mail, Phone, Share2 } from "lucide-react";
 
 export function Footer() {
   return (
@@ -18,6 +22,31 @@ export function Footer() {
           <p className="ftagline">
             פלטפורמת העובד המובילה בישראל — תקשורת, למידה וממשקים ביחד.
           </p>
+          {/* Newsletter signup — borrowed from the shadcn footer demo, in Hebrew/RTL */}
+          <form
+            className="fnews"
+            action="#contact"
+            aria-label="הרשמה לעדכונים"
+          >
+            <div className="fnews-form">
+              <input
+                type="email"
+                className="fnews-input"
+                placeholder="הזינו אימייל לעדכונים"
+                aria-label="כתובת אימייל"
+              />
+              <button type="submit" className="fnews-btn" aria-label="הרשמה">
+                <Send aria-hidden="true" />
+              </button>
+            </div>
+          </form>
+          {/* Social / contact links */}
+          <div className="fsocial">
+            <a href="#" aria-label="אתר"><Globe aria-hidden="true" /></a>
+            <a href="mailto:hello@wendi.co.il" aria-label="אימייל"><Mail aria-hidden="true" /></a>
+            <a href="tel:+97200000000" aria-label="טלפון"><Phone aria-hidden="true" /></a>
+            <a href="#" aria-label="שיתוף"><Share2 aria-hidden="true" /></a>
+          </div>
         </div>
         <div className="fcol">
           <h5>ממשקים</h5>

@@ -251,8 +251,16 @@ export function ClientBehaviors() {
       track.style.transform = `translateX(${tx}px)`;
       visibleCards.forEach((card, i) => {
         const d = Math.abs(i - currentIdx);
-        card.style.opacity = d === 0 ? "1" : d === 1 ? "0.45" : "0.15";
-        card.style.transform = d === 0 ? "scale(1)" : "scale(0.92)";
+        // For the centred card, clear inline opacity/transform and let the
+        // .is-center CSS rule own it (scale 1.04, full opacity, glow). Setting
+        // an inline scale(1) here would override that and shrink it.
+        if (d === 0) {
+          card.style.opacity = "";
+          card.style.transform = "";
+        } else {
+          card.style.opacity = d === 1 ? "0.45" : "0.15";
+          card.style.transform = "scale(0.92)";
+        }
         card.classList.toggle("is-center", d === 0);
       });
       Array.from(dotsEl.querySelectorAll(".mob-dot")).forEach((dot, i) => {
@@ -415,6 +423,38 @@ export function ClientBehaviors() {
       }
     }, 120);
 
+    // The stage sits below the fold and is 640px tall, so the initial init()
+    // can run before fonts/images settle the layout — leaving every card in
+    // its shrunken default (opacity .4, scale .92) until a scroll forces a
+    // reflow. Re-run the layout when the stage scrolls into view and once the
+    // card images finish loading, so the centred card is correct on arrival.
+    const recenter = () => {
+      if (!inited) {
+        inited = true;
+        filterCat(firstCat);
+      } else {
+        goTo(currentIdx);
+      }
+    };
+
+    let io: IntersectionObserver | null = null;
+    if ("IntersectionObserver" in window) {
+      io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) recenter();
+        },
+        { threshold: 0.1 }
+      );
+      io.observe(stage);
+    }
+
+    allCards.forEach((card) => {
+      const img = card.querySelector<HTMLImageElement>("img");
+      if (img && !img.complete) {
+        img.addEventListener("load", recenter, { once: true });
+      }
+    });
+
     const onResize = () => goTo(currentIdx);
     window.addEventListener("resize", onResize);
 
@@ -431,6 +471,7 @@ export function ClientBehaviors() {
       stageEl.removeEventListener("touchmove", onTouchMove);
       stageEl.removeEventListener("touchend", onTouchEnd);
       stageEl.removeEventListener("click", onClickCapture, true);
+      io?.disconnect();
       clearTimeout(safety);
     };
   }, []);

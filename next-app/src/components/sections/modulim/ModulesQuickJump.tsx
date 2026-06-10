@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import type { Module } from "@/content/modulim";
+import { onColor, type Module } from "@/content/modulim";
 
 type Props = {
   modules: Module[];
@@ -27,31 +26,19 @@ export function ModulesQuickJump({ modules, activeId, onSelect }: Props) {
                 onClick={() => onSelect(m.id)}
                 aria-pressed={isActive}
                 aria-label={`הצג מודול ${m.shortLabel}`}
-                className="group relative flex items-center gap-2 rounded-full px-4 py-2 text-[0.85rem] font-bold transition-transform duration-200 hover:-translate-y-[2px] sm:px-5"
+                className="group relative flex items-center gap-2 rounded-full px-4 py-2 text-[0.85rem] font-bold transition-all duration-200 hover:-translate-y-[2px] sm:px-5"
                 style={{
-                  background: isActive ? "transparent" : m.colorSoft,
-                  border: `1.5px solid ${m.color}`,
-                  color: isActive ? "#fff" : "#1e293b",
+                  // Every bubble is filled with its own colour — always vivid.
+                  background: m.color,
+                  color: onColor(m.color),
+                  // The active one pops with a brighter ring + shadow; others sit calmer.
+                  boxShadow: isActive
+                    ? `0 8px 22px -4px ${m.color}, 0 0 0 3px #fff, 0 0 0 5px ${m.color}`
+                    : `0 2px 8px -3px ${m.color}`,
+                  opacity: isActive ? 1 : 0.82,
+                  transform: isActive ? "scale(1.04)" : undefined,
                 }}
               >
-                {/* Active fill — animates between buttons via shared layoutId */}
-                {isActive && (
-                  <motion.span
-                    layoutId="quickjump-active"
-                    aria-hidden
-                    className="absolute inset-0 -z-10 rounded-full"
-                    style={{
-                      background: m.gradient,
-                      boxShadow: `0 6px 20px -4px ${m.color}, 0 0 0 1px ${m.color}`,
-                    }}
-                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                  />
-                )}
-                <span
-                  aria-hidden
-                  className="h-2 w-2 flex-shrink-0 rounded-full transition-colors duration-200"
-                  style={{ background: isActive ? "#fff" : m.color }}
-                />
                 <span className="relative z-10 whitespace-nowrap">{m.shortLabel}</span>
               </button>
             </li>

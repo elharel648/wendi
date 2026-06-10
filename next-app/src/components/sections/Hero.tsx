@@ -72,7 +72,7 @@ export function Hero({ content }: HeroProps) {
   const lastIndex = titleLines.length - 1;
 
   return (
-    <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-paper px-6 pt-0 -mt-4 md:px-16 md:-mt-8">
+    <section className="relative isolate flex min-h-screen items-center justify-center overflow-hidden bg-paper px-6 pt-0 md:px-16">
       {/* Subtle film grain */}
       <div
         aria-hidden
