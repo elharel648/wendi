@@ -24,7 +24,7 @@ export function PitronotSectors({ cmsText }: { cmsText?: SectorText[] }) {
       className="relative isolate bg-paper"
     >
       {sectors.map((s, i) => (
-        <SectorBlock key={s.id} sector={s} index={i} alternate={i % 2 === 1} />
+        <SectorBlock key={s.id} sector={s} alternate={i % 2 === 1} />
       ))}
     </section>
   );
@@ -32,11 +32,9 @@ export function PitronotSectors({ cmsText }: { cmsText?: SectorText[] }) {
 
 function SectorBlock({
   sector: s,
-  index,
   alternate,
 }: {
   sector: Sector;
-  index: number;
   alternate: boolean;
 }) {
   return (
@@ -122,7 +120,7 @@ function SectorBlock({
 
           {/* Feature list */}
           <ul className="mt-7 flex flex-col gap-3">
-            {s.features.map((f, fi) => (
+            {s.features.map((f) => (
               <li
                 key={f}
                 className="flex items-start gap-3 text-[0.95rem] leading-relaxed text-ink-2"

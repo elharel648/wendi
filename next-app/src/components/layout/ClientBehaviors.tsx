@@ -218,8 +218,11 @@ export function ClientBehaviors() {
     // shrinks on tablet/phone) stay in sync with the track math. Falls back to
     // 300 if it can't be measured yet.
     const getCardW = () => {
+      // offsetWidth ignores the scale() transform on the cards, so we read the
+      // true layout width (getBoundingClientRect would return the scaled-down
+      // value of a non-centred card and throw the track math off).
       const first = allCards[0];
-      const w = first ? Math.round(first.getBoundingClientRect().width) : 0;
+      const w = first ? first.offsetWidth : 0;
       return w >= 20 ? w : 300;
     };
 
@@ -240,7 +243,11 @@ export function ClientBehaviors() {
         visibleCards.length;
       const cardW = getCardW();
       if (cardW < 20) return;
-      allCards.forEach((c) => (c.style.width = cardW + "px"));
+      // NOTE: do NOT write c.style.width here. The card width is owned by CSS
+      // (responsive 300/260/240px). Writing an inline width locks every card to
+      // whatever getCardW() measured — and if that ran during a transient
+      // layout, the cards get stuck narrow and never recover (the next read
+      // sees the shrunken inline width). We only READ the width for the math.
       let beforeCount = 0;
       for (let i = 0; i < allCards.length; i++) {
         if (allCards[i].style.display === "none") continue;
@@ -455,6 +462,28 @@ export function ClientBehaviors() {
       }
     });
 
+    // Belt-and-suspenders: when everything (fonts, optimized images) finishes,
+    // the stage box settles — re-center once more so a cached/late layout never
+    // leaves the cards stuck in their shrunken default. Covers the case where
+    // next/image reports complete before the real layout width is known.
+    const onWindowLoad = () => recenter();
+    if (document.readyState === "complete") {
+      requestAnimationFrame(recenter);
+    } else {
+      window.addEventListener("load", onWindowLoad, { once: true });
+    }
+
+    // A ResizeObserver on the stage catches any box change the events above
+    // miss (font swap, image decode, container reflow) and re-centers.
+    let roRaf = 0;
+    const ro = new ResizeObserver(() => {
+      cancelAnimationFrame(roRaf);
+      roRaf = requestAnimationFrame(() => {
+        if (inited && stage.offsetWidth >= 40) goTo(currentIdx);
+      });
+    });
+    ro.observe(stage);
+
     const onResize = () => goTo(currentIdx);
     window.addEventListener("resize", onResize);
 
@@ -472,6 +501,9 @@ export function ClientBehaviors() {
       stageEl.removeEventListener("touchend", onTouchEnd);
       stageEl.removeEventListener("click", onClickCapture, true);
       io?.disconnect();
+      ro.disconnect();
+      cancelAnimationFrame(roRaf);
+      window.removeEventListener("load", onWindowLoad);
       clearTimeout(safety);
     };
   }, []);

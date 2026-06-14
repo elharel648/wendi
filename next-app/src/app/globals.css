@@ -198,3 +198,44 @@ body {
   .marquee-track { animation: none; }
 }
 
+/* Mobile menu sheet entrance. */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Skip link — visually hidden until focused, then anchored top-center.
+   Lets keyboard users jump past the nav straight to #main-content. */
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: -100px;
+  transform: translateX(-50%);
+  z-index: 100;
+  padding: 0.6rem 1.25rem;
+  border-radius: 0 0 0.75rem 0.75rem;
+  background: #0d9488;
+  color: #fff;
+  font-weight: 700;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
+/* Global reduced-motion safety net — covers framer-motion transitions and any
+   animation/transition we didn't disable explicitly above. Honours the user's
+   OS setting site-wide. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

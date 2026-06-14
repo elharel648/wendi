@@ -77,7 +77,7 @@ export const homeContent: HomeContent = {
     ctas: [
       { label: "קבלו הדגמה חינמית", href: "#contact", variant: "primary", withArrow: true },
     ],
-    mascot: { src: "/wendi-char2.png", alt: "Wendi" },
+    mascot: { src: "/wendi-char2.webp", alt: "Wendi" },
   },
 
   wol: {

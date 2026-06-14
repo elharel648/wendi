@@ -40,6 +40,8 @@ export function PitronotSideNav({ cmsText }: { cmsText?: SectorText[] }) {
     });
 
     return () => observer.disconnect();
+    // sector ids are stable for the page's lifetime — observe once on mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleClick = (id: string) => {

@@ -85,9 +85,11 @@ function ModuleCard({ module: m }: { module: Module }) {
 function FeatureCard({ feature, module: m }: { feature: Feature; module: Module }) {
   return (
     <article
-      className="group relative flex items-start gap-4 overflow-hidden rounded-2xl border border-transparent bg-white p-4 shadow-[0_2px_12px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(15,23,42,0.09)]"
-      onMouseEnter={(e) => (e.currentTarget.style.borderColor = m.color)}
-      onMouseLeave={(e) => (e.currentTarget.style.borderColor = "transparent")}
+      // Border colour comes in via the --mc custom property and is applied on
+      // hover/focus through CSS — so it works on touch and keyboard too, with
+      // no JS mouse handlers (which never fire on touch devices).
+      style={{ ["--mc" as string]: m.color }}
+      className="group relative flex items-start gap-4 overflow-hidden rounded-2xl border border-transparent bg-white p-4 shadow-[0_2px_12px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--mc)] hover:shadow-[0_12px_30px_rgba(15,23,42,0.09)] focus-within:border-[var(--mc)]"
     >
       <FeatureIcon feature={feature} module={m} size={42} />
       <div className="flex flex-col gap-1">

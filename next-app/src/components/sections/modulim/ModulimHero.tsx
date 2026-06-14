@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { modules } from "@/content/modulim";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 const expo = [0.22, 1, 0.36, 1] as const;
 
@@ -37,7 +38,7 @@ export function ModulimHero({ title, subtitleHtml }: ModulimHeroProps = {}) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: expo, delay: 0.55 }}
           className="mx-auto max-w-[620px] text-[1rem] leading-[1.75] text-muted-fg md:text-[1.15rem] md:leading-[1.8]"
-          dangerouslySetInnerHTML={{ __html: subtitleHtml || DEFAULT_SUBTITLE }}
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(subtitleHtml || DEFAULT_SUBTITLE) }}
         />
       </div>
     </section>

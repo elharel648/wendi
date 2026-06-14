@@ -35,7 +35,9 @@ export function LottieIcon({
 
   useEffect(() => {
     let alive = true;
-    fetch(src)
+    // force-cache: these JSON icons are static assets and many render at once;
+    // the browser serves repeats from cache instead of refetching each one.
+    fetch(src, { cache: "force-cache" })
       .then((r) => r.json())
       .then((j) => alive && setData(j))
       .catch(() => {});

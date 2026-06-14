@@ -2,6 +2,28 @@ import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
 
+/**
+ * Allow next/image to load images served by the configured Umbraco host.
+ * Derived from UMBRACO_API_URL so it works in any environment without
+ * hardcoding a hostname — empty (no remote images allowed) if unset.
+ */
+function umbracoRemotePatterns() {
+  const url = process.env.UMBRACO_API_URL;
+  if (!url) return [];
+  try {
+    const u = new URL(url);
+    return [
+      {
+        protocol: u.protocol.replace(":", "") as "http" | "https",
+        hostname: u.hostname,
+        ...(u.port ? { port: u.port } : {}),
+      },
+    ];
+  } catch {
+    return [];
+  }
+}
+
 const cspHeader = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
@@ -49,7 +71,7 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30,
     dangerouslyAllowSVG: false,
     contentDispositionType: "attachment",
-    remotePatterns: [],
+    remotePatterns: umbracoRemotePatterns(),
   },
   experimental: {
     optimizePackageImports: [

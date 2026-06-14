@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { sanitizeHtml } from "@/lib/sanitize";
 import type { HeroContent } from "@/content/home";
 
 type HeroProps = { content: HeroContent };
@@ -122,7 +123,7 @@ export function Hero({ content }: HeroProps) {
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.8, ease: expo, delay: 0.55 }}
-            dangerouslySetInnerHTML={{ __html: subtitle }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(subtitle) }}
           />
 
           <motion.div
@@ -181,7 +182,6 @@ export function Hero({ content }: HeroProps) {
             }}
           />
           {/* Mascot — gentle float + breathing */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <motion.img
             src={mascot.src}
             alt={mascot.alt}

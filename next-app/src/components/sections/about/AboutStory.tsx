@@ -159,6 +159,8 @@ function ZineCard({
       onClick={() => setFlipped((f) => !f)}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
+      onFocus={() => setFlipped(true)}
+      onBlur={() => setFlipped(false)}
       className="group relative aspect-[3/4] w-full text-right [perspective:1200px]"
       style={{ transform: `rotate(${baseRot}deg)` }}
       aria-label={`${item.year} — ${item.title}`}

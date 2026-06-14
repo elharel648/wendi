@@ -148,9 +148,8 @@ function Mascot() {
         }}
       />
       {/* Mascot image — floats */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <motion.img
-        src="/wendi-char1.png"
+        src="/wendi-char1.webp"
         alt="Wendi"
         className="relative z-10 object-contain will-change-transform"
         style={{ height: "min(60vw, 360px)", width: "auto" }}

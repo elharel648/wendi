@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { WallOfLoveContent, WolTestimonial as Testimonial } from "@/content/homeSections";
 import { homeSections } from "@/content/homeSections";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 function Avatar({ t }: { t: Testimonial }) {
   if (t.avatar) {
@@ -37,7 +38,7 @@ function Card({ t, ariaHidden = false }: { t: Testimonial; ariaHidden?: boolean 
           <span>{t.role}</span>
         </div>
       </div>
-      <p className="wol-quote" dangerouslySetInnerHTML={{ __html: t.quoteHtml }} />
+      <p className="wol-quote" dangerouslySetInnerHTML={{ __html: sanitizeHtml(t.quoteHtml) }} />
     </article>
   );
 }

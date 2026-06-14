@@ -35,7 +35,7 @@ export function CtaBand({ content }: { content?: CtaBandContent }) {
   return (
     <section className="cta-band" id="contact">
       <Image
-        src="/wendi-char1.png"
+        src="/wendi-char1.webp"
         className="cta-char"
         alt=""
         width={480}

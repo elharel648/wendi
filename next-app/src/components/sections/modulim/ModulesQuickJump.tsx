@@ -26,7 +26,7 @@ export function ModulesQuickJump({ modules, activeId, onSelect }: Props) {
                 onClick={() => onSelect(m.id)}
                 aria-pressed={isActive}
                 aria-label={`הצג מודול ${m.shortLabel}`}
-                className="group relative flex items-center gap-2 rounded-full px-4 py-2 text-[0.85rem] font-bold transition-all duration-200 hover:-translate-y-[2px] sm:px-5"
+                className="group relative flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-[0.85rem] font-bold transition-all duration-200 hover:-translate-y-[2px] sm:px-5"
                 style={{
                   // Every bubble is filled with its own colour — always vivid.
                   background: m.color,

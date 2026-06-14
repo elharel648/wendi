@@ -269,11 +269,16 @@ const RAW_NODES: OrbitNode[] = [
   { id: "sap",        angle: 270, radius: 45, delay: 0.5, Logo: SapLogo },
 ];
 
+// Round to 3 decimals so the server-rendered string and the client-computed
+// string are byte-identical — otherwise last-digit float drift between Node
+// and the browser triggers a React hydration mismatch.
+const r3 = (n: number) => Math.round(n * 1000) / 1000;
+
 const polar = (angle: number, radius: number) => {
   const rad = ((angle - 90) * Math.PI) / 180;
   return {
-    x: CENTER.x + radius * Math.cos(rad),
-    y: CENTER.y + radius * Math.sin(rad),
+    x: r3(CENTER.x + radius * Math.cos(rad)),
+    y: r3(CENTER.y + radius * Math.sin(rad)),
   };
 };
 
@@ -292,10 +297,10 @@ function trimEndpoints(
   const ux = dx / len;
   const uy = dy / len;
   return {
-    x1: from.x + ux * startPad,
-    y1: from.y + uy * startPad,
-    x2: to.x   - ux * endPad,
-    y2: to.y   - uy * endPad,
+    x1: r3(from.x + ux * startPad),
+    y1: r3(from.y + uy * startPad),
+    x2: r3(to.x - ux * endPad),
+    y2: r3(to.y - uy * endPad),
   };
 }
 

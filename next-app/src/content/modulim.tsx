@@ -29,16 +29,24 @@ const ico = (path: ReactNode) => (
 
 /**
  * Readable foreground (white or near-black) for text/icons sitting on a solid
- * module colour. The brochure gold (#E4B322) is light enough that white washes
- * out, so we switch to dark ink on light backgrounds by luminance.
+ * module colour. Uses the WCAG relative-luminance formula and picks whichever
+ * of dark-ink / white yields the higher contrast ratio — so the brochure gold
+ * and teal get dark text (which they need to pass AA), pink/blue get white.
  */
 export function onColor(hex: string): string {
   const h = hex.replace("#", "");
-  const r = parseInt(h.slice(0, 2), 16);
-  const g = parseInt(h.slice(2, 4), 16);
-  const b = parseInt(h.slice(4, 6), 16);
-  const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return lum > 0.62 ? "#1e293b" : "#ffffff";
+  const toLinear = (c: number) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  const r = toLinear(parseInt(h.slice(0, 2), 16));
+  const g = toLinear(parseInt(h.slice(2, 4), 16));
+  const b = toLinear(parseInt(h.slice(4, 6), 16));
+  const L = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  // Contrast vs white (L=1) and vs near-black ink (#1e293b, L≈0.0157).
+  const contrastWhite = 1.05 / (L + 0.05);
+  const contrastDark = (L + 0.05) / (0.0157 + 0.05);
+  return contrastDark >= contrastWhite ? "#1e293b" : "#ffffff";
 }
 
 /**

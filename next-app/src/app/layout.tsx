@@ -122,8 +122,11 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl" className={heebo.variable}>
       <body>
+        <a href="#main-content" className="skip-link">
+          דלג לתוכן הראשי
+        </a>
         <Navigation />
-        {children}
+        <main id="main-content">{children}</main>
         <Footer />
         <script
           type="application/ld+json"

@@ -35,11 +35,11 @@ export function InfiniteSlider({
   const durationOnHover =
     durationOnHoverProp ??
     (speedOnHover && contentSize ? contentSize / speedOnHover : undefined);
-  const [currentDuration, setCurrentDuration] = useState(duration);
-
-  useEffect(() => {
-    setCurrentDuration(duration);
-  }, [duration]);
+  // Hover can temporarily override the scroll duration. We store only the
+  // override (null = no override) and derive the active duration, so we don't
+  // sync prop->state via an effect (which React 19 flags as cascading renders).
+  const [hoverDuration, setHoverDuration] = useState<number | null>(null);
+  const currentDuration = hoverDuration ?? duration;
   const translation = useMotionValue(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [key, setKey] = useState(0);
@@ -91,11 +91,11 @@ export function InfiniteSlider({
     ? {
         onHoverStart: () => {
           setIsTransitioning(true);
-          setCurrentDuration(durationOnHover);
+          setHoverDuration(durationOnHover);
         },
         onHoverEnd: () => {
           setIsTransitioning(true);
-          setCurrentDuration(duration);
+          setHoverDuration(null);
         },
       }
     : {};

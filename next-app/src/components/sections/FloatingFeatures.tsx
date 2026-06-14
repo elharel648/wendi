@@ -172,7 +172,7 @@ export function FloatingFeatures({ content }: { content?: FloatingFeaturesConten
               <motion.div className="flt-char-wrap" style={wrapStyle}>
                 <motion.div className="flt-char-zoom" style={charStyle}>
                   <Image
-                    src="/05.png"
+                    src="/05.webp"
                     alt="Wendi"
                     width={376}
                     height={600}

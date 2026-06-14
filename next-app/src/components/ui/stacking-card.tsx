@@ -1,7 +1,23 @@
 "use client";
 
-import { useTransform, motion, useScroll, type MotionValue } from "motion/react";
-import { useRef } from "react";
+import { useTransform, motion, useScroll, type MotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+
+/** True when the viewport is below the md breakpoint (768px). Drives the
+ *  mobile behaviour: the scroll-stacking effect is desktop-only — on phones
+ *  the tall module cards would overflow the pinned viewport and get clipped,
+ *  so we render them as a plain vertical list instead. */
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return isMobile;
+}
 
 /**
  * Scroll-stacking cards primitive (adapted from ui-layout's "stacking-card").
@@ -42,10 +58,34 @@ export function StackingCards({
   dir = "ltr",
 }: StackingCardsProps) {
   const container = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: container,
     offset: ["start start", "end end"],
   });
+
+  // Mobile: render each card in normal flow, full height, no pinning/scaling —
+  // so nothing is clipped. Desktop keeps the scroll-stacking effect.
+  if (isMobile) {
+    return (
+      <div dir={dir} className={className}>
+        <div className="flex flex-col gap-6 px-3 py-6">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              style={{
+                backgroundColor: item.background,
+                border: item.borderColor ? `1px solid ${item.borderColor}` : undefined,
+              }}
+              className="overflow-hidden rounded-[22px] shadow-[0_16px_40px_-26px_rgba(15,23,42,0.4)]"
+            >
+              {item.content}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={container} dir={dir} className={className}>

@@ -55,12 +55,17 @@ export const mamashkimContent: MamashkimContent = {
     sub: 'בניגוד לפלטפורמות מדף, וונדי היא חברת מוצר שמבצעת ממשקים ייעודיים לפי צורך ארגוני, כדי לספק לעובדים <strong class="font-bold text-ink">One Stop Shop</strong> אמיתי.',
     ctaLabel: "דברו איתנו על אינטגרציה",
     footnote: "+30 מערכות שכבר התחברנו אליהן · HR, שכר, נוכחות, BI, גיוס, למידה, תפעול.",
+    // Order mirrors the constellation NODES in MamashkimHero so the CMS
+    // index-merge lands each label on its matching logo.
     leftRows: [
       { title: "SAP HR", subtitle: "נתוני עובדים" },
       { title: "Synerion", subtitle: "נוכחות ומשמרות" },
       { title: "Power BI", subtitle: "מדדים" },
-      { title: "Legacy API", subtitle: "מותאם אישית" },
       { title: "Comeet", subtitle: "גיוס" },
+      { title: "Priority", subtitle: "ERP" },
+      { title: "Hilan", subtitle: "שכר ונוכחות" },
+      { title: "Moodle", subtitle: "למידה" },
+      { title: "Teams", subtitle: "תקשורת" },
     ],
     rightRows: [
       { title: "מנהל", subtitle: "דשבורד ניהולי" },
